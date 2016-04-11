@@ -12,6 +12,7 @@
 		7165A5811CBB6A310088EA76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7165A57F1CBB6A310088EA76 /* Main.storyboard */; };
 		7165A5831CBB6A310088EA76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7165A5821CBB6A310088EA76 /* Assets.xcassets */; };
 		7165A5861CBB6A310088EA76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7165A5841CBB6A310088EA76 /* LaunchScreen.storyboard */; };
+		7165A5941CBB8BBE0088EA76 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7165A5931CBB8BBE0088EA76 /* Reminder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		7165A5821CBB6A310088EA76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7165A5851CBB6A310088EA76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7165A5871CBB6A310088EA76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7165A5931CBB8BBE0088EA76 /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,12 +56,13 @@
 		7165A57A1CBB6A310088EA76 /* remindMe */ = {
 			isa = PBXGroup;
 			children = (
-				7165A57B1CBB6A310088EA76 /* AppDelegate.swift */,
+				7165A5871CBB6A310088EA76 /* Info.plist */,
 				7165A57D1CBB6A310088EA76 /* AllRemindersViewController.swift */,
-				7165A57F1CBB6A310088EA76 /* Main.storyboard */,
+				7165A57B1CBB6A310088EA76 /* AppDelegate.swift */,
+				7165A5931CBB8BBE0088EA76 /* Reminder.swift */,
 				7165A5821CBB6A310088EA76 /* Assets.xcassets */,
 				7165A5841CBB6A310088EA76 /* LaunchScreen.storyboard */,
-				7165A5871CBB6A310088EA76 /* Info.plist */,
+				7165A57F1CBB6A310088EA76 /* Main.storyboard */,
 			);
 			path = remindMe;
 			sourceTree = "<group>";
@@ -136,6 +139,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7165A5941CBB8BBE0088EA76 /* Reminder.swift in Sources */,
 				7165A57E1CBB6A310088EA76 /* AllRemindersViewController.swift in Sources */,
 				7165A57C1CBB6A310088EA76 /* AppDelegate.swift in Sources */,
 			);
@@ -287,6 +291,7 @@
 				7165A58C1CBB6A310088EA76 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

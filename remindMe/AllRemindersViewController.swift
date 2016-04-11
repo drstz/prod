@@ -12,7 +12,7 @@ class AllRemindersViewController: UIViewController {
     
     // MARK: - Instance Variables
     
-    var reminders = [String]()
+    var reminders = [Reminder]()
     
     // MARK: - Outlets
     
@@ -34,10 +34,14 @@ class AllRemindersViewController: UIViewController {
     // MARK: - Reminder list
     
     func updateList() {
-        reminders = [String]()
+        reminders = [Reminder]()
         
         for i in 0...4 {
-            reminders.append(String(format: "Reminder #%d", i))
+            let reminder = Reminder()
+            reminder.name = String(format: "Reminder #%d", i)
+            reminder.occurence = "Mondays"
+            reminder.countdown = "In 3 hours"
+            reminders.append(reminder)
         }
         tableView.reloadData()
     }
@@ -55,10 +59,12 @@ extension AllRemindersViewController: UITableViewDataSource {
         
         var cell: UITableViewCell! = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
         if cell == nil {
-            cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
+            cell = UITableViewCell(style: .Subtitle, reuseIdentifier: cellIdentifier)
         }
         
-        cell.textLabel!.text = reminders[indexPath.row]
+        let reminder = reminders[indexPath.row]
+        cell.textLabel!.text = reminder.name
+        cell.detailTextLabel!.text = reminder.occurence
         return cell
     }
     

@@ -6,4 +6,8 @@
 //  Copyright © 2016 Duane Stoltz. All rights reserved.
 //
 
-import Foundation
+class Reminder {
+    var name = ""
+    var occurence = ""
+    var countdown = ""
+}

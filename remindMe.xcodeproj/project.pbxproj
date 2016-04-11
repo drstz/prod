@@ -13,6 +13,8 @@
 		7165A5831CBB6A310088EA76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7165A5821CBB6A310088EA76 /* Assets.xcassets */; };
 		7165A5861CBB6A310088EA76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7165A5841CBB6A310088EA76 /* LaunchScreen.storyboard */; };
 		7165A5941CBB8BBE0088EA76 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7165A5931CBB8BBE0088EA76 /* Reminder.swift */; };
+		7165A5961CBB910B0088EA76 /* ReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7165A5951CBB910B0088EA76 /* ReminderCell.xib */; };
+		7165A5981CBB92C30088EA76 /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7165A5971CBB92C30088EA76 /* ReminderCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		7165A5851CBB6A310088EA76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7165A5871CBB6A310088EA76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7165A5931CBB8BBE0088EA76 /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
+		7165A5951CBB910B0088EA76 /* ReminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderCell.xib; sourceTree = "<group>"; };
+		7165A5971CBB92C30088EA76 /* ReminderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +64,9 @@
 				7165A57D1CBB6A310088EA76 /* AllRemindersViewController.swift */,
 				7165A57B1CBB6A310088EA76 /* AppDelegate.swift */,
 				7165A5931CBB8BBE0088EA76 /* Reminder.swift */,
+				7165A5971CBB92C30088EA76 /* ReminderCell.swift */,
 				7165A5821CBB6A310088EA76 /* Assets.xcassets */,
+				7165A5951CBB910B0088EA76 /* ReminderCell.xib */,
 				7165A5841CBB6A310088EA76 /* LaunchScreen.storyboard */,
 				7165A57F1CBB6A310088EA76 /* Main.storyboard */,
 			);
@@ -129,6 +135,7 @@
 				7165A5861CBB6A310088EA76 /* LaunchScreen.storyboard in Resources */,
 				7165A5831CBB6A310088EA76 /* Assets.xcassets in Resources */,
 				7165A5811CBB6A310088EA76 /* Main.storyboard in Resources */,
+				7165A5961CBB910B0088EA76 /* ReminderCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,6 +149,7 @@
 				7165A5941CBB8BBE0088EA76 /* Reminder.swift in Sources */,
 				7165A57E1CBB6A310088EA76 /* AllRemindersViewController.swift in Sources */,
 				7165A57C1CBB6A310088EA76 /* AppDelegate.swift in Sources */,
+				7165A5981CBB92C30088EA76 /* ReminderCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,6 +17,8 @@ class AllRemindersViewController: UIViewController {
     // MARK: - Properties
     
     var nothingDue = false
+    var color: UIColor?
+
     
     // MARK: - Outlets
     
@@ -27,6 +29,9 @@ class AllRemindersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateList()
+        let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
+        tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
+        tableView.rowHeight = 200
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -41,7 +46,7 @@ class AllRemindersViewController: UIViewController {
         reminders = [Reminder]()
         
         if !nothingDue {
-            for i in 0...4 {
+            for i in 0...9 {
                 let reminder = Reminder()
                 reminder.name = String(format: "Reminder #%d", i)
                 reminder.occurence = "Mondays"
@@ -66,23 +71,29 @@ extension AllRemindersViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellIdentifier = "SearchResultCell"
-        
-        var cell: UITableViewCell! = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
-        if cell == nil {
-            cell = UITableViewCell(style: .Subtitle, reuseIdentifier: cellIdentifier)
-        }
-        
+        let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as! ReminderCell
         if reminders.count == 0 {
-            cell.textLabel!.text = "No reminders are due"
-            cell.detailTextLabel!.text = "Go add some!"
+            cell.reminderLabel.text = "Nothing Found"
+            cell.occurenceLabel.text = ""
+            cell.countdownLabel.text = ""
         } else {
             let reminder = reminders[indexPath.row]
-            cell.textLabel!.text = reminder.name
-            cell.detailTextLabel!.text = reminder.occurence
+            print(indexPath.row)
+            cell.reminderLabel.text = reminder.name
+            cell.occurenceLabel.text = reminder.occurence
+            cell.countdownLabel.text = reminder.countdown
+            if indexPath.row % 2 == 0 {
+                print("Mod: \(indexPath.row % 2)")
+                reminder.cellBackground = UIColor(red: 255/255, green: 165/255, blue: 0, alpha: 1)
+                color = reminder.cellBackground
+            } else {
+                reminder.cellBackground = UIColor(red: 32/255, green: 178/255, blue: 170/255, alpha: 1)
+                color = reminder.cellBackground
+            }
+            
+            
         }
-        
-
+        cell.backgroundColor = color
         return cell
     }
     

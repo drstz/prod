@@ -14,6 +14,10 @@ class AllRemindersViewController: UIViewController {
     
     var reminders = [Reminder]()
     
+    // MARK: - Properties
+    
+    var nothingDue = false
+    
     // MARK: - Outlets
     
     @IBOutlet weak var tableView: UITableView!
@@ -36,13 +40,16 @@ class AllRemindersViewController: UIViewController {
     func updateList() {
         reminders = [Reminder]()
         
-        for i in 0...4 {
-            let reminder = Reminder()
-            reminder.name = String(format: "Reminder #%d", i)
-            reminder.occurence = "Mondays"
-            reminder.countdown = "In 3 hours"
-            reminders.append(reminder)
+        if !nothingDue {
+            for i in 0...4 {
+                let reminder = Reminder()
+                reminder.name = String(format: "Reminder #%d", i)
+                reminder.occurence = "Mondays"
+                reminder.countdown = "In 3 hours"
+                reminders.append(reminder)
+            }
         }
+        
         tableView.reloadData()
     }
 }
@@ -51,7 +58,11 @@ class AllRemindersViewController: UIViewController {
 
 extension AllRemindersViewController: UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return reminders.count
+        if reminders.count == 0 {
+            return 1
+        } else {
+            return reminders.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -62,15 +73,35 @@ extension AllRemindersViewController: UITableViewDataSource {
             cell = UITableViewCell(style: .Subtitle, reuseIdentifier: cellIdentifier)
         }
         
-        let reminder = reminders[indexPath.row]
-        cell.textLabel!.text = reminder.name
-        cell.detailTextLabel!.text = reminder.occurence
+        if reminders.count == 0 {
+            cell.textLabel!.text = "No reminders are due"
+            cell.detailTextLabel!.text = "Go add some!"
+        } else {
+            let reminder = reminders[indexPath.row]
+            cell.textLabel!.text = reminder.name
+            cell.detailTextLabel!.text = reminder.occurence
+        }
+        
+
         return cell
     }
     
 }
 
 extension AllRemindersViewController: UITableViewDelegate {
+    // MARK: - Selection
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        if reminders.count == 0 {
+            return nil
+        } else {
+            return indexPath
+        }
+    }
     
 }
 

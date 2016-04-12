@@ -18,11 +18,44 @@ class AllRemindersViewController: UIViewController {
     
     var nothingDue = false
     var color: UIColor?
+    var nbOfReminders = 0
 
     
     // MARK: - Outlets
     
     @IBOutlet weak var tableView: UITableView!
+    
+    // MARK: - REMINDERS
+    
+    // MARK: Add reminders
+    
+    @IBAction func addReminder() {
+        let reminder = Reminder()
+        nbOfReminders += 1
+        reminder.name = String(format: "Reminder #%d", nbOfReminders)
+        reminder.occurence = "Monday"
+        reminder.countdown = "In 3 Hours"
+        reminders.append(reminder)
+        tableView.reloadData()
+    }
+    
+    // MARK: Reminder list
+    
+    func updateList() {
+        // reminders = [Reminder]()
+        
+        //        if !nothingDue {
+        //            for i in 0..<nbOfReminders {
+        //                let reminder = Reminder()
+        //                reminder.name = String(format: "Reminder #%d", i + 1)
+        //                reminder.occurence = "Mondays"
+        //                reminder.countdown = "In 3 hours"
+        //                reminders.append(reminder)
+        //            }
+        //        }
+        
+        tableView.reloadData()
+    }
     
     // MARK: - The view
 
@@ -40,23 +73,7 @@ class AllRemindersViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - Reminder list
-    
-    func updateList() {
-        reminders = [Reminder]()
-        
-        if !nothingDue {
-            for i in 0...9 {
-                let reminder = Reminder()
-                reminder.name = String(format: "Reminder #%d", i)
-                reminder.occurence = "Mondays"
-                reminder.countdown = "In 3 hours"
-                reminders.append(reminder)
-            }
-        }
-        
-        tableView.reloadData()
-    }
+
 }
 
 // MARK: - Extensions

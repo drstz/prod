@@ -16,6 +16,9 @@
 		7165A5961CBB910B0088EA76 /* ReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7165A5951CBB910B0088EA76 /* ReminderCell.xib */; };
 		7165A5981CBB92C30088EA76 /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7165A5971CBB92C30088EA76 /* ReminderCell.swift */; };
 		7165A59A1CBCB4330088EA76 /* AddReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7165A5991CBCB4330088EA76 /* AddReminder.swift */; };
+		716C72A91CBE346700A34B32 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 716C72A71CBE346700A34B32 /* DataModel.xcdatamodeld */; };
+		716C72AC1CBE34CF00A34B32 /* TheReminder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716C72AA1CBE34CF00A34B32 /* TheReminder+CoreDataProperties.swift */; };
+		716C72AD1CBE34CF00A34B32 /* TheReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716C72AB1CBE34CF00A34B32 /* TheReminder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		7165A5951CBB910B0088EA76 /* ReminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderCell.xib; sourceTree = "<group>"; };
 		7165A5971CBB92C30088EA76 /* ReminderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderCell.swift; sourceTree = "<group>"; };
 		7165A5991CBCB4330088EA76 /* AddReminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddReminder.swift; sourceTree = "<group>"; };
+		716C72A81CBE346700A34B32 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		716C72AA1CBE34CF00A34B32 /* TheReminder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TheReminder+CoreDataProperties.swift"; path = "../TheReminder+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		716C72AB1CBE34CF00A34B32 /* TheReminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TheReminder.swift; path = ../TheReminder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,8 +74,11 @@
 				7165A57B1CBB6A310088EA76 /* AppDelegate.swift */,
 				7165A5931CBB8BBE0088EA76 /* Reminder.swift */,
 				7165A5971CBB92C30088EA76 /* ReminderCell.swift */,
+				716C72AB1CBE34CF00A34B32 /* TheReminder.swift */,
+				716C72AA1CBE34CF00A34B32 /* TheReminder+CoreDataProperties.swift */,
 				7165A5821CBB6A310088EA76 /* Assets.xcassets */,
 				7165A5951CBB910B0088EA76 /* ReminderCell.xib */,
+				716C72A71CBE346700A34B32 /* DataModel.xcdatamodeld */,
 				7165A5841CBB6A310088EA76 /* LaunchScreen.storyboard */,
 				7165A57F1CBB6A310088EA76 /* Main.storyboard */,
 			);
@@ -152,6 +161,9 @@
 				7165A5941CBB8BBE0088EA76 /* Reminder.swift in Sources */,
 				7165A57E1CBB6A310088EA76 /* AllRemindersViewController.swift in Sources */,
 				7165A57C1CBB6A310088EA76 /* AppDelegate.swift in Sources */,
+				716C72AD1CBE34CF00A34B32 /* TheReminder.swift in Sources */,
+				716C72A91CBE346700A34B32 /* DataModel.xcdatamodeld in Sources */,
+				716C72AC1CBE34CF00A34B32 /* TheReminder+CoreDataProperties.swift in Sources */,
 				7165A5981CBB92C30088EA76 /* ReminderCell.swift in Sources */,
 				7165A59A1CBCB4330088EA76 /* AddReminder.swift in Sources */,
 			);
@@ -306,6 +318,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		716C72A71CBE346700A34B32 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				716C72A81CBE346700A34B32 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 716C72A81CBE346700A34B32 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7165A5701CBB6A310088EA76 /* Project object */;
 }

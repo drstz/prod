@@ -21,7 +21,11 @@ protocol AddReminderViewControllerDelegate: class {
                                                             anIndex: Int?)
 }
 
+// MARK: - Class
+
 class AddReminderViewController: UITableViewController, UITextFieldDelegate {
+    
+    // MARK: Properties
     
     var reminderNameIsEmpty = true
     var reminderDateIsEmpty = true
@@ -31,16 +35,26 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     weak var delegate: AddReminderViewControllerDelegate?
     
+    // MARK: Outlets
+    
+    // Fields
+    
     @IBOutlet weak var reminderNameField : UITextField!
     @IBOutlet weak var reminderOccurenceField : UITextField!
     
+    // Buttons
+    
     @IBOutlet weak var doneBarButton : UIBarButtonItem!
     
+    // MARK: - Actions
+    
     @IBAction func cancel() {
+        print(#function)
         delegate?.addReminderViewControllerDidCancel(self)
     }
     
     @IBAction func done() {
+        print(#function)
         
         if let reminder = reminderToEdit {
             reminder.name = reminderNameField.text!
@@ -59,14 +73,18 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
-    // Prevent rows from being selected
+    // MARK: - VIEW
+    
     
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        return nil 
+        // Prevent rows from being selected
+        print(#function)
+        return nil
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        print(#function)
         
         // Put curser into textfield immediately
         reminderNameField.becomeFirstResponder()
@@ -74,16 +92,21 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        reminderOccurenceField.enabled = false
+        print(#function)
         
         if let reminder = reminderToEdit {
             title = "Edit reminder"
             doneBarButton.enabled = true
             reminderNameField.text = reminder.name
             reminderOccurenceField.text = reminder.occurence
+            reminderOccurenceField.enabled = true
         }
     }
     
     // MARK: - Text Field
+    
+    // Listen to textfield
     
     func textField(textField: UITextField,
                    shouldChangeCharactersInRange range: NSRange,
@@ -92,41 +115,64 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         let oldText: NSString = textField.text!
         let newText: NSString = oldText.stringByReplacingCharactersInRange(range, withString: string)
         
-
-        
-        if newText.length > 0 {
-            if textField.tag == 1 {
-                reminderNameIsEmpty = false
-            } else if textField.tag == 2 {
-                reminderDateIsEmpty = false
+    
+        chooseEmptyTextField(textField, isEmpty: textFieldIsEmpty(newText))
+        if reminderNameIsEmpty {
+            if reminderDateIsEmpty {
+                reminderOccurenceField.enabled = false
             }
         } else {
-            if textField.tag == 1 {
-                reminderNameIsEmpty = true
-            } else if textField.tag == 2 {
-                reminderDateIsEmpty = true
-            }
+            reminderOccurenceField.enabled = true
         }
         fieldsAreEmpty()
-        
+        print(#function)
         return true
+    }
+    
+    func textFieldIsEmpty(text : NSString) -> Bool {
+        return text.length == 0
+    }
+    
+    func chooseEmptyTextField(textFieldtoCheck : UITextField, isEmpty: Bool) {
+        switch textFieldtoCheck.tag {
+        case 1:
+            reminderNameIsEmpty = isEmpty
+            if reminderNameIsEmpty {
+            }
+        case 2:
+            reminderDateIsEmpty = isEmpty
+        default:
+            print("ERROR")
+        }
     }
     
     
     func textFieldDidBeginEditing(textField: UITextField) {
+        print(#function)
         if textField.tag == 2 {
             if reminderNameIsEmpty {
                 textField.returnKeyType = .Next
             } else {
                 textField.returnKeyType = .Done
             }
-            
         }
-        
-        
     }
     
+
+    
+    func fieldsAreEmpty() {
+        print(#function)
+        if !reminderNameIsEmpty && !reminderDateIsEmpty {
+            doneBarButton.enabled = true
+        } else {
+            doneBarButton.enabled = false
+        }
+    }
+    
+
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+        print(#function)
         if textField.tag == 1 {
             reminderOccurenceField.becomeFirstResponder()
             return false
@@ -145,13 +191,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         
     }
     
-    func fieldsAreEmpty() {
-        if !reminderNameIsEmpty && !reminderDateIsEmpty {
-            doneBarButton.enabled = true
-        } else {
-            doneBarButton.enabled = false
-        }
-    }
+
 
 
     

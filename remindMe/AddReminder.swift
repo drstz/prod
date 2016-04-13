@@ -8,10 +8,20 @@
 
 import UIKit
 
+// MARK: - Protocols
+
+protocol AddReminderViewControllerDelegate: class {
+    func addReminderViewControllerDidCancel(controller: AddReminderViewController)
+    func addReminderViewController(controller: AddReminderViewController,
+                                   didFinishAddingReminder reminder: Reminder)
+}
+
 class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     var reminderNameIsEmpty = true
     var reminderDateIsEmpty = true
+    
+    weak var delegate: AddReminderViewControllerDelegate?
     
     @IBOutlet weak var reminderNameField : UITextField!
     @IBOutlet weak var reminderOccurenceField : UITextField!
@@ -19,11 +29,16 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var doneBarButton : UIBarButtonItem!
     
     @IBAction func cancel() {
-        dismissViewControllerAnimated(true, completion: nil)
+        delegate?.addReminderViewControllerDidCancel(self)
     }
     
     @IBAction func done() {
-        dismissViewControllerAnimated(true, completion: nil)
+        let reminder = Reminder()
+        reminder.name = reminderNameField.text!
+        reminder.occurence = reminderOccurenceField.text!
+        reminder.countdown = "5 minutes"
+        
+        delegate?.addReminderViewController(self, didFinishAddingReminder: reminder)
     }
     
     // Prevent rows from being selected

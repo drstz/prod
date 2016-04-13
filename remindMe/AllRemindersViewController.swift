@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllRemindersViewController: UIViewController {
+class AllRemindersViewController: UIViewController, AddReminderViewControllerDelegate {
     
     // MARK: - Instance Variables
     
@@ -24,6 +24,29 @@ class AllRemindersViewController: UIViewController {
     // MARK: - Outlets
     
     @IBOutlet weak var tableView: UITableView!
+    
+    // MARK: - Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "AddReminder" {
+            // The segue first goes to the navigation controller that the new view controller is embeded in
+            let navigationController = segue.destinationViewController as! UINavigationController
+            // To find the view controller, you look in the navigation controller topViewController property. This is the screen that is active in this navigation controller
+            let controller = navigationController.topViewController as! AddReminderViewController
+            // You now have the view controller that you want and you want to access its delegate property, setting it to this pages viewController(self)
+            controller.delegate = self
+        }
+    }
+    
+    // MARK: - AddReminderDelegate
+    
+    func addReminderViewControllerDidCancel(controller: AddReminderViewController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func addReminderViewController(controller: AddReminderViewController, didFinishAddingReminder reminder: Reminder) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     
     // MARK: - REMINDERS
     

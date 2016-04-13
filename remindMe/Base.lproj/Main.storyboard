@@ -37,7 +37,7 @@
                     <navigationItem key="navigationItem" id="n3W-EJ-gSN">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="xkf-GL-rPd">
                             <connections>
-                                <segue destination="EXe-5T-xJU" kind="presentation" id="VcW-Tq-td7"/>
+                                <segue destination="EXe-5T-xJU" kind="presentation" identifier="AddReminder" id="VcW-Tq-td7"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

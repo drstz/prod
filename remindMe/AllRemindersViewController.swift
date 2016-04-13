@@ -41,19 +41,7 @@ class AllRemindersViewController: UIViewController {
     
     // MARK: Reminder list
     
-    func updateList() {
-        // reminders = [Reminder]()
-        
-        //        if !nothingDue {
-        //            for i in 0..<nbOfReminders {
-        //                let reminder = Reminder()
-        //                reminder.name = String(format: "Reminder #%d", i + 1)
-        //                reminder.occurence = "Mondays"
-        //                reminder.countdown = "In 3 hours"
-        //                reminders.append(reminder)
-        //            }
-        //        }
-        
+    func updateList() {        
         tableView.reloadData()
     }
     

@@ -37,8 +37,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     // MARK: Outlets
     
+    // Fields
+    
     @IBOutlet weak var reminderNameField : UITextField!
     @IBOutlet weak var reminderOccurenceField : UITextField!
+    
+    // Buttons
     
     @IBOutlet weak var doneBarButton : UIBarButtonItem!
     
@@ -88,6 +92,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        reminderOccurenceField.enabled = false
         print(#function)
         
         if let reminder = reminderToEdit {
@@ -95,11 +100,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
             doneBarButton.enabled = true
             reminderNameField.text = reminder.name
             reminderOccurenceField.text = reminder.occurence
+            reminderOccurenceField.enabled = true
         }
-        
-        reminderOccurenceField.enabled = false
-        
-
     }
     
     // MARK: - Text Field

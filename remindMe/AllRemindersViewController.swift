@@ -14,16 +14,17 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     // MARK: - Instance Variables
     
     var reminders = [Reminder]()
-    
-    
-    
+ 
     required init?(coder aDecoder: NSCoder) {
         reminders = [Reminder]()
         
-        let sampleReminder = Reminder()
-        sampleReminder.name = "A sample"
-        sampleReminder.occurence = "Monday"
-        sampleReminder.countdown = "7 days left"
+        for i in 1...3 {
+            let sampleReminder = Reminder()
+            sampleReminder.name = String(format: "Sample #%d", i)
+            sampleReminder.occurence = "Monday"
+            sampleReminder.countdown = "\(7 + i) days left"
+            reminders.append(sampleReminder)
+        }
         
         super.init(coder: aDecoder)
     }

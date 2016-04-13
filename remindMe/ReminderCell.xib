@@ -15,34 +15,35 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reminder Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cNe-HO-hOr">
-                        <rect key="frame" x="8" y="8" width="144" height="24"/>
+                        <rect key="frame" x="8" y="8" width="304" height="24"/>
                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Occurence" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pcd-jg-yJM">
-                        <rect key="frame" x="8" y="40" width="66" height="16"/>
+                        <rect key="frame" x="8" y="40" width="304" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Countdown" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgs-ll-DcJ">
-                        <rect key="frame" x="257" y="179" width="55" height="12"/>
+                        <rect key="frame" x="227" y="179" width="85" height="12"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="cNe-HO-hOr" firstAttribute="leading" secondItem="qdg-uO-bVj" secondAttribute="leading" constant="8" id="6GG-dP-Cwz"/>
-                    <constraint firstAttribute="bottom" secondItem="cgs-ll-DcJ" secondAttribute="bottom" constant="8" id="Cxc-Eg-Tk0"/>
-                    <constraint firstAttribute="trailing" secondItem="Pcd-jg-yJM" secondAttribute="trailing" constant="246" id="G4u-bH-MpB"/>
-                    <constraint firstItem="cNe-HO-hOr" firstAttribute="top" secondItem="qdg-uO-bVj" secondAttribute="top" constant="8" id="HYg-lm-lTo"/>
-                    <constraint firstAttribute="trailing" secondItem="cNe-HO-hOr" secondAttribute="trailing" constant="168" id="THd-lg-8g1"/>
-                    <constraint firstItem="Pcd-jg-yJM" firstAttribute="top" secondItem="cNe-HO-hOr" secondAttribute="bottom" constant="8" id="Wp6-Wc-gzF"/>
-                    <constraint firstAttribute="trailing" secondItem="cgs-ll-DcJ" secondAttribute="trailing" constant="8" id="Xpb-tm-OcK"/>
-                    <constraint firstItem="Pcd-jg-yJM" firstAttribute="leading" secondItem="qdg-uO-bVj" secondAttribute="leading" constant="8" id="frQ-0f-dv6"/>
-                    <constraint firstItem="cgs-ll-DcJ" firstAttribute="leading" secondItem="qdg-uO-bVj" secondAttribute="leading" constant="257" id="zV3-yQ-ghK"/>
+                    <constraint firstAttribute="trailing" secondItem="cNe-HO-hOr" secondAttribute="trailing" constant="8" id="5eb-Im-agg"/>
+                    <constraint firstItem="cNe-HO-hOr" firstAttribute="leading" secondItem="qdg-uO-bVj" secondAttribute="leading" constant="8" id="ARW-cG-vL2"/>
+                    <constraint firstAttribute="bottom" secondItem="cgs-ll-DcJ" secondAttribute="bottom" constant="8" id="Lgo-GB-PLQ"/>
+                    <constraint firstItem="cNe-HO-hOr" firstAttribute="top" secondItem="qdg-uO-bVj" secondAttribute="top" constant="8" id="PPf-q4-CUj"/>
+                    <constraint firstItem="cgs-ll-DcJ" firstAttribute="leading" secondItem="qdg-uO-bVj" secondAttribute="leading" constant="227" id="cl9-X0-ajx"/>
+                    <constraint firstAttribute="trailing" secondItem="Pcd-jg-yJM" secondAttribute="trailing" constant="8" id="cx6-rF-1tI"/>
+                    <constraint firstAttribute="trailing" secondItem="cgs-ll-DcJ" secondAttribute="trailing" constant="8" id="hg5-9m-Fun"/>
+                    <constraint firstItem="cgs-ll-DcJ" firstAttribute="top" secondItem="Pcd-jg-yJM" secondAttribute="bottom" constant="123" id="kL6-7e-BZZ"/>
+                    <constraint firstItem="Pcd-jg-yJM" firstAttribute="leading" secondItem="qdg-uO-bVj" secondAttribute="leading" constant="8" id="v0q-iA-Zfg"/>
+                    <constraint firstItem="Pcd-jg-yJM" firstAttribute="top" secondItem="cNe-HO-hOr" secondAttribute="bottom" constant="8" id="wlM-8n-xnS"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.63993196416517151" green="0.17618798593103455" blue="0.33239836887931035" alpha="0.89968417553191493" colorSpace="calibratedRGB"/>

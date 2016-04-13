@@ -15,6 +15,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     var reminders = [Reminder]()
     
+    
+    
     required init?(coder aDecoder: NSCoder) {
         reminders = [Reminder]()
         
@@ -30,6 +32,9 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     var nothingDue = false
     var color: UIColor?
+    
+    var titleString = ""
+    var nbOfReminders = 0
 
 
     
@@ -38,6 +43,17 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: - Navigation
+    
+    func setNumberOfReminders() {
+        nbOfReminders = reminders.count
+        if nbOfReminders > 1 || nbOfReminders == 0 {
+            titleString = "You have \(nbOfReminders) reminders"
+        } else {
+            titleString = "You have \(nbOfReminders) reminder"
+        }
+        self.title = titleString
+        
+    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "AddReminder" {
@@ -115,13 +131,14 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
         tableView.rowHeight = 200
+        setNumberOfReminders()
         
         // Do any additional setup after loading the view, typically from a nib.
     }
     
     override func viewWillAppear(animated: Bool) {
         // self.navigationController?.navigationBar.topItem?.title =
-        title = "You have \(reminders.count) reminders"
+        setNumberOfReminders()
     }
     
     
@@ -180,6 +197,15 @@ extension AllRemindersViewController: UITableViewDelegate {
         } else {
             return indexPath
         }
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        reminders.removeAtIndex(indexPath.row)
+        
+        let indexPaths = [indexPath]
+        tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        setNumberOfReminders()
+        
     }
     
 }

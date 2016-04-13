@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class AllRemindersViewController: UIViewController, AddReminderViewControllerDelegate {
     
@@ -14,11 +15,22 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     var reminders = [Reminder]()
     
+    required init?(coder aDecoder: NSCoder) {
+        reminders = [Reminder]()
+        
+        let sampleReminder = Reminder()
+        sampleReminder.name = "A sample"
+        sampleReminder.occurence = "Monday"
+        sampleReminder.countdown = "7 days left"
+        
+        super.init(coder: aDecoder)
+    }
+    
     // MARK: - Properties
     
     var nothingDue = false
     var color: UIColor?
-    var nbOfReminders = 0
+
 
     
     // MARK: - Outlets
@@ -31,8 +43,10 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         if segue.identifier == "AddReminder" {
             // The segue first goes to the navigation controller that the new view controller is embeded in
             let navigationController = segue.destinationViewController as! UINavigationController
+            
             // To find the view controller, you look in the navigation controller topViewController property. This is the screen that is active in this navigation controller
             let controller = navigationController.topViewController as! AddReminderViewController
+            
             // You now have the view controller that you want and you want to access its delegate property, setting it to this pages viewController(self)
             controller.delegate = self
         }
@@ -45,6 +59,14 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     }
     
     func addReminderViewController(controller: AddReminderViewController, didFinishAddingReminder reminder: Reminder) {
+        let newRowIndex = reminders.count
+        
+        reminders.append(reminder)
+        
+        let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
+        let indexPaths = [indexPath]
+        tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -52,15 +74,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     // MARK: Add reminders
     
-    @IBAction func addReminder() {
-        let reminder = Reminder()
-        nbOfReminders += 1
-        reminder.name = String(format: "Reminder #%d", nbOfReminders)
-        reminder.occurence = "Monday"
-        reminder.countdown = "In 3 Hours"
-        reminders.append(reminder)
-        tableView.reloadData()
-    }
+
     
     // MARK: Reminder list
     
@@ -76,7 +90,12 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
         tableView.rowHeight = 200
+        
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.topItem?.title = "You have \(reminders.count) reminders"
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,36 +110,27 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
 
 extension AllRemindersViewController: UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if reminders.count == 0 {
-            return 1
-        } else {
             return reminders.count
-        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as! ReminderCell
-        if reminders.count == 0 {
-            cell.reminderLabel.text = "Nothing Found"
-            cell.occurenceLabel.text = ""
-            cell.countdownLabel.text = ""
+
+        let reminder = reminders[indexPath.row]
+        
+        
+        cell.reminderLabel.text = reminder.name
+        cell.occurenceLabel.text = reminder.occurence
+        cell.countdownLabel.text = reminder.countdown
+        if indexPath.row % 2 == 0 {
+            print("Mod: \(indexPath.row % 2)")
+            reminder.cellBackground = UIColor(red: 255/255, green: 165/255, blue: 0, alpha: 1)
+            color = reminder.cellBackground
         } else {
-            let reminder = reminders[indexPath.row]
-            print(indexPath.row)
-            cell.reminderLabel.text = reminder.name
-            cell.occurenceLabel.text = reminder.occurence
-            cell.countdownLabel.text = reminder.countdown
-            if indexPath.row % 2 == 0 {
-                print("Mod: \(indexPath.row % 2)")
-                reminder.cellBackground = UIColor(red: 255/255, green: 165/255, blue: 0, alpha: 1)
-                color = reminder.cellBackground
-            } else {
-                reminder.cellBackground = UIColor(red: 32/255, green: 178/255, blue: 170/255, alpha: 1)
-                color = reminder.cellBackground
-            }
-            
-            
+            reminder.cellBackground = UIColor(red: 32/255, green: 178/255, blue: 170/255, alpha: 1)
+            color = reminder.cellBackground
         }
+        
         cell.backgroundColor = color
         return cell
     }

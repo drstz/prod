@@ -41,6 +41,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "AddReminder" {
+            
             // The segue first goes to the navigation controller that the new view controller is embeded in
             let navigationController = segue.destinationViewController as! UINavigationController
             
@@ -49,6 +50,16 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
             
             // You now have the view controller that you want and you want to access its delegate property, setting it to this pages viewController(self)
             controller.delegate = self
+            
+        } else if segue.identifier == "EditReminder" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let controller = navigationController.topViewController as! AddReminderViewController
+            controller.delegate = self
+            
+            if let indexPath = sender {
+                controller.reminderToEdit = reminders[indexPath.row]
+                controller.indexPathToEdit = indexPath.row 
+            }
         }
     }
     
@@ -58,7 +69,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func addReminderViewController(controller: AddReminderViewController, didFinishAddingReminder reminder: Reminder) {
+    func addReminderViewController(controller: AddReminderViewController,
+                                   didFinishAddingReminder reminder: Reminder) {
         let newRowIndex = reminders.count
         
         reminders.append(reminder)
@@ -70,12 +82,25 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // MARK: - REMINDERS
-    
-    // MARK: Add reminders
-    
 
     
+    func addReminderViewController(controller: AddReminderViewController,
+                                   didFinishEditingReminder reminder: Reminder,
+                                   anIndex: Int?) {
+        if let index = anIndex {
+            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+            if let cell = tableView.cellForRowAtIndexPath(indexPath) as! ReminderCell? {
+                cell.reminderLabel.text = reminder.name
+                cell.occurenceLabel.text = reminder.occurence
+            }
+        }
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    // MARK: - REMINDERS
+    
+
     // MARK: Reminder list
     
     func updateList() {        
@@ -95,8 +120,11 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBar.topItem?.title = "You have \(reminders.count) reminders"
+        // self.navigationController?.navigationBar.topItem?.title =
+        title = "You have \(reminders.count) reminders"
     }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -142,6 +170,8 @@ extension AllRemindersViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        performSegueWithIdentifier("EditReminder", sender: indexPath)
+        print("Index Path: \(indexPath)")
     }
     
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {

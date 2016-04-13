@@ -12,14 +12,22 @@ import UIKit
 
 protocol AddReminderViewControllerDelegate: class {
     func addReminderViewControllerDidCancel(controller: AddReminderViewController)
+    
     func addReminderViewController(controller: AddReminderViewController,
                                    didFinishAddingReminder reminder: Reminder)
+    
+    func addReminderViewController(controller: AddReminderViewController,
+                                   didFinishEditingReminder reminder: Reminder,
+                                                            anIndex: Int?)
 }
 
 class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     var reminderNameIsEmpty = true
     var reminderDateIsEmpty = true
+    
+    var reminderToEdit: Reminder?
+    var indexPathToEdit: Int?
     
     weak var delegate: AddReminderViewControllerDelegate?
     
@@ -33,12 +41,22 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     }
     
     @IBAction func done() {
-        let reminder = Reminder()
-        reminder.name = reminderNameField.text!
-        reminder.occurence = reminderOccurenceField.text!
-        reminder.countdown = "5 minutes"
         
-        delegate?.addReminderViewController(self, didFinishAddingReminder: reminder)
+        if let reminder = reminderToEdit {
+            reminder.name = reminderNameField.text!
+            reminder.occurence = reminderOccurenceField.text!
+            if let index = indexPathToEdit {
+                delegate?.addReminderViewController(self, didFinishEditingReminder: reminder, anIndex: index)
+            }
+            
+        } else {
+            let reminder = Reminder()
+            reminder.name = reminderNameField.text!
+            reminder.occurence = reminderOccurenceField.text!
+            reminder.countdown = "5 minutes"
+            
+            delegate?.addReminderViewController(self, didFinishAddingReminder: reminder)
+        }
     }
     
     // Prevent rows from being selected
@@ -52,6 +70,17 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         
         // Put curser into textfield immediately
         reminderNameField.becomeFirstResponder()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if let reminder = reminderToEdit {
+            title = "Edit reminder"
+            doneBarButton.enabled = true
+            reminderNameField.text = reminder.name
+            reminderOccurenceField.text = reminder.occurence
+        }
     }
     
     // MARK: - Text Field

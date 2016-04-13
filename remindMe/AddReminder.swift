@@ -53,13 +53,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         if newText.length > 0 {
             if textField.tag == 1 {
                 reminderNameIsEmpty = false
-            } else {
+            } else if textField.tag == 2 {
                 reminderDateIsEmpty = false
             }
         } else {
             if textField.tag == 1 {
                 reminderNameIsEmpty = true
-            } else {
+            } else if textField.tag == 2 {
                 reminderDateIsEmpty = true
             }
         }
@@ -68,7 +68,17 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         return true
     }
     
+    
     func textFieldDidBeginEditing(textField: UITextField) {
+        if textField.tag == 2 {
+            if reminderNameIsEmpty {
+                textField.returnKeyType = .Next
+            } else {
+                textField.returnKeyType = .Done
+            }
+            
+        }
+        
         
     }
     
@@ -77,10 +87,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
             reminderOccurenceField.becomeFirstResponder()
             return false
         } else {
-            if reminderDateIsEmpty == false {
+            if doneBarButton.enabled == true {
                 return true
-            } else if reminderDateIsEmpty == true  {
-                textField.resignFirstResponder()
+            } else if doneBarButton.enabled == false {
+                if reminderNameIsEmpty {
+                    reminderNameField.becomeFirstResponder()
+                }
                 return false
             }
             

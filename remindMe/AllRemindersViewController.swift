@@ -21,7 +21,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         for i in 1...3 {
             let sampleReminder = Reminder()
             sampleReminder.name = String(format: "Sample #%d", i)
-            sampleReminder.occurence = "Monday"
+            sampleReminder.dueDate = NSDate()
             sampleReminder.countdown = "\(7 + i) days left"
             reminders.append(sampleReminder)
         }
@@ -108,10 +108,22 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
             let indexPath = NSIndexPath(forRow: index, inSection: 0)
             if let cell = tableView.cellForRowAtIndexPath(indexPath) as! ReminderCell? {
                 cell.reminderLabel.text = reminder.name
-                cell.occurenceLabel.text = reminder.occurence
+                if let date = reminder.dueDate {
+                    cell.occurenceLabel.text = dateConverter(dateToConvert: date)
+                }
+                
             }
         }
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // MARK: - Date Converter
+    
+    func dateConverter(dateToConvert date: NSDate) -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .MediumStyle
+        formatter.timeStyle = .ShortStyle
+        return formatter.stringFromDate(date)
     }
     
     
@@ -166,7 +178,9 @@ extension AllRemindersViewController: UITableViewDataSource {
         
         
         cell.reminderLabel.text = reminder.name
-        cell.occurenceLabel.text = reminder.occurence
+        if let date = reminder.dueDate {
+            cell.occurenceLabel.text = dateConverter(dateToConvert: date)
+        }
         cell.countdownLabel.text = reminder.countdown
         if indexPath.row % 2 == 0 {
             print("Mod: \(indexPath.row % 2)")

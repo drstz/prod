@@ -33,8 +33,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     var reminderToEdit: Reminder?
     var indexPathToEdit: Int?
     
-    // The Date Picker
+    // The Date
+    
+    var dueDate = NSDate()
     var datePickerVisible = false
+
+    // Delegate
     
     weak var delegate: AddReminderViewControllerDelegate?
     
@@ -43,7 +47,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     // Fields
     
     @IBOutlet weak var reminderNameField : UITextField!
-    @IBOutlet weak var reminderOccurenceField : UITextField!
+    
+    
+    // Labels
+    
+    @IBOutlet weak var dueDateLabel : UILabel!
     
     // Buttons
     
@@ -66,6 +74,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         
         if let reminder = reminderToEdit {
             reminder.name = reminderNameField.text!
+            reminder.dueDate = dueDate
 
             if let index = indexPathToEdit {
                 delegate?.addReminderViewController(self, didFinishEditingReminder: reminder, anIndex: index)
@@ -74,6 +83,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         } else {
             let reminder = Reminder()
             reminder.name = reminderNameField.text!
+            reminder.dueDate = dueDate
 
             reminder.countdown = "5 minutes"
             
@@ -106,11 +116,21 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
             title = "Edit reminder"
             doneBarButton.enabled = true
             reminderNameField.text = reminder.name
-
+            if let date = reminder.dueDate {
+                dueDate = date
+            }
         }
+        updateDueDateLabel()
     }
     
     // MARK: - Date Picker
+    
+    func updateDueDateLabel() {
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .MediumStyle
+        formatter.timeStyle = .ShortStyle
+        dueDateLabel.text = formatter.stringFromDate(dueDate)
+    }
     
     func showDatePicker() {
         print(#function)

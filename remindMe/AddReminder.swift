@@ -33,6 +33,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     var reminderToEdit: Reminder?
     var indexPathToEdit: Int?
     
+    // The Date Picker
+    var datePickerVisible = false
+    
     weak var delegate: AddReminderViewControllerDelegate?
     
     // MARK: Outlets
@@ -45,6 +48,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     // Buttons
     
     @IBOutlet weak var doneBarButton : UIBarButtonItem!
+    
+    // Date Picker
+    
+    @IBOutlet weak var datePickerCell: UITableViewCell!
+    @IBOutlet weak var datePicker: UIDatePicker!
     
     // MARK: - Actions
     
@@ -76,11 +84,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - VIEW
     
     
-    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        // Prevent rows from being selected
-        print(#function)
-        return nil
-    }
+
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -102,6 +106,67 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
             reminderOccurenceField.text = reminder.occurence
             reminderOccurenceField.enabled = true
         }
+    }
+    
+    // MARK: - Date Picker
+    
+    func showDatePicker() {
+        datePickerVisible = true
+        
+        let indexPathDatePicker = NSIndexPath(forRow: 1, inSection: 2)
+        tableView.insertRowsAtIndexPaths([indexPathDatePicker], withRowAnimation: .Fade)
+    }
+    
+    // MARK: - Table View
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if indexPath.section == 2 && indexPath.row == 1 {
+            return datePickerCell
+        } else {
+            return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 2 && datePickerVisible {
+            return 2
+        } else {
+            return super.tableView(tableView, numberOfRowsInSection: section)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 2 && indexPath.row == 1 {
+            return 217
+        } else {
+            return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        reminderNameField.resignFirstResponder()
+        
+        if indexPath.section == 2 && indexPath.row == 1 {
+            showDatePicker()
+        }
+    }
+    
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        // Prevent rows from being selected
+        print(#function)
+        if indexPath.section == 2 && indexPath.row == 1 {
+            return indexPath
+        } else {
+            return nil
+        }
+    }
+    
+    override func tableView(tableView: UITableView, var indentationLevelForRowAtIndexPath indexPath: NSIndexPath) -> Int {
+        if indexPath.section == 2 && indexPath.row == 1 {
+            indexPath = NSIndexPath(forRow: 0, inSection: indexPath.section)
+        }
+        return super.tableView(tableView, indentationLevelForRowAtIndexPath: indexPath)
     }
     
     // MARK: - Text Field

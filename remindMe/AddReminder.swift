@@ -169,11 +169,15 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         tableView.reloadRowsAtIndexPaths([indexPathDateRow], withRowAnimation: .None)
         tableView.endUpdates()
         
+        datePicker.minimumDate = NSDate()
+        
         if let date = dueDate {
             datePicker.setDate(date, animated: false)
         } else {
             datePicker.setDate(NSDate(), animated: false)
         }
+        
+
         
     }
     

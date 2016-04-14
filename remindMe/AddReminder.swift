@@ -48,7 +48,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     @IBOutlet weak var reminderNameField : UITextField!
     
-    
     // Labels
     
     @IBOutlet weak var dueDateLabel : UILabel!
@@ -93,6 +92,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     // Date Picker
     
+    @IBAction func dateChanged(datePicker: UIDatePicker) {
+        dueDate = datePicker.date
+        updateDueDateLabel()
+    }
+    
 
     
     // MARK: - VIEW
@@ -136,8 +140,20 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         print(#function)
         datePickerVisible = true
         
+        let indexPathDateRow = NSIndexPath(forRow: 0, inSection: 1)
+        
         let indexPathDatePicker = NSIndexPath(forRow: 1, inSection: 1)
+        
+        if let dateCell = tableView.cellForRowAtIndexPath(indexPathDateRow) {
+            dateCell.detailTextLabel!.textColor = dateCell.detailTextLabel!.tintColor
+        }
+        
+        tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths([indexPathDatePicker], withRowAnimation: .Fade)
+        tableView.reloadRowsAtIndexPaths([indexPathDateRow], withRowAnimation: .None)
+        tableView.endUpdates()
+        
+        datePicker.setDate(dueDate, animated: false)
     }
     
     func hideDatePicker() {
@@ -145,6 +161,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
             datePickerVisible = false
             let indexPathDateRow = NSIndexPath(forRow: 0, inSection: 1)
             let indexPathDatePicker = NSIndexPath(forRow: 1, inSection: 1)
+            
+            if let dateCell = tableView.cellForRowAtIndexPath(indexPathDateRow) {
+                dateCell.detailTextLabel!.textColor = UIColor(white: 0, alpha: 0.5)
+            }
             
             tableView.beginUpdates()
             tableView.reloadRowsAtIndexPaths([indexPathDateRow], withRowAnimation: .None)

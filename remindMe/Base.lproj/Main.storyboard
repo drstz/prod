@@ -89,29 +89,28 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Due Date" id="1hA-h1-Jhb">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="CUz-Zn-fK9">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="cUE-qd-G5q" detailTextLabel="wOD-0E-6su" style="IBUITableViewCellStyleValue1" id="CUz-Zn-fK9">
                                         <rect key="frame" x="0.0" y="164" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CUz-Zn-fK9" id="pIb-F7-zrB">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter the due date here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="B0f-Cy-Wdq">
-                                                    <rect key="frame" x="8" y="7" width="584" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                                                    <connections>
-                                                        <action selector="done" destination="y4H-jB-eKA" eventType="editingDidEndOnExit" id="ouP-kq-qMH"/>
-                                                        <outlet property="delegate" destination="y4H-jB-eKA" id="HjL-kc-tm6"/>
-                                                    </connections>
-                                                </textField>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Due Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cUE-qd-G5q">
+                                                    <rect key="frame" x="15" y="12" width="68" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wOD-0E-6su">
+                                                    <rect key="frame" x="543" y="12" width="42" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="B0f-Cy-Wdq" secondAttribute="bottom" constant="6" id="M4X-aD-VR2"/>
-                                                <constraint firstItem="B0f-Cy-Wdq" firstAttribute="leading" secondItem="pIb-F7-zrB" secondAttribute="leading" constant="8" id="OlS-i9-QHH"/>
-                                                <constraint firstAttribute="trailing" secondItem="B0f-Cy-Wdq" secondAttribute="trailing" constant="8" id="Q8h-GN-XWL"/>
-                                                <constraint firstItem="B0f-Cy-Wdq" firstAttribute="top" secondItem="pIb-F7-zrB" secondAttribute="top" constant="7" id="z5K-aI-7bq"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -135,12 +134,39 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="datePicker" destination="cxX-D0-ahn" id="Q8T-ol-i8g"/>
+                        <outlet property="datePickerCell" destination="keT-2G-HMn" id="68Q-kO-gfU"/>
                         <outlet property="doneBarButton" destination="JCj-VB-1gz" id="h7O-FF-MdA"/>
+                        <outlet property="dueDateLabel" destination="wOD-0E-6su" id="dWN-dh-qFw"/>
                         <outlet property="reminderNameField" destination="dvW-lG-G6W" id="xbw-oL-hrw"/>
-                        <outlet property="reminderOccurenceField" destination="B0f-Cy-Wdq" id="uFa-bj-yEB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NWt-mi-rqE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="keT-2G-HMn">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="217"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="keT-2G-HMn" id="lIs-Pa-GUt">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="cxX-D0-ahn">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="482300333.98030603">
+                                    <!--2016-04-14 04:18:53 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="dateChanged:" destination="y4H-jB-eKA" eventType="valueChanged" id="xfJ-cM-tGJ"/>
+                                </connections>
+                            </datePicker>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="cxX-D0-ahn" secondAttribute="bottom" id="3lC-Yn-lRZ"/>
+                            <constraint firstItem="cxX-D0-ahn" firstAttribute="leading" secondItem="lIs-Pa-GUt" secondAttribute="leading" id="khR-wb-ijD"/>
+                            <constraint firstItem="cxX-D0-ahn" firstAttribute="top" secondItem="lIs-Pa-GUt" secondAttribute="top" id="pYH-S6-vpZ"/>
+                            <constraint firstAttribute="trailing" secondItem="cxX-D0-ahn" secondAttribute="trailing" id="yhn-lH-SAb"/>
+                        </constraints>
+                    </tableViewCellContentView>
+                </tableViewCell>
             </objects>
             <point key="canvasLocation" x="2674" y="341"/>
         </scene>

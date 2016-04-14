@@ -10,6 +10,4 @@ import UIKit
 class Reminder {
     var name = ""
     var dueDate: NSDate?
-    var countdown = ""
-    var cellBackground = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
 }

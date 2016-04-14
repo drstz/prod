@@ -83,8 +83,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
             let reminder = Reminder()
             reminder.name = reminderNameField.text!
             reminder.dueDate = dueDate
-
-            reminder.countdown = "5 minutes"
             
             delegate?.addReminderViewController(self, didFinishAddingReminder: reminder)
         }
@@ -157,7 +155,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         datePickerVisible = true
         
         let indexPathDateRow = NSIndexPath(forRow: 0, inSection: 1)
-        
         let indexPathDatePicker = NSIndexPath(forRow: 1, inSection: 1)
         
         if let dateCell = tableView.cellForRowAtIndexPath(indexPathDateRow) {
@@ -313,13 +310,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
             textField.placeholder = "You have to give your reminder a name"
             textField.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.1)
         }
-        
         return false
-        
     }
-    
-
-
-
-    
 }

@@ -22,7 +22,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
             let sampleReminder = Reminder()
             sampleReminder.name = String(format: "Sample #%d", i)
             sampleReminder.dueDate = NSDate()
-            sampleReminder.countdown = "\(7 + i) days left"
             reminders.append(sampleReminder)
         }
         
@@ -32,7 +31,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     // MARK: - Properties
     
     var nothingDue = false
-    var color: UIColor?
     
     var titleString = ""
     var nbOfReminders = 0
@@ -181,17 +179,6 @@ extension AllRemindersViewController: UITableViewDataSource {
         if let date = reminder.dueDate {
             cell.occurenceLabel.text = dateConverter(dateToConvert: date)
         }
-        cell.countdownLabel.text = reminder.countdown
-        if indexPath.row % 2 == 0 {
-            print("Mod: \(indexPath.row % 2)")
-            reminder.cellBackground = UIColor(red: 255/255, green: 165/255, blue: 0, alpha: 1)
-            color = reminder.cellBackground
-        } else {
-            reminder.cellBackground = UIColor(red: 32/255, green: 178/255, blue: 170/255, alpha: 1)
-            color = reminder.cellBackground
-        }
-        
-        cell.backgroundColor = color
         return cell
     }
     

@@ -15,7 +15,5 @@ import CoreData
 extension TheReminder {
 
     @NSManaged var name: String
-    @NSManaged var occurence: String
-    @NSManaged var countdown: String
-
+    @NSManaged var dueDate: NSDate
 }

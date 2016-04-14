@@ -14,9 +14,6 @@ class ReminderCell: UITableViewCell {
     @IBOutlet weak var occurenceLabel: UILabel!
     @IBOutlet weak var countdownLabel: UILabel!
     
-    
-    
-
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

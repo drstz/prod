@@ -66,7 +66,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         
         if let reminder = reminderToEdit {
             reminder.name = reminderNameField.text!
-            reminder.occurence = reminderOccurenceField.text!
+
             if let index = indexPathToEdit {
                 delegate?.addReminderViewController(self, didFinishEditingReminder: reminder, anIndex: index)
             }
@@ -74,7 +74,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         } else {
             let reminder = Reminder()
             reminder.name = reminderNameField.text!
-            reminder.occurence = reminderOccurenceField.text!
+
             reminder.countdown = "5 minutes"
             
             delegate?.addReminderViewController(self, didFinishAddingReminder: reminder)
@@ -96,15 +96,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        reminderOccurenceField.enabled = false
         print(#function)
         
         if let reminder = reminderToEdit {
             title = "Edit reminder"
             doneBarButton.enabled = true
             reminderNameField.text = reminder.name
-            reminderOccurenceField.text = reminder.occurence
-            reminderOccurenceField.enabled = true
+
         }
     }
     
@@ -113,14 +111,14 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     func showDatePicker() {
         datePickerVisible = true
         
-        let indexPathDatePicker = NSIndexPath(forRow: 1, inSection: 2)
+        let indexPathDatePicker = NSIndexPath(forRow: 0, inSection: 1)
         tableView.insertRowsAtIndexPaths([indexPathDatePicker], withRowAnimation: .Fade)
     }
     
     // MARK: - Table View
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.section == 2 && indexPath.row == 1 {
+        if indexPath.section == 1 && indexPath.row == 0 {
             return datePickerCell
         } else {
             return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
@@ -128,7 +126,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 2 && datePickerVisible {
+        if section == 1 && datePickerVisible {
             return 2
         } else {
             return super.tableView(tableView, numberOfRowsInSection: section)
@@ -136,7 +134,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 2 && indexPath.row == 1 {
+        if indexPath.section == 1 && indexPath.row == 0 {
             return 217
         } else {
             return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
@@ -147,7 +145,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         reminderNameField.resignFirstResponder()
         
-        if indexPath.section == 2 && indexPath.row == 1 {
+        if indexPath.section == 1 && indexPath.row == 0 {
             showDatePicker()
         }
     }
@@ -155,7 +153,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         // Prevent rows from being selected
         print(#function)
-        if indexPath.section == 2 && indexPath.row == 1 {
+        print(indexPath.section)
+        print(indexPath.row)
+        if indexPath.section == 1 && indexPath.row == 0 {
             return indexPath
         } else {
             return nil
@@ -184,10 +184,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         chooseEmptyTextField(textField, isEmpty: textFieldIsEmpty(newText))
         if reminderNameIsEmpty {
             if reminderDateIsEmpty {
-                reminderOccurenceField.enabled = false
+ 
             }
         } else {
-            reminderOccurenceField.enabled = true
+
         }
         fieldsAreEmpty()
         print(#function)
@@ -239,7 +239,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         print(#function)
         if textField.tag == 1 {
-            reminderOccurenceField.becomeFirstResponder()
             return false
         } else {
             if doneBarButton.enabled == true {

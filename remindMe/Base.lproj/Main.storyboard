@@ -95,23 +95,6 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CUz-Zn-fK9" id="pIb-F7-zrB">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter the due date here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="B0f-Cy-Wdq">
-                                                    <rect key="frame" x="8" y="7" width="584" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                                                    <connections>
-                                                        <action selector="done" destination="y4H-jB-eKA" eventType="editingDidEndOnExit" id="ouP-kq-qMH"/>
-                                                        <outlet property="delegate" destination="y4H-jB-eKA" id="HjL-kc-tm6"/>
-                                                    </connections>
-                                                </textField>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="B0f-Cy-Wdq" secondAttribute="bottom" constant="6" id="M4X-aD-VR2"/>
-                                                <constraint firstItem="B0f-Cy-Wdq" firstAttribute="leading" secondItem="pIb-F7-zrB" secondAttribute="leading" constant="8" id="OlS-i9-QHH"/>
-                                                <constraint firstAttribute="trailing" secondItem="B0f-Cy-Wdq" secondAttribute="trailing" constant="8" id="Q8h-GN-XWL"/>
-                                                <constraint firstItem="B0f-Cy-Wdq" firstAttribute="top" secondItem="pIb-F7-zrB" secondAttribute="top" constant="7" id="z5K-aI-7bq"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -139,7 +122,6 @@
                         <outlet property="datePickerCell" destination="keT-2G-HMn" id="68Q-kO-gfU"/>
                         <outlet property="doneBarButton" destination="JCj-VB-1gz" id="h7O-FF-MdA"/>
                         <outlet property="reminderNameField" destination="dvW-lG-G6W" id="xbw-oL-hrw"/>
-                        <outlet property="reminderOccurenceField" destination="B0f-Cy-Wdq" id="uFa-bj-yEB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NWt-mi-rqE" userLabel="First Responder" sceneMemberID="firstResponder"/>

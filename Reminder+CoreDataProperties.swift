@@ -1,8 +1,8 @@
 //
-//  TheReminder+CoreDataProperties.swift
+//  Reminder+CoreDataProperties.swift
 //  remindMe
 //
-//  Created by Duane Stoltz on 13/04/2016.
+//  Created by Duane Stoltz on 14/04/2016.
 //  Copyright © 2016 Duane Stoltz. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -12,8 +12,9 @@
 import Foundation
 import CoreData
 
-extension TheReminder {
+extension Reminder {
 
     @NSManaged var name: String
     @NSManaged var dueDate: NSDate
+
 }

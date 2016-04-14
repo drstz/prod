@@ -8,23 +8,20 @@
 
 import UIKit
 import Foundation
+import CoreData
 
 class AllRemindersViewController: UIViewController, AddReminderViewControllerDelegate {
     
     // MARK: - Instance Variables
     
     var reminders = [Reminder]()
+    
+    // Core Data
+    
+    var managedObjectContext: NSManagedObjectContext!
  
     required init?(coder aDecoder: NSCoder) {
         reminders = [Reminder]()
-        
-        for i in 1...3 {
-            let sampleReminder = Reminder()
-            sampleReminder.name = String(format: "Sample #%d", i)
-            sampleReminder.dueDate = NSDate()
-            reminders.append(sampleReminder)
-        }
-        
         super.init(coder: aDecoder)
     }
     
@@ -65,11 +62,13 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
             
             // You now have the view controller that you want and you want to access its delegate property, setting it to this pages viewController(self)
             controller.delegate = self
+            controller.managedObjectContext = managedObjectContext 
             
         } else if segue.identifier == "EditReminder" {
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! AddReminderViewController
             controller.delegate = self
+            controller.managedObjectContext = managedObjectContext
             
             if let indexPath = sender {
                 controller.reminderToEdit = reminders[indexPath.row]
@@ -106,9 +105,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
             let indexPath = NSIndexPath(forRow: index, inSection: 0)
             if let cell = tableView.cellForRowAtIndexPath(indexPath) as! ReminderCell? {
                 cell.reminderLabel.text = reminder.name
-                if let date = reminder.dueDate {
-                    cell.occurenceLabel.text = dateConverter(dateToConvert: date)
-                }
+                cell.occurenceLabel.text = dateConverter(dateToConvert: reminder.dueDate)
+                
                 
             }
         }
@@ -145,6 +143,21 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         setNumberOfReminders()
         
         // Do any additional setup after loading the view, typically from a nib.
+        
+        let fetchRequest = NSFetchRequest()
+        
+        let entity = NSEntityDescription.entityForName("Reminder", inManagedObjectContext: managedObjectContext)
+        fetchRequest.entity = entity
+        
+        let sortDescriptor = NSSortDescriptor(key: "dueDate", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        do {
+            let foundObjects = try managedObjectContext.executeFetchRequest(fetchRequest)
+            reminders = foundObjects as! [Reminder]
+        } catch {
+            fatalCoreDataError(error)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -176,9 +189,7 @@ extension AllRemindersViewController: UITableViewDataSource {
         
         
         cell.reminderLabel.text = reminder.name
-        if let date = reminder.dueDate {
-            cell.occurenceLabel.text = dateConverter(dateToConvert: date)
-        }
+        cell.occurenceLabel.text = dateConverter(dateToConvert: reminder.dueDate)
         return cell
     }
     

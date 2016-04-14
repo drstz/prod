@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 // MARK: - Protocols
 
@@ -30,8 +31,14 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     var reminderNameIsValid = false
     var dueDateIsSet = false
     
+    
+    
     var reminderToEdit: Reminder?
     var indexPathToEdit: Int?
+    
+    // CoreData
+    
+    var managedObjectContext: NSManagedObjectContext!
     
     // The Date
     
@@ -73,18 +80,26 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         
         if let reminder = reminderToEdit {
             reminder.name = reminderNameField.text!
-            reminder.dueDate = dueDate
+            reminder.dueDate = dueDate!
+            
+         
 
             if let index = indexPathToEdit {
                 delegate?.addReminderViewController(self, didFinishEditingReminder: reminder, anIndex: index)
             }
             
         } else {
-            let reminder = Reminder()
-            reminder.name = reminderNameField.text!
-            reminder.dueDate = dueDate
+            let reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as! Reminder
             
+            reminder.name = reminderNameField.text!
+            reminder.dueDate = dueDate!
             delegate?.addReminderViewController(self, didFinishAddingReminder: reminder)
+        }
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            fatalCoreDataError(error)
         }
     }
     
@@ -128,9 +143,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
             title = "Edit reminder"
             doneBarButton.enabled = true
             reminderNameField.text = reminder.name
-            if let date = reminder.dueDate {
-                dueDate = date
-            }
+            dueDate = reminder.dueDate
         }
         updateDueDateLabel()
     }

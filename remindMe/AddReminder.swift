@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 // MARK: - Protocols
 
@@ -17,56 +18,111 @@ protocol AddReminderViewControllerDelegate: class {
                                    didFinishAddingReminder reminder: Reminder)
     
     func addReminderViewController(controller: AddReminderViewController,
-                                   didFinishEditingReminder reminder: Reminder,
-                                                            anIndex: Int?)
+                                   didFinishEditingReminder reminder: Reminder)
 }
+
+// MARK: - Class
 
 class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
-    var reminderNameIsEmpty = true
-    var reminderDateIsEmpty = true
+    // MARK: Properties
+    
+    var reminderNameIsValid = false
+    var dueDateIsSet = false
+    
+    
     
     var reminderToEdit: Reminder?
     var indexPathToEdit: Int?
     
+    // CoreData
+    
+    var managedObjectContext: NSManagedObjectContext!
+    
+    // The Date
+    
+    var dueDate: NSDate?
+    var datePickerVisible = false
+
+    // Delegate
+    
     weak var delegate: AddReminderViewControllerDelegate?
     
+    // MARK: Outlets
+    
+    // Fields
+    
     @IBOutlet weak var reminderNameField : UITextField!
-    @IBOutlet weak var reminderOccurenceField : UITextField!
+    
+    // Labels
+    
+    @IBOutlet weak var dueDateLabel : UILabel!
+    
+    // Buttons
     
     @IBOutlet weak var doneBarButton : UIBarButtonItem!
     
+    // Date Picker
+    
+    @IBOutlet weak var datePickerCell: UITableViewCell!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    
+    // MARK: - Actions
+    
     @IBAction func cancel() {
+        //print(#function)
         delegate?.addReminderViewControllerDidCancel(self)
     }
     
     @IBAction func done() {
+        print(#function)
         
         if let reminder = reminderToEdit {
             reminder.name = reminderNameField.text!
-            reminder.occurence = reminderOccurenceField.text!
-            if let index = indexPathToEdit {
-                delegate?.addReminderViewController(self, didFinishEditingReminder: reminder, anIndex: index)
-            }
-            
+            reminder.dueDate = dueDate!
+            delegate?.addReminderViewController(self, didFinishEditingReminder: reminder)
         } else {
-            let reminder = Reminder()
-            reminder.name = reminderNameField.text!
-            reminder.occurence = reminderOccurenceField.text!
-            reminder.countdown = "5 minutes"
+            let reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as! Reminder
             
+            reminder.name = reminderNameField.text!
+            reminder.dueDate = dueDate!
             delegate?.addReminderViewController(self, didFinishAddingReminder: reminder)
+        }
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            fatalCoreDataError(error)
         }
     }
     
-    // Prevent rows from being selected
+    // Date Picker
     
-    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        return nil 
+    @IBAction func dateChanged(datePicker: UIDatePicker) {
+        dueDate = datePicker.date
+        dueDateIsSet = true
+        updateDueDateLabel()
     }
+    
+    // MARK: - Enable Done Button
+    
+    func enableDoneButton() {
+        if dueDateIsSet && reminderNameIsValid {
+            doneBarButton.enabled = true
+        } else {
+            doneBarButton.enabled = false
+        }
+    }
+
+    
+    // MARK: - VIEW
+    
+    
+
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        //print(#function)
         
         // Put curser into textfield immediately
         reminderNameField.becomeFirstResponder()
@@ -74,16 +130,151 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //print(#function)
         
         if let reminder = reminderToEdit {
             title = "Edit reminder"
             doneBarButton.enabled = true
             reminderNameField.text = reminder.name
-            reminderOccurenceField.text = reminder.occurence
+            dueDate = reminder.dueDate
+        }
+        updateDueDateLabel()
+    }
+    
+    // MARK: - Date Picker
+    
+    func updateDueDateLabel() {
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .MediumStyle
+        formatter.timeStyle = .ShortStyle
+        if let date = dueDate {
+            dueDateLabel.text = formatter.stringFromDate(date)
+            enableDoneButton()
+        } else {
+            dueDateLabel.text = "Please Set a Date"
+        }
+        
+    }
+    
+    func showDatePicker() {
+        //print(#function)
+        datePickerVisible = true
+        
+        let indexPathDateRow = NSIndexPath(forRow: 0, inSection: 1)
+        let indexPathDatePicker = NSIndexPath(forRow: 1, inSection: 1)
+        
+        if let dateCell = tableView.cellForRowAtIndexPath(indexPathDateRow) {
+            dateCell.detailTextLabel!.textColor = dateCell.detailTextLabel!.tintColor
+        }
+        
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths([indexPathDatePicker], withRowAnimation: .Fade)
+        tableView.reloadRowsAtIndexPaths([indexPathDateRow], withRowAnimation: .None)
+        tableView.endUpdates()
+        
+        datePicker.minimumDate = NSDate()
+        
+        if let date = dueDate {
+            datePicker.setDate(date, animated: false)
+        } else {
+            datePicker.setDate(NSDate(), animated: false)
+        }
+        
+
+        
+    }
+    
+    func hideDatePicker() {
+        if datePickerVisible {
+            datePickerVisible = false
+            let indexPathDateRow = NSIndexPath(forRow: 0, inSection: 1)
+            let indexPathDatePicker = NSIndexPath(forRow: 1, inSection: 1)
+            
+            if let dateCell = tableView.cellForRowAtIndexPath(indexPathDateRow) {
+                if dueDateIsSet {
+                    dateCell.detailTextLabel!.textColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.8)
+                } else {
+                    dateCell.detailTextLabel!.textColor = UIColor(white: 0, alpha: 0.5)
+                }
+            }
+            
+            tableView.beginUpdates()
+            tableView.reloadRowsAtIndexPaths([indexPathDateRow], withRowAnimation: .None)
+            tableView.deleteRowsAtIndexPaths([indexPathDatePicker], withRowAnimation: .Fade)
+            tableView.endUpdates()
+            enableDoneButton()
+        }
+        
+        
+    }
+    
+    
+    // MARK: - Table View
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        //print(#function)
+        if indexPath.section == 1 && indexPath.row == 1 {
+            return datePickerCell
+        } else {
+            return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
         }
     }
     
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //print(#function)
+        if section == 1 && datePickerVisible {
+            return 2
+        } else {
+            return super.tableView(tableView, numberOfRowsInSection: section)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        //print(#function)
+        if indexPath.section == 1 && indexPath.row == 1 {
+            return 217
+        } else {
+            return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //print(#function)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        reminderNameField.resignFirstResponder()
+        
+        if indexPath.section == 1 && indexPath.row == 0 {
+            if !datePickerVisible {
+                showDatePicker()
+            } else {
+                hideDatePicker()
+            }
+        }
+    }
+    
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        // Prevent rows from being selected
+        //print(#function)
+        print("Section: \(indexPath.section)")
+        print("Row: \(indexPath.row)")
+        if indexPath.section == 1 && indexPath.row == 0 {
+            return indexPath
+        } else {
+            return nil
+        }
+    }
+    
+    override func tableView(tableView: UITableView, var indentationLevelForRowAtIndexPath indexPath: NSIndexPath) -> Int {
+       // print(#function)
+        if indexPath.section == 1 && indexPath.row == 1 {
+            indexPath = NSIndexPath(forRow: 0, inSection: indexPath.section)
+        }
+        return super.tableView(tableView, indentationLevelForRowAtIndexPath: indexPath)
+    }
+    
     // MARK: - Text Field
+    
+    // Listen to textfield
     
     func textField(textField: UITextField,
                    shouldChangeCharactersInRange range: NSRange,
@@ -92,67 +283,39 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         let oldText: NSString = textField.text!
         let newText: NSString = oldText.stringByReplacingCharactersInRange(range, withString: string)
         
-
-        
-        if newText.length > 0 {
-            if textField.tag == 1 {
-                reminderNameIsEmpty = false
-            } else if textField.tag == 2 {
-                reminderDateIsEmpty = false
-            }
-        } else {
-            if textField.tag == 1 {
-                reminderNameIsEmpty = true
-            } else if textField.tag == 2 {
-                reminderDateIsEmpty = true
-            }
+    
+        reminderNameIsValid = textFieldHasText(newText)
+        if reminderNameIsValid {
+            textField.backgroundColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.1)
         }
-        fieldsAreEmpty()
-        
+        print(reminderNameIsValid)
+        enableDoneButton()
         return true
     }
     
+    func textFieldHasText(text : NSString) -> Bool {
+        //print(#function)
+        return text.length > 0
+    }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        if textField.tag == 2 {
-            if reminderNameIsEmpty {
-                textField.returnKeyType = .Next
-            } else {
-                textField.returnKeyType = .Done
-            }
-            
+        //print(#function)
+        hideDatePicker()
+        if reminderNameIsValid {
+            textField.returnKeyType = .Next
         }
-        
-        
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if textField.tag == 1 {
-            reminderOccurenceField.becomeFirstResponder()
-            return false
+        //print(#function)
+        if reminderNameIsValid {
+            showDatePicker()
+            textField.resignFirstResponder()
         } else {
-            if doneBarButton.enabled == true {
-                return true
-            } else if doneBarButton.enabled == false {
-                if reminderNameIsEmpty {
-                    reminderNameField.becomeFirstResponder()
-                }
-                return false
-            }
-            
+            print(reminderNameIsValid)
+            textField.placeholder = "You have to give your reminder a name"
+            textField.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.1)
         }
         return false
-        
     }
-    
-    func fieldsAreEmpty() {
-        if !reminderNameIsEmpty && !reminderDateIsEmpty {
-            doneBarButton.enabled = true
-        } else {
-            doneBarButton.enabled = false
-        }
-    }
-
-
-    
 }

@@ -14,9 +14,6 @@ class ReminderCell: UITableViewCell {
     @IBOutlet weak var occurenceLabel: UILabel!
     @IBOutlet weak var countdownLabel: UILabel!
     
-    
-    
-
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -26,6 +23,11 @@ class ReminderCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func configureForReminder(reminder: Reminder) {
+        reminderLabel.text = reminder.name
+        occurenceLabel.text = dateConverter(dateToConvert: reminder.dueDate)
     }
 
 }

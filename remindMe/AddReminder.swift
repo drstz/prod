@@ -18,8 +18,7 @@ protocol AddReminderViewControllerDelegate: class {
                                    didFinishAddingReminder reminder: Reminder)
     
     func addReminderViewController(controller: AddReminderViewController,
-                                   didFinishEditingReminder reminder: Reminder,
-                                                            anIndex: Int?)
+                                   didFinishEditingReminder reminder: Reminder)
 }
 
 // MARK: - Class
@@ -71,7 +70,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - Actions
     
     @IBAction func cancel() {
-        print(#function)
+        //print(#function)
         delegate?.addReminderViewControllerDidCancel(self)
     }
     
@@ -81,13 +80,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         if let reminder = reminderToEdit {
             reminder.name = reminderNameField.text!
             reminder.dueDate = dueDate!
-            
-         
-
-            if let index = indexPathToEdit {
-                delegate?.addReminderViewController(self, didFinishEditingReminder: reminder, anIndex: index)
-            }
-            
+            delegate?.addReminderViewController(self, didFinishEditingReminder: reminder)
         } else {
             let reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as! Reminder
             
@@ -129,7 +122,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        print(#function)
+        //print(#function)
         
         // Put curser into textfield immediately
         reminderNameField.becomeFirstResponder()
@@ -137,7 +130,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(#function)
+        //print(#function)
         
         if let reminder = reminderToEdit {
             title = "Edit reminder"
@@ -164,7 +157,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     }
     
     func showDatePicker() {
-        print(#function)
+        //print(#function)
         datePickerVisible = true
         
         let indexPathDateRow = NSIndexPath(forRow: 0, inSection: 1)
@@ -219,7 +212,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - Table View
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print(#function)
+        //print(#function)
         if indexPath.section == 1 && indexPath.row == 1 {
             return datePickerCell
         } else {
@@ -228,7 +221,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(#function)
+        //print(#function)
         if section == 1 && datePickerVisible {
             return 2
         } else {
@@ -237,7 +230,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        print(#function)
+        //print(#function)
         if indexPath.section == 1 && indexPath.row == 1 {
             return 217
         } else {
@@ -246,7 +239,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(#function)
+        //print(#function)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         reminderNameField.resignFirstResponder()
         
@@ -261,7 +254,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         // Prevent rows from being selected
-        print(#function)
+        //print(#function)
         print("Section: \(indexPath.section)")
         print("Row: \(indexPath.row)")
         if indexPath.section == 1 && indexPath.row == 0 {
@@ -272,7 +265,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     }
     
     override func tableView(tableView: UITableView, var indentationLevelForRowAtIndexPath indexPath: NSIndexPath) -> Int {
-        print(#function)
+       // print(#function)
         if indexPath.section == 1 && indexPath.row == 1 {
             indexPath = NSIndexPath(forRow: 0, inSection: indexPath.section)
         }
@@ -301,12 +294,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     }
     
     func textFieldHasText(text : NSString) -> Bool {
-        print(#function)
+        //print(#function)
         return text.length > 0
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        print(#function)
+        //print(#function)
         hideDatePicker()
         if reminderNameIsValid {
             textField.returnKeyType = .Next
@@ -314,7 +307,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        print(#function)
+        //print(#function)
         if reminderNameIsValid {
             showDatePicker()
             textField.resignFirstResponder()

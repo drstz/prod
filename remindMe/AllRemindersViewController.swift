@@ -64,8 +64,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         fetchedResultsController.delegate = nil
     }
 
-
-    
     // MARK: - Outlets
     
     @IBOutlet weak var tableView: UITableView!
@@ -73,7 +71,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     // MARK: - Navigation
     
     func setNumberOfReminders() {
-        nbOfReminders = reminders.count
+        
         if nbOfReminders > 1 || nbOfReminders == 0 {
             titleString = "You have \(nbOfReminders) reminders"
         } else {
@@ -84,21 +82,21 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Add Reminder
         if segue.identifier == "AddReminder" {
             
-            // The segue first goes to the navigation controller that the new view controller is embeded in
             let navigationController = segue.destinationViewController as! UINavigationController
             
-            // To find the view controller, you look in the navigation controller topViewController property. This is the screen that is active in this navigation controller
             let controller = navigationController.topViewController as! AddReminderViewController
             
-            // You now have the view controller that you want and you want to access its delegate property, setting it to this pages viewController(self)
             controller.delegate = self
             controller.managedObjectContext = managedObjectContext 
             
+        // Edit Reminder
         } else if segue.identifier == "EditReminder" {
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! AddReminderViewController
+            
             controller.delegate = self
             controller.managedObjectContext = managedObjectContext
             
@@ -115,7 +113,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func addReminderViewController(controller: AddReminderViewController,
+    func addReminderViewController(controller:AddReminderViewController,
                                    didFinishAddingReminder reminder: Reminder) {
         let newRowIndex = reminders.count
         
@@ -123,29 +121,18 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         
         let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
         let indexPaths = [indexPath]
-        tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        //tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
         
         dismissViewControllerAnimated(true, completion: nil)
     }
     
 
-    
     func addReminderViewController(controller: AddReminderViewController,
-                                   didFinishEditingReminder reminder: Reminder,
-                                   anIndex: Int?) {
-        if let index = anIndex {
-            let indexPath = NSIndexPath(forRow: index, inSection: 0)
-            if let cell = tableView.cellForRowAtIndexPath(indexPath) as! ReminderCell? {
-                cell.configureForReminder(reminder)
-                
-                
-            }
-        }
+                                   didFinishEditingReminder reminder: Reminder) {
+        print(#function)
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
-
-    
     
     // MARK: - REMINDERS
     
@@ -162,6 +149,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         } catch {
             fatalCoreDataError(error)
         }
+        print(#function)
     }
     
     
@@ -170,8 +158,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         performFetch()
-        
-        // updateList()
         
         // The Nib
         let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
@@ -205,9 +191,8 @@ extension AllRemindersViewController: UITableViewDataSource {
                    numberOfRowsInSection section: Int) -> Int {
         
         let sectionInfo = fetchedResultsController.sections![section]
+        nbOfReminders = sectionInfo.numberOfObjects
         return sectionInfo.numberOfObjects
-        
-        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -225,25 +210,28 @@ extension AllRemindersViewController: UITableViewDelegate {
     // MARK: - Selection
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print(#function)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        performSegueWithIdentifier("EditReminder", sender: indexPath)
+        performSegueWithIdentifier("EditReminder", sender: tableView.cellForRowAtIndexPath(indexPath))
         print("Index Path: \(indexPath)")
+        
     }
     
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        if reminders.count == 0 {
-            return nil
-        } else {
+
             return indexPath
-        }
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        reminders.removeAtIndex(indexPath.row)
+        let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
+        managedObjectContext.deleteObject(reminder)
         
-        let indexPaths = [indexPath]
-        tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-        setNumberOfReminders()
+        do {
+            try managedObjectContext.save()
+        } catch {
+            fatalCoreDataError(error)
+        }
+
         
     }
     

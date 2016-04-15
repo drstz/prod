@@ -72,6 +72,7 @@
 				7165A5991CBCB4330088EA76 /* AddReminder.swift */,
 				7165A57D1CBB6A310088EA76 /* AllRemindersViewController.swift */,
 				7165A57B1CBB6A310088EA76 /* AppDelegate.swift */,
+				71ABD7091CC0A87600F0BF90 /* Date.swift */,
 				71ABD7061CBF897B00F0BF90 /* Reminder.swift */,
 				71ABD7051CBF897B00F0BF90 /* Reminder+CoreDataProperties.swift */,
 				7165A5971CBB92C30088EA76 /* ReminderCell.swift */,
@@ -80,7 +81,6 @@
 				71ABD7021CBF893300F0BF90 /* DataModel.xcdatamodeld */,
 				7165A5841CBB6A310088EA76 /* LaunchScreen.storyboard */,
 				7165A57F1CBB6A310088EA76 /* Main.storyboard */,
-				71ABD7091CC0A87600F0BF90 /* Date.swift */,
 			);
 			path = remindMe;
 			sourceTree = "<group>";

@@ -30,7 +30,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     var reminderNameIsValid = false
     var dueDateIsSet = false
     
+    var inEditMode = false
     
+    // Instances
     
     var reminderToEdit: Reminder?
     var indexPathToEdit: Int?
@@ -81,6 +83,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
             reminder.name = reminderNameField.text!
             reminder.dueDate = dueDate!
             delegate?.addReminderViewController(self, didFinishEditingReminder: reminder)
+            inEditMode = false
         } else {
             let reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as! Reminder
             
@@ -107,7 +110,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - Enable Done Button
     
     func enableDoneButton() {
-        if dueDateIsSet && reminderNameIsValid {
+        if dueDateIsSet && reminderNameIsValid || inEditMode {
             doneBarButton.enabled = true
         } else {
             doneBarButton.enabled = false
@@ -133,6 +136,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         //print(#function)
         
         if let reminder = reminderToEdit {
+            inEditMode = true
             title = "Edit reminder"
             doneBarButton.enabled = true
             reminderNameField.text = reminder.name

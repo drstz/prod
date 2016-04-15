@@ -16,6 +16,32 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     var reminders = [Reminder]()
     
+    // MARK: fetchedResultsController
+    
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+       
+        let fetchRequest = NSFetchRequest()
+        
+        let entity = NSEntityDescription.entityForName("Reminder", inManagedObjectContext: self.managedObjectContext)
+        fetchRequest.entity = entity
+        
+        let sortDescriptor = NSSortDescriptor(key: "dueDate", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        fetchRequest.fetchBatchSize = 20
+        
+        let fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: self.managedObjectContext,
+            sectionNameKeyPath: nil,
+            
+            // This is kept even after the app quits to keep it fast
+            cacheName: "Reminder")
+        
+        fetchedResultsController.delegate = self
+        return fetchedResultsController
+    }()
+    
     // Core Data
     
     var managedObjectContext: NSManagedObjectContext!
@@ -31,6 +57,12 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     var titleString = ""
     var nbOfReminders = 0
+    
+    // MARK: - Deinit
+    
+    deinit {
+        fetchedResultsController.delegate = nil
+    }
 
 
     
@@ -70,9 +102,9 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
             controller.delegate = self
             controller.managedObjectContext = managedObjectContext
             
-            if let indexPath = sender {
-                controller.reminderToEdit = reminders[indexPath.row]
-                controller.indexPathToEdit = indexPath.row 
+            if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
+                let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
+                controller.reminderToEdit = reminder
             }
         }
     }
@@ -104,8 +136,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         if let index = anIndex {
             let indexPath = NSIndexPath(forRow: index, inSection: 0)
             if let cell = tableView.cellForRowAtIndexPath(indexPath) as! ReminderCell? {
-                cell.reminderLabel.text = reminder.name
-                cell.occurenceLabel.text = dateConverter(dateToConvert: reminder.dueDate)
+                cell.configureForReminder(reminder)
                 
                 
             }
@@ -113,14 +144,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // MARK: - Date Converter
-    
-    func dateConverter(dateToConvert date: NSDate) -> String {
-        let formatter = NSDateFormatter()
-        formatter.dateStyle = .MediumStyle
-        formatter.timeStyle = .ShortStyle
-        return formatter.stringFromDate(date)
-    }
+
     
     
     // MARK: - REMINDERS
@@ -132,32 +156,31 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         tableView.reloadData()
     }
     
+    func performFetch() {
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalCoreDataError(error)
+        }
+    }
+    
+    
     // MARK: - The view
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateList()
+        performFetch()
+        
+        // updateList()
+        
+        // The Nib
         let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
         tableView.rowHeight = 200
         setNumberOfReminders()
         
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        let fetchRequest = NSFetchRequest()
-        
-        let entity = NSEntityDescription.entityForName("Reminder", inManagedObjectContext: managedObjectContext)
-        fetchRequest.entity = entity
-        
-        let sortDescriptor = NSSortDescriptor(key: "dueDate", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        
-        do {
-            let foundObjects = try managedObjectContext.executeFetchRequest(fetchRequest)
-            reminders = foundObjects as! [Reminder]
-        } catch {
-            fatalCoreDataError(error)
-        }
+
+
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -178,18 +201,21 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
 // MARK: - Extensions
 
 extension AllRemindersViewController: UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return reminders.count
+    func tableView(tableView: UITableView,
+                   numberOfRowsInSection section: Int) -> Int {
+        
+        let sectionInfo = fetchedResultsController.sections![section]
+        return sectionInfo.numberOfObjects
+        
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as! ReminderCell
 
-        let reminder = reminders[indexPath.row]
-        
-        
-        cell.reminderLabel.text = reminder.name
-        cell.occurenceLabel.text = dateConverter(dateToConvert: reminder.dueDate)
+        let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
+        cell.configureForReminder(reminder)
+    
         return cell
     }
     
@@ -221,5 +247,66 @@ extension AllRemindersViewController: UITableViewDelegate {
         
     }
     
+}
+
+extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        print(#function)
+        tableView.beginUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController,
+                    didChangeObject anObject: AnyObject,
+                    atIndexPath indexPath: NSIndexPath?,
+                    forChangeType type: NSFetchedResultsChangeType,
+                    newIndexPath: NSIndexPath?) {
+        switch type {
+        case .Insert:
+            print("*** NSFetchedResultsChangeInsert (object)")
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            
+        case .Delete:
+            print("*** NSFethedResultsChangeDelete (object)")
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            
+        case .Update:
+            print("*** NSFetchedResultsChangeUpdate (object")
+            if let cell = tableView.cellForRowAtIndexPath(indexPath!) as? ReminderCell {
+                let reminder = controller.objectAtIndexPath(indexPath!) as! Reminder
+                cell.configureForReminder(reminder)
+            }
+            
+        case .Move:
+            print("*** NSFetchedResultsChangeMove (object)")
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+        }
+    }
+    
+    func controller(controller: NSFetchedResultsController,
+                    didChangeSection sectionInfo: NSFetchedResultsSectionInfo,
+                    atIndex sectionIndex: Int,
+                    forChangeType type: NSFetchedResultsChangeType) {
+        switch type {
+        case .Insert:
+            print("*** NSFetchedResultsChangeInsert (section)")
+            tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+            
+        case .Delete:
+            print("*** NSFetchedResultsChangeDelete (section)")
+            tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+            
+        case .Update:
+            print("*** NSFetchedResultsChangeUpdate (section)")
+            
+        case .Move:
+            print("*** NSFetchedResultsChangeMove (section)")
+        }
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        print("*** controllerDidChangeContent")
+        tableView.endUpdates()
+    }
 }
 

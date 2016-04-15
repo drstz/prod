@@ -24,5 +24,10 @@ class ReminderCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    func configureForReminder(reminder: Reminder) {
+        reminderLabel.text = reminder.name
+        occurenceLabel.text = dateConverter(dateToConvert: reminder.dueDate)
+    }
 
 }

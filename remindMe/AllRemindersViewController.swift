@@ -115,12 +115,12 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     func addReminderViewController(controller:AddReminderViewController,
                                    didFinishAddingReminder reminder: Reminder) {
-        let newRowIndex = reminders.count
+        //let newRowIndex = reminders.count
         
-        reminders.append(reminder)
+        //reminders.append(reminder)
         
-        let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
-        let indexPaths = [indexPath]
+        //let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
+        //let indexPaths = [indexPath]
         //tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
         
         dismissViewControllerAnimated(true, completion: nil)

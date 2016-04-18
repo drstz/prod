@@ -41,7 +41,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         fetchedResultsController.delegate = self
         return fetchedResultsController
     }()
-    
+
     // Core Data
     
     var managedObjectContext: NSManagedObjectContext!
@@ -81,6 +81,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         
     }
     
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Add Reminder
         if segue.identifier == "AddReminder" {
@@ -135,6 +136,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     func addReminderViewController(controller:AddReminderViewController,
                                    didFinishAddingReminder reminder: Reminder) {        
         dismissViewControllerAnimated(true, completion: nil)
+        nbOfReminders += 1
+        setNumberOfReminders()
     }
     
 
@@ -206,8 +209,11 @@ extension AllRemindersViewController: UITableViewDataSource {
     func tableView(tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
         
+        print(#function)
+        
         let sectionInfo = fetchedResultsController.sections![section]
-        nbOfReminders = sectionInfo.numberOfObjects
+        
+        //nbOfReminders = sectionInfo.numberOfObjects
         return sectionInfo.numberOfObjects
     }
     
@@ -246,6 +252,8 @@ extension AllRemindersViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
         managedObjectContext.deleteObject(reminder)
+        nbOfReminders -= 1
+        setNumberOfReminders()
         
         do {
             try managedObjectContext.save()
@@ -293,6 +301,8 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
         }
     }
     
+    
+    
     func controller(controller: NSFetchedResultsController,
                     didChangeSection sectionInfo: NSFetchedResultsSectionInfo,
                     atIndex sectionIndex: Int,
@@ -301,10 +311,12 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
         case .Insert:
             print("*** NSFetchedResultsChangeInsert (section)")
             tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+
             
         case .Delete:
             print("*** NSFetchedResultsChangeDelete (section)")
             tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+
             
         case .Update:
             print("*** NSFetchedResultsChangeUpdate (section)")

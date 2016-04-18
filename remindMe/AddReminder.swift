@@ -97,6 +97,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
             reminder.name = reminderNameField.text!
             reminder.dueDate = dueDate!
             reminder.isEnabled = enableSwitch.on
+            reminder.isComplete = false 
             delegate?.addReminderViewController(self, didFinishAddingReminder: reminder)
         }
         

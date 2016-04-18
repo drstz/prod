@@ -17,5 +17,6 @@ extension Reminder {
     @NSManaged var dueDate: NSDate
     @NSManaged var name: String
     @NSManaged var isEnabled: NSNumber
+    @NSManaged var isComplete: NSNumber 
 
 }

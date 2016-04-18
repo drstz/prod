@@ -39,7 +39,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAJ-A1-0lv">
-                        <rect key="frame" x="127" y="107" width="67" height="30"/>
+                        <rect key="frame" x="22" y="105" width="276" height="30"/>
                         <state key="normal" title="Complete"/>
                         <connections>
                             <action selector="completeReminder" destination="PT5-Uj-cRn" eventType="touchUpInside" id="1zh-QX-fot"/>
@@ -61,6 +61,7 @@
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.63993196416517151" green="0.17618798593103455" blue="0.33239836887931035" alpha="0.89968417553191493" colorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="completeButton" destination="YAJ-A1-0lv" id="Zz0-M4-dwg"/>
                 <outlet property="countdownLabel" destination="cgs-ll-DcJ" id="kRd-R7-S2l"/>
                 <outlet property="isEnabledLabel" destination="pta-c1-8uS" id="dYu-f4-z8Z"/>
                 <outlet property="occurenceLabel" destination="Pcd-jg-yJM" id="h10-t5-iNa"/>

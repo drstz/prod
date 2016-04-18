@@ -2,10 +2,11 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Xcode 7.0">
     <entity name="Reminder" representedClassName=".Reminder" syncable="YES">
         <attribute name="dueDate" attributeType="Date" syncable="YES"/>
+        <attribute name="isComplete" attributeType="Boolean" syncable="YES"/>
         <attribute name="isEnabled" attributeType="Boolean" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Reminder" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="Reminder" positionX="-63" positionY="-18" width="128" height="105"/>
     </elements>
 </model>

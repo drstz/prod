@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--All Reminders View Controller-->
@@ -54,15 +55,15 @@
         <scene sceneID="Rvz-mT-SVI">
             <objects>
                 <tableViewController id="y4H-jB-eKA" customClass="AddReminderViewController" customModule="remindMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="EwD-PK-W5g">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="EwD-PK-W5g">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
                             <tableViewSection headerTitle="Reminder Name" id="V29-H2-5ss">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="KeY-Nv-NrH">
-                                        <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="114" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KeY-Nv-NrH" id="Y8u-NC-N0d">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -90,7 +91,7 @@
                             <tableViewSection headerTitle="Due Date" id="1hA-h1-Jhb">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="cUE-qd-G5q" detailTextLabel="wOD-0E-6su" style="IBUITableViewCellStyleValue1" id="CUz-Zn-fK9">
-                                        <rect key="frame" x="0.0" y="164" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="209" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CUz-Zn-fK9" id="pIb-F7-zrB">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -127,17 +128,26 @@
                                 <action selector="cancel" destination="y4H-jB-eKA" id="Lj4-J7-9bZ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="done" systemItem="done" id="JCj-VB-1gz">
-                            <connections>
-                                <action selector="done" destination="y4H-jB-eKA" id="t2u-6d-rzN"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem enabled="NO" style="done" systemItem="done" id="JCj-VB-1gz">
+                                <connections>
+                                    <action selector="done" destination="y4H-jB-eKA" id="t2u-6d-rzN"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem style="plain" id="14J-AH-Nas">
+                                <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="WDI-z2-Ch0">
+                                    <rect key="frame" x="481" y="6" width="51" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </switch>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="datePicker" destination="cxX-D0-ahn" id="Q8T-ol-i8g"/>
                         <outlet property="datePickerCell" destination="keT-2G-HMn" id="68Q-kO-gfU"/>
                         <outlet property="doneBarButton" destination="JCj-VB-1gz" id="h7O-FF-MdA"/>
                         <outlet property="dueDateLabel" destination="wOD-0E-6su" id="dWN-dh-qFw"/>
+                        <outlet property="enableSwitch" destination="WDI-z2-Ch0" id="AKm-HE-Cs7"/>
                         <outlet property="reminderNameField" destination="dvW-lG-G6W" id="xbw-oL-hrw"/>
                     </connections>
                 </tableViewController>

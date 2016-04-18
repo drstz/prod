@@ -32,6 +32,12 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Is Enabled " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pta-c1-8uS">
+                        <rect key="frame" x="8" y="179" width="53" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="cNe-HO-hOr" secondAttribute="trailing" constant="8" id="5eb-Im-agg"/>
@@ -49,6 +55,7 @@
             <color key="backgroundColor" red="0.63993196416517151" green="0.17618798593103455" blue="0.33239836887931035" alpha="0.89968417553191493" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="countdownLabel" destination="cgs-ll-DcJ" id="kRd-R7-S2l"/>
+                <outlet property="isEnabledLabel" destination="pta-c1-8uS" id="dYu-f4-z8Z"/>
                 <outlet property="occurenceLabel" destination="Pcd-jg-yJM" id="h10-t5-iNa"/>
                 <outlet property="reminderLabel" destination="cNe-HO-hOr" id="fcN-PF-5Ps"/>
             </connections>

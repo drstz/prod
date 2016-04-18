@@ -2,7 +2,7 @@
 //  Reminder.swift
 //  remindMe
 //
-//  Created by Duane Stoltz on 14/04/2016.
+//  Created by Duane Stoltz on 18/04/2016.
 //  Copyright © 2016 Duane Stoltz. All rights reserved.
 //
 

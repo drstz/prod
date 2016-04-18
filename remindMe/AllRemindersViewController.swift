@@ -115,7 +115,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     func addReminderViewController(controller:AddReminderViewController,
                                    didFinishAddingReminder reminder: Reminder) {
-        //let newRowIndex = reminders.count
+        //Bulet newRowIndex = reminders.count
         
         //reminders.append(reminder)
         

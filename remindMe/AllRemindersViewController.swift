@@ -107,6 +107,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         }
     }
     
+    
+    
     // MARK: - AddReminderDelegate
     
     func addReminderViewControllerDidCancel(controller: AddReminderViewController) {
@@ -248,6 +250,7 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
                     atIndexPath indexPath: NSIndexPath?,
                     forChangeType type: NSFetchedResultsChangeType,
                     newIndexPath: NSIndexPath?) {
+        
         switch type {
         case .Insert:
             print("*** NSFetchedResultsChangeInsert (object)")

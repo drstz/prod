@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class ReminderCell: UITableViewCell {
     
     @IBOutlet weak var reminderLabel: UILabel!
@@ -15,7 +16,13 @@ class ReminderCell: UITableViewCell {
     @IBOutlet weak var countdownLabel: UILabel!
     @IBOutlet weak var isEnabledLabel: UILabel!
     
+
+    
     var reminderIsEnabled = false
+    
+    @IBAction func completeReminder () {
+        backgroundColor = UIColor(red: 1, green: 0, blue: 1, alpha: 1)
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,6 +51,7 @@ class ReminderCell: UITableViewCell {
        if reminderIsEnabled {
         print(reminderIsEnabled)
            isEnabledLabel.text = "Enabled"
+            backgroundColor = UIColor(red: 163/255, green: 45/255, blue: 85/255, alpha: 0.9)
         } else {
             print(reminderIsEnabled)
            isEnabledLabel.text = "Disabled"

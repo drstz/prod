@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ReminderCellDelegate: class {
+    func completeButtonWasPressed (cell : ReminderCell)
+}
+
 
 class ReminderCell: UITableViewCell {
     
@@ -16,12 +20,15 @@ class ReminderCell: UITableViewCell {
     @IBOutlet weak var countdownLabel: UILabel!
     @IBOutlet weak var isEnabledLabel: UILabel!
     
-
+    weak var delegate : ReminderCellDelegate?
     
     var reminderIsEnabled = false
     
     @IBAction func completeReminder () {
-        backgroundColor = UIColor(red: 1, green: 0, blue: 1, alpha: 1)
+
+        delegate?.completeButtonWasPressed(self)
+        print(#function)
+        
     }
     
     override func awakeFromNib() {

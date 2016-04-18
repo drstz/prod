@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import CoreData
 
-class AllRemindersViewController: UIViewController, AddReminderViewControllerDelegate {
+class AllRemindersViewController: UIViewController, AddReminderViewControllerDelegate, ReminderCellDelegate {
     
     // MARK: - Instance Variables
     
@@ -86,7 +86,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         if segue.identifier == "AddReminder" {
             
             let navigationController = segue.destinationViewController as! UINavigationController
-            
             let controller = navigationController.topViewController as! AddReminderViewController
             
             controller.delegate = self
@@ -107,7 +106,13 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         }
     }
     
+    // MARK: - ReminderCellDelegate
     
+    func completeButtonWasPressed(cell: ReminderCell) {
+        let indexPath = tableView.indexPathForCell(cell)
+        
+        print("Getting the message")
+    }
     
     // MARK: - AddReminderDelegate
     
@@ -116,15 +121,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     }
     
     func addReminderViewController(controller:AddReminderViewController,
-                                   didFinishAddingReminder reminder: Reminder) {
-        //Bulet newRowIndex = reminders.count
-        
-        //reminders.append(reminder)
-        
-        //let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
-        //let indexPaths = [indexPath]
-        //tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-        
+                                   didFinishAddingReminder reminder: Reminder) {        
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -167,6 +164,11 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         tableView.rowHeight = 200
         setNumberOfReminders()
         
+        //
+        
+        
+        
+        
 
 
     }
@@ -202,6 +204,11 @@ extension AllRemindersViewController: UITableViewDataSource {
 
         let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
         cell.configureForReminder(reminder)
+        
+        
+        // Make this view controller the delegate of ReminderCell
+        
+        cell.delegate = self
     
         return cell
     }

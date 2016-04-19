@@ -72,6 +72,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     func setNumberOfReminders() {
         
+        nbOfReminders = tableView.numberOfRowsInSection(0)
+        
         if nbOfReminders > 1 || nbOfReminders == 0 {
             titleString = "You have \(nbOfReminders) reminders"
         } else {
@@ -81,7 +83,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         
     }
     
-
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Add Reminder
         if segue.identifier == "AddReminder" {
@@ -124,7 +125,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
             fatalCoreDataError(error)
         }
         print(reminder.isComplete)
-
     }
     
     // MARK: - AddReminderDelegate
@@ -136,16 +136,14 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     func addReminderViewController(controller:AddReminderViewController,
                                    didFinishAddingReminder reminder: Reminder) {        
         dismissViewControllerAnimated(true, completion: nil)
-        nbOfReminders += 1
         setNumberOfReminders()
     }
     
-
     func addReminderViewController(controller: AddReminderViewController,
                                    didFinishEditingReminder reminder: Reminder) {
-        print(#function)
         
         dismissViewControllerAnimated(true, completion: nil)
+        setNumberOfReminders()
     }
     
     // MARK: - REMINDERS
@@ -166,7 +164,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         print(#function)
     }
     
-    
     // MARK: - The view
 
     override func viewDidLoad() {
@@ -178,14 +175,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
         tableView.rowHeight = 200
         setNumberOfReminders()
-        
-        //
-        
-        
-        
-        
-
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -193,14 +182,11 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         setNumberOfReminders()
     }
     
-    
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
 }
 
 // MARK: - Extensions
@@ -212,8 +198,6 @@ extension AllRemindersViewController: UITableViewDataSource {
         print(#function)
         
         let sectionInfo = fetchedResultsController.sections![section]
-        
-        //nbOfReminders = sectionInfo.numberOfObjects
         return sectionInfo.numberOfObjects
     }
     
@@ -223,11 +207,9 @@ extension AllRemindersViewController: UITableViewDataSource {
         let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
         cell.configureForReminder(reminder)
         
-        
         // Make this view controller the delegate of ReminderCell
-        
         cell.delegate = self
-    
+        
         return cell
     }
     
@@ -246,22 +228,19 @@ extension AllRemindersViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
 
-            return indexPath
+        return indexPath
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
         managedObjectContext.deleteObject(reminder)
-        nbOfReminders -= 1
-        setNumberOfReminders()
-        
+
         do {
             try managedObjectContext.save()
         } catch {
             fatalCoreDataError(error)
         }
-
-        
+        setNumberOfReminders()
     }
     
 }
@@ -270,6 +249,7 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         print(#function)
         tableView.beginUpdates()
+        setNumberOfReminders()
     }
     
     func controller(controller: NSFetchedResultsController,
@@ -282,6 +262,7 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
         case .Insert:
             print("*** NSFetchedResultsChangeInsert (object)")
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            
             
         case .Delete:
             print("*** NSFethedResultsChangeDelete (object)")
@@ -299,6 +280,7 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         }
+        setNumberOfReminders()
     }
     
     
@@ -324,10 +306,12 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
         case .Move:
             print("*** NSFetchedResultsChangeMove (section)")
         }
+        setNumberOfReminders()
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         print("*** controllerDidChangeContent")
+        setNumberOfReminders()
         tableView.endUpdates()
     }
 }

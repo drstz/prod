@@ -27,12 +27,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     // MARK: Properties
     
-    var reminderNameIsValid = false
     var dueDateIsSet = false
     
-    var inEditMode = false
     
     var textFieldisValid = false
+    var textFieldHasText = false
     
     // Instances
     
@@ -95,7 +94,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         if var reminder = reminderToEdit {
             getReminderDetails(&reminder)
 
-            inEditMode = false
             delegate?.addReminderViewController(self, didFinishEditingReminder: reminder)
         } else {
             var reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as! Reminder
@@ -123,7 +121,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - Enable Done Button
     
     func enableDoneButton() {
-        if dueDateIsSet && reminderNameIsValid || inEditMode {
+        if dueDateIsSet && textFieldHasText {
             doneBarButton.enabled = true
         } else {
             doneBarButton.enabled = false
@@ -147,13 +145,14 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         //print(#function)
+        enableDoneButton()
         
         if let reminder = reminderToEdit {
-            inEditMode = true
             title = "Edit reminder"
-            doneBarButton.enabled = true
+            // doneBarButton.enabled = true
             reminderNameField.text = reminder.name
             dueDate = reminder.dueDate
+            dueDateIsSet = true
             enableSwitch.on = reminder.isEnabled as Bool
         }
         updateDueDateLabel()
@@ -299,13 +298,20 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         let oldText: NSString = textField.text!
         let newText: NSString = oldText.stringByReplacingCharactersInRange(range, withString: string)
         
-        reminderNameIsValid = textFieldHasText(newText)
-        textFieldisValid = textFieldHasText(oldText)
+
         
-        if textFieldHasText(reminderNameField.text! as NSString) {
+        textFieldisValid = textFieldHasText(oldText)
+
+//        print("OldText: \(oldText.length)")
+//        print("NewText: \(newText.length)")
+//        print("********")
+        
+        textFieldHasText = newText.length > 0
+        
+        if textFieldHasText {
             textField.backgroundColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.1)
         }
-        //print(reminderNameIsValid)
+
         enableDoneButton()
         return true
     }
@@ -317,6 +323,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     func textFieldDidBeginEditing(textField: UITextField) {
         //print(#function)
+        let someText: NSString = textField.text!
+        textFieldHasText = someText.length > 0
+        enableDoneButton()
+        print("Textfield length at start of editing: \(someText.length)")
         hideDatePicker()
         if textFieldHasText(reminderNameField.text! as NSString) {
             textField.returnKeyType = .Next
@@ -325,11 +335,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         //print(#function)
-        if textFieldHasText(reminderNameField.text! as NSString) {
+        if textFieldHasText {
             showDatePicker()
             textField.resignFirstResponder()
         } else {
-            print(reminderNameIsValid)
             textField.placeholder = "You have to give your reminder a name"
             textField.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.1)
         }

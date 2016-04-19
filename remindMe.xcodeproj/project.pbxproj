@@ -49,6 +49,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		71386A421CC5EE5F007DF704 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7165A5951CBB910B0088EA76 /* ReminderCell.xib */,
+				7165A5841CBB6A310088EA76 /* LaunchScreen.storyboard */,
+				7165A57F1CBB6A310088EA76 /* Main.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		7165A56F1CBB6A310088EA76 = {
 			isa = PBXGroup;
 			children = (
@@ -68,6 +78,7 @@
 		7165A57A1CBB6A310088EA76 /* remindMe */ = {
 			isa = PBXGroup;
 			children = (
+				71386A421CC5EE5F007DF704 /* View */,
 				7165A5871CBB6A310088EA76 /* Info.plist */,
 				7165A5991CBCB4330088EA76 /* AddReminder.swift */,
 				7165A57D1CBB6A310088EA76 /* AllRemindersViewController.swift */,
@@ -77,10 +88,7 @@
 				71878B401CC49A9700AD0F27 /* Reminder+CoreDataProperties.swift */,
 				7165A5971CBB92C30088EA76 /* ReminderCell.swift */,
 				7165A5821CBB6A310088EA76 /* Assets.xcassets */,
-				7165A5951CBB910B0088EA76 /* ReminderCell.xib */,
 				71ABD7021CBF893300F0BF90 /* DataModel.xcdatamodeld */,
-				7165A5841CBB6A310088EA76 /* LaunchScreen.storyboard */,
-				7165A57F1CBB6A310088EA76 /* Main.storyboard */,
 			);
 			path = remindMe;
 			sourceTree = "<group>";

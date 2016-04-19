@@ -82,21 +82,25 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         delegate?.addReminderViewControllerDidCancel(self)
     }
     
+    func getReminderDetails(inout reminder: Reminder) {
+        print(#function)
+        reminder.name = reminderNameField.text!
+        reminder.dueDate = dueDate!
+        reminder.isEnabled = enableSwitch.on
+    }
+    
     @IBAction func done() {
         print(#function)
         
-        if let reminder = reminderToEdit {
-            reminder.name = reminderNameField.text!
-            reminder.dueDate = dueDate!
-            reminder.isEnabled = enableSwitch.on
-            delegate?.addReminderViewController(self, didFinishEditingReminder: reminder)
+        if var reminder = reminderToEdit {
+            getReminderDetails(&reminder)
+
             inEditMode = false
+            delegate?.addReminderViewController(self, didFinishEditingReminder: reminder)
         } else {
-            let reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as! Reminder
+            var reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as! Reminder
+            getReminderDetails(&reminder)
             
-            reminder.name = reminderNameField.text!
-            reminder.dueDate = dueDate!
-            reminder.isEnabled = enableSwitch.on
             reminder.isComplete = false 
             delegate?.addReminderViewController(self, didFinishAddingReminder: reminder)
         }
@@ -301,7 +305,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         if textFieldHasText(reminderNameField.text! as NSString) {
             textField.backgroundColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.1)
         }
-        print(reminderNameIsValid)
+        //print(reminderNameIsValid)
         enableDoneButton()
         return true
     }

@@ -28,15 +28,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     // MARK: Properties
     
     var dueDateIsSet = false
-    
-    
-    var textFieldisValid = false
     var textFieldHasText = false
     
     // Instances
     
     var reminderToEdit: Reminder?
-    var indexPathToEdit: Int?
     
     // CoreData
     
@@ -77,7 +73,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - Actions
     
     @IBAction func cancel() {
-        //print(#function)
         delegate?.addReminderViewControllerDidCancel(self)
     }
     
@@ -127,35 +122,27 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
             doneBarButton.enabled = false
         }
     }
-
     
     // MARK: - VIEW
-    
-    
 
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        //print(#function)
-        
-        // Put curser into textfield immediately
         reminderNameField.becomeFirstResponder()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //print(#function)
-        enableDoneButton()
-        
+  
         if let reminder = reminderToEdit {
             title = "Edit reminder"
-            // doneBarButton.enabled = true
             reminderNameField.text = reminder.name
             dueDate = reminder.dueDate
             dueDateIsSet = true
             enableSwitch.on = reminder.isEnabled as Bool
         }
         updateDueDateLabel()
+        enableDoneButton()
     }
     
     // MARK: - Date Picker
@@ -170,7 +157,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         } else {
             dueDateLabel.text = "Please Set a Date"
         }
-        
     }
     
     func showDatePicker() {
@@ -271,20 +257,21 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         //print(#function)
         print("Section: \(indexPath.section)")
         print("Row: \(indexPath.row)")
-        if indexPath.section == 1 && indexPath.row == 0 && textFieldHasText(reminderNameField.text! as NSString) {
+        if indexPath.section == 1 && indexPath.row == 0 && textFieldHasText {
             return indexPath
-        } else if !textFieldHasText(reminderNameField.text! as NSString) {
+        } else if !textFieldHasText {
             reminderNameField.becomeFirstResponder()
         }
         return nil
     }
     
-    override func tableView(tableView: UITableView, var indentationLevelForRowAtIndexPath indexPath: NSIndexPath) -> Int {
+    override func tableView(tableView: UITableView, indentationLevelForRowAtIndexPath indexPath: NSIndexPath) -> Int {
        // print(#function)
-        if indexPath.section == 1 && indexPath.row == 1 {
-            indexPath = NSIndexPath(forRow: 0, inSection: indexPath.section)
+        var indexPathMod = indexPath
+        if indexPathMod.section == 1 && indexPathMod.row == 1 {
+            indexPathMod = NSIndexPath(forRow: 0, inSection: indexPathMod.section)
         }
-        return super.tableView(tableView, indentationLevelForRowAtIndexPath: indexPath)
+        return super.tableView(tableView, indentationLevelForRowAtIndexPath: indexPathMod)
     }
     
     // MARK: - Text Field
@@ -297,15 +284,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         
         let oldText: NSString = textField.text!
         let newText: NSString = oldText.stringByReplacingCharactersInRange(range, withString: string)
-        
 
-        
-        textFieldisValid = textFieldHasText(oldText)
-
-//        print("OldText: \(oldText.length)")
-//        print("NewText: \(newText.length)")
-//        print("********")
-        
         textFieldHasText = newText.length > 0
         
         if textFieldHasText {
@@ -316,11 +295,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         return true
     }
     
-    func textFieldHasText(text : NSString) -> Bool {
-        //print(#function)
-        return text.length > 0
-    }
-    
     func textFieldDidBeginEditing(textField: UITextField) {
         //print(#function)
         let someText: NSString = textField.text!
@@ -328,7 +302,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         enableDoneButton()
         print("Textfield length at start of editing: \(someText.length)")
         hideDatePicker()
-        if textFieldHasText(reminderNameField.text! as NSString) {
+        if textFieldHasText {
             textField.returnKeyType = .Next
         }
     }
@@ -336,8 +310,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         //print(#function)
         if textFieldHasText {
-            showDatePicker()
             textField.resignFirstResponder()
+            showDatePicker()
         } else {
             textField.placeholder = "You have to give your reminder a name"
             textField.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.1)

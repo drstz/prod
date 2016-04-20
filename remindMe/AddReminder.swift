@@ -23,7 +23,7 @@ protocol AddReminderViewControllerDelegate: class {
 
 // MARK: - Class
 
-class AddReminderViewController: UITableViewController, UITextFieldDelegate {
+class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     // MARK: Properties
     
@@ -42,6 +42,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     var dueDate: NSDate?
     var datePickerVisible = false
+    
+    var reccuringPickerVisible = false
 
     // Delegate
     
@@ -69,6 +71,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     
     @IBOutlet weak var datePickerCell: UITableViewCell!
     @IBOutlet weak var datePicker: UIDatePicker!
+    
+    // Recurring Picker
+    
+    @IBOutlet weak var recurringPickerCell: UITableViewCell!
+    @IBOutlet weak var recurringPicker: UIPickerView!
     
     // MARK: - Actions
     
@@ -208,6 +215,45 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         
     }
     
+    // MARK: - Reccurring Picker
+    
+    func showReccurringPicker() {
+        //print(#function)
+        reccuringPickerVisible = true
+        
+        let indexPathRecurringRow = NSIndexPath(forRow: 0, inSection: 2)
+        let indexPathRecurringPicker = NSIndexPath(forRow: 1, inSection: 2)
+        
+        if let recurringCell = tableView.cellForRowAtIndexPath(indexPathRecurringRow) {
+            recurringCell.detailTextLabel!.textColor = recurringCell.detailTextLabel!.tintColor
+        }
+        
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths([indexPathRecurringPicker], withRowAnimation: .Fade)
+        tableView.reloadRowsAtIndexPaths([indexPathRecurringRow], withRowAnimation: .None)
+        tableView.endUpdates()
+
+    }
+    
+    func hideRecurringPicker() {
+        if reccuringPickerVisible {
+            reccuringPickerVisible = false
+            
+            let indexPathRecurringRow = NSIndexPath(forRow: 0, inSection: 2)
+            let indexPathRecurringPicker = NSIndexPath(forRow: 1, inSection: 2)
+            
+            
+            
+            tableView.beginUpdates()
+            tableView.reloadRowsAtIndexPaths([indexPathRecurringRow], withRowAnimation: .None)
+            tableView.deleteRowsAtIndexPaths([indexPathRecurringPicker], withRowAnimation: .Fade)
+            tableView.endUpdates()
+            enableDoneButton()
+        }
+        
+        
+    }
+    
     
     // MARK: - Table View
     
@@ -215,6 +261,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         //print(#function)
         if indexPath.section == 1 && indexPath.row == 1 {
             return datePickerCell
+        } else if indexPath.section == 2 && indexPath.row == 1 {
+            return recurringPickerCell
         } else {
             return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
         }
@@ -224,6 +272,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         //print(#function)
         if section == 1 && datePickerVisible {
             return 2
+        } else if section == 2 && reccuringPickerVisible {
+            return 2
         } else {
             return super.tableView(tableView, numberOfRowsInSection: section)
         }
@@ -232,6 +282,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         //print(#function)
         if indexPath.section == 1 && indexPath.row == 1 {
+            return 217
+        } else if indexPath.section == 2 && indexPath.row == 1 {
             return 217
         } else {
             return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
@@ -250,14 +302,27 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
                 hideDatePicker()
             }
         }
+        
+        if indexPath.section == 2 && indexPath.row == 0 {
+            if !reccuringPickerVisible {
+                showReccurringPicker()
+            } else {
+                hideRecurringPicker()
+            }
+        }
     }
     
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        // Prevent rows from being selected
         //print(#function)
         print("Section: \(indexPath.section)")
         print("Row: \(indexPath.row)")
         if indexPath.section == 1 && indexPath.row == 0 && textFieldHasText {
+            return indexPath
+        } else if !textFieldHasText {
+            reminderNameField.becomeFirstResponder()
+        }
+        
+        if indexPath.section == 2 && indexPath.row == 0 && textFieldHasText {
             return indexPath
         } else if !textFieldHasText {
             reminderNameField.becomeFirstResponder()
@@ -271,6 +336,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         if indexPathMod.section == 1 && indexPathMod.row == 1 {
             indexPathMod = NSIndexPath(forRow: 0, inSection: indexPathMod.section)
         }
+        if indexPathMod.section == 2 && indexPathMod.row == 1 {
+            indexPathMod = NSIndexPath(forRow: 0, inSection: indexPathMod.section)
+        }
+        
         return super.tableView(tableView, indentationLevelForRowAtIndexPath: indexPathMod)
     }
     
@@ -318,4 +387,46 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate {
         }
         return false
     }
+    
+    // MARK: - Picker Delegates
+    
+    // MARK: Data Source
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 2
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if component == 0 {
+            return 20
+        } else {
+            return 5
+        }
+    }
+    
+    // MARK: Delegates
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        let number = row
+        if component == 0 {
+            return "\(number + 1)"
+        } else {
+            switch row {
+            case 0:
+                return "hours"
+            case 1:
+                return "days"
+            case 2:
+                return "weeks"
+            case 3:
+                return "months"
+            case 4:
+                return "years"
+            default:
+                return "No idea"
+            }
+        }
+    }
+    
+    
 }

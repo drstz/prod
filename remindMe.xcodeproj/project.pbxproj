@@ -52,9 +52,9 @@
 		71386A421CC5EE5F007DF704 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7165A5951CBB910B0088EA76 /* ReminderCell.xib */,
 				7165A5841CBB6A310088EA76 /* LaunchScreen.storyboard */,
 				7165A57F1CBB6A310088EA76 /* Main.storyboard */,
+				7165A5951CBB910B0088EA76 /* ReminderCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";

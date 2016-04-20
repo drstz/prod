@@ -45,26 +45,22 @@ class ReminderCell: UITableViewCell {
     
     func configureForReminder(reminder: Reminder) {
         print(#function)
-        func enableReminderCell () {
-            print(#function)
-            if reminder.isEnabled == 1 {
-                reminderIsEnabled = true
-            } else {
-                reminderIsEnabled = false
-            }
-        }
+        
+        enableReminderCell(reminder)
+        configureLabels(reminder)
+        configureColor(reminder) 
+    }
+    
+    func configureLabels(reminder: Reminder) {
         reminderLabel.text = reminder.name
         occurenceLabel.text = dateConverter(dateToConvert: reminder.dueDate)
-        enableReminderCell()
+        
         if reminderIsEnabled {
-            print(reminderIsEnabled)
             isEnabledLabel.text = "Enabled"
-            backgroundColor = UIColor(red: 163/255, green: 45/255, blue: 85/255, alpha: 0.9)
         } else {
-            print(reminderIsEnabled)
             isEnabledLabel.text = "Disabled"
-            backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.4)
         }
+        
         if reminder.isComplete == true {
             completeButton.setTitle("Reopen reminder", forState: .Normal)
         } else {
@@ -73,6 +69,20 @@ class ReminderCell: UITableViewCell {
         
     }
     
-
-
+    func enableReminderCell (reminder: Reminder) {
+        print(#function)
+        if reminder.isEnabled == 1 {
+            reminderIsEnabled = true
+        } else {
+            reminderIsEnabled = false
+        }
+    }
+    
+    func configureColor(reminder: Reminder) {
+        if reminderIsEnabled {
+            backgroundColor = UIColor(red: 163/255, green: 45/255, blue: 85/255, alpha: 0.9)
+        } else {
+            backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.4)
+        }
+    }
 }

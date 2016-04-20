@@ -16,3 +16,5 @@ func dateConverter(dateToConvert date: NSDate) -> String {
     formatter.timeStyle = .ShortStyle
     return formatter.stringFromDate(date)
 }
+
+

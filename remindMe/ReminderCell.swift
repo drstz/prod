@@ -16,8 +16,13 @@ protocol ReminderCellDelegate: class {
 class ReminderCell: UITableViewCell {
     
     @IBOutlet weak var reminderLabel: UILabel!
-    @IBOutlet weak var occurenceLabel: UILabel!
+    
+    @IBOutlet weak var dayLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    
     @IBOutlet weak var countdownLabel: UILabel!
+    
     @IBOutlet weak var isEnabledLabel: UILabel!
     @IBOutlet weak var completeButton: UIButton!
     
@@ -53,7 +58,7 @@ class ReminderCell: UITableViewCell {
     
     func configureLabels(reminder: Reminder) {
         reminderLabel.text = reminder.name
-        occurenceLabel.text = dateConverter(dateToConvert: reminder.dueDate)
+        dayLabel.text = dateConverter(dateToConvert: reminder.dueDate)
         
         if reminderIsEnabled {
             isEnabledLabel.text = "Enabled"

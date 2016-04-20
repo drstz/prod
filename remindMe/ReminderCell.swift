@@ -26,6 +26,9 @@ class ReminderCell: UITableViewCell {
     @IBOutlet weak var isEnabledLabel: UILabel!
     @IBOutlet weak var completeButton: UIButton!
     
+    
+    @IBOutlet weak var nextDueDate: UILabel!
+    
     weak var delegate : ReminderCellDelegate?
     
     var reminderIsEnabled = false
@@ -61,6 +64,12 @@ class ReminderCell: UITableViewCell {
         dayLabel.text = convertDateToString(dayFromDate: reminder.dueDate)
         dateLabel.text = convertDateToString(dateFromDate: reminder.dueDate)
         timeLabel.text = convertDateToString(timeFromDate: reminder.dueDate)
+        if let nexty = reminder.nextDueDate {
+            nextDueDate.text = convertDateToString(dateToConvert: nexty)
+        } else {
+            nextDueDate.text = "No recurrence"
+        }
+        
         
         
         if reminderIsEnabled {

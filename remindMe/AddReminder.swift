@@ -44,6 +44,20 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     var datePickerVisible = false
     
     var reccuringPickerVisible = false
+    var recurringAmount = 1
+    var timeInterval = "hours"
+    
+    enum choiceOfDelay {
+        case Hour
+        case Day
+        case Week
+        case Month
+        case Year
+    }
+    
+    var newDate: NSDate?
+    
+    var delay :choiceOfDelay?
 
     // Delegate
     
@@ -58,6 +72,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     // Labels
     
     @IBOutlet weak var dueDateLabel : UILabel!
+    @IBOutlet weak var recurringDateLabel : UILabel!
     
     // Buttons
     
@@ -87,6 +102,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         print(#function)
         reminder.name = reminderNameField.text!
         reminder.dueDate = dueDate!
+        reminder.nextDueDate = newDate!
         reminder.isEnabled = enableSwitch.on
     }
     
@@ -216,6 +232,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     }
     
     // MARK: - Reccurring Picker
+    
+    func updateRecurringLabel() {
+        recurringDateLabel.text = "\(timeInterval): \(recurringAmount)"
+    }
     
     func showReccurringPicker() {
         //print(#function)
@@ -426,6 +446,38 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
                 return "No idea"
             }
         }
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if component == 0 {
+            recurringAmount = row + 1
+            print(recurringAmount)
+            updateRecurringLabel()
+        } else {
+            switch row {
+            case 0:
+                timeInterval = "hours"
+            case 1:
+                timeInterval = "days"
+            case 2:
+                timeInterval = "weeks"
+            case 3:
+                timeInterval = "months"
+            case 4:
+                timeInterval = "years"
+            default:
+                print("Error")
+            }
+            
+            updateRecurringLabel()
+            
+            print(delay)
+            
+        }
+        newDate = addRecurringDate(recurringAmount, delayType: timeInterval, date: dueDate!)
+        print(newDate!)
+        
+        
     }
     
     

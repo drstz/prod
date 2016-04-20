@@ -58,7 +58,10 @@ class ReminderCell: UITableViewCell {
     
     func configureLabels(reminder: Reminder) {
         reminderLabel.text = reminder.name
-        dayLabel.text = dateConverter(dateToConvert: reminder.dueDate)
+        dayLabel.text = convertDateToString(dayFromDate: reminder.dueDate)
+        dateLabel.text = convertDateToString(dateFromDate: reminder.dueDate)
+        timeLabel.text = convertDateToString(timeFromDate: reminder.dueDate)
+        
         
         if reminderIsEnabled {
             isEnabledLabel.text = "Enabled"

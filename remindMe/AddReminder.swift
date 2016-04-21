@@ -161,7 +161,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     // Date Picker
     
     @IBAction func dateChanged(datePicker: UIDatePicker) {
-        dueDate = datePicker.date
+        dueDate = roundSecondsToZero(datePicker.date)
         dueDateIsSet = true
         updateDueDateLabel()
     }

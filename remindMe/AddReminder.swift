@@ -6,11 +6,6 @@
 //  Copyright © 2016 Duane Stoltz. All rights reserved.
 //
 
-// 0x7d155940 <x-coredata:///Reminder/t28068C43-8F9D-48D2-9556-840D0BC1404A2>
-// 0x7d155940 <x-coredata:///Reminder/t28068C43-8F9D-48D2-9556-840D0BC1404A2>
-
-// 0x786d8df0 <x-coredata://75BF188F-B93C-4265-BD94-38AAB65E7FAA/Reminder/p2>
-// 0x79646360 <x-coredata://75BF188F-B93C-4265-BD94-38AAB65E7FAA/Reminder/p2>
 
 
 
@@ -236,6 +231,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     func showDatePicker() {
         //print(#function)
+        
         datePickerVisible = true
         
         let indexPathDateRow = NSIndexPath(forRow: 0, inSection: 1)
@@ -333,6 +329,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         //print(#function)
         if indexPath.section == 1 && indexPath.row == 1 {
+            let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories: nil)
+            UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
             return datePickerCell
         } else if indexPath.section == 2 && indexPath.row == 1 {
             return recurringPickerCell

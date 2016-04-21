@@ -46,6 +46,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     var reccuringPickerVisible = false
     var recurringAmount = 1
     var timeInterval = "hours"
+    var recurringDateWasSet = false
     
     enum choiceOfDelay {
         case Hour
@@ -77,6 +78,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     // Buttons
     
     @IBOutlet weak var doneBarButton : UIBarButtonItem!
+    @IBOutlet weak var recurringButton: UIBarButtonItem!
     
     // Switch
     
@@ -102,8 +104,14 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         print(#function)
         reminder.name = reminderNameField.text!
         reminder.dueDate = dueDate!
-        reminder.nextDueDate = newDate!
+        if let nextDueDate = newDate {
+            reminder.nextDueDate = nextDueDate
+        } else {
+            reminder.nextDueDate = nil
+        }
+        
         reminder.isEnabled = enableSwitch.on
+        reminder.isRecurring = recurringDateWasSet
     }
     
     @IBAction func done() {
@@ -111,12 +119,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         
         if var reminder = reminderToEdit {
             getReminderDetails(&reminder)
-
             delegate?.addReminderViewController(self, didFinishEditingReminder: reminder)
         } else {
             var reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as! Reminder
             getReminderDetails(&reminder)
-            
             reminder.isComplete = false 
             delegate?.addReminderViewController(self, didFinishAddingReminder: reminder)
         }
@@ -126,6 +132,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         } catch {
             fatalCoreDataError(error)
         }
+    }
+    
+    @IBAction func dontRepeat() {
+        newDate = nil
+        recurringDateWasSet = false
+        enableDontRepeatButton()
     }
     
     // Date Picker
@@ -146,6 +158,14 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         }
     }
     
+    func enableDontRepeatButton() {
+        if recurringDateWasSet {
+            recurringButton.enabled = true
+        } else {
+            recurringButton.enabled = false
+        }
+    }
+    
     // MARK: - VIEW
 
     override func viewWillAppear(animated: Bool) {
@@ -163,9 +183,15 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             dueDate = reminder.dueDate
             dueDateIsSet = true
             enableSwitch.on = reminder.isEnabled as Bool
+            recurringDateWasSet = reminder.isRecurring as Bool
+            if let recurringDate = reminder.nextDueDate {
+                newDate = recurringDate
+            }
         }
         updateDueDateLabel()
         enableDoneButton()
+        enableDontRepeatButton()
+        
     }
     
     // MARK: - Date Picker
@@ -451,8 +477,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == 0 {
             recurringAmount = row + 1
-            print(recurringAmount)
-            updateRecurringLabel()
+            
         } else {
             switch row {
             case 0:
@@ -468,12 +493,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             default:
                 print("Error")
             }
-            
-            updateRecurringLabel()
-            
-            print(delay)
-            
+
         }
+        updateRecurringLabel()
+        
+        recurringDateWasSet = true
+        enableDontRepeatButton()
+    
         newDate = addRecurringDate(recurringAmount, delayType: timeInterval, date: dueDate!)
         print(newDate!)
         

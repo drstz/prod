@@ -4,9 +4,11 @@
         <attribute name="dueDate" attributeType="Date" syncable="YES"/>
         <attribute name="isComplete" attributeType="Boolean" syncable="YES"/>
         <attribute name="isEnabled" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isRecurring" attributeType="Boolean" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="nextDueDate" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Reminder" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Reminder" positionX="-63" positionY="-18" width="128" height="135"/>
     </elements>
 </model>

@@ -116,6 +116,34 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Recurring" id="PZZ-vf-ehn">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="fsB-X8-9od" detailTextLabel="99v-SE-qd5" style="IBUITableViewCellStyleValue1" id="zvQ-6Z-yi2">
+                                        <rect key="frame" x="0.0" y="304" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zvQ-6Z-yi2" id="TB6-Ux-tvt">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Recurring" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fsB-X8-9od">
+                                                    <rect key="frame" x="15" y="12" width="71" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="99v-SE-qd5">
+                                                    <rect key="frame" x="543" y="12" width="42" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="y4H-jB-eKA" id="u1y-ju-kSk"/>
@@ -134,9 +162,14 @@
                                     <action selector="done" destination="y4H-jB-eKA" id="t2u-6d-rzN"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem enabled="NO" title="Don't repeat" id="wSc-tg-JGY">
+                                <connections>
+                                    <action selector="dontRepeat" destination="y4H-jB-eKA" id="s2s-ut-eXG"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem style="plain" id="14J-AH-Nas">
                                 <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="WDI-z2-Ch0">
-                                    <rect key="frame" x="481" y="6" width="51" height="31"/>
+                                    <rect key="frame" x="378" y="6" width="51" height="31"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </switch>
                             </barButtonItem>
@@ -148,6 +181,10 @@
                         <outlet property="doneBarButton" destination="JCj-VB-1gz" id="h7O-FF-MdA"/>
                         <outlet property="dueDateLabel" destination="wOD-0E-6su" id="dWN-dh-qFw"/>
                         <outlet property="enableSwitch" destination="WDI-z2-Ch0" id="AKm-HE-Cs7"/>
+                        <outlet property="recurringButton" destination="wSc-tg-JGY" id="ojs-P2-wOO"/>
+                        <outlet property="recurringDateLabel" destination="99v-SE-qd5" id="FnY-kT-IEC"/>
+                        <outlet property="recurringPicker" destination="RsU-xJ-Jjh" id="CW8-fo-LW7"/>
+                        <outlet property="recurringPickerCell" destination="30K-sv-yeC" id="0kz-l8-r4z"/>
                         <outlet property="reminderNameField" destination="dvW-lG-G6W" id="xbw-oL-hrw"/>
                     </connections>
                 </tableViewController>
@@ -175,6 +212,23 @@
                             <constraint firstItem="cxX-D0-ahn" firstAttribute="top" secondItem="lIs-Pa-GUt" secondAttribute="top" id="pYH-S6-vpZ"/>
                             <constraint firstAttribute="trailing" secondItem="cxX-D0-ahn" secondAttribute="trailing" id="yhn-lH-SAb"/>
                         </constraints>
+                    </tableViewCellContentView>
+                </tableViewCell>
+                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="30K-sv-yeC">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="217"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="30K-sv-yeC" id="Zf7-bi-DDY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RsU-xJ-Jjh">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="y4H-jB-eKA" id="I2h-s3-b0h"/>
+                                    <outlet property="delegate" destination="y4H-jB-eKA" id="7TL-pj-uVH"/>
+                                </connections>
+                            </pickerView>
+                        </subviews>
                     </tableViewCellContentView>
                 </tableViewCell>
             </objects>

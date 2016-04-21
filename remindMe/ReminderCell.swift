@@ -16,10 +16,18 @@ protocol ReminderCellDelegate: class {
 class ReminderCell: UITableViewCell {
     
     @IBOutlet weak var reminderLabel: UILabel!
-    @IBOutlet weak var occurenceLabel: UILabel!
+    
+    @IBOutlet weak var dayLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    
     @IBOutlet weak var countdownLabel: UILabel!
+    
     @IBOutlet weak var isEnabledLabel: UILabel!
     @IBOutlet weak var completeButton: UIButton!
+    
+    
+    @IBOutlet weak var nextDueDate: UILabel!
     
     weak var delegate : ReminderCellDelegate?
     
@@ -45,26 +53,31 @@ class ReminderCell: UITableViewCell {
     
     func configureForReminder(reminder: Reminder) {
         print(#function)
-        func enableReminderCell () {
-            print(#function)
-            if reminder.isEnabled == 1 {
-                reminderIsEnabled = true
-            } else {
-                reminderIsEnabled = false
-            }
-        }
+        
+        enableReminderCell(reminder)
+        configureLabels(reminder)
+        configureColor(reminder)
+    }
+    
+    func configureLabels(reminder: Reminder) {
         reminderLabel.text = reminder.name
-        occurenceLabel.text = dateConverter(dateToConvert: reminder.dueDate)
-        enableReminderCell()
-        if reminderIsEnabled {
-            print(reminderIsEnabled)
-            isEnabledLabel.text = "Enabled"
-            backgroundColor = UIColor(red: 163/255, green: 45/255, blue: 85/255, alpha: 0.9)
+        dayLabel.text = convertDateToString(dayFromDate: reminder.dueDate)
+        dateLabel.text = convertDateToString(dateFromDate: reminder.dueDate)
+        timeLabel.text = convertDateToString(timeFromDate: reminder.dueDate)
+        if let nexty = reminder.nextDueDate {
+            nextDueDate.text = convertDateToString(dateToConvert: nexty)
         } else {
-            print(reminderIsEnabled)
-            isEnabledLabel.text = "Disabled"
-            backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.4)
+            nextDueDate.text = "No recurrence"
         }
+        
+        
+        
+        if reminderIsEnabled {
+            isEnabledLabel.text = "Enabled"
+        } else {
+            isEnabledLabel.text = "Disabled"
+        }
+        
         if reminder.isComplete == true {
             completeButton.setTitle("Reopen reminder", forState: .Normal)
         } else {
@@ -73,6 +86,20 @@ class ReminderCell: UITableViewCell {
         
     }
     
-
-
+    func enableReminderCell (reminder: Reminder) {
+        print(#function)
+        if reminder.isEnabled == 1 {
+            reminderIsEnabled = true
+        } else {
+            reminderIsEnabled = false
+        }
+    }
+    
+    func configureColor(reminder: Reminder) {
+        if reminderIsEnabled {
+            backgroundColor = UIColor(red: 163/255, green: 45/255, blue: 85/255, alpha: 0.9)
+        } else {
+            backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.4)
+        }
+    }
 }

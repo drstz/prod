@@ -281,6 +281,7 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         }
         setNumberOfReminders()
+        
     }
     
     

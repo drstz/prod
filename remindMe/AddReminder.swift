@@ -120,18 +120,19 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     @IBAction func done() {
         print(#function)
         var tempReminder: Reminder?
-        var makingATask = false
+
         
         if var reminder = reminderToEdit {
             getReminderDetails(&reminder)
             delegate?.addReminderViewController(self, didFinishEditingReminder: reminder)
+            tempReminder = reminder
         } else {
             var reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as! Reminder
             getReminderDetails(&reminder)
             reminder.isComplete = false 
             delegate?.addReminderViewController(self, didFinishAddingReminder: reminder)
             tempReminder = reminder
-            makingATask = true
+            
             
         }
         
@@ -140,14 +141,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             try managedObjectContext.save()
             print("Saved...")
             
-            if makingATask {
-                print("Asking to schedule notification")
-                if tempReminder != nil {
-                    tempReminder!.scheduleNotifications()
-                }
-                
+            print("Asking to schedule notification")
+            if tempReminder != nil {
+                tempReminder!.scheduleNotifications()
             }
-            
             
         } catch {
             fatalCoreDataError(error)

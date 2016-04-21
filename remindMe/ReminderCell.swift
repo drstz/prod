@@ -56,7 +56,7 @@ class ReminderCell: UITableViewCell {
         
         enableReminderCell(reminder)
         configureLabels(reminder)
-        configureColor(reminder) 
+        configureColor(reminder)
     }
     
     func configureLabels(reminder: Reminder) {

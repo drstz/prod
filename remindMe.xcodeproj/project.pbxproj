@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		714CB6B51CCBA00E00723399 /* List+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714CB6B31CCBA00E00723399 /* List+CoreDataProperties.swift */; };
+		714CB6B61CCBA00E00723399 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714CB6B41CCBA00E00723399 /* List.swift */; };
 		7165A57C1CBB6A310088EA76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7165A57B1CBB6A310088EA76 /* AppDelegate.swift */; };
 		7165A57E1CBB6A310088EA76 /* AllRemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7165A57D1CBB6A310088EA76 /* AllRemindersViewController.swift */; };
 		7165A5811CBB6A310088EA76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7165A57F1CBB6A310088EA76 /* Main.storyboard */; };
@@ -19,9 +21,12 @@
 		71878B431CC49A9700AD0F27 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71878B411CC49A9700AD0F27 /* Reminder.swift */; };
 		71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 71ABD7021CBF893300F0BF90 /* DataModel.xcdatamodeld */; };
 		71ABD70A1CC0A87600F0BF90 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ABD7091CC0A87600F0BF90 /* Date.swift */; };
+		71B294881CC8D4AE0069714E /* notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B294871CC8D4AE0069714E /* notifications.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		714CB6B31CCBA00E00723399 /* List+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "List+CoreDataProperties.swift"; path = "../List+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		714CB6B41CCBA00E00723399 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = List.swift; path = ../List.swift; sourceTree = "<group>"; };
 		7165A5781CBB6A310088EA76 /* remindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = remindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7165A57B1CBB6A310088EA76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7165A57D1CBB6A310088EA76 /* AllRemindersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllRemindersViewController.swift; sourceTree = "<group>"; };
@@ -36,6 +41,7 @@
 		71878B411CC49A9700AD0F27 /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		71ABD7031CBF893300F0BF90 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		71ABD7091CC0A87600F0BF90 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Date.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		71B294871CC8D4AE0069714E /* notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = notifications.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +65,17 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		714CB6B71CCBA01C00723399 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				714CB6B31CCBA00E00723399 /* List+CoreDataProperties.swift */,
+				714CB6B41CCBA00E00723399 /* List.swift */,
+				71878B401CC49A9700AD0F27 /* Reminder+CoreDataProperties.swift */,
+				71878B411CC49A9700AD0F27 /* Reminder.swift */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
 		7165A56F1CBB6A310088EA76 = {
 			isa = PBXGroup;
 			children = (
@@ -78,17 +95,17 @@
 		7165A57A1CBB6A310088EA76 /* remindMe */ = {
 			isa = PBXGroup;
 			children = (
-				71386A421CC5EE5F007DF704 /* View */,
 				7165A5871CBB6A310088EA76 /* Info.plist */,
 				7165A5991CBCB4330088EA76 /* AddReminder.swift */,
 				7165A57D1CBB6A310088EA76 /* AllRemindersViewController.swift */,
 				7165A57B1CBB6A310088EA76 /* AppDelegate.swift */,
 				71ABD7091CC0A87600F0BF90 /* Date.swift */,
-				71878B411CC49A9700AD0F27 /* Reminder.swift */,
-				71878B401CC49A9700AD0F27 /* Reminder+CoreDataProperties.swift */,
+				71B294871CC8D4AE0069714E /* notifications.swift */,
 				7165A5971CBB92C30088EA76 /* ReminderCell.swift */,
 				7165A5821CBB6A310088EA76 /* Assets.xcassets */,
+				714CB6B71CCBA01C00723399 /* Core Data */,
 				71ABD7021CBF893300F0BF90 /* DataModel.xcdatamodeld */,
+				71386A421CC5EE5F007DF704 /* View */,
 			);
 			path = remindMe;
 			sourceTree = "<group>";
@@ -167,9 +184,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				7165A57E1CBB6A310088EA76 /* AllRemindersViewController.swift in Sources */,
+				714CB6B51CCBA00E00723399 /* List+CoreDataProperties.swift in Sources */,
+				71B294881CC8D4AE0069714E /* notifications.swift in Sources */,
 				71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */,
 				71ABD70A1CC0A87600F0BF90 /* Date.swift in Sources */,
 				7165A57C1CBB6A310088EA76 /* AppDelegate.swift in Sources */,
+				714CB6B61CCBA00E00723399 /* List.swift in Sources */,
 				7165A5981CBB92C30088EA76 /* ReminderCell.swift in Sources */,
 				71878B431CC49A9700AD0F27 /* Reminder.swift in Sources */,
 				7165A59A1CBCB4330088EA76 /* AddReminder.swift in Sources */,

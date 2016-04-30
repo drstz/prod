@@ -19,8 +19,14 @@ extension Reminder {
     
     @NSManaged var name: String
     
+    @NSManaged var idNumber: NSNumber
+    
     @NSManaged var isEnabled: NSNumber
     @NSManaged var isComplete: NSNumber
     @NSManaged var isRecurring: NSNumber
+    
+    
+    
+    @NSManaged var list: List
 
 }

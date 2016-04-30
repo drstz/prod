@@ -34,6 +34,13 @@ func addRecurringDate(delayAmount: Int, delayType : String, date: NSDate) -> NSD
     return calculateDate!
 }
 
+func roundSecondsToZero(date: NSDate) -> NSDate {
+    let calendar = NSCalendar.currentCalendar()
+    let newDate = calendar.dateBySettingUnit(.Second, value: 0, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
+    print(newDate)
+    return newDate!
+}
+
 func convertDateToString(dateToConvert date: NSDate) -> String {
     let formatter = NSDateFormatter()
     formatter.locale = NSLocale(localeIdentifier: preferredLanguage)

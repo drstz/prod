@@ -16,6 +16,9 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     var reminders = [Reminder]()
     
+    var notificationID: NSManagedObjectID!
+    
+    
     // MARK: fetchedResultsController
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
@@ -45,6 +48,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     // Core Data
     
     var managedObjectContext: NSManagedObjectContext!
+    var list: List!
  
     required init?(coder aDecoder: NSCoder) {
         reminders = [Reminder]()
@@ -91,7 +95,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
             let controller = navigationController.topViewController as! AddReminderViewController
             
             controller.delegate = self
-            controller.managedObjectContext = managedObjectContext 
+            controller.managedObjectContext = managedObjectContext
+            controller.list = list
             
         // Edit Reminder
         } else if segue.identifier == "EditReminder" {
@@ -175,6 +180,9 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
         tableView.rowHeight = 200
         setNumberOfReminders()
+        
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(printHello), name: "printHello", object: nil)
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -185,6 +193,11 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func printHello() {
+        
+        
     }
     
 }
@@ -283,8 +296,6 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
         setNumberOfReminders()
         
     }
-    
-    
     
     func controller(controller: NSFetchedResultsController,
                     didChangeSection sectionInfo: NSFetchedResultsSectionInfo,

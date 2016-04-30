@@ -41,6 +41,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     var managedObjectContext: NSManagedObjectContext!
     
+    var list: List!
+    
     // The Date
     
     var dueDate: NSDate?
@@ -121,7 +123,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         print(#function)
         var tempReminder: Reminder?
 
-        
         if var reminder = reminderToEdit {
             getReminderDetails(&reminder)
             delegate?.addReminderViewController(self, didFinishEditingReminder: reminder)
@@ -129,7 +130,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         } else {
             var reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as! Reminder
             getReminderDetails(&reminder)
-            reminder.isComplete = false 
+            reminder.isComplete = false
+            reminder.list = list
+            let numberOfReminders = list.numberOfReminders.integerValue
+            list.numberOfReminders = NSNumber(integer: numberOfReminders + 1)
+            reminder.addIDtoReminder()
+            
             delegate?.addReminderViewController(self, didFinishAddingReminder: reminder)
             tempReminder = reminder
             
@@ -137,9 +143,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         }
         
         do {
-            print("About to save")
             try managedObjectContext.save()
             print("Saved...")
+            print("ID NUMBER")
+            print(tempReminder?.idNumber)
+            print("NUMBER OF REMINDERS")
+            print(list.numberOfReminders)
+            print(tempReminder?.list.numberOfReminders)
             
             print("Asking to schedule notification")
             if tempReminder != nil {
@@ -326,8 +336,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         //print(#function)
         if indexPath.section == 1 && indexPath.row == 1 {
-            let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories: nil)
-            UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+            setNotifications()
+//            let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories: nil)
+//            UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
             return datePickerCell
         } else if indexPath.section == 2 && indexPath.row == 1 {
             return recurringPickerCell

@@ -19,10 +19,10 @@ class Reminder: NSManagedObject {
             UIApplication.sharedApplication().cancelLocalNotification(notification)
         }
     }
-
     
-    func iAlwaysGetCalled() {
-        print(#function)
+    func addIDtoReminder() {
+        let idasInteger = list.numberOfReminders.integerValue + idNumber.integerValue
+        idNumber = NSNumber(integer: idasInteger)
     }
     
     func notificationForThisItem() -> UILocalNotification? {
@@ -39,8 +39,7 @@ class Reminder: NSManagedObject {
     }
     
     func scheduleNotifications() {
-        print(#function)
-        print(self.objectID.URIRepresentation())
+        
         let existingNotification = notificationForThisItem()
         if let notification = existingNotification {
             print("Going to change a notification: \(notification)")
@@ -50,20 +49,28 @@ class Reminder: NSManagedObject {
         
         if self.objectID.temporaryID == false {
             let localNotification = UILocalNotification()
-            localNotification.fireDate = dueDate
+            
+            // localNotification.fireDate = dueDate
+            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
             localNotification.timeZone = NSTimeZone.defaultTimeZone()
-            localNotification.alertBody = name
+            
+            localNotification.alertBody = "Hi Bob!"
+            localNotification.alertAction = "Complete"
+            localNotification.category = "CATEGORY"
+            localNotification.alertTitle = name
             localNotification.soundName = UILocalNotificationDefaultSoundName
+   
             let reminderID = String(self.objectID.URIRepresentation())
+
             localNotification.userInfo = ["ReminderID": reminderID]
             
             UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
-            print("My id is not temp! Yay")
             print("Notificaiton  was set")
         } else {
-            print("My id is temp :-(")
             print("Notification was not set")
         }
+        
+        
     }
 
 }

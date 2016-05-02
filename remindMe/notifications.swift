@@ -12,6 +12,15 @@ import UIKit
 
 
 func setNotifications() {
+    let actions = setNotificationActions()
+    let categories = setNotificationCategories(actions)
+    let settings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories:  categories)
+    
+    UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+
+}
+
+func setNotificationActions() -> [UIMutableUserNotificationAction]  {
     let completeAction = UIMutableUserNotificationAction()
     completeAction.identifier = "Complete"
     completeAction.title = "Complete"
@@ -28,6 +37,12 @@ func setNotifications() {
     
     let actions = [completeAction, deferAction]
     
+    return actions
+    
+}
+
+func setNotificationCategories(actions : [UIMutableUserNotificationAction]) -> Set<UIMutableUserNotificationCategory>  {
+    
     let category = UIMutableUserNotificationCategory()
     
     category.identifier = "CATEGORY"
@@ -37,9 +52,8 @@ func setNotifications() {
     var categoriesForSettings = Set<UIMutableUserNotificationCategory>()
     categoriesForSettings.insert(category)
     
-    let settings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories:  categoriesForSettings)
-    UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-
+    return categoriesForSettings
+    
 }
 
 

@@ -107,13 +107,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
         }
-        
-        
-        
-       
-        
-        
-       
+
         return true
     }
 
@@ -143,7 +137,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      completionHandler: () -> Void) {
         
         let idFromNotification = notification.userInfo!["ReminderID"] as! Int
-        print(idFromNotification)
         
         let fetchRequest = NSFetchRequest(entityName: "Reminder")
         let predicate = NSPredicate(format: "%K == %@", "idNumber", "\(idFromNotification)" )
@@ -152,7 +145,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do {
             let result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
             let reminder = result[0] as! NSManagedObject as! Reminder
-            print(reminder.name)
+            
             let navigationController = window!.rootViewController as! UINavigationController
             let navigationViewControllers = navigationController.viewControllers
             let allRemindersViewController = navigationViewControllers[0] as! AllRemindersViewController

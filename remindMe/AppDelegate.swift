@@ -73,6 +73,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as! List
         list.numberOfReminders = 0
         
+        // IF not first time use
+        // NSUSERDEFAULTS
+        // let frog = NSEntityDescription.entityForName("List", inManagedObjectContext: managedObjectContext)
+        
         do {
             try managedObjectContext.save()
             print("Saved...")

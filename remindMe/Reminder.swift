@@ -15,7 +15,7 @@ class Reminder: NSManagedObject {
     
     deinit {
         if let notification = notificationForThisItem() {
-            print("Deleteing notification with task")
+            print("Deleting notification with task")
             UIApplication.sharedApplication().cancelLocalNotification(notification)
         }
     }
@@ -30,7 +30,7 @@ class Reminder: NSManagedObject {
         let allNotifications = UIApplication.sharedApplication().scheduledLocalNotifications!
         
         for notification in allNotifications {
-            if let reminderID = notification.userInfo?["ReminderID"]  as? String where reminderID == String(self.objectID.URIRepresentation()) {
+            if let reminderID = notification.userInfo?["ReminderID"]  as? Int where reminderID == self.idNumber {
                 print("I've found the notification!")
                 return notification
             }
@@ -60,9 +60,7 @@ class Reminder: NSManagedObject {
             localNotification.alertTitle = name
             localNotification.soundName = UILocalNotificationDefaultSoundName
    
-            let reminderID = String(self.objectID.URIRepresentation())
-
-            localNotification.userInfo = ["ReminderID": reminderID]
+            localNotification.userInfo = ["ReminderID": idNumber]
             
             UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
             print("Notificaiton  was set")

@@ -127,6 +127,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             getReminderDetails(&reminder)
             delegate?.addReminderViewController(self, didFinishEditingReminder: reminder)
             tempReminder = reminder
+            list = reminder.list
         } else {
             var reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as! Reminder
             getReminderDetails(&reminder)

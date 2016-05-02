@@ -183,6 +183,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         setNumberOfReminders()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
         
     }
     
@@ -205,6 +206,11 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         } catch {
             fatalCoreDataError(error)
         }
+    }
+    
+    func deferReminder() {
+        print("Going to defer reminder")
+        reminderFromNotification?.scheduleNotifications()
     }
     
 }

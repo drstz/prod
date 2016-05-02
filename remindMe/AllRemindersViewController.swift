@@ -182,7 +182,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         tableView.rowHeight = 200
         setNumberOfReminders()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(printHello), name: "printHello", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
         
     }
     
@@ -196,9 +196,15 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         // Dispose of any resources that can be recreated.
     }
     
-    func printHello() {
-        print(reminderFromNotification?.name)
-
+    func completeReminder() {
+        print("Going to complete reminder")
+        reminderFromNotification?.isComplete = true
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            fatalCoreDataError(error)
+        }
     }
     
 }

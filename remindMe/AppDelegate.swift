@@ -141,38 +141,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      handleActionWithIdentifier identifier: String?,
                      forLocalNotification notification: UILocalNotification,
                      completionHandler: () -> Void) {
+        
+        let idFromNotification = notification.userInfo!["ReminderID"] as! Int
+        print(idFromNotification)
+        
+        let fetchRequest = NSFetchRequest(entityName: "Reminder")
+        let predicate = NSPredicate(format: "%K == %@", "idNumber", "\(idFromNotification)" )
+        fetchRequest.predicate = predicate
+        
+        do {
+            let result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
+            let reminder = result[0] as! NSManagedObject as! Reminder
+            print(reminder.name)
+            let navigationController = window!.rootViewController as! UINavigationController
+            let navigationViewControllers = navigationController.viewControllers
+            let allRemindersViewController = navigationViewControllers[0] as! AllRemindersViewController
+            allRemindersViewController.reminderFromNotification = reminder
+            
+        } catch {
+            let fetchError = error as NSError
+            print(fetchError)
+        }
 
         if notification.category == "CATEGORY" {
             if identifier == "Complete" {
-                
-                print("You pressed the action")
 
-               
-                
-                
-                let idFromNotification = notification.userInfo!["ReminderID"] as! Int
-                print(idFromNotification)
-                
-                let fetchRequest = NSFetchRequest(entityName: "Reminder")
-                let predicate = NSPredicate(format: "%K == %@", "idNumber", "\(idFromNotification)" )
-                fetchRequest.predicate = predicate
-                
-                do {
-                    let result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
-                    let reminder = result[0] as! NSManagedObject as! Reminder
-                    print(reminder.name)
-                    let navigationController = window!.rootViewController as! UINavigationController
-                    let navigationViewControllers = navigationController.viewControllers
-                    let allRemindersViewController = navigationViewControllers[0] as! AllRemindersViewController
-                    allRemindersViewController.reminderFromNotification = reminder
-                    NSNotificationCenter.defaultCenter().postNotificationName("completeReminder", object: nil)
-                } catch {
-                    let fetchError = error as NSError
-                    print(fetchError)
-                }
-                
-                
-                
+                print("You asked to complete")
+                NSNotificationCenter.defaultCenter().postNotificationName("completeReminder", object: nil)
+            }
+            
+            if identifier == "Defer" {
+                print("You asked to defer")
+                NSNotificationCenter.defaultCenter().postNotificationName("deferReminder", object: nil)
             }
         }
         completionHandler()

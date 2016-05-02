@@ -21,6 +21,7 @@ func setNotifications() {
 }
 
 func setNotificationActions() -> [UIMutableUserNotificationAction]  {
+    
     let completeAction = UIMutableUserNotificationAction()
     completeAction.identifier = "Complete"
     completeAction.title = "Complete"
@@ -30,7 +31,7 @@ func setNotificationActions() -> [UIMutableUserNotificationAction]  {
     
     let deferAction = UIMutableUserNotificationAction()
     deferAction.identifier = "Defer"
-    deferAction.title = "Defer"
+    deferAction.title = "+10 min"
     deferAction.activationMode = UIUserNotificationActivationMode.Background
     deferAction.authenticationRequired = true
     deferAction.destructive = false

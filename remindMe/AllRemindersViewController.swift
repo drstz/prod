@@ -170,6 +170,24 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         print(#function)
     }
     
+    // MARK: Reminder Actions
+    
+    func completeReminder() {
+        print("Going to complete reminder")
+        reminderFromNotification?.isComplete = true
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            fatalCoreDataError(error)
+        }
+    }
+    
+    func deferReminder() {
+        print("Going to defer reminder")
+        reminderFromNotification?.scheduleNotifications(true)
+    }
+    
     // MARK: - The view
 
     override func viewDidLoad() {
@@ -197,21 +215,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         // Dispose of any resources that can be recreated.
     }
     
-    func completeReminder() {
-        print("Going to complete reminder")
-        reminderFromNotification?.isComplete = true
-        
-        do {
-            try managedObjectContext.save()
-        } catch {
-            fatalCoreDataError(error)
-        }
-    }
-    
-    func deferReminder() {
-        print("Going to defer reminder")
-        reminderFromNotification?.scheduleNotifications()
-    }
+
     
 }
 

@@ -19,7 +19,14 @@ func setNotifications() {
     completeAction.authenticationRequired = true
     completeAction.destructive = false
     
-    let actions = [completeAction]
+    let deferAction = UIMutableUserNotificationAction()
+    deferAction.identifier = "Defer"
+    deferAction.title = "Defer"
+    deferAction.activationMode = UIUserNotificationActivationMode.Background
+    deferAction.authenticationRequired = true
+    deferAction.destructive = false
+    
+    let actions = [completeAction, deferAction]
     
     let category = UIMutableUserNotificationCategory()
     

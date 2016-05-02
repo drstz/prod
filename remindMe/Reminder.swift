@@ -54,7 +54,7 @@ class Reminder: NSManagedObject {
             localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
             localNotification.timeZone = NSTimeZone.defaultTimeZone()
             
-            localNotification.alertBody = name
+            localNotification.alertBody = "Complete"
             localNotification.alertAction = "Complete"
             localNotification.category = "CATEGORY"
             localNotification.alertTitle = name

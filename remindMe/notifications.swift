@@ -12,14 +12,14 @@ import UIKit
 
 
 func setNotifications() {
-    let myAction = UIMutableUserNotificationAction()
-    myAction.identifier = "HELLO"
-    myAction.title = "Say hello"
-    myAction.activationMode = UIUserNotificationActivationMode.Background
-    myAction.authenticationRequired = true
-    myAction.destructive = false
+    let completeAction = UIMutableUserNotificationAction()
+    completeAction.identifier = "Complete"
+    completeAction.title = "Complete"
+    completeAction.activationMode = UIUserNotificationActivationMode.Background
+    completeAction.authenticationRequired = true
+    completeAction.destructive = false
     
-    let actions = [myAction]
+    let actions = [completeAction]
     
     let category = UIMutableUserNotificationCategory()
     

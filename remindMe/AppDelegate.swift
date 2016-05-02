@@ -143,7 +143,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      completionHandler: () -> Void) {
 
         if notification.category == "CATEGORY" {
-            if identifier == "HELLO" {
+            if identifier == "Complete" {
                 
                 print("You pressed the action")
 
@@ -165,7 +165,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let navigationViewControllers = navigationController.viewControllers
                     let allRemindersViewController = navigationViewControllers[0] as! AllRemindersViewController
                     allRemindersViewController.reminderFromNotification = reminder
-                    NSNotificationCenter.defaultCenter().postNotificationName("printHello", object: nil)
+                    NSNotificationCenter.defaultCenter().postNotificationName("completeReminder", object: nil)
                 } catch {
                     let fetchError = error as NSError
                     print(fetchError)

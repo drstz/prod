@@ -60,7 +60,7 @@ class ReminderCell: UITableViewCell {
     }
     
     func configureLabels(reminder: Reminder) {
-        reminderLabel.text = reminder.name
+        reminderLabel.text = "\(reminder.name)" + " " + "(\(reminder.idNumber))"
         dayLabel.text = convertDateToString(dayFromDate: reminder.dueDate)
         dateLabel.text = convertDateToString(dateFromDate: reminder.dueDate)
         timeLabel.text = convertDateToString(timeFromDate: reminder.dueDate)

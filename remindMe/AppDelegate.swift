@@ -68,28 +68,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-        
-        let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as! List
-        list.numberOfReminders = 0
-        
-        // IF not first time use
-        // NSUSERDEFAULTS
-        // let frog = NSEntityDescription.entityForName("List", inManagedObjectContext: managedObjectContext)
-        
-        do {
-            try managedObjectContext.save()
-            print("Saved...")
-            print(list.numberOfReminders)
-        } catch {
-            fatalCoreDataError(error)
-        }
+        registerDefaults()
         
         let navigationController = window!.rootViewController as! UINavigationController
         let navigationViewControllers = navigationController.viewControllers
         let allRemindersViewController = navigationViewControllers[0] as! AllRemindersViewController
         allRemindersViewController.managedObjectContext = managedObjectContext
-        allRemindersViewController.list = list 
+        
+        if isFirstTime() {
+            print("*** First time")
+            let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as! List
+            list.numberOfReminders = 0
+            
+            do {
+                try managedObjectContext.save()
+                print("Saved...")
+                print(list.numberOfReminders)
+            } catch {
+                fatalCoreDataError(error)
+            }
+            allRemindersViewController.list = list
+            
+        } else {
+            print("*** Fetching list")
+            let fetchRequest = NSFetchRequest()
+            let entityDescription = NSEntityDescription.entityForName("List", inManagedObjectContext: managedObjectContext)
+            
+            fetchRequest.entity = entityDescription
+            
+            do {
+                let result = try managedObjectContext.executeFetchRequest(fetchRequest)
+                let list = result[0] as! NSManagedObject as! List
+                print(list.numberOfReminders)
+                allRemindersViewController.list = list
+            } catch {
+                let fetchError = error as NSError
+                print(fetchError)
+            }
+            
+        }
+        
+        
+        
+       
+        
+        
+       
         return true
     }
 

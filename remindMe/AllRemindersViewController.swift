@@ -15,6 +15,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     // MARK: - Instance Variables
     
     var reminders = [Reminder]()
+    var reminderFromNotification: Reminder?
     
     var notificationID: NSManagedObjectID!
     
@@ -181,7 +182,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         tableView.rowHeight = 200
         setNumberOfReminders()
         
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(printHello), name: "printHello", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(printHello), name: "printHello", object: nil)
         
     }
     
@@ -196,8 +197,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     }
     
     func printHello() {
-        
-        
+        print(reminderFromNotification?.name)
+
     }
     
 }

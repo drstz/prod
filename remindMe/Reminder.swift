@@ -50,9 +50,13 @@ class Reminder: NSManagedObject {
         let localNotification = UILocalNotification()
         
         if isBeingDeferred {
-            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10 * 60)
+            // For testing
+            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
+//            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10 * 60)
         } else {
-            localNotification.fireDate = dueDate
+            // For testing
+            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
+//            localNotification.fireDate = dueDate
         }
 
         localNotification.timeZone = NSTimeZone.defaultTimeZone()

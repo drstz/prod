@@ -38,7 +38,7 @@ class Reminder: NSManagedObject {
         return nil
     }
     
-    func scheduleNotifications() {
+    func scheduleNotifications(isBeingDeferred: Bool = false) {
         
         let existingNotification = notificationForThisItem()
         if let notification = existingNotification {
@@ -47,27 +47,30 @@ class Reminder: NSManagedObject {
             print("Old notification was deleted")
         }
         
-        if self.objectID.temporaryID == false {
-            let localNotification = UILocalNotification()
-            
-            // localNotification.fireDate = dueDate
-            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
-            localNotification.timeZone = NSTimeZone.defaultTimeZone()
-            
-            localNotification.alertBody = "Hi Bob!"
-            localNotification.alertAction = "Complete"
-            localNotification.category = "CATEGORY"
-            localNotification.alertTitle = name
-            localNotification.soundName = UILocalNotificationDefaultSoundName
-   
-            localNotification.userInfo = ["ReminderID": idNumber]
-            
-            UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
-            print("Notificaiton  was set")
-        } else {
-            print("Notification was not set")
-        }
+        let localNotification = UILocalNotification()
         
+        if isBeingDeferred {
+            // For testing
+            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
+//            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10 * 60)
+        } else {
+            // For testing
+            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
+//            localNotification.fireDate = dueDate
+        }
+
+        localNotification.timeZone = NSTimeZone.defaultTimeZone()
+        
+        localNotification.alertBody = name
+//        localNotification.alertAction = "complete"
+        localNotification.category = "CATEGORY"
+        localNotification.alertTitle = name
+        localNotification.soundName = UILocalNotificationDefaultSoundName
+        
+        localNotification.userInfo = ["ReminderID": idNumber]
+        
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+        print("Notificaiton  was set")
         
     }
 

@@ -18,15 +18,14 @@ extension Reminder {
     @NSManaged var nextDueDate: NSDate?
     
     @NSManaged var name: String
+    @NSManaged var typeOfInterval: String?
     
     @NSManaged var idNumber: NSNumber
     
     @NSManaged var isEnabled: NSNumber
     @NSManaged var isComplete: NSNumber
     @NSManaged var isRecurring: NSNumber
-    
-    
-    
+ 
     @NSManaged var list: List
 
 }

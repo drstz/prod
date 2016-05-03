@@ -15,6 +15,6 @@ import CoreData
 extension List {
 
     @NSManaged var numberOfReminders: NSNumber
-    @NSManaged var reminders: NSSet?
+    @NSManaged weak var reminders: NSSet?
 
 }

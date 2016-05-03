@@ -263,6 +263,7 @@ extension AllRemindersViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
+        reminder.deleteReminderNotifications()
         managedObjectContext.deleteObject(reminder)
 
         do {

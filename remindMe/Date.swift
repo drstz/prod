@@ -17,15 +17,17 @@ func addRecurringDate(delayAmount: Int, delayType : String, date: NSDate) -> NSD
     let newDateComponents = NSDateComponents()
     
     switch delayType {
-    case "hours":
+    case "minute":
+        newDateComponents.minute = delayAmount
+    case "hour":
         newDateComponents.hour = delayAmount
-        case "days":
+    case "day":
         newDateComponents.day = delayAmount
-        case "weeks":
+    case "week":
         newDateComponents.day = 7 * delayAmount
-        case "months":
+    case "month":
         newDateComponents.month = delayAmount
-        case "years":
+    case "year":
         newDateComponents.year = delayAmount
     default:
         print("Cant add date")
@@ -70,6 +72,28 @@ func convertDateToString(timeFromDate date: NSDate) -> String {
     formatter.locale = NSLocale(localeIdentifier: preferredLanguage)
     formatter.dateFormat = "HH:mm "
     return formatter.stringFromDate(date)
+    
+}
+
+func recurringInterval(typeOfInterval: String) -> NSCalendarUnit {
+    
+    var calendarUnit = NSCalendarUnit()
+    
+    switch typeOfInterval {
+    case "minute":
+        calendarUnit = .Minute
+    case "hour":
+        calendarUnit = .Hour
+    case "day":
+        calendarUnit = .Day
+    case "month":
+        calendarUnit = .Month
+    case "year":
+        calendarUnit = .Year
+    default:
+        print("Error")
+    }
+    return calendarUnit
     
 }
 

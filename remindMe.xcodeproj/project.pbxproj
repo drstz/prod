@@ -60,9 +60,9 @@
 		71386A421CC5EE5F007DF704 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7165A5951CBB910B0088EA76 /* ReminderCell.xib */,
 				7165A5841CBB6A310088EA76 /* LaunchScreen.storyboard */,
 				7165A57F1CBB6A310088EA76 /* Main.storyboard */,
-				7165A5951CBB910B0088EA76 /* ReminderCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -70,10 +70,11 @@
 		714CB6B71CCBA01C00723399 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				714CB6B31CCBA00E00723399 /* List+CoreDataProperties.swift */,
 				714CB6B41CCBA00E00723399 /* List.swift */,
-				71878B401CC49A9700AD0F27 /* Reminder+CoreDataProperties.swift */,
+				714CB6B31CCBA00E00723399 /* List+CoreDataProperties.swift */,
 				71878B411CC49A9700AD0F27 /* Reminder.swift */,
+				71878B401CC49A9700AD0F27 /* Reminder+CoreDataProperties.swift */,
+				71ABD7021CBF893300F0BF90 /* DataModel.xcdatamodeld */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -104,11 +105,10 @@
 				71ABD7091CC0A87600F0BF90 /* Date.swift */,
 				71B294871CC8D4AE0069714E /* notifications.swift */,
 				7165A5971CBB92C30088EA76 /* ReminderCell.swift */,
+				71238DE01CD70AC100F9D706 /* UserDefaults.swift */,
 				7165A5821CBB6A310088EA76 /* Assets.xcassets */,
 				714CB6B71CCBA01C00723399 /* Core Data */,
-				71ABD7021CBF893300F0BF90 /* DataModel.xcdatamodeld */,
 				71386A421CC5EE5F007DF704 /* View */,
-				71238DE01CD70AC100F9D706 /* UserDefaults.swift */,
 			);
 			path = remindMe;
 			sourceTree = "<group>";

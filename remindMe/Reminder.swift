@@ -61,8 +61,8 @@ class Reminder: NSManagedObject {
 
         localNotification.timeZone = NSTimeZone.defaultTimeZone()
         
-        localNotification.alertBody = "Complete"
-        localNotification.alertAction = "Complete"
+        localNotification.alertBody = name
+//        localNotification.alertAction = "complete"
         localNotification.category = "CATEGORY"
         localNotification.alertTitle = name
         localNotification.soundName = UILocalNotificationDefaultSoundName

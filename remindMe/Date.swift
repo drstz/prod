@@ -75,6 +75,31 @@ func convertDateToString(timeFromDate date: NSDate) -> String {
     
 }
 
+func createNewDate(oldDate : NSDate, typeOfInterval: String) -> NSDate {
+    let newDateComponents = NSDateComponents()
+    
+    switch typeOfInterval {
+    case "minute":
+        newDateComponents.minute = 5
+    case "hour":
+        newDateComponents.hour = 1
+    case "day":
+        newDateComponents.day = 1
+    case "week":
+        newDateComponents.day = 7
+    case "month":
+        newDateComponents.month = 1
+    case "year":
+        newDateComponents.year = 1
+    default:
+        print("Cant add date")
+    }
+    
+    let calculateDate = NSCalendar.currentCalendar().dateByAddingComponents(newDateComponents, toDate: oldDate, options: NSCalendarOptions.init(rawValue: 0))
+    return calculateDate!
+    
+}
+
 func recurringInterval(typeOfInterval: String) -> NSCalendarUnit {
     
     var calendarUnit = NSCalendarUnit()

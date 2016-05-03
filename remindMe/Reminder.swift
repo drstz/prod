@@ -25,6 +25,18 @@ class Reminder: NSManagedObject {
         }
     }
     
+    func reminderIsComplete() -> Bool {
+        if isComplete == 0 {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    func setNewDueDate() -> NSDate {
+            return createNewDate(dueDate, typeOfInterval: typeOfInterval!)
+    }
+    
     func deleteReminderNotifications() {
         if let notification = notificationForThisItem() {
             UIApplication.sharedApplication().cancelLocalNotification(notification)
@@ -60,21 +72,46 @@ class Reminder: NSManagedObject {
         
         if isBeingDeferred {
             // For testing
+            print("Deffered Notification")
             localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
+            localNotification.repeatInterval = .Minute
 //            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10 * 60)
         } else {
             // For testing
             localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
+            localNotification.repeatInterval = .Minute
 //            localNotification.fireDate = dueDate
-            if reminderIsRecurring() {
-                localNotification.repeatInterval = recurringInterval(typeOfInterval!)
-            }
+            
         }
 
         localNotification.timeZone = NSTimeZone.defaultTimeZone()
         
         localNotification.alertBody = name
 //        localNotification.alertAction = "complete"
+        localNotification.category = "CATEGORY"
+        localNotification.alertTitle = name
+        localNotification.soundName = UILocalNotificationDefaultSoundName
+        
+        localNotification.userInfo = ["ReminderID": idNumber]
+        
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+        print("Notification  was set")
+        
+    }
+    
+    func scheduleRecurringNotification() {
+        deleteReminderNotifications()
+        
+        
+        let localNotification = UILocalNotification()
+        
+        localNotification.fireDate = dueDate
+        localNotification.repeatInterval = .Minute
+        
+        localNotification.timeZone = NSTimeZone.defaultTimeZone()
+        
+        localNotification.alertBody = name
+        //        localNotification.alertAction = "complete"
         localNotification.category = "CATEGORY"
         localNotification.alertTitle = name
         localNotification.soundName = UILocalNotificationDefaultSoundName

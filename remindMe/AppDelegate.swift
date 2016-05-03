@@ -171,6 +171,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         completionHandler()
     }
 
-
 }
 

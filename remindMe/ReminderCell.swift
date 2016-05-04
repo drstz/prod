@@ -74,8 +74,6 @@ class ReminderCell: UITableViewCell {
             nextDueDate.text = "No recurrence"
         }
         
-        
-        
         if reminderIsEnabled {
             isEnabledLabel.text = "Enabled"
         } else {

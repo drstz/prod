@@ -137,6 +137,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             delegate?.addReminderViewController(self, didFinishEditingReminder: reminder)
             tempReminder = reminder
             list = reminder.list
+            
         } else {
             var reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as! Reminder
             getReminderDetails(&reminder)
@@ -154,12 +155,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         
         do {
             try managedObjectContext.save()
-            print("Saved...")
-            print("ID NUMBER")
-            print(tempReminder?.idNumber)
-            print("NUMBER OF REMINDERS")
-            print(list.numberOfReminders)
-            print(tempReminder?.list.numberOfReminders)
             
             print("Asking to schedule notification")
             if tempReminder != nil {
@@ -173,6 +168,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     }
     
     @IBAction func dontRepeat() {
+        recurringDateLabel.text = "Doesn't repeat"
         newDate = nil
         recurringDateWasSet = false
         enableDontRepeatButton()
@@ -255,6 +251,15 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             } else {
                 completeButton.enabled = true 
             }
+            if let interval = reminderToEdit?.typeOfInterval {
+                timeInterval = interval
+            }
+            if let amount = reminderToEdit?.everyAmount {
+                recurringAmount = amount as Int
+            }
+            
+            updateRecurringLabel()
+            setRecurringPicker()
         }
         updateDueDateLabel()
         enableDoneButton()
@@ -329,7 +334,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     // MARK: - Reccurring Picker
     
     func updateRecurringLabel() {
-        recurringDateLabel.text = "\(timeInterval): \(recurringAmount)"
+        if recurringAmount != 1 {
+            recurringDateLabel.text = "Repeat every " + "\(recurringAmount) " + "\(timeInterval)" + "s"
+        } else {
+            recurringDateLabel.text = "Repeat every " + "\(timeInterval)"
+        }
+        
     }
     
     func showReccurringPicker() {
@@ -343,12 +353,15 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             recurringCell.detailTextLabel!.textColor = recurringCell.detailTextLabel!.tintColor
         }
         
+        
         tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths([indexPathRecurringPicker], withRowAnimation: .Fade)
         tableView.reloadRowsAtIndexPaths([indexPathRecurringRow], withRowAnimation: .None)
         tableView.endUpdates()
 
     }
+    
+    
     
     func hideRecurringPicker() {
         if reccuringPickerVisible {
@@ -581,6 +594,35 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         
         print(newDate!)
         
+        
+    }
+    
+    func setRecurringPicker() {
+        let amount = reminderToEdit?.everyAmount!
+        let interval = reminderToEdit?.typeOfInterval!
+        var intervalRow = 0
+        
+        recurringPicker.selectRow((amount?.integerValue)! - 1, inComponent: 0, animated: false)
+        
+        switch interval! {
+        case "minute":
+            intervalRow = 0
+        case "hour":
+            intervalRow = 1
+        case "day":
+        intervalRow = 2
+        case "week":
+        intervalRow = 3
+        case "month":
+        intervalRow = 4
+        case "year":
+            intervalRow = 5
+        default:
+            print("Date picking error")
+            
+        }
+        
+        recurringPicker.selectRow(intervalRow, inComponent: 1, animated: false)
         
     }
     

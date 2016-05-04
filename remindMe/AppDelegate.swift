@@ -68,6 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        print(#function)
         registerDefaults()
         
         let navigationController = window!.rootViewController as! UINavigationController
@@ -107,7 +108,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
         }
+        
+        
 
+        return true
+    }
+    
+    func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+        print(#function)
+        
         return true
     }
 
@@ -172,27 +181,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        let idFromNotification = notification.userInfo!["ReminderID"] as! Int
-        
-        let fetchRequest = NSFetchRequest(entityName: "Reminder")
-        let predicate = NSPredicate(format: "%K == %@", "idNumber", "\(idFromNotification)" )
-        fetchRequest.predicate = predicate
-        
-        do {
-            let result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
-            let reminder = result[0] as! NSManagedObject as! Reminder
+        print(#function)
+        if application.applicationState == .Inactive {
             
-            let navigationController = window!.rootViewController as! UINavigationController
-            let navigationViewControllers = navigationController.viewControllers
-            let allRemindersViewController = navigationViewControllers[0] as! AllRemindersViewController
-            allRemindersViewController.reminderFromNotification = reminder
+            print("Handling notification from the background")
             
-        } catch {
-            let fetchError = error as NSError
-            print(fetchError)
+            let idFromNotification = notification.userInfo!["ReminderID"] as! Int
+            
+            let fetchRequest = NSFetchRequest(entityName: "Reminder")
+            let predicate = NSPredicate(format: "%K == %@", "idNumber", "\(idFromNotification)" )
+            fetchRequest.predicate = predicate
+            
+            do {
+                let result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
+                let reminder = result[0] as! NSManagedObject as! Reminder
+                
+                let navigationController = window!.rootViewController as! UINavigationController
+                let navigationViewControllers = navigationController.viewControllers
+                let allRemindersViewController = navigationViewControllers[0] as! AllRemindersViewController
+                allRemindersViewController.reminderFromNotification = reminder
+                
+            } catch {
+                let fetchError = error as NSError
+                print(fetchError)
+            }
+            
+            NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
+            
+            
         }
         
-        NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
     }
 
 }

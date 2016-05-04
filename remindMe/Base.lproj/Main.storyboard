@@ -45,6 +45,7 @@
                     <connections>
                         <outlet property="tableView" destination="izq-nV-FBg" id="maa-dz-lVZ"/>
                         <segue destination="EXe-5T-xJU" kind="presentation" identifier="EditReminder" id="XiK-Cj-5ub"/>
+                        <segue destination="EXe-5T-xJU" kind="presentation" identifier="ViewReminder" id="Hyd-Sp-vHQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -272,6 +273,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="XiK-Cj-5ub"/>
+        <segue reference="Hyd-Sp-vHQ"/>
     </inferredMetricsTieBreakers>
 </document>

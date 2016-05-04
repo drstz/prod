@@ -78,9 +78,9 @@ class Reminder: NSManagedObject {
 //            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10 * 60)
         } else {
             // For testing
-//            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
+            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
             localNotification.repeatInterval = .Minute
-            localNotification.fireDate = dueDate
+            // localNotification.fireDate = dueDate
             
             
         }

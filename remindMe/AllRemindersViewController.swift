@@ -111,7 +111,19 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
                 let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
                 controller.reminderToEdit = reminder
             }
+        } else if segue.identifier == "ViewReminder" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let controller = navigationController.topViewController as! AddReminderViewController
+            
+            controller.delegate = self
+            controller.managedObjectContext = managedObjectContext
+            
+            if let reminder = sender as? Reminder {
+                controller.reminderToEdit = reminder
+                controller.managedObjectContext = managedObjectContext
+            }
         }
+        
     }
     
     // MARK: - ReminderCellDelegate
@@ -202,7 +214,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     }
     
     func viewReminder() {
-        performSegueWithIdentifier(<#T##identifier: String##String#>, sender: <#T##AnyObject?#>)
+        reminderFromNotification?.deleteReminderNotifications()
+        performSegueWithIdentifier("ViewReminder", sender: reminderFromNotification)
         
     }
     

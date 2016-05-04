@@ -241,7 +241,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         //print(#function)
   
         if let reminder = reminderToEdit {
-            title = "Edit reminder"
+            title = "Edit"
             reminderNameField.text = reminder.name
             dueDate = reminder.dueDate
             dueDateIsSet = true

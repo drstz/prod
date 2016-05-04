@@ -3,6 +3,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--All Reminders View Controller-->
@@ -93,18 +95,21 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="pVF-tA-mfC">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="pVF-tA-mfC">
                                                     <rect key="frame" x="543" y="6" width="51" height="31"/>
                                                 </switch>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IOi-x5-3cM">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IOi-x5-3cM">
                                                     <rect key="frame" x="261" y="7" width="79" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="79" id="uOA-n6-pxd"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <state key="normal" title="No Repeat"/>
                                                     <connections>
                                                         <action selector="dontRepeat" destination="y4H-jB-eKA" eventType="touchUpInside" id="vcf-Dd-SST"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o0T-A9-xlE">
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o0T-A9-xlE">
                                                     <rect key="frame" x="8" y="6" width="68" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <state key="normal" title="Complete"/>
@@ -113,6 +118,18 @@
                                                     </connections>
                                                 </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="o0T-A9-xlE" firstAttribute="top" secondItem="HiA-ki-BuS" secondAttribute="top" constant="6" id="AEW-fr-p6C"/>
+                                                <constraint firstItem="IOi-x5-3cM" firstAttribute="baseline" secondItem="o0T-A9-xlE" secondAttribute="firstBaseline" id="CoC-nc-TQR"/>
+                                                <constraint firstAttribute="trailing" secondItem="pVF-tA-mfC" secondAttribute="trailing" constant="8" id="IQ4-8M-Jl1"/>
+                                                <constraint firstAttribute="bottom" secondItem="o0T-A9-xlE" secondAttribute="bottom" constant="7" id="IlJ-oU-CHY"/>
+                                                <constraint firstItem="IOi-x5-3cM" firstAttribute="firstBaseline" secondItem="o0T-A9-xlE" secondAttribute="baseline" id="Shu-c0-UYG"/>
+                                                <constraint firstItem="o0T-A9-xlE" firstAttribute="leading" secondItem="HiA-ki-BuS" secondAttribute="leading" constant="8" id="btp-BU-AKu"/>
+                                                <constraint firstItem="IOi-x5-3cM" firstAttribute="centerX" secondItem="HiA-ki-BuS" secondAttribute="centerX" id="fiv-I2-WJ3"/>
+                                                <constraint firstItem="IOi-x5-3cM" firstAttribute="bottom" secondItem="pVF-tA-mfC" secondAttribute="bottom" id="i5z-ey-bsh"/>
+                                                <constraint firstItem="pVF-tA-mfC" firstAttribute="top" secondItem="HiA-ki-BuS" secondAttribute="top" constant="6" id="pTk-gV-6fV"/>
+                                                <constraint firstAttribute="bottom" secondItem="pVF-tA-mfC" secondAttribute="bottom" constant="6" id="xGd-Xi-zZf"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>

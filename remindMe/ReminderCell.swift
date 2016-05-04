@@ -65,7 +65,11 @@ class ReminderCell: UITableViewCell {
         dateLabel.text = convertDateToString(dateFromDate: reminder.dueDate)
         timeLabel.text = convertDateToString(timeFromDate: reminder.dueDate)
         if let nexty = reminder.nextDueDate {
-            nextDueDate.text = convertDateToString(dateToConvert: nexty)
+            if reminder.everyAmount! != 1 {
+                nextDueDate.text = "Every " + "\(reminder.everyAmount!) " + "\(reminder.typeOfInterval!)" + "s"
+            } else {
+                nextDueDate.text = "Every " + "\(reminder.typeOfInterval!)"
+            }
         } else {
             nextDueDate.text = "No recurrence"
         }

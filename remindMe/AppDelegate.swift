@@ -207,11 +207,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
             NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
-            
-            
+        } else {
+            print("Still receiving")
         }
-        
     }
-
 }
-

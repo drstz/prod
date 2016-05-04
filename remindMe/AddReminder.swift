@@ -87,7 +87,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     // Buttons
     
     @IBOutlet weak var doneBarButton : UIBarButtonItem!
-    @IBOutlet weak var recurringButton: UIBarButtonItem!
+    @IBOutlet weak var recurringButton: UIButton!
+    @IBOutlet weak var completeButton: UIButton!
     
     // Switch
     
@@ -177,6 +178,31 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         enableDontRepeatButton()
     }
     
+    @IBAction func complete() {
+        print("Going to complete reminder")
+        reminderToEdit?.isComplete = true
+        
+        let reminderReccurs = reminderToEdit?.reminderIsRecurring()
+        
+        if reminderReccurs! {
+            let newDate = reminderToEdit?.setNewDueDate()
+            reminderToEdit?.dueDate = newDate!
+            reminderToEdit?.scheduleNotifications()
+        } else {
+            reminderToEdit?.deleteReminderNotifications()
+            
+        }
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            fatalCoreDataError(error)
+        }
+        
+        delegate?.addReminderViewController(self, didFinishEditingReminder: reminderToEdit!)
+        
+    }
+    
     // Date Picker
     
     @IBAction func dateChanged(datePicker: UIDatePicker) {
@@ -223,6 +249,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             recurringDateWasSet = reminder.isRecurring as Bool
             if let recurringDate = reminder.nextDueDate {
                 newDate = recurringDate
+            }
+            if reminder.isComplete == 1 {
+                completeButton.enabled = false
+            } else {
+                completeButton.enabled = true 
             }
         }
         updateDueDateLabel()

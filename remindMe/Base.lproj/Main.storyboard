@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--All Reminders View Controller-->
@@ -87,12 +86,41 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="ffU-vp-XTM">
+                                        <rect key="frame" x="0.0" y="158" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ffU-vp-XTM" id="HiA-ki-BuS">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="pVF-tA-mfC">
+                                                    <rect key="frame" x="543" y="6" width="51" height="31"/>
+                                                </switch>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IOi-x5-3cM">
+                                                    <rect key="frame" x="261" y="7" width="79" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <state key="normal" title="No Repeat"/>
+                                                    <connections>
+                                                        <action selector="dontRepeat" destination="y4H-jB-eKA" eventType="touchUpInside" id="vcf-Dd-SST"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o0T-A9-xlE">
+                                                    <rect key="frame" x="8" y="6" width="68" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <state key="normal" title="Complete"/>
+                                                    <connections>
+                                                        <action selector="complete" destination="y4H-jB-eKA" eventType="touchUpInside" id="f0c-0L-bU8"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Due Date" id="1hA-h1-Jhb">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="cUE-qd-G5q" detailTextLabel="wOD-0E-6su" style="IBUITableViewCellStyleValue1" id="CUz-Zn-fK9">
-                                        <rect key="frame" x="0.0" y="209" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="253" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CUz-Zn-fK9" id="pIb-F7-zrB">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -120,7 +148,7 @@
                             <tableViewSection headerTitle="Recurring" id="PZZ-vf-ehn">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="fsB-X8-9od" detailTextLabel="99v-SE-qd5" style="IBUITableViewCellStyleValue1" id="zvQ-6Z-yi2">
-                                        <rect key="frame" x="0.0" y="304" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="348" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zvQ-6Z-yi2" id="TB6-Ux-tvt">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -157,32 +185,20 @@
                                 <action selector="cancel" destination="y4H-jB-eKA" id="Lj4-J7-9bZ"/>
                             </connections>
                         </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem enabled="NO" style="done" systemItem="done" id="JCj-VB-1gz">
-                                <connections>
-                                    <action selector="done" destination="y4H-jB-eKA" id="t2u-6d-rzN"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem enabled="NO" title="Don't repeat" id="wSc-tg-JGY">
-                                <connections>
-                                    <action selector="dontRepeat" destination="y4H-jB-eKA" id="s2s-ut-eXG"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem style="plain" id="14J-AH-Nas">
-                                <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="WDI-z2-Ch0">
-                                    <rect key="frame" x="378" y="6" width="51" height="31"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </switch>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="done" systemItem="done" id="JCj-VB-1gz">
+                            <connections>
+                                <action selector="done" destination="y4H-jB-eKA" id="t2u-6d-rzN"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="completeButton" destination="o0T-A9-xlE" id="Rg9-Ao-BlV"/>
                         <outlet property="datePicker" destination="cxX-D0-ahn" id="Q8T-ol-i8g"/>
                         <outlet property="datePickerCell" destination="keT-2G-HMn" id="68Q-kO-gfU"/>
                         <outlet property="doneBarButton" destination="JCj-VB-1gz" id="h7O-FF-MdA"/>
                         <outlet property="dueDateLabel" destination="wOD-0E-6su" id="dWN-dh-qFw"/>
-                        <outlet property="enableSwitch" destination="WDI-z2-Ch0" id="AKm-HE-Cs7"/>
-                        <outlet property="recurringButton" destination="wSc-tg-JGY" id="ojs-P2-wOO"/>
+                        <outlet property="enableSwitch" destination="pVF-tA-mfC" id="FJ7-35-ODB"/>
+                        <outlet property="recurringButton" destination="IOi-x5-3cM" id="gFh-Xa-pZU"/>
                         <outlet property="recurringDateLabel" destination="99v-SE-qd5" id="FnY-kT-IEC"/>
                         <outlet property="recurringPicker" destination="RsU-xJ-Jjh" id="CW8-fo-LW7"/>
                         <outlet property="recurringPickerCell" destination="30K-sv-yeC" id="0kz-l8-r4z"/>

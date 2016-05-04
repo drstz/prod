@@ -181,29 +181,22 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         if reminderReccurs! {
             let newDate = reminderFromNotification?.setNewDueDate()
             reminderFromNotification?.dueDate = newDate!
+            reminderFromNotification?.scheduleNotifications()
+        } else {
+            reminderFromNotification?.deleteReminderNotifications()
+            
         }
-        
-        
         
         do {
             try managedObjectContext.save()
         } catch {
             fatalCoreDataError(error)
         }
-        
-        if reminderReccurs! {
-            reminderFromNotification?.scheduleRecurringNotification()
-        } else {
-            reminderFromNotification?.deleteReminderNotifications()
-        }
-        
-        
-        
+
     }
     
     func deferReminder() {
         print("Going to defer reminder")
-        
         
         reminderFromNotification?.scheduleNotifications(true)
     }

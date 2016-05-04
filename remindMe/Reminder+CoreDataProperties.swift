@@ -20,6 +20,8 @@ extension Reminder {
     @NSManaged var name: String
     @NSManaged var typeOfInterval: String?
     
+    @NSManaged var everyAmount: NSNumber?
+    
     @NSManaged var idNumber: NSNumber
     
     @NSManaged var isEnabled: NSNumber

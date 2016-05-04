@@ -6,6 +6,7 @@
     </entity>
     <entity name="Reminder" representedClassName=".Reminder" syncable="YES">
         <attribute name="dueDate" attributeType="Date" syncable="YES"/>
+        <attribute name="everyAmount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="idNumber" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="isComplete" attributeType="Boolean" syncable="YES"/>
         <attribute name="isEnabled" attributeType="Boolean" syncable="YES"/>
@@ -17,6 +18,6 @@
     </entity>
     <elements>
         <element name="List" positionX="-792" positionY="-57" width="128" height="73"/>
-        <element name="Reminder" positionX="-405" positionY="-69" width="128" height="180"/>
+        <element name="Reminder" positionX="-405" positionY="-69" width="128" height="195"/>
     </elements>
 </model>

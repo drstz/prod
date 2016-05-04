@@ -34,10 +34,10 @@ class Reminder: NSManagedObject {
     }
     
     func setNewDueDate() -> NSDate {
-            return createNewDate(dueDate, typeOfInterval: typeOfInterval!)
+        return createNewDate(dueDate, typeOfInterval: typeOfInterval!, everyAmount: everyAmount! as Int)
     }
     
-    func deleteReminderNotifications() {
+    func deleteReminderNotifications()  {
         if let notification = notificationForThisItem() {
             UIApplication.sharedApplication().cancelLocalNotification(notification)
             print("Notification was deleted")
@@ -78,49 +78,28 @@ class Reminder: NSManagedObject {
 //            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10 * 60)
         } else {
             // For testing
-            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
+//            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
             localNotification.repeatInterval = .Minute
-//            localNotification.fireDate = dueDate
+            localNotification.fireDate = dueDate
+            
             
         }
 
         localNotification.timeZone = NSTimeZone.defaultTimeZone()
         
         localNotification.alertBody = name
-//        localNotification.alertAction = "complete"
         localNotification.category = "CATEGORY"
         localNotification.alertTitle = name
         localNotification.soundName = UILocalNotificationDefaultSoundName
         
         localNotification.userInfo = ["ReminderID": idNumber]
         
+        print(localNotification.fireDate)
+        print(dueDate)
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
         print("Notification  was set")
         
     }
     
-    func scheduleRecurringNotification() {
-        deleteReminderNotifications()
-        
-        
-        let localNotification = UILocalNotification()
-        
-        localNotification.fireDate = dueDate
-        localNotification.repeatInterval = .Minute
-        
-        localNotification.timeZone = NSTimeZone.defaultTimeZone()
-        
-        localNotification.alertBody = name
-        //        localNotification.alertAction = "complete"
-        localNotification.category = "CATEGORY"
-        localNotification.alertTitle = name
-        localNotification.soundName = UILocalNotificationDefaultSoundName
-        
-        localNotification.userInfo = ["ReminderID": idNumber]
-        
-        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
-        print("Notification  was set")
-        
-    }
 
 }

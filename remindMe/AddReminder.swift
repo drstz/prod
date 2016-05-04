@@ -55,6 +55,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     var intervalType: String?
     
+    var everyAmount: Int?
+    
     enum choiceOfDelay {
         case Hour
         case Day
@@ -114,9 +116,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         if let nextDueDate = newDate {
             reminder.nextDueDate = nextDueDate
             reminder.typeOfInterval = timeInterval
+            reminder.everyAmount = recurringAmount
         } else {
             reminder.nextDueDate = nil
-            reminder.typeOfInterval = nil 
+            reminder.typeOfInterval = nil
+            reminder.everyAmount = nil 
         }
         
         reminder.isEnabled = enableSwitch.on

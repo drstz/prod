@@ -50,8 +50,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     var reccuringPickerVisible = false
     var recurringAmount = 1
-    var timeInterval = "hours"
+    var timeInterval = "minute"
     var recurringDateWasSet = false
+    
+    var intervalType: String?
+    
+    var everyAmount: Int?
     
     enum choiceOfDelay {
         case Hour
@@ -111,8 +115,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         reminder.dueDate = dueDate!
         if let nextDueDate = newDate {
             reminder.nextDueDate = nextDueDate
+            reminder.typeOfInterval = timeInterval
+            reminder.everyAmount = recurringAmount
         } else {
             reminder.nextDueDate = nil
+            reminder.typeOfInterval = nil
+            reminder.everyAmount = nil 
         }
         
         reminder.isEnabled = enableSwitch.on
@@ -480,7 +488,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         if component == 0 {
             return 20
         } else {
-            return 5
+            return 6
         }
     }
     
@@ -493,14 +501,16 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         } else {
             switch row {
             case 0:
-                return "hours"
+                return "minutes"
             case 1:
-                return "days"
+                return "hours"
             case 2:
-                return "weeks"
+                return "days"
             case 3:
-                return "months"
+                return "weeks"
             case 4:
+                return "months"
+            case 5:
                 return "years"
             default:
                 return "No idea"
@@ -515,15 +525,17 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         } else {
             switch row {
             case 0:
-                timeInterval = "hours"
+                timeInterval = "minute"
             case 1:
-                timeInterval = "days"
+                timeInterval = "hour"
             case 2:
-                timeInterval = "weeks"
+                timeInterval = "day"
             case 3:
-                timeInterval = "months"
+                timeInterval = "week"
             case 4:
-                timeInterval = "years"
+                timeInterval = "month"
+            case 5:
+                timeInterval = "year"
             default:
                 print("Error")
             }
@@ -535,6 +547,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         enableDontRepeatButton()
     
         newDate = addRecurringDate(recurringAmount, delayType: timeInterval, date: dueDate!)
+        
         print(newDate!)
         
         

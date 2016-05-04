@@ -17,15 +17,17 @@ func addRecurringDate(delayAmount: Int, delayType : String, date: NSDate) -> NSD
     let newDateComponents = NSDateComponents()
     
     switch delayType {
-    case "hours":
+    case "minute":
+        newDateComponents.minute = delayAmount
+    case "hour":
         newDateComponents.hour = delayAmount
-        case "days":
+    case "day":
         newDateComponents.day = delayAmount
-        case "weeks":
+    case "week":
         newDateComponents.day = 7 * delayAmount
-        case "months":
+    case "month":
         newDateComponents.month = delayAmount
-        case "years":
+    case "year":
         newDateComponents.year = delayAmount
     default:
         print("Cant add date")
@@ -70,6 +72,54 @@ func convertDateToString(timeFromDate date: NSDate) -> String {
     formatter.locale = NSLocale(localeIdentifier: preferredLanguage)
     formatter.dateFormat = "HH:mm "
     return formatter.stringFromDate(date)
+    
+}
+
+func createNewDate(oldDate : NSDate, typeOfInterval: String, everyAmount: Int) -> NSDate {
+    let newDateComponents = NSDateComponents()
+    
+    switch typeOfInterval {
+    case "minute":
+        newDateComponents.minute = everyAmount
+    case "hour":
+        newDateComponents.hour = everyAmount
+    case "day":
+        newDateComponents.day = everyAmount
+    case "week":
+        newDateComponents.day = everyAmount * 7
+    case "month":
+        newDateComponents.month = everyAmount
+    case "year":
+        newDateComponents.year = everyAmount
+    default:
+        print("Cant add date")
+    }
+    
+    let calculateDate = NSCalendar.currentCalendar().dateByAddingComponents(newDateComponents, toDate: oldDate, options: NSCalendarOptions.init(rawValue: 0))
+    print(calculateDate!)
+    return calculateDate!
+    
+}
+
+func recurringInterval(typeOfInterval: String) -> NSCalendarUnit {
+    
+    var calendarUnit = NSCalendarUnit()
+    
+    switch typeOfInterval {
+    case "minute":
+        calendarUnit = .Minute
+    case "hour":
+        calendarUnit = .Hour
+    case "day":
+        calendarUnit = .Day
+    case "month":
+        calendarUnit = .Month
+    case "year":
+        calendarUnit = .Year
+    default:
+        print("Error")
+    }
+    return calendarUnit
     
 }
 

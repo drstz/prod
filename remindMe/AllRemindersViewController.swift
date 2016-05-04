@@ -176,16 +176,34 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         print("Going to complete reminder")
         reminderFromNotification?.isComplete = true
         
+        let reminderReccurs = reminderFromNotification?.reminderIsRecurring()
+        
+        if reminderReccurs! {
+            let newDate = reminderFromNotification?.setNewDueDate()
+            reminderFromNotification?.dueDate = newDate!
+            reminderFromNotification?.scheduleNotifications()
+        } else {
+            reminderFromNotification?.deleteReminderNotifications()
+            
+        }
+        
         do {
             try managedObjectContext.save()
         } catch {
             fatalCoreDataError(error)
         }
+
     }
     
     func deferReminder() {
         print("Going to defer reminder")
+        
         reminderFromNotification?.scheduleNotifications(true)
+    }
+    
+    func viewReminder() {
+        performSegueWithIdentifier(<#T##identifier: String##String#>, sender: <#T##AnyObject?#>)
+        
     }
     
     // MARK: - The view
@@ -202,6 +220,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
+
         
     }
     
@@ -263,6 +283,7 @@ extension AllRemindersViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
+        reminder.deleteReminderNotifications()
         managedObjectContext.deleteObject(reminder)
 
         do {

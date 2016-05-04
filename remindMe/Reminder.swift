@@ -14,64 +14,92 @@ import UIKit
 class Reminder: NSManagedObject {
     
     deinit {
+        print("Reminder was deleted")
+    }
+    
+    func reminderIsRecurring() -> Bool {
+        if isRecurring == 0 {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    func reminderIsComplete() -> Bool {
+        if isComplete == 0 {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    func setNewDueDate() -> NSDate {
+        return createNewDate(dueDate, typeOfInterval: typeOfInterval!, everyAmount: everyAmount! as Int)
+    }
+    
+    func deleteReminderNotifications()  {
         if let notification = notificationForThisItem() {
-            print("Deleting notification with task")
             UIApplication.sharedApplication().cancelLocalNotification(notification)
+            print("Notification was deleted")
+        } else {
+            print("No notifications were found")
         }
     }
     
     func addIDtoReminder() {
-        let idasInteger = list.numberOfReminders.integerValue + idNumber.integerValue
-        idNumber = NSNumber(integer: idasInteger)
+        let idAsInteger = list.numberOfReminders.integerValue + idNumber.integerValue
+        idNumber = NSNumber(integer: idAsInteger)
     }
     
     func notificationForThisItem() -> UILocalNotification? {
-        print(#function)
         let allNotifications = UIApplication.sharedApplication().scheduledLocalNotifications!
         
         for notification in allNotifications {
-            if let reminderID = notification.userInfo?["ReminderID"]  as? Int where reminderID == self.idNumber {
-                print("I've found the notification!")
+            if let reminderID = notification.userInfo?["ReminderID"]  as? Int where reminderID == idNumber {
+                print("Returning notifications")
                 return notification
             }
         }
+        print("Found no notifications")
         return nil
     }
     
     func scheduleNotifications(isBeingDeferred: Bool = false) {
         
-        let existingNotification = notificationForThisItem()
-        if let notification = existingNotification {
-            print("Going to change a notification: \(notification)")
-            UIApplication.sharedApplication().cancelLocalNotification(notification)
-            print("Old notification was deleted")
-        }
+        deleteReminderNotifications()
         
         let localNotification = UILocalNotification()
         
         if isBeingDeferred {
             // For testing
+            print("Deffered Notification")
             localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
+            localNotification.repeatInterval = .Minute
 //            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10 * 60)
         } else {
             // For testing
-            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
-//            localNotification.fireDate = dueDate
+//            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
+            localNotification.repeatInterval = .Minute
+            localNotification.fireDate = dueDate
+            
+            
         }
 
         localNotification.timeZone = NSTimeZone.defaultTimeZone()
         
         localNotification.alertBody = name
-//        localNotification.alertAction = "complete"
         localNotification.category = "CATEGORY"
         localNotification.alertTitle = name
         localNotification.soundName = UILocalNotificationDefaultSoundName
         
         localNotification.userInfo = ["ReminderID": idNumber]
         
+        print(localNotification.fireDate)
+        print(dueDate)
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
-        print("Notificaiton  was set")
+        print("Notification  was set")
         
     }
+    
 
 }

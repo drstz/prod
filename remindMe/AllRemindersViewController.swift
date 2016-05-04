@@ -201,6 +201,11 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         reminderFromNotification?.scheduleNotifications(true)
     }
     
+    func viewReminder() {
+        performSegueWithIdentifier(<#T##identifier: String##String#>, sender: <#T##AnyObject?#>)
+        
+    }
+    
     // MARK: - The view
 
     override func viewDidLoad() {
@@ -215,6 +220,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
+
         
     }
     

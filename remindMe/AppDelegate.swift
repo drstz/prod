@@ -170,6 +170,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         completionHandler()
     }
+    
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        let idFromNotification = notification.userInfo!["ReminderID"] as! Int
+        
+        let fetchRequest = NSFetchRequest(entityName: "Reminder")
+        let predicate = NSPredicate(format: "%K == %@", "idNumber", "\(idFromNotification)" )
+        fetchRequest.predicate = predicate
+        
+        do {
+            let result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
+            let reminder = result[0] as! NSManagedObject as! Reminder
+            
+            let navigationController = window!.rootViewController as! UINavigationController
+            let navigationViewControllers = navigationController.viewControllers
+            let allRemindersViewController = navigationViewControllers[0] as! AllRemindersViewController
+            allRemindersViewController.reminderFromNotification = reminder
+            
+        } catch {
+            let fetchError = error as NSError
+            print(fetchError)
+        }
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
+    }
 
 }
 

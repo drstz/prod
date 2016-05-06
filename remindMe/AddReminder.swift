@@ -46,14 +46,27 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     // The Date
     
     var dueDate: NSDate?
-    var datePickerVisible = false
+    var datePickerVisible = false {
+        
+        didSet {
+            print("Datepicker was set from \(oldValue) to \(datePickerVisible)")
+        }
+    }
     
-    var reccuringPickerVisible = false
+    var reccuringPickerVisible = false {
+        
+        didSet {
+            print("Recurring was set from \(oldValue) to \(reccuringPickerVisible)")
+        }
+    }
+    
     var recurringAmount = 1
     var timeInterval = "minute"
     var recurringDateWasSet = false
     
     var intervalType: String?
+    
+    var indentationCounter = 0
     
     var everyAmount: Int?
     
@@ -232,6 +245,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         reminderNameField.becomeFirstResponder()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        print(#function)
+        print("----------------------------------------------------")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //print(#function)
@@ -265,6 +284,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         enableDoneButton()
         enableDontRepeatButton()
         
+        
     }
     
     // MARK: - Date Picker
@@ -295,6 +315,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         
         tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths([indexPathDatePicker], withRowAnimation: .Fade)
+        print("Inserted row")
         tableView.reloadRowsAtIndexPaths([indexPathDateRow], withRowAnimation: .None)
         tableView.endUpdates()
         
@@ -308,6 +329,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     }
     
     func hideDatePicker() {
+        //print(#function)
         if datePickerVisible {
             datePickerVisible = false
             let indexPathDateRow = NSIndexPath(forRow: 0, inSection: 1)
@@ -324,6 +346,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             tableView.beginUpdates()
             tableView.reloadRowsAtIndexPaths([indexPathDateRow], withRowAnimation: .None)
             tableView.deleteRowsAtIndexPaths([indexPathDatePicker], withRowAnimation: .Fade)
+            print("Deleted row")
             tableView.endUpdates()
             enableDoneButton()
         }
@@ -387,6 +410,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        print(" ")
+        print("---------------------RETURN CELL S:\(indexPath.section) R:\(indexPath.row) ------------------------------  ")
         //print(#function)
         if indexPath.section == 1 && indexPath.row == 1 {
             setNotifications()
@@ -401,25 +426,34 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("--------------------------------------------------- NB OF ROWS S: \(section)")
         //print(#function)
         if section == 1 && datePickerVisible {
+            print("Changing number of rows in section")
             return 2
         } else if section == 2 && reccuringPickerVisible {
             return 2
         } else {
+            print("--------------------------------------------------- = \(super.tableView(tableView, numberOfRowsInSection: section)) ")
             return super.tableView(tableView, numberOfRowsInSection: section)
         }
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         //print(#function)
+        print("--------------------------------------------------- HEIGHT S:\(indexPath.section) R:\(indexPath.row)")
         if indexPath.section == 1 && indexPath.row == 1 {
+            print("Getting the new Height")
             return 217
         } else if indexPath.section == 2 && indexPath.row == 1 {
+            print("Getting the new Height")
             return 217
         } else {
+            print("--------------------------------------------------- = \(super.tableView(tableView, heightForRowAtIndexPath: indexPath))")
             return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+            
         }
+        
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -428,6 +462,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         reminderNameField.resignFirstResponder()
         
         if indexPath.section == 1 && indexPath.row == 0 {
+            print("--------------------------------------------------- TAPPED DATE S:\(indexPath.section) R:\(indexPath.row) ")
             if !datePickerVisible {
                 showDatePicker()
             } else {
@@ -446,8 +481,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         //print(#function)
-        print("Section: \(indexPath.section)")
-        print("Row: \(indexPath.row)")
+        //print("Section: \(indexPath.section)")
+        //print("Row: \(indexPath.row)")
         if indexPath.section == 1 && indexPath.row == 0 && textFieldHasText {
             return indexPath
         } else if !textFieldHasText {
@@ -464,14 +499,27 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     override func tableView(tableView: UITableView, indentationLevelForRowAtIndexPath indexPath: NSIndexPath) -> Int {
        // print(#function)
+        indentationCounter += 1
+        print("--------------------------------------------------- INDENTATION  S:\(indexPath.section) R:\(indexPath.row) ")
+        print("This function has been called \(indentationCounter) times")
         var indexPathMod = indexPath
+        
+        print("Calling row \(indexPathMod.row) in section: \(indexPathMod.section)")
+        
+        
         if indexPathMod.section == 1 && indexPathMod.row == 1 {
             indexPathMod = NSIndexPath(forRow: 0, inSection: indexPathMod.section)
-        }
-        if indexPathMod.section == 2 && indexPathMod.row == 1 {
+
+        } else if indexPathMod.section == 2 && indexPathMod.row == 1 {
             indexPathMod = NSIndexPath(forRow: 0, inSection: indexPathMod.section)
+        } else {
+            print("No change in indexPath")
         }
+        print("Returning row \(indexPathMod.row) in section: \(indexPathMod.section) at level \(super.tableView(tableView, indentationLevelForRowAtIndexPath: indexPathMod) )")
         
+        
+        
+
         return super.tableView(tableView, indentationLevelForRowAtIndexPath: indexPathMod)
     }
     
@@ -501,7 +549,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         let someText: NSString = textField.text!
         textFieldHasText = someText.length > 0
         enableDoneButton()
-        print("Textfield length at start of editing: \(someText.length)")
         hideDatePicker()
         if textFieldHasText {
             textField.returnKeyType = .Next

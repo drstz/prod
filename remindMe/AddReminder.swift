@@ -6,9 +6,6 @@
 //  Copyright © 2016 Duane Stoltz. All rights reserved.
 //
 
-
-
-
 import UIKit
 import CoreData
 
@@ -24,9 +21,9 @@ protocol AddReminderViewControllerDelegate: class {
                                    didFinishEditingReminder reminder: Reminder)
 }
 
-// MARK: - Class
-
 class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    // MARK: - Cells
     
     var repeatsCell = UITableViewCell()
     var enableRepeatsCell = UITableViewCell()
@@ -65,6 +62,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     var recurringAmount = 1
     var timeInterval = "minute"
+    
+    var reminderRepeats = false
+    
     var recurringDateWasSet = false
     
     var intervalType: String?
@@ -106,48 +106,28 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     @IBOutlet weak var recurringButton: UIButton!
     @IBOutlet weak var completeButton: UIButton!
     
-    // Switch
+    // Switches
     
-    @IBOutlet weak var enableSwitch : UISwitch!
-    @IBOutlet weak var recurringSwitch: UISwitch!
+    @IBOutlet weak var enableReminderSwitch : UISwitch!
+    @IBOutlet weak var reminderRepeatsSwitch: UISwitch!
     
-    // Date Picker
+    // Pickers
     
     @IBOutlet weak var datePickerCell: UITableViewCell!
     @IBOutlet weak var datePicker: UIDatePicker!
-    
-    // Recurring Picker
     
     @IBOutlet weak var recurringPickerCell: UITableViewCell!
     @IBOutlet weak var recurringPicker: UIPickerView!
     
     // MARK: - Actions
     
+    // MARK: Bar items
+    
     @IBAction func cancel() {
         delegate?.addReminderViewControllerDidCancel(self)
     }
     
-    
-    func getReminderDetails(inout reminder: Reminder) {
-        print(#function)
-        reminder.name = reminderNameField.text!
-        reminder.dueDate = dueDate!
-        if let nextDueDate = newDate {
-            reminder.nextDueDate = nextDueDate
-            reminder.typeOfInterval = timeInterval
-            reminder.everyAmount = recurringAmount
-        } else {
-            reminder.nextDueDate = nil
-            reminder.typeOfInterval = nil
-            reminder.everyAmount = nil 
-        }
-        
-        reminder.isEnabled = enableSwitch.on
-        reminder.isRecurring = recurringDateWasSet
-        
-    }
-    
-    @IBAction func done() {
+    @IBAction func saveReminder() {
         print(#function)
         var tempReminder: Reminder?
 
@@ -156,7 +136,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             delegate?.addReminderViewController(self, didFinishEditingReminder: reminder)
             tempReminder = reminder
             list = reminder.list
-            
         } else {
             var reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as! Reminder
             getReminderDetails(&reminder)
@@ -168,8 +147,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             
             delegate?.addReminderViewController(self, didFinishAddingReminder: reminder)
             tempReminder = reminder
-            
-            
         }
         
         do {
@@ -186,20 +163,36 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         
     }
     
-    @IBAction func dontRepeat() {
+    // MARK: Switches
+    
+    @IBAction func toggleRepeatDateForReminder() {
+        reminderRepeats = reminderRepeatsSwitch.on
+        if !reminderRepeats {
+            recurringDateLabel.text = "Doesn't repeat"
+            
+            newDate = nil
+            recurringDateWasSet = false
+            enableDontRepeatButton()
+        }
+        
+    }
+    
+    // MARK: Reminder Actions
+    
+    @IBAction func removeRepeatDateFromReminder() {
         recurringDateLabel.text = "Doesn't repeat"
+        
         newDate = nil
         recurringDateWasSet = false
         enableDontRepeatButton()
     }
     
-    @IBAction func complete() {
-        print("Going to complete reminder")
+    @IBAction func completeReminder() {
         reminderToEdit?.isComplete = true
         
-        let reminderReccurs = reminderToEdit?.reminderIsRecurring()
+        let reminderRepeats = reminderToEdit?.reminderIsRecurring()
         
-        if reminderReccurs! {
+        if reminderRepeats! {
             let newDate = reminderToEdit?.setNewDueDate()
             reminderToEdit?.dueDate = newDate!
             reminderToEdit?.scheduleNotifications()
@@ -218,220 +211,74 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         
     }
     
-    // Date Picker
+    // MARK: Date Picker
     
-    @IBAction func dateChanged(datePicker: UIDatePicker) {
+    @IBAction func listenToDate(datePicker: UIDatePicker) {
+        print(#function)
         dueDate = roundSecondsToZero(datePicker.date)
         dueDateIsSet = true
         updateDueDateLabel()
     }
     
-    // MARK: - Enable Done Button
-    
-    func enableDoneButton() {
-        if dueDateIsSet && textFieldHasText {
-            doneBarButton.enabled = true
-        } else {
-            doneBarButton.enabled = false
-        }
-    }
-    
-    func enableDontRepeatButton() {
-        if recurringDateWasSet {
-            recurringButton.enabled = true
-        } else {
-            recurringButton.enabled = false
-        }
-    }
-    
     // MARK: - VIEW
-
+    
+    // MARK: Loading
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if let reminder = reminderToEdit {
+            prepareViewForReminder(reminder)
+        }
+        updateDueDateLabel()
+        enableDoneButton()
+        enableDontRepeatButton()
+    }
+    
+    func prepareViewForReminder(reminder: Reminder) {
+        title = "Edit"
+        reminderNameField.text = reminder.name
+        dueDate = reminder.dueDate
+        dueDateIsSet = true
+        enableReminderSwitch.on = reminder.isEnabled as Bool
+        reminderRepeatsSwitch.on = reminder.isRecurring as Bool
+        reminderRepeats = reminder.isRecurring as Bool
+        recurringDateWasSet = reminder.isRecurring as Bool
+        if let recurringDate = reminder.nextDueDate {
+            newDate = recurringDate
+        }
+        if reminder.isComplete == 1 {
+            completeButton.enabled = false
+        } else {
+            completeButton.enabled = true
+        }
+        if let interval = reminderToEdit?.typeOfInterval {
+            timeInterval = interval
+        }
+        if let amount = reminderToEdit?.everyAmount {
+            recurringAmount = amount as Int
+        }
+        
+        updateRecurringLabel()
+        setRecurringPicker()
+        
+    }
+    
     override func viewWillAppear(animated: Bool) {
+        print(#function)
         super.viewWillAppear(animated)
         reminderNameField.becomeFirstResponder()
     }
     
     override func viewDidAppear(animated: Bool) {
+        print(#function)
         super.viewDidAppear(animated)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //print(#function)
-  
-        if let reminder = reminderToEdit {
-            title = "Edit"
-            reminderNameField.text = reminder.name
-            dueDate = reminder.dueDate
-            dueDateIsSet = true
-            enableSwitch.on = reminder.isEnabled as Bool
-            recurringSwitch.on = reminder.isRecurring as Bool 
-            recurringDateWasSet = reminder.isRecurring as Bool
-            if let recurringDate = reminder.nextDueDate {
-                newDate = recurringDate
-            }
-            if reminder.isComplete == 1 {
-                completeButton.enabled = false
-            } else {
-                completeButton.enabled = true 
-            }
-            if let interval = reminderToEdit?.typeOfInterval {
-                timeInterval = interval
-            }
-            if let amount = reminderToEdit?.everyAmount {
-                recurringAmount = amount as Int
-            }
-            
-            updateRecurringLabel()
-            setRecurringPicker()
-        }
-        updateDueDateLabel()
-        enableDoneButton()
-        enableDontRepeatButton()
-        
-        
-    }
-    
-    // MARK: - Pickers
-    
-    // MARK: Date Picker
-    
-    func updateDueDateLabel() {
-        let formatter = NSDateFormatter()
-        formatter.dateStyle = .MediumStyle
-        formatter.timeStyle = .ShortStyle
-        if let date = dueDate {
-            dueDateLabel.text = formatter.stringFromDate(date)
-            enableDoneButton()
-        } else {
-            dueDateLabel.text = "Please Set a Date"
-        }
-    }
-    
-    func showDatePicker() {
-        
-        datePickerVisible = true
-        
-        let indexPathDateRow = NSIndexPath(forRow: 0, inSection: 1)
-        let indexPathDatePicker = NSIndexPath(forRow: 1, inSection: 1)
-        
-        let indexPathEnableRepeatRow = NSIndexPath(forRow: 1, inSection: 1)
-        let indexPathRepeatsDateRow = NSIndexPath(forRow: 2, inSection: 1)
-        
-        let newIndexPathEnableRepeatRow = NSIndexPath(forRow: 2, inSection: 1)
-        let newIndexPathRepeatsDatesRow = NSIndexPath(forRow: 3, inSection: 1)
-        
-        let repeatsCellIndexPath = NSIndexPath(forRow: 2, inSection: 1)
-        repeatsCell = tableView.cellForRowAtIndexPath(repeatsCellIndexPath)!
-        enableRepeatsCell = tableView.cellForRowAtIndexPath(indexPathEnableRepeatRow)!
- 
-        
-        if let dateCell = tableView.cellForRowAtIndexPath(indexPathDateRow) {
-            dateCell.detailTextLabel!.textColor = dateCell.detailTextLabel!.tintColor
-        }
-        
-        tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths([indexPathDatePicker], withRowAnimation: .Fade)
-        
-        tableView.moveRowAtIndexPath(indexPathEnableRepeatRow, toIndexPath: newIndexPathEnableRepeatRow)
-        tableView.moveRowAtIndexPath(indexPathRepeatsDateRow, toIndexPath: newIndexPathRepeatsDatesRow)
-        
-        tableView.reloadRowsAtIndexPaths([indexPathDateRow], withRowAnimation: .None)
-        tableView.endUpdates()
-        datePicker.minimumDate = NSDate()
-        
-        tableView.scrollToRowAtIndexPath(indexPathDatePicker, atScrollPosition: .Middle, animated: true)
-        
-        if let date = dueDate {
-            datePicker.setDate(date, animated: false)
-        } else {
-            datePicker.setDate(NSDate(), animated: false)
-        }
-    }
-    
-    func hideDatePicker() {
-        if datePickerVisible {
-            datePickerVisible = false
-            let indexPathDateRow = NSIndexPath(forRow: 0, inSection: 1)
-            let indexPathDatePicker = NSIndexPath(forRow: 1, inSection: 1)
-            
-            let indexPathEnableRepeatRow = NSIndexPath(forRow: 2, inSection: 1)
-
-            
-            if let dateCell = tableView.cellForRowAtIndexPath(indexPathDateRow) {
-                if dueDateIsSet {
-                    dateCell.detailTextLabel!.textColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.8)
-                } else {
-                    dateCell.detailTextLabel!.textColor = UIColor(white: 0, alpha: 0.5)
-                }
-            }
-            
-            tableView.beginUpdates()
-            tableView.reloadRowsAtIndexPaths([indexPathDateRow, indexPathEnableRepeatRow], withRowAnimation: .None)
-            tableView.deleteRowsAtIndexPaths([indexPathDatePicker], withRowAnimation: .Fade)
-            tableView.endUpdates()
-            enableDoneButton()
-        }
-    }
-    
-    // MARK: Reccurring Picker
-    
-    func updateRecurringLabel() {
-        if recurringAmount != 1 {
-            recurringDateLabel.text = "every " + "\(recurringAmount) " + "\(timeInterval)" + "s"
-        } else {
-            recurringDateLabel.text = "every " + "\(timeInterval)"
-        }
-        
-    }
-    
-    func showReccurringPicker() {
-        print(#function)
-        reccuringPickerVisible = true
-        
-        let indexPathRecurringRow = NSIndexPath(forRow: 2, inSection: 1)
-        let indexPathRecurringPicker = NSIndexPath(forRow: 3, inSection: 1)
-        
-        if let recurringCell = tableView.cellForRowAtIndexPath(indexPathRecurringRow) {
-            recurringCell.detailTextLabel!.textColor = recurringCell.detailTextLabel!.tintColor
-        }
-        
-        tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths([indexPathRecurringPicker], withRowAnimation: .Fade)
-        tableView.endUpdates()
-        
-        tableView.scrollToRowAtIndexPath(indexPathRecurringPicker, atScrollPosition: .Middle, animated: true)
-
-    }
-    
-    
-    
-    func hideRecurringPicker() {
-        if reccuringPickerVisible {
-            reccuringPickerVisible = false
-            
-            let indexPathRecurringRow = NSIndexPath(forRow: 2, inSection: 1)
-            let indexPathRecurringPicker = NSIndexPath(forRow: 3, inSection: 1)
-            
-            tableView.beginUpdates()
-            tableView.reloadRowsAtIndexPaths([indexPathRecurringRow], withRowAnimation: .None)
-            tableView.deleteRowsAtIndexPaths([indexPathRecurringPicker], withRowAnimation: .Fade)
-            tableView.endUpdates()
-            enableDoneButton()
-        }
-        
-        
-    }
-    
-    
-    // MARK: - Table View
+    // MARK: - Table View Delegate
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-
-        if section == 1 && datePickerVisible {
-            return 4
-        } else if section == 1 && reccuringPickerVisible {
+        if section == 1 && (datePickerVisible || reccuringPickerVisible){
             return 4
         } else {
             return super.tableView(tableView, numberOfRowsInSection: section)
@@ -439,16 +286,14 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-
+        
         if indexPath.section == 1 && indexPath.row == 1 && datePickerVisible {
             return 217
         } else if indexPath.section == 1 && indexPath.row == 3 && reccuringPickerVisible {
             return 217
         } else {
             return 50
-            
         }
-        
     }
     
     
@@ -471,7 +316,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     override func tableView(tableView: UITableView, indentationLevelForRowAtIndexPath indexPath: NSIndexPath) -> Int {
         var indexPathMod = indexPath
-
+        
         if indexPathMod.section == 1 && indexPathMod.row == 1 && datePickerVisible {
             indexPathMod = NSIndexPath(forRow: 0, inSection: indexPathMod.section)
             
@@ -482,11 +327,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         }
         return super.tableView(tableView, indentationLevelForRowAtIndexPath: indexPathMod)
     }
-    
 
-    
-
-    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         reminderNameField.resignFirstResponder()
@@ -499,7 +340,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             }
         }
         
-        if indexPath.section == 1 && indexPath.row == 2 && dueDateIsSet && recurringSwitch.on {
+        if indexPath.section == 1 && indexPath.row == 2 && dueDateIsSet && reminderRepeatsSwitch.on {
             if !reccuringPickerVisible {
                 showReccurringPicker()
             } else {
@@ -522,9 +363,46 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         }
         return nil
     }
-    
 
+    // MARK: - Interface
     
+    func enableDoneButton() {
+        if dueDateIsSet && textFieldHasText {
+            doneBarButton.enabled = true
+        } else {
+            doneBarButton.enabled = false
+        }
+    }
+    
+    func enableDontRepeatButton() {
+        if recurringDateWasSet {
+            recurringButton.enabled = true
+        } else {
+            recurringButton.enabled = false
+        }
+    }
+    
+    // MARK: - Prepare the reminders
+    
+    func getReminderDetails(inout reminder: Reminder) {
+        print(#function)
+        reminder.name = reminderNameField.text!
+        reminder.dueDate = dueDate!
+        if let nextDueDate = newDate {
+            reminder.nextDueDate = nextDueDate
+            reminder.typeOfInterval = timeInterval
+            reminder.everyAmount = recurringAmount
+        } else {
+            reminder.nextDueDate = nil
+            reminder.typeOfInterval = nil
+            reminder.everyAmount = nil
+        }
+        
+        reminder.isEnabled = enableReminderSwitch.on
+        reminder.isRecurring = recurringDateWasSet
+        
+    }
+
     // MARK: - Text Field
     
     // Listen to textfield
@@ -569,7 +447,126 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         return false
     }
     
-    // MARK: - Picker Delegates
+    // MARK: - Date Picker
+    
+    func updateDueDateLabel() {
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .MediumStyle
+        formatter.timeStyle = .ShortStyle
+        if let date = dueDate {
+            dueDateLabel.text = formatter.stringFromDate(date)
+            enableDoneButton()
+        } else {
+            dueDateLabel.text = "Please Set a Date"
+        }
+    }
+    
+    func showDatePicker() {
+        hideRecurringPicker()
+        
+        datePickerVisible = true
+        
+        let indexPathDateRow = NSIndexPath(forRow: 0, inSection: 1)
+        let indexPathDatePicker = NSIndexPath(forRow: 1, inSection: 1)
+        
+        let indexPathEnableRepeatRow = NSIndexPath(forRow: 1, inSection: 1)
+        
+        let repeatsCellIndexPath = NSIndexPath(forRow: 2, inSection: 1)
+        repeatsCell = tableView.cellForRowAtIndexPath(repeatsCellIndexPath)!
+        enableRepeatsCell = tableView.cellForRowAtIndexPath(indexPathEnableRepeatRow)!
+        
+        
+        if let dateCell = tableView.cellForRowAtIndexPath(indexPathDateRow) {
+            dateCell.detailTextLabel!.textColor = dateCell.detailTextLabel!.tintColor
+        }
+        
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths([indexPathDatePicker], withRowAnimation: .Fade)
+        tableView.reloadRowsAtIndexPaths([indexPathDateRow], withRowAnimation: .None)
+        tableView.endUpdates()
+        
+        datePicker.minimumDate = NSDate()
+        
+        tableView.scrollToRowAtIndexPath(indexPathDatePicker, atScrollPosition: .Middle, animated: true)
+        
+        if let date = dueDate {
+            datePicker.setDate(date, animated: false)
+        } else {
+            datePicker.setDate(NSDate(), animated: false)
+        }
+    }
+    
+    func hideDatePicker() {
+        if datePickerVisible {
+            datePickerVisible = false
+            let indexPathDateRow = NSIndexPath(forRow: 0, inSection: 1)
+            let indexPathDatePicker = NSIndexPath(forRow: 1, inSection: 1)
+            
+            let indexPathEnableRepeatRow = NSIndexPath(forRow: 2, inSection: 1)
+            
+            
+            if let dateCell = tableView.cellForRowAtIndexPath(indexPathDateRow) {
+                if dueDateIsSet {
+                    dateCell.detailTextLabel!.textColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.8)
+                } else {
+                    dateCell.detailTextLabel!.textColor = UIColor(white: 0, alpha: 0.5)
+                }
+            }
+            
+            tableView.beginUpdates()
+            tableView.reloadRowsAtIndexPaths([indexPathDateRow, indexPathEnableRepeatRow], withRowAnimation: .None)
+            tableView.deleteRowsAtIndexPaths([indexPathDatePicker], withRowAnimation: .Fade)
+            tableView.endUpdates()
+            enableDoneButton()
+        }
+    }
+    
+    // MARK: - Reccurring Picker
+    
+    func updateRecurringLabel() {
+        if recurringAmount != 1 {
+            recurringDateLabel.text = "every " + "\(recurringAmount) " + "\(timeInterval)" + "s"
+        } else {
+            recurringDateLabel.text = "every " + "\(timeInterval)"
+        }
+        
+    }
+    
+    func showReccurringPicker() {
+        hideDatePicker()
+        reccuringPickerVisible = true
+        
+        let indexPathRecurringRow = NSIndexPath(forRow: 2, inSection: 1)
+        let indexPathRecurringPicker = NSIndexPath(forRow: 3, inSection: 1)
+        
+        if let recurringCell = tableView.cellForRowAtIndexPath(indexPathRecurringRow) {
+            recurringCell.detailTextLabel!.textColor = recurringCell.detailTextLabel!.tintColor
+        }
+        
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths([indexPathRecurringPicker], withRowAnimation: .Fade)
+        tableView.endUpdates()
+        
+        tableView.scrollToRowAtIndexPath(indexPathRecurringPicker, atScrollPosition: .Middle, animated: true)
+        
+    }
+
+    func hideRecurringPicker() {
+        if reccuringPickerVisible {
+            reccuringPickerVisible = false
+            
+            let indexPathRecurringRow = NSIndexPath(forRow: 2, inSection: 1)
+            let indexPathRecurringPicker = NSIndexPath(forRow: 3, inSection: 1)
+            
+            tableView.beginUpdates()
+            tableView.reloadRowsAtIndexPaths([indexPathRecurringRow], withRowAnimation: .None)
+            tableView.deleteRowsAtIndexPaths([indexPathRecurringPicker], withRowAnimation: .Fade)
+            tableView.endUpdates()
+            enableDoneButton()
+        }
+    }
+    
+    // MARK: Delegates
     
     // MARK: Data Source
     
@@ -632,13 +629,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             default:
                 print("Error")
             }
-
+            
         }
         updateRecurringLabel()
         
         recurringDateWasSet = true
         enableDontRepeatButton()
-    
+        
         newDate = addRecurringDate(recurringAmount, delayType: timeInterval, date: dueDate!)
         
         print(newDate!)
@@ -659,21 +656,17 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         case "hour":
             intervalRow = 1
         case "day":
-        intervalRow = 2
+            intervalRow = 2
         case "week":
-        intervalRow = 3
+            intervalRow = 3
         case "month":
-        intervalRow = 4
+            intervalRow = 4
         case "year":
             intervalRow = 5
         default:
             print("Date picking error")
             
         }
-        
         recurringPicker.selectRow(intervalRow, inComponent: 1, animated: false)
-        
     }
-    
-    
 }

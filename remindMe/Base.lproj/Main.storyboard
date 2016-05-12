@@ -158,6 +158,9 @@
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="R7z-Lm-xV6">
                                                     <rect key="frame" x="543" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="toggleRepeatDateForReminder" destination="y4H-jB-eKA" eventType="valueChanged" id="LBU-aj-eeM"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -211,7 +214,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <state key="normal" title="Complete"/>
                                                     <connections>
-                                                        <action selector="complete" destination="y4H-jB-eKA" eventType="touchUpInside" id="f0c-0L-bU8"/>
+                                                        <action selector="completeReminder" destination="y4H-jB-eKA" eventType="touchUpInside" id="AN4-m3-Odh"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IOi-x5-3cM">
@@ -222,7 +225,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <state key="normal" title="No Repeat"/>
                                                     <connections>
-                                                        <action selector="dontRepeat" destination="y4H-jB-eKA" eventType="touchUpInside" id="vcf-Dd-SST"/>
+                                                        <action selector="removeRepeatDateFromReminder" destination="y4H-jB-eKA" eventType="touchUpInside" id="bqp-zP-A7I"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -253,7 +256,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" enabled="NO" style="done" systemItem="done" id="JCj-VB-1gz">
                             <connections>
-                                <action selector="done" destination="y4H-jB-eKA" id="t2u-6d-rzN"/>
+                                <action selector="saveReminder" destination="y4H-jB-eKA" id="wyp-U7-wue"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -263,13 +266,13 @@
                         <outlet property="datePickerCell" destination="keT-2G-HMn" id="68Q-kO-gfU"/>
                         <outlet property="doneBarButton" destination="JCj-VB-1gz" id="h7O-FF-MdA"/>
                         <outlet property="dueDateLabel" destination="wOD-0E-6su" id="dWN-dh-qFw"/>
-                        <outlet property="enableSwitch" destination="pVF-tA-mfC" id="FJ7-35-ODB"/>
+                        <outlet property="enableReminderSwitch" destination="pVF-tA-mfC" id="5tr-BL-fcw"/>
                         <outlet property="recurringButton" destination="IOi-x5-3cM" id="gFh-Xa-pZU"/>
                         <outlet property="recurringDateLabel" destination="HUm-Gx-jEn" id="0WZ-eD-Gea"/>
                         <outlet property="recurringPicker" destination="RsU-xJ-Jjh" id="CW8-fo-LW7"/>
                         <outlet property="recurringPickerCell" destination="30K-sv-yeC" id="0kz-l8-r4z"/>
-                        <outlet property="recurringSwitch" destination="R7z-Lm-xV6" id="ufk-Ob-YEa"/>
                         <outlet property="reminderNameField" destination="dvW-lG-G6W" id="xbw-oL-hrw"/>
+                        <outlet property="reminderRepeatsSwitch" destination="R7z-Lm-xV6" id="POg-KW-VSK"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NWt-mi-rqE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -286,7 +289,7 @@
                                     <!--2016-04-14 04:18:53 +0000-->
                                 </date>
                                 <connections>
-                                    <action selector="dateChanged:" destination="y4H-jB-eKA" eventType="valueChanged" id="xfJ-cM-tGJ"/>
+                                    <action selector="listenToDate:" destination="y4H-jB-eKA" eventType="valueChanged" id="Y84-71-N9O"/>
                                 </connections>
                             </datePicker>
                         </subviews>

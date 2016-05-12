@@ -65,12 +65,14 @@ class ReminderCell: UITableViewCell {
         dateLabel.text = convertDateToString(dateFromDate: reminder.dueDate)
         timeLabel.text = convertDateToString(timeFromDate: reminder.dueDate)
         if let nexty = reminder.nextDueDate {
-            nextDueDate.text = convertDateToString(dateToConvert: nexty)
+            if reminder.everyAmount! != 1 {
+                nextDueDate.text = "Every " + "\(reminder.everyAmount!) " + "\(reminder.typeOfInterval!)" + "s"
+            } else {
+                nextDueDate.text = "Every " + "\(reminder.typeOfInterval!)"
+            }
         } else {
             nextDueDate.text = "No recurrence"
         }
-        
-        
         
         if reminderIsEnabled {
             isEnabledLabel.text = "Enabled"
@@ -97,9 +99,9 @@ class ReminderCell: UITableViewCell {
     
     func configureColor(reminder: Reminder) {
         if reminderIsEnabled {
-            backgroundColor = UIColor(red: 163/255, green: 45/255, blue: 85/255, alpha: 0.9)
+            backgroundColor = UIColor(red: 0, green: 0, blue: 1, alpha: 1)
         } else {
-            backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.4)
+            backgroundColor = UIColor(red: 0.5, green: 0, blue: 0, alpha: 1)
         }
     }
 }

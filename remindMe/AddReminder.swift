@@ -215,7 +215,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         dueDate = roundSecondsToZero(datePicker.date)
         dueDateIsSet = true
         reminderRepeatsSwitch.enabled = true
-        updateDueDateLabel()
+        setDueDateLabel(with: dueDate!)
     }
     
     // MARK: - VIEW
@@ -227,6 +227,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         
         if let reminder = reminderToEdit {
             prepareViewForReminder(reminder)
+            setDueDateLabel(with: reminder.dueDate)
         } else {
             creatingReminder = true
         }
@@ -236,7 +237,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         } else {
             reminderRepeatsSwitch.enabled = true
         }
-        updateDueDateLabel()
         enableDoneButton()
     }
     
@@ -273,21 +273,15 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         if let amount = reminderToEdit?.everyAmount {
             recurringAmount = amount as Int
         }
-        
-        
-        
-        
     }
     
     override func viewWillAppear(animated: Bool) {
-        print(#function)
         super.viewWillAppear(animated)
-        reminderNameField.becomeFirstResponder()
     }
     
     override func viewDidAppear(animated: Bool) {
-        print(#function)
         super.viewDidAppear(animated)
+        reminderNameField.becomeFirstResponder()
     }
     
     // MARK: - Table View Delegate
@@ -462,16 +456,14 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     // MARK: - Date Picker
     
-    func updateDueDateLabel() {
+    func setDueDateLabel(with date: NSDate) {
         let formatter = NSDateFormatter()
         formatter.dateStyle = .MediumStyle
         formatter.timeStyle = .ShortStyle
-        if let date = dueDate {
-            dueDateLabel.text = formatter.stringFromDate(date)
-            enableDoneButton()
-        } else {
-            dueDateLabel.text = "Please Set a Date"
-        }
+        
+        dueDateLabel.text = formatter.stringFromDate(date)
+        enableDoneButton()
+        
     }
     
     func showDatePicker() {
@@ -481,10 +473,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         
         let indexPathDateRow = NSIndexPath(forRow: 0, inSection: 1)
         let indexPathDatePicker = NSIndexPath(forRow: 1, inSection: 1)
-        
         let indexPathEnableRepeatRow = NSIndexPath(forRow: 1, inSection: 1)
-        
         let repeatsCellIndexPath = NSIndexPath(forRow: 2, inSection: 1)
+        
         repeatsCell = tableView.cellForRowAtIndexPath(repeatsCellIndexPath)!
         enableRepeatsCell = tableView.cellForRowAtIndexPath(indexPathEnableRepeatRow)!
         
@@ -498,14 +489,22 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         tableView.reloadRowsAtIndexPaths([indexPathDateRow], withRowAnimation: .None)
         tableView.endUpdates()
         
-        datePicker.minimumDate = NSDate()
-        
         tableView.scrollToRowAtIndexPath(indexPathDatePicker, atScrollPosition: .Middle, animated: true)
+        
+        datePicker.minimumDate = NSDate()
         
         if let date = dueDate {
             datePicker.setDate(date, animated: false)
         } else {
-            datePicker.setDate(NSDate(), animated: false)
+            let now = NSDate()
+            let nowWithDelay = now.dateByAddingTimeInterval(30*60)
+            
+            datePicker.setDate(nowWithDelay, animated: false)
+            
+            dueDate = datePicker.date 
+            dueDateIsSet = true
+            setDueDateLabel(with: datePicker.date)
+            
         }
     }
     
@@ -520,8 +519,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             
             if let dateCell = tableView.cellForRowAtIndexPath(indexPathDateRow) {
                 if dueDateIsSet {
-                    dateCell.detailTextLabel!.textColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.8)
-                } else {
                     dateCell.detailTextLabel!.textColor = UIColor(white: 0, alpha: 0.5)
                 }
             }
@@ -572,6 +569,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             
             let indexPathRecurringRow = NSIndexPath(forRow: 2, inSection: 1)
             let indexPathRecurringPicker = NSIndexPath(forRow: 3, inSection: 1)
+            
+            if let recurringCell = tableView.cellForRowAtIndexPath(indexPathRecurringRow) {
+                if reminderRepeats {
+                    recurringCell.detailTextLabel!.textColor = UIColor(white: 0, alpha: 0.5)
+                }
+            }
             
             tableView.beginUpdates()
             tableView.reloadRowsAtIndexPaths([indexPathRecurringRow], withRowAnimation: .None)

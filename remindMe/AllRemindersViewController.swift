@@ -150,19 +150,69 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     func addReminderViewControllerDidCancel(controller: AddReminderViewController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+
     
     func addReminderViewController(controller:AddReminderViewController,
                                    didFinishAddingReminder reminder: Reminder) {        
         dismissViewControllerAnimated(true, completion: nil)
         setNumberOfReminders()
+        
+        print(fetchedResultsController.indexPathForObject(reminder))
+        
+        
+    }
+    
+    func addReminderViewController(controller:AddReminderViewController,
+                                   didChooseToDeleteReminder reminder: Reminder) {
+        
+        print(#function)
+        dismissViewControllerAnimated(true, completion: nil)
+        print("Here is the index from the reminder")
+        print(fetchedResultsController.indexPathForObject(reminder))
+        if fetchedResultsController.indexPathForObject(reminder) != nil {
+            let indexPath = fetchedResultsController.indexPathForObject(reminder)
+            let reminderToDelete = fetchedResultsController.objectAtIndexPath(indexPath!) as! Reminder
+            reminder.deleteReminderNotifications()
+            managedObjectContext.deleteObject(reminderToDelete)
+            
+            do {
+                try managedObjectContext.save()
+            } catch {
+                fatalCoreDataError(error)
+            }
+            
+            setNumberOfReminders()
+        }
+        
+
+        
+
     }
     
     func addReminderViewController(controller: AddReminderViewController,
                                    didFinishEditingReminder reminder: Reminder) {
         
         dismissViewControllerAnimated(true, completion: nil)
+        
+        print("The reminder will go off: \(reminder.dueDate)")
+        if reminder.isRecurring == true {
+            print("The reminder will go off again: \(reminder.nextDueDate)")
+        }
+        
+        let allNotifications = UIApplication.sharedApplication().scheduledLocalNotifications!
+        
+        for notification in allNotifications {
+            print(notification)
+        }
+        
+        if allNotifications.count == 0 {
+            print("There are no more notifications")
+        }
+        
         setNumberOfReminders()
     }
+    
+    
     
     // MARK: - REMINDERS
     

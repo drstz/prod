@@ -122,6 +122,15 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
                 controller.reminderToEdit = reminder
                 controller.managedObjectContext = managedObjectContext
             }
+        } else if segue.identifier == "QuickView" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let controller = navigationController.topViewController as! QuickViewViewController
+            
+            if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
+                let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
+                controller.reminder = reminder
+            }
+            
         }
         
     }
@@ -334,7 +343,8 @@ extension AllRemindersViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(#function)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        performSegueWithIdentifier("EditReminder", sender: tableView.cellForRowAtIndexPath(indexPath))
+        // performSegueWithIdentifier("EditReminder", sender: tableView.cellForRowAtIndexPath(indexPath))
+        performSegueWithIdentifier("QuickView", sender: tableView.cellForRowAtIndexPath(indexPath))
         print("Index Path: \(indexPath)")
         
     }

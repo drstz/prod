@@ -58,7 +58,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     var timeInterval = "minute"
     
     // MARK: Outlets
-    
+   
     // Fields
     
     @IBOutlet weak var reminderNameField : UITextField!

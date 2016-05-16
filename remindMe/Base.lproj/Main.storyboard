@@ -45,13 +45,12 @@
                     <connections>
                         <outlet property="tableView" destination="izq-nV-FBg" id="maa-dz-lVZ"/>
                         <segue destination="EXe-5T-xJU" kind="presentation" identifier="EditReminder" id="XiK-Cj-5ub"/>
-                        <segue destination="EXe-5T-xJU" kind="presentation" identifier="ViewReminder" id="Hyd-Sp-vHQ"/>
                         <segue destination="JzB-DQ-DW5" kind="presentation" identifier="QuickView" id="9BS-ej-vCI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="899" y="341"/>
+            <point key="canvasLocation" x="817" y="341"/>
         </scene>
         <!--Add Reminder View Controller-->
         <scene sceneID="Rvz-mT-SVI">
@@ -196,65 +195,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Actions" id="5Cm-R8-1yI">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="iew-hg-FhD">
-                                        <rect key="frame" x="0.0" y="421" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iew-hg-FhD" id="hAt-FP-Nzl">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o0T-A9-xlE">
-                                                    <rect key="frame" x="266" y="7" width="68" height="30"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="68" id="3y8-z1-Quc"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <state key="normal" title="Complete"/>
-                                                    <connections>
-                                                        <action selector="completeReminder" destination="y4H-jB-eKA" eventType="touchUpInside" id="AN4-m3-Odh"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="o0T-A9-xlE" firstAttribute="centerY" secondItem="hAt-FP-Nzl" secondAttribute="centerY" id="NmH-yN-j9b"/>
-                                                <constraint firstItem="o0T-A9-xlE" firstAttribute="centerX" secondItem="hAt-FP-Nzl" secondAttribute="centerX" id="WrC-Vs-ZUi"/>
-                                                <constraint firstItem="o0T-A9-xlE" firstAttribute="top" secondItem="hAt-FP-Nzl" secondAttribute="topMargin" constant="-1" id="jdK-QI-HcW"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="WaY-Ek-PZo">
-                                        <rect key="frame" x="0.0" y="465" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WaY-Ek-PZo" id="Ake-sD-RbF">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Luj-Gw-Vsf">
-                                                    <rect key="frame" x="266" y="7" width="68" height="30"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="68" id="LJF-8C-Lph"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <state key="normal" title="Delete">
-                                                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="completeReminder" destination="y4H-jB-eKA" eventType="touchUpInside" id="Jfg-d4-n6A"/>
-                                                        <action selector="deleteReminder" destination="y4H-jB-eKA" eventType="touchUpInside" id="xsw-kd-1kh"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Luj-Gw-Vsf" firstAttribute="centerX" secondItem="Ake-sD-RbF" secondAttribute="centerX" id="8vq-lO-ZOB"/>
-                                                <constraint firstItem="Luj-Gw-Vsf" firstAttribute="centerY" secondItem="Ake-sD-RbF" secondAttribute="centerY" id="FdR-mu-JHO"/>
-                                                <constraint firstItem="Luj-Gw-Vsf" firstAttribute="top" secondItem="Ake-sD-RbF" secondAttribute="topMargin" constant="-1" id="Jiq-bs-RXk"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="y4H-jB-eKA" id="u1y-ju-kSk"/>
@@ -274,7 +214,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="completeButton" destination="o0T-A9-xlE" id="Rg9-Ao-BlV"/>
                         <outlet property="datePicker" destination="cxX-D0-ahn" id="Q8T-ol-i8g"/>
                         <outlet property="datePickerCell" destination="keT-2G-HMn" id="68Q-kO-gfU"/>
                         <outlet property="doneBarButton" destination="JCj-VB-1gz" id="h7O-FF-MdA"/>
@@ -331,7 +270,7 @@
                     </tableViewCellContentView>
                 </tableViewCell>
             </objects>
-            <point key="canvasLocation" x="2674" y="341"/>
+            <point key="canvasLocation" x="2890" y="341"/>
         </scene>
         <!--Quick View View Controller-->
         <scene sceneID="9is-Ci-hnE">
@@ -446,7 +385,6 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="iBh-XQ-5XE">
                             <connections>
-                                <action selector="editReminder" destination="Shj-iq-C6Z" id="iZu-3y-5yr"/>
                                 <segue destination="EXe-5T-xJU" kind="presentation" identifier="EditReminder" id="v7Q-ZB-wc4"/>
                             </connections>
                         </barButtonItem>
@@ -462,7 +400,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXQ-La-dHl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1950" y="1133"/>
+            <point key="canvasLocation" x="1484" y="875"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="seE-bD-j3R">
@@ -480,7 +418,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nSj-zH-G5e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="264" y="341"/>
+            <point key="canvasLocation" x="170" y="341"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JXx-8J-hl1">
@@ -498,7 +436,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AYe-Pr-452" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2034" y="341"/>
+            <point key="canvasLocation" x="2196" y="341"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3jl-4F-q5V">
@@ -516,7 +454,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zdd-Et-wDm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1294" y="1133"/>
+            <point key="canvasLocation" x="817" y="1109"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

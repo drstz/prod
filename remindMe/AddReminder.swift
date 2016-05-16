@@ -266,11 +266,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             updateRecurringLabel()
         }
         
-        if reminder.isComplete == true {
-            completeButton.enabled = false
-        } else {
-            completeButton.enabled = true
-        }
+        
         
         
     }

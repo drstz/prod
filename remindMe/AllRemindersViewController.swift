@@ -12,18 +12,14 @@ import CoreData
 
 class AllRemindersViewController: UIViewController, AddReminderViewControllerDelegate, ReminderCellDelegate, QuickViewViewControllerDelegate {
     
-    // MARK: - Instance Variables
+    // MARK: - Outlets
     
-    var reminders = [Reminder]()
-    var reminderFromNotification: Reminder?
+    @IBOutlet weak var tableView: UITableView!
     
-    var notificationID: NSManagedObjectID!
-    
-    
-    // MARK: fetchedResultsController
+    // MARK: - Core Date
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
-       
+        
         let fetchRequest = NSFetchRequest()
         
         let entity = NSEntityDescription.entityForName("Reminder", inManagedObjectContext: self.managedObjectContext)
@@ -45,126 +41,52 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         fetchedResultsController.delegate = self
         return fetchedResultsController
     }()
-
-    // Core Data
-    
     var managedObjectContext: NSManagedObjectContext!
-    var list: List!
- 
-    required init?(coder aDecoder: NSCoder) {
-        reminders = [Reminder]()
-        super.init(coder: aDecoder)
-    }
+    
     
     // MARK: - Properties
+    
+    var reminders = [Reminder]()
+    var reminderFromNotification: Reminder?
+    var list: List!
+    
+    var notificationID: NSManagedObjectID!
     
     var nothingDue = false
     
     var titleString = ""
     var nbOfReminders = 0
     
-    // MARK: - Deinit
+    // MARK: - Delegate Methods
     
-    deinit {
-        fetchedResultsController.delegate = nil
-    }
-    
-    // MARK: QuickView Delegate Methods
+    // MARK: Quick View
     
     func quickViewViewControllerDidCancel(controller: QuickViewViewController) {
-         dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func quickViewViewControllerDidDelete(controller: QuickViewViewController, didDeleteReminder reminder: Reminder) {
+        deleteReminder(reminder)
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     func quickViewViewControllerDidSnooze(controller: QuickViewViewController, didSnoozeReminder reminder: Reminder) {
+        reminder.scheduleNotifications(snooze: true)
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     func quickViewViewControllerDidComplete(controller: QuickViewViewController, didCompleteReminder reminder: Reminder) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-
-    // MARK: - Outlets
-    
-    @IBOutlet weak var tableView: UITableView!
-    
-    // MARK: - Navigation
-    
-    func setNumberOfReminders() {
+        print("Going to complete reminder")
+        reminder.isComplete = true
         
-        nbOfReminders = tableView.numberOfRowsInSection(0)
+        let reminderReccurs = reminder.reminderIsRecurring()
         
-        if nbOfReminders > 1 || nbOfReminders == 0 {
-            titleString = "You have \(nbOfReminders) reminders"
+        if reminderReccurs {
+            let newDate = reminder.setNewDueDate()
+            reminder.dueDate = newDate
+            reminder.scheduleNotifications()
         } else {
-            titleString = "You have \(nbOfReminders) reminder"
-        }
-        self.title = titleString
-        
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Add Reminder
-        if segue.identifier == "AddReminder" {
-            
-            let navigationController = segue.destinationViewController as! UINavigationController
-            let controller = navigationController.topViewController as! AddReminderViewController
-            
-            controller.delegate = self
-            controller.managedObjectContext = managedObjectContext
-            controller.list = list
-            
-        // Edit Reminder
-        } else if segue.identifier == "EditReminder" {
-            let navigationController = segue.destinationViewController as! UINavigationController
-            let controller = navigationController.topViewController as! AddReminderViewController
-            
-            controller.delegate = self
-            controller.managedObjectContext = managedObjectContext
-            
-            if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
-                let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
-                controller.reminderToEdit = reminder
-            }
-        } else if segue.identifier == "ViewReminder" {
-            let navigationController = segue.destinationViewController as! UINavigationController
-            let controller = navigationController.topViewController as! AddReminderViewController
-            
-            controller.delegate = self
-            controller.managedObjectContext = managedObjectContext
-            
-            if let reminder = sender as? Reminder {
-                controller.reminderToEdit = reminder
-                controller.managedObjectContext = managedObjectContext
-            }
-        } else if segue.identifier == "QuickView" {
-            let navigationController = segue.destinationViewController as! UINavigationController
-            let controller = navigationController.topViewController as! QuickViewViewController
-            controller.delegate = self 
-            
-            if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
-                let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
-                controller.incomingReminder = reminder
-                controller.managedObjectContext = managedObjectContext
-            }
-            
-        }
-        
-    }
-    
-    // MARK: - ReminderCellDelegate
-    
-    func completeButtonWasPressed(cell: ReminderCell) {
-        let indexPath = tableView.indexPathForCell(cell)
-        let reminder = fetchedResultsController.objectAtIndexPath(indexPath!) as! Reminder
-        if reminder.isComplete == false {
-            reminder.isComplete = true
-        } else {
-            reminder.isComplete = false 
+            reminder.deleteReminderNotifications()
         }
         
         do {
@@ -172,51 +94,26 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         } catch {
             fatalCoreDataError(error)
         }
-        print(reminder.isComplete)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // MARK: - AddReminderDelegate
+    // MARK: Add/Edit Reminders
     
     func addReminderViewControllerDidCancel(controller: AddReminderViewController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
-
+    
     
     func addReminderViewController(controller:AddReminderViewController,
-                                   didFinishAddingReminder reminder: Reminder) {        
-        dismissViewControllerAnimated(true, completion: nil)
+                                   didFinishAddingReminder reminder: Reminder) {
         setNumberOfReminders()
-        
-        print(fetchedResultsController.indexPathForObject(reminder))
-        
-        
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func addReminderViewController(controller:AddReminderViewController,
                                    didChooseToDeleteReminder reminder: Reminder) {
-        
-        print(#function)
+        deleteReminder(reminder)
         dismissViewControllerAnimated(true, completion: nil)
-        print("Here is the index from the reminder")
-        print(fetchedResultsController.indexPathForObject(reminder))
-        if fetchedResultsController.indexPathForObject(reminder) != nil {
-            let indexPath = fetchedResultsController.indexPathForObject(reminder)
-            let reminderToDelete = fetchedResultsController.objectAtIndexPath(indexPath!) as! Reminder
-            reminder.deleteReminderNotifications()
-            managedObjectContext.deleteObject(reminderToDelete)
-            
-            do {
-                try managedObjectContext.save()
-            } catch {
-                fatalCoreDataError(error)
-            }
-            
-            setNumberOfReminders()
-        }
-        
-
-        
-
     }
     
     func addReminderViewController(controller: AddReminderViewController,
@@ -242,7 +139,121 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         setNumberOfReminders()
     }
     
+    // MARK: - Methods
     
+    // MARK: Init & Deinit
+    
+    required init?(coder aDecoder: NSCoder) {
+        reminders = [Reminder]()
+        super.init(coder: aDecoder)
+    }
+    
+    deinit {
+        fetchedResultsController.delegate = nil
+    }
+    
+    // MARK: View
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        performFetch()
+        
+        // The Nib
+        let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
+        tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
+        tableView.rowHeight = 200
+        setNumberOfReminders()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
+        
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        setNumberOfReminders()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    // MARK: Segues
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Add Reminder
+        if segue.identifier == "AddReminder" {
+            
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let controller = navigationController.topViewController as! AddReminderViewController
+            
+            controller.delegate = self
+            controller.managedObjectContext = managedObjectContext
+            controller.list = list
+            
+            // Edit Reminder
+        } else if segue.identifier == "EditReminder" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let controller = navigationController.topViewController as! AddReminderViewController
+            
+            controller.delegate = self
+            controller.managedObjectContext = managedObjectContext
+            
+            if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
+                let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
+                controller.reminderToEdit = reminder
+            }
+        } else if segue.identifier == "QuickView" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let controller = navigationController.topViewController as! QuickViewViewController
+            controller.delegate = self
+            
+            if let reminder = sender as? Reminder {
+                controller.incomingReminder = reminder
+                controller.managedObjectContext = managedObjectContext
+            } else {
+                
+                if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
+                    let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
+                    controller.incomingReminder = reminder
+                    controller.managedObjectContext = managedObjectContext
+                }
+            }
+            
+        }
+        
+    }
+    
+    func setNumberOfReminders() {
+        
+        nbOfReminders = tableView.numberOfRowsInSection(0)
+        
+        if nbOfReminders > 1 || nbOfReminders == 0 {
+            titleString = "You have \(nbOfReminders) reminders"
+        } else {
+            titleString = "You have \(nbOfReminders) reminder"
+        }
+        self.title = titleString
+        
+    }
+    
+    func completeButtonWasPressed(cell: ReminderCell) {
+        let indexPath = tableView.indexPathForCell(cell)
+        let reminder = fetchedResultsController.objectAtIndexPath(indexPath!) as! Reminder
+        if reminder.isComplete == false {
+            reminder.isComplete = true
+        } else {
+            reminder.isComplete = false 
+        }
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            fatalCoreDataError(error)
+        }
+        print(reminder.isComplete)
+    }
     
     // MARK: - REMINDERS
     
@@ -259,12 +270,12 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         } catch {
             fatalCoreDataError(error)
         }
-        print(#function)
     }
     
     // MARK: Reminder Actions
     
-    func completeReminder() {
+    func completeReminder(reminder: Reminder) {
+        
         print("Going to complete reminder")
         reminderFromNotification?.isComplete = true
         
@@ -276,7 +287,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
             reminderFromNotification?.scheduleNotifications()
         } else {
             reminderFromNotification?.deleteReminderNotifications()
-            
         }
         
         do {
@@ -288,48 +298,31 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     }
     
     func deferReminder() {
-        print("Going to defer reminder")
-        
-        reminderFromNotification?.scheduleNotifications(true)
+        reminderFromNotification?.scheduleNotifications(snooze: true)
     }
     
     func viewReminder() {
         reminderFromNotification?.deleteReminderNotifications()
-        performSegueWithIdentifier("ViewReminder", sender: reminderFromNotification)
+        performSegueWithIdentifier("QuickView", sender: reminderFromNotification)
         
     }
-    
-    // MARK: - The view
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        performFetch()
-        
-        // The Nib
-        let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
-        tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
-        tableView.rowHeight = 200
-        setNumberOfReminders()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
-
-        
+    func deleteReminder(reminder: Reminder) {
+        if fetchedResultsController.indexPathForObject(reminder) != nil {
+            let indexPath = fetchedResultsController.indexPathForObject(reminder)
+            let reminderToDelete = fetchedResultsController.objectAtIndexPath(indexPath!) as! Reminder
+            reminder.deleteReminderNotifications()
+            managedObjectContext.deleteObject(reminderToDelete)
+            
+            do {
+                try managedObjectContext.save()
+            } catch {
+                fatalCoreDataError(error)
+            }
+            
+            setNumberOfReminders()
+        }
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        // self.navigationController?.navigationBar.topItem?.title =
-        setNumberOfReminders()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    
 }
 
 // MARK: - Extensions

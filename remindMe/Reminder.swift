@@ -64,7 +64,7 @@ class Reminder: NSManagedObject {
         return nil
     }
     
-    func scheduleNotifications(isBeingDeferred: Bool = false) {
+    func scheduleNotifications(snooze isBeingDeferred: Bool = false) {
         
         deleteReminderNotifications()
         

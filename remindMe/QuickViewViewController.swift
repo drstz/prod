@@ -53,10 +53,6 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
         delegate?.quickViewViewControllerDidCancel(self)
     }
     
-    @IBAction func editReminder() {
-        
-    }
-    
     // Bottom Buttons
     
     @IBAction func completeReminder() {

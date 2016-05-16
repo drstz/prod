@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import CoreData
 
-class AllRemindersViewController: UIViewController, AddReminderViewControllerDelegate, ReminderCellDelegate {
+class AllRemindersViewController: UIViewController, AddReminderViewControllerDelegate, ReminderCellDelegate, QuickViewViewControllerDelegate {
     
     // MARK: - Instance Variables
     
@@ -68,6 +68,25 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     deinit {
         fetchedResultsController.delegate = nil
     }
+    
+    // MARK: QuickView Delegate Methods
+    
+    func quickViewViewControllerDidCancel(controller: QuickViewViewController) {
+         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func quickViewViewControllerDidDelete(controller: QuickViewViewController, didDeleteReminder reminder: Reminder) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func quickViewViewControllerDidSnooze(controller: QuickViewViewController, didSnoozeReminder reminder: Reminder) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func quickViewViewControllerDidComplete(controller: QuickViewViewController, didCompleteReminder reminder: Reminder) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
 
     // MARK: - Outlets
     
@@ -125,10 +144,12 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         } else if segue.identifier == "QuickView" {
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! QuickViewViewController
+            controller.delegate = self 
             
             if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
                 let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
-                controller.reminder = reminder
+                controller.incomingReminder = reminder
+                controller.managedObjectContext = managedObjectContext
             }
             
         }

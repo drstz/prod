@@ -87,10 +87,17 @@
 			isa = PBXGroup;
 			children = (
 				71ABD7091CC0A87600F0BF90 /* Date.swift */,
-				71B294871CC8D4AE0069714E /* Notifications.swift */,
 				71238DE01CD70AC100F9D706 /* UserDefaults.swift */,
 			);
 			name = Global;
+			sourceTree = "<group>";
+		};
+		71328A8B1CED9C78005A0D13 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				71B294871CC8D4AE0069714E /* Notifications.swift */,
+			);
+			name = Notifications;
 			sourceTree = "<group>";
 		};
 		71386A421CC5EE5F007DF704 /* View */ = {
@@ -129,12 +136,13 @@
 		7165A57A1CBB6A310088EA76 /* remindMe */ = {
 			isa = PBXGroup;
 			children = (
-				7165A5871CBB6A310088EA76 /* Info.plist */,
 				7165A57B1CBB6A310088EA76 /* AppDelegate.swift */,
 				7165A5821CBB6A310088EA76 /* Assets.xcassets */,
 				714CB6B71CCBA01C00723399 /* Core Data */,
 				710D67D01CE38CC90007143B /* Global */,
+				7165A5871CBB6A310088EA76 /* Info.plist */,
 				710D67CE1CE38C380007143B /* List */,
+				71328A8B1CED9C78005A0D13 /* Notifications */,
 				710D67CF1CE38C4E0007143B /* Reminder */,
 				71A7884C1CE5B54300D5CE47 /* Reminder View */,
 				71386A421CC5EE5F007DF704 /* View */,

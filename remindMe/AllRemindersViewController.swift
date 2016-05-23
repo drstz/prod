@@ -10,6 +10,11 @@ import UIKit
 import Foundation
 import CoreData
 
+protocol AllRemindersViewControllerDelegate: class {
+    func allRemindersViewControllerDelegateDidReceiveNotification (controller: AllRemindersViewController,
+                                                                   reminder: Reminder)
+}
+
 class AllRemindersViewController: UIViewController, AddReminderViewControllerDelegate, ReminderCellDelegate, QuickViewViewControllerDelegate {
     
     // MARK: - Outlets
@@ -43,11 +48,23 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     }()
     var managedObjectContext: NSManagedObjectContext!
     
+    // MARK: - Delegates
+    
+    weak var delegate: AllRemindersViewControllerDelegate?
+    
     
     // MARK: - Properties
     
     var reminders = [Reminder]()
-    var reminderFromNotification: Reminder?
+    var reminderFromNotification: Reminder? {
+        didSet {
+            print("\"All reminders\" has reminder \"\(reminderFromNotification!.name)\"", separator:"", terminator: "\n")
+            delegate?.allRemindersViewControllerDelegateDidReceiveNotification(self, reminder: reminderFromNotification!)
+        }
+    }
+    
+    var notifiedReminder: Reminder?
+    
     var list: List!
     
     var notificationID: NSManagedObjectID!
@@ -56,6 +73,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     var titleString = ""
     var nbOfReminders = 0
+    
+    var notificationHasGoneOff = false
     
     // MARK: - Delegate Methods
     
@@ -77,17 +96,21 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     func quickViewViewControllerDidComplete(controller: QuickViewViewController, didCompleteReminder reminder: Reminder) {
         print("Going to complete reminder")
-        reminder.isComplete = true
-        
-        let reminderReccurs = reminder.reminderIsRecurring()
-        
-        if reminderReccurs {
-            let newDate = reminder.setNewDueDate()
-            reminder.dueDate = newDate
-            reminder.scheduleNotifications()
+        if reminder.isComplete == false {
+            reminder.isComplete = true
+            let reminderReccurs = reminder.reminderIsRecurring()
+            
+            if reminderReccurs {
+                let newDate = reminder.setNewDueDate()
+                reminder.dueDate = newDate
+                reminder.scheduleNotifications()
+            } else {
+                reminder.deleteReminderNotifications()
+            }
         } else {
-            reminder.deleteReminderNotifications()
+            reminder.isComplete = false
         }
+        
         
         do {
             try managedObjectContext.save()
@@ -167,9 +190,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
-        
-        
     }
+    
     
     override func viewWillAppear(animated: Bool) {
         setNumberOfReminders()
@@ -187,6 +209,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
             
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! AddReminderViewController
+            
             
             controller.delegate = self
             controller.managedObjectContext = managedObjectContext
@@ -209,9 +232,13 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
             let controller = navigationController.topViewController as! QuickViewViewController
             controller.delegate = self
             
+            // Make Quick View a delegate of All Reminders
+            delegate = controller
+            
             if let reminder = sender as? Reminder {
                 controller.incomingReminder = reminder
                 controller.managedObjectContext = managedObjectContext
+                controller.notificationHasGoneOff = notificationHasGoneOff
             } else {
                 
                 if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
@@ -303,6 +330,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     func viewReminder() {
         reminderFromNotification?.deleteReminderNotifications()
+        notificationHasGoneOff = true
+        
         performSegueWithIdentifier("QuickView", sender: reminderFromNotification)
         
     }
@@ -331,7 +360,6 @@ extension AllRemindersViewController: UITableViewDataSource {
     func tableView(tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
         
-        print(#function)
         
         let sectionInfo = fetchedResultsController.sections![section]
         return sectionInfo.numberOfObjects
@@ -355,7 +383,6 @@ extension AllRemindersViewController: UITableViewDelegate {
     // MARK: - Selection
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(#function)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         // performSegueWithIdentifier("EditReminder", sender: tableView.cellForRowAtIndexPath(indexPath))
         performSegueWithIdentifier("QuickView", sender: tableView.cellForRowAtIndexPath(indexPath))
@@ -385,7 +412,6 @@ extension AllRemindersViewController: UITableViewDelegate {
 
 extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        print(#function)
         tableView.beginUpdates()
         setNumberOfReminders()
     }

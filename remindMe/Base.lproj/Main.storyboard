@@ -50,7 +50,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="817" y="341"/>
+            <point key="canvasLocation" x="201" y="797"/>
         </scene>
         <!--Add Reminder View Controller-->
         <scene sceneID="Rvz-mT-SVI">
@@ -270,12 +270,12 @@
                     </tableViewCellContentView>
                 </tableViewCell>
             </objects>
-            <point key="canvasLocation" x="2890" y="341"/>
+            <point key="canvasLocation" x="1934" y="797"/>
         </scene>
         <!--Quick View View Controller-->
         <scene sceneID="9is-Ci-hnE">
             <objects>
-                <viewController id="Shj-iq-C6Z" customClass="QuickViewViewController" customModule="remindMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="QuickView" id="Shj-iq-C6Z" customClass="QuickViewViewController" customModule="remindMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HCE-Xf-Qwf"/>
                         <viewControllerLayoutGuide type="bottom" id="KQz-I8-JfX"/>
@@ -328,9 +328,6 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s2b-pA-Jpa">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="150"/>
                                         <color key="backgroundColor" red="0.67602093360000004" green="0.98907664029999998" blue="0.1412680456" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="300" id="LAD-NV-DxA"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Complete"/>
                                         <connections>
@@ -400,7 +397,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXQ-La-dHl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1484" y="875"/>
+            <point key="canvasLocation" x="1016" y="-211"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="seE-bD-j3R">
@@ -418,7 +415,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nSj-zH-G5e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="170" y="341"/>
+            <point key="canvasLocation" x="-534" y="797"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JXx-8J-hl1">
@@ -436,7 +433,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AYe-Pr-452" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2196" y="341"/>
+            <point key="canvasLocation" x="1016" y="797"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3jl-4F-q5V">
@@ -454,7 +451,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zdd-Et-wDm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="817" y="1109"/>
+            <point key="canvasLocation" x="201" y="-211"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

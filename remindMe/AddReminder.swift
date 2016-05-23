@@ -57,6 +57,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     var everyAmount: Int?
     var timeInterval = "minute"
     
+    var willSetNewDate = false
+    
     // MARK: Outlets
    
     // Fields
@@ -127,6 +129,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             }
             reminder.isEnabled = enableReminderSwitch.on
             reminder.isRecurring = recurringDateWasSet
+            reminder.isComplete = false 
         }
 
         if reminderToEdit != nil {
@@ -140,12 +143,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             reminder?.addIDtoReminder()
         }
         getReminderDetails(&reminder!)
-        delegate?.addReminderViewController(self, didFinishEditingReminder: reminder!)
         
         do {
             try managedObjectContext.save()
             if reminder != nil {
                 reminder!.scheduleNotifications()
+                delegate?.addReminderViewController(self, didFinishEditingReminder: reminder!)
             } else {
                 print("Failure to schedule notification: no reminder")
             }
@@ -232,6 +235,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         }
         
         enableDoneButton()
+        
+        
     }
     
     func prepareViewForReminder(reminder: Reminder) {
@@ -266,18 +271,19 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             updateRecurringLabel()
         }
         
-        if reminder.isComplete == true {
-            completeButton.enabled = false
-        } else {
-            completeButton.enabled = true
-        }
+        
         
         
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        reminderNameField.becomeFirstResponder()
+        if willSetNewDate {
+            showDatePicker()
+        } else {
+            reminderNameField.becomeFirstResponder()
+
+        }
     }
     
     // MARK: - Table View Delegate

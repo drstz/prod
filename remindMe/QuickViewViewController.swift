@@ -211,8 +211,8 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
     
     func updateLabels(with reminder: Reminder) {
         reminderNameLabel.text = reminder.name
-        reminderDueDateLabel.text = convertDateToString(dateFromDate: reminder.dueDate)
-        reminderDueTimeLabel.text = convertDateToString(timeFromDate: reminder.dueDate)
+        reminderDueDateLabel.text = convertDateToString(.WholeDate, date: reminder.dueDate)
+        reminderDueTimeLabel.text = convertDateToString(.Time, date: reminder.dueDate)
     }
     
     func setCompleteButton(with reminder: Reminder) {

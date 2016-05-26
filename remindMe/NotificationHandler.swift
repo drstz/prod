@@ -62,15 +62,13 @@ class NotificationHandler {
     
     // MARK: - Handling Notifications
     
-    
-    
     func scheduleNotifications(reminder: Reminder, snooze isBeingDeferred: Bool = false) {
         var localNotification = UILocalNotification()
         
         deleteReminderNotifications(reminder)
         
         if isBeingDeferred {
-            print("Deferring notification for \(reminder.name)")
+            print("Snoozing notification for \(reminder.name)")
             localNotification = deferNotification()
         } else {
             print("Setting notification for \(reminder.name)")
@@ -88,7 +86,6 @@ class NotificationHandler {
     func deferNotification() -> UILocalNotification {
         let timeInterval: NSTimeInterval = 10
         let localNotification = UILocalNotification()
-        // For testing
         
         localNotification.fireDate = NSDate(timeIntervalSinceNow: timeInterval)
         localNotification.repeatInterval = .Minute
@@ -97,12 +94,10 @@ class NotificationHandler {
     }
     
     func scheduleNotification() -> UILocalNotification {
-        
         let timeInterval: NSTimeInterval = 10
         let localNotification = UILocalNotification()
         let dueDate = NSDate(timeIntervalSinceNow: timeInterval)
-        
-        // For testing
+
         localNotification.fireDate = dueDate
         localNotification.repeatInterval = .Minute
         

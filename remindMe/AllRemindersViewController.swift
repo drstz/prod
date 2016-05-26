@@ -265,18 +265,13 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     func completeButtonWasPressed(cell: ReminderCell) {
         let indexPath = tableView.indexPathForCell(cell)
         let reminder = fetchedResultsController.objectAtIndexPath(indexPath!) as! Reminder
-        if reminder.isComplete == false {
-            reminder.isComplete = true
-        } else {
-            reminder.isComplete = false 
-        }
+        reminder.complete()
         
         do {
             try managedObjectContext.save()
         } catch {
             fatalCoreDataError(error)
         }
-        print(reminder.isComplete)
     }
     
     // MARK: - REMINDERS

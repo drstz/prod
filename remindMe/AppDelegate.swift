@@ -113,7 +113,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let fetchError = error as NSError
                 print(fetchError)
             }
-            
         }
         return true
     }
@@ -138,11 +137,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      forLocalNotification notification: UILocalNotification,
                      completionHandler: () -> Void) {
         
-        let reminderID = notificationHandler.reminderID(notification)
-        let reminder = coreDataHandler.getReminderWithID(reminderID)
-        
-        sendReminderToController(reminder!)
-
+        handleIncomingNotification(notification)
         notificationHandler.handleActionInCategory(notification, actionIdentifier: identifier!)
         
         completionHandler()
@@ -151,12 +146,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         notificationWentOff = true
         
-        let reminderID = notificationHandler.reminderID(notification)
-
-        let reminder = coreDataHandler.getReminderWithID(reminderID)
-
-        sendReminderToController(reminder!)
-        
+        handleIncomingNotification(notification)
         notificationHandler.recieveLocalNotificationWithState(application.applicationState)
     }
     
@@ -165,7 +155,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationViewControllers = navigationController.viewControllers
         let allRemindersViewController = navigationViewControllers[0] as! AllRemindersViewController
         allRemindersViewController.reminderFromNotification = reminder
-        
+    }
+    
+    func handleIncomingNotification(notification: UILocalNotification) {
+        let reminderID = notificationHandler.reminderID(notification)
+        let reminder = coreDataHandler.getReminderWithID(reminderID)
+        sendReminderToController(reminder!)
     }
     
     

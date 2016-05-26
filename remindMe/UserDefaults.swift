@@ -10,7 +10,6 @@ import Foundation
     
 func registerDefaults() {
     let dictionary = ["FirstTime": true]
-    
     NSUserDefaults.standardUserDefaults().registerDefaults(dictionary)
 }
 

@@ -27,6 +27,7 @@ class Reminder: NSManagedObject {
             let newDate = setNewDueDate()
             dueDate = newDate
             notificationHandler.scheduleNotifications(self)
+            print("Completed Reminder - New One Scheduled")
         } else {
             notificationHandler.deleteReminderNotifications(self)
         }
@@ -36,7 +37,6 @@ class Reminder: NSManagedObject {
         print("Going to snooze reminder")
         notificationHandler.scheduleNotifications(self, snooze: true)
     }
-    
     
     func reminderIsRecurring() -> Bool {
         if isRecurring == 0 {

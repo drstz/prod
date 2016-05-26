@@ -62,6 +62,8 @@ class NotificationHandler {
     
     // MARK: - Handling Notifications
     
+    
+    
     func scheduleNotifications(reminder: Reminder, snooze isBeingDeferred: Bool = false) {
         var localNotification = UILocalNotification()
         
@@ -161,5 +163,31 @@ class NotificationHandler {
     func countAllNotifications() -> Int {
         let notifications = allNotifications()
         return notifications.count
+    }
+    
+    func reminderID(localNotification: UILocalNotification) -> Int {
+        let idFromNotification = localNotification.userInfo!["ReminderID"] as! Int
+        return idFromNotification
+    }
+    
+    func recieveLocalNotificationWithState(state: UIApplicationState) {
+        if state == .Inactive {
+            print("Handling notification from the background")
+            NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
+        } else {
+            print("Handling notification from app")
+            // NSNotificationCenter.defaultCenter().postNotificationName("showNotificationHasGoneOff", object: nil)
+        }
+    }
+    
+    func handleActionInCategory(notification: UILocalNotification, actionIdentifier: String) {
+        if notification.category == "Category" {
+            if actionIdentifier == "Complete" {
+                NSNotificationCenter.defaultCenter().postNotificationName("completeReminder", object: nil)
+            } else if actionIdentifier == "Defer" {
+                NSNotificationCenter.defaultCenter().postNotificationName("deferReminder", object: nil)
+            }
+        }
+        
     }
 }

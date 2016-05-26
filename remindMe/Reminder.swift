@@ -19,6 +19,24 @@ class Reminder: NSManagedObject {
         print("Reminder was deallocated")
     }
     
+    func complete() {
+        print("Going to complete reminder")
+        isComplete = true
+        
+        if reminderIsRecurring() {
+            let newDate = setNewDueDate()
+            dueDate = newDate
+            notificationHandler.scheduleNotifications(self)
+        } else {
+            notificationHandler.deleteReminderNotifications(self)
+        }
+    }
+    
+    func snooze() {
+        print("Going to snooze reminder")
+        notificationHandler.scheduleNotifications(self, snooze: true)
+    }
+    
     
     func reminderIsRecurring() -> Bool {
         if isRecurring == 0 {

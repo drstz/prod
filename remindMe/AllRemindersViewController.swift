@@ -63,13 +63,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         }
     }
     
-    var notifiedReminder: Reminder?
-    
     var list: List!
-    
-    var notificationID: NSManagedObjectID!
-    
-    var nothingDue = false
     
     var titleString = ""
     var nbOfReminders = 0
@@ -304,21 +298,9 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     // MARK: Reminder Actions
     
-    func completeReminder(reminder: Reminder) {
-        
-        print("Going to complete reminder")
-        reminderFromNotification?.isComplete = true
-        
-        let reminderReccurs = reminderFromNotification?.reminderIsRecurring()
-        
-        if reminderReccurs! {
-            let newDate = reminderFromNotification?.setNewDueDate()
-            reminderFromNotification?.dueDate = newDate!
-            let reminderNotificationHandler = reminderFromNotification?.notificationHandler
-            reminderNotificationHandler!.scheduleNotifications(reminderFromNotification!)
-        } else {
-            let reminderNotificationHandler = reminderFromNotification?.notificationHandler
-            reminderNotificationHandler?.deleteReminderNotifications(reminderFromNotification!)
+    func completeReminder() {
+        if let reminder = reminderFromNotification {
+            reminder.complete()
         }
         
         do {
@@ -330,8 +312,9 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     }
     
     func deferReminder() {
-        let reminderNotificationHandler = reminderFromNotification?.notificationHandler
-        reminderNotificationHandler!.scheduleNotifications(reminderFromNotification!, snooze: true)
+        if let reminder = reminderFromNotification {
+            reminder.snooze()
+        }
     }
     
     func viewReminder() {

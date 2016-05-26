@@ -119,13 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
-        
         return true
-    }
-
-    func applicationWillResignActive(application: UIApplication) {
-        
-        
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
@@ -137,25 +131,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationWillEnterForegroundNotification, object: nil)
             notificationWentOff = false
         }
-        
-        
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
-        
-    }
-
-    func applicationWillTerminate(application: UIApplication) {
-        
-    }
-    
     func application(application: UIApplication,
                      handleActionWithIdentifier identifier: String?,
                      forLocalNotification notification: UILocalNotification,
                      completionHandler: () -> Void) {
         
         let reminderID = notificationHandler.reminderID(notification)
-        
         let reminder = coreDataHandler.getReminderWithID(reminderID)
         
         sendReminderToController(reminder!)

@@ -313,7 +313,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 1 && indexPath.row == 1 && datePickerVisible {
-            setNotifications()
+            let notificationHandler = NotificationHandler()
+            notificationHandler.setNotifications()
             return datePickerCell
         } else if indexPath.section == 1 && indexPath.row == 4 {
             return recurringPickerCell

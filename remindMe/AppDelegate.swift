@@ -169,7 +169,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(fetchError)
         }
 
-        if notification.category == "CATEGORY" {
+        if notification.category == "Category" {
             if identifier == "Complete" {
                 NSNotificationCenter.defaultCenter().postNotificationName("completeReminder", object: nil)
             }

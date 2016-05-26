@@ -11,45 +11,4 @@ import UIKit
 
 
 
-func setNotifications() {
-    let actions = setNotificationActions()
-    let categories = setNotificationCategories(actions)
-    let settings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories:  categories)
-    
-    UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-}
 
-func setNotificationActions() -> [UIMutableUserNotificationAction]  {
-    
-    let completeAction = UIMutableUserNotificationAction()
-    completeAction.identifier = "Complete"
-    completeAction.title = "Complete"
-    completeAction.activationMode = UIUserNotificationActivationMode.Background
-    completeAction.authenticationRequired = false
-    completeAction.destructive = false
-    
-    let deferAction = UIMutableUserNotificationAction()
-    deferAction.identifier = "Defer"
-    deferAction.title = "+10 min"
-    deferAction.activationMode = UIUserNotificationActivationMode.Background
-    deferAction.authenticationRequired = false
-    deferAction.destructive = false
-    
-    let actions = [completeAction, deferAction]
-    
-    return actions
-}
-
-func setNotificationCategories(actions : [UIMutableUserNotificationAction]) -> Set<UIMutableUserNotificationCategory>  {
-    
-    let category = UIMutableUserNotificationCategory()
-    
-    category.identifier = "CATEGORY"
-    category.setActions(actions, forContext: UIUserNotificationActionContext.Default)
-    category.setActions(actions, forContext: UIUserNotificationActionContext.Minimal)
-    
-    var categoriesForSettings = Set<UIMutableUserNotificationCategory>()
-    categoriesForSettings.insert(category)
-    
-    return categoriesForSettings
-}

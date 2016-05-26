@@ -15,37 +15,67 @@ class NotificationHandler {
         print("Notification Handler was deallocated")
     }
     
+    // MARK: - Basic Set-Up
+    
+    func setNotifications() {
+        let actions = setNotificationActions()
+        let categories = setNotificationCategories(actions)
+        let settings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories:  categories)
+        
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+    }
+    
+    func setNotificationActions() -> [UIMutableUserNotificationAction]  {
+        
+        let completeAction = UIMutableUserNotificationAction()
+        completeAction.identifier = "Complete"
+        completeAction.title = "Complete"
+        completeAction.activationMode = UIUserNotificationActivationMode.Background
+        completeAction.authenticationRequired = false
+        completeAction.destructive = false
+        
+        let deferAction = UIMutableUserNotificationAction()
+        deferAction.identifier = "Defer"
+        deferAction.title = "+10 min"
+        deferAction.activationMode = UIUserNotificationActivationMode.Background
+        deferAction.authenticationRequired = false
+        deferAction.destructive = false
+        
+        let actions = [completeAction, deferAction]
+        
+        return actions
+    }
+    
+    func setNotificationCategories(actions : [UIMutableUserNotificationAction]) -> Set<UIMutableUserNotificationCategory>  {
+        
+        let category = UIMutableUserNotificationCategory()
+        
+        category.identifier = "Category"
+        category.setActions(actions, forContext: UIUserNotificationActionContext.Default)
+        category.setActions(actions, forContext: UIUserNotificationActionContext.Minimal)
+        
+        var categoriesForSettings = Set<UIMutableUserNotificationCategory>()
+        categoriesForSettings.insert(category)
+        
+        return categoriesForSettings
+    }
+    
+    // MARK: - Handling Notifications
+    
     func scheduleNotifications(reminder: Reminder, snooze isBeingDeferred: Bool = false) {
-        let name = reminder.name
-        let idNumber = reminder.idNumber
+        var localNotification = UILocalNotification()
         
         deleteReminderNotifications(reminder)
         
-        let localNotification = UILocalNotification()
-        
         if isBeingDeferred {
-            // For testing
-            print("Deferring notification for \(name)")
-            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
-            localNotification.repeatInterval = .Minute
-            //            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10 * 60)
+            print("Deferring notification for \(reminder.name)")
+            localNotification = deferNotification()
         } else {
-            // For testing
-            print("Setting notification for \(name)")
-            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
-            localNotification.repeatInterval = .Minute
-            // localNotification.fireDate = dueDate
+            print("Setting notification for \(reminder.name)")
+            localNotification = scheduleNotification()
         }
         
-        localNotification.timeZone = NSTimeZone.defaultTimeZone()
-        
-        localNotification.alertBody = name
-        localNotification.alertTitle = name
-        
-        localNotification.category = "CATEGORY"
-        localNotification.soundName = UILocalNotificationDefaultSoundName
-        
-        localNotification.userInfo = ["ReminderID": idNumber]
+        localNotification = setNotificationSettings(localNotification, reminder: reminder)
         
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
         
@@ -53,6 +83,47 @@ class NotificationHandler {
         print("Total of \(numberOfNotifications) notifications" )
     }
     
+    func deferNotification() -> UILocalNotification {
+        let timeInterval: NSTimeInterval = 10
+        let localNotification = UILocalNotification()
+        // For testing
+        
+        localNotification.fireDate = NSDate(timeIntervalSinceNow: timeInterval)
+        localNotification.repeatInterval = .Minute
+        
+        return localNotification
+    }
+    
+    func scheduleNotification() -> UILocalNotification {
+        
+        let timeInterval: NSTimeInterval = 10
+        let localNotification = UILocalNotification()
+        let dueDate = NSDate(timeIntervalSinceNow: timeInterval)
+        
+        // For testing
+        localNotification.fireDate = dueDate
+        localNotification.repeatInterval = .Minute
+        
+        return localNotification
+        
+    }
+    
+    func setNotificationSettings(notification: UILocalNotification, reminder: Reminder) -> UILocalNotification {
+        let localNotification = notification
+        
+        localNotification.timeZone = NSTimeZone.defaultTimeZone()
+        
+        localNotification.alertBody = reminder.name
+        localNotification.alertTitle = reminder.name
+        
+        localNotification.category = "Category"
+        localNotification.soundName = UILocalNotificationDefaultSoundName
+        
+        localNotification.userInfo = ["ReminderID": reminder.idNumber]
+        
+        return localNotification
+    }
+
     func deleteReminderNotifications(reminder: Reminder)  {
         let notifications = notificationsForReminder(reminder)
         

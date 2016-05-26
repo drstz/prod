@@ -14,7 +14,7 @@ import UIKit
 class Reminder: NSManagedObject {
     
     deinit {
-        print("Reminder was deleted")
+        print("\(name) was deleted")
     }
     
     func reminderIsRecurring() -> Bool {
@@ -40,10 +40,11 @@ class Reminder: NSManagedObject {
     func deleteReminderNotifications()  {
         if let notification = notificationForThisItem() {
             UIApplication.sharedApplication().cancelLocalNotification(notification)
-            print("Notification was deleted")
+            print("Deleted notification for \(name)")
         } else {
-            print("No notifications were found")
+            print("Deleted no notifications")
         }
+        countNotifications()
     }
     
     func addIDtoReminder() {
@@ -51,16 +52,39 @@ class Reminder: NSManagedObject {
         idNumber = NSNumber(integer: idAsInteger)
     }
     
+    func countNotifications() {
+        let allNotifications = UIApplication.sharedApplication().scheduledLocalNotifications!
+        let notificationCount = allNotifications.count
+        
+        var notificationForReminder = [UILocalNotification]()
+        
+        for notification in allNotifications {
+            if let reminderID = notification.userInfo?["ReminderID"] as? Int where reminderID == idNumber {
+                notificationForReminder.append(notification)
+            }
+        }
+        
+        let notificationForReminderCount = notificationForReminder.count
+        
+        print("")
+        print("\(notificationCount) notifications are scheduled")
+        print("\(notificationForReminderCount) notifications for \(name) -- ID: \(idNumber)")
+        
+    }
+    
     func notificationForThisItem() -> UILocalNotification? {
         let allNotifications = UIApplication.sharedApplication().scheduledLocalNotifications!
         
+        print("\(allNotifications.count) scheduled notifications")
+        
         for notification in allNotifications {
-            if let reminderID = notification.userInfo?["ReminderID"]  as? Int where reminderID == idNumber {
-                print("Returning notifications")
+            if let reminderID = notification.userInfo?["ReminderID"] as? Int where reminderID == idNumber {
+                
+                print("Returning notification for \(name)")
                 return notification
             }
         }
-        print("Found no notifications")
+        print("No notifications found")
         return nil
     }
     
@@ -72,12 +96,13 @@ class Reminder: NSManagedObject {
         
         if isBeingDeferred {
             // For testing
-            print("Deffered Notification")
+            print("Deferring notification for \(name)")
             localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
             localNotification.repeatInterval = .Minute
 //            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10 * 60)
         } else {
             // For testing
+            print("Setting notification for \(name)")
             localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
             localNotification.repeatInterval = .Minute
             // localNotification.fireDate = dueDate
@@ -94,10 +119,12 @@ class Reminder: NSManagedObject {
         
         localNotification.userInfo = ["ReminderID": idNumber]
         
-        print(localNotification.fireDate)
-        print(dueDate)
+        let fireDate = localNotification.fireDate
+
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
-        print("Notification  was set")
+        print("Notification for \(name)  was set for \(fireDate)")
+        
+        countNotifications()
         
     }
     

@@ -147,7 +147,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         do {
             try managedObjectContext.save()
             if reminder != nil {
-                reminder!.scheduleNotifications()
+                let reminderNotificationHandler = reminder!.notificationHandler
+                reminderNotificationHandler.scheduleNotifications(reminder!)
                 delegate?.addReminderViewController(self, didFinishEditingReminder: reminder!)
             } else {
                 print("Failure to schedule notification: no reminder")
@@ -189,10 +190,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         if reminderRepeats! {
             let newDate = reminderToEdit?.setNewDueDate()
             reminderToEdit?.dueDate = newDate!
-            reminderToEdit?.scheduleNotifications()
-        } else {
-            reminderToEdit?.deleteReminderNotifications()
             
+            let reminderNotificationHandler = reminderToEdit?.notificationHandler
+            reminderNotificationHandler?.scheduleNotifications(reminderToEdit!)
+        } else {
+            let reminderNotificationHandler = reminderToEdit?.notificationHandler
+            reminderNotificationHandler?.deleteReminderNotifications(reminderToEdit!)
         }
         
         do {

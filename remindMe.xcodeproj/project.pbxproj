@@ -25,6 +25,7 @@
 		71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 71ABD7021CBF893300F0BF90 /* DataModel.xcdatamodeld */; };
 		71ABD70A1CC0A87600F0BF90 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ABD7091CC0A87600F0BF90 /* Date.swift */; };
 		71B294881CC8D4AE0069714E /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B294871CC8D4AE0069714E /* Notifications.swift */; };
+		71F6A5361CF6C0FD0010C135 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F6A5351CF6C0FD0010C135 /* NotificationHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		71ABD7031CBF893300F0BF90 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		71ABD7091CC0A87600F0BF90 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Date.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		71B294871CC8D4AE0069714E /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		71F6A5351CF6C0FD0010C135 /* NotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				71B294871CC8D4AE0069714E /* Notifications.swift */,
+				71F6A5351CF6C0FD0010C135 /* NotificationHandler.swift */,
 			);
 			name = Notifications;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 				71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */,
 				71ABD70A1CC0A87600F0BF90 /* Date.swift in Sources */,
 				7165A57C1CBB6A310088EA76 /* AppDelegate.swift in Sources */,
+				71F6A5361CF6C0FD0010C135 /* NotificationHandler.swift in Sources */,
 				714CB6B61CCBA00E00723399 /* List.swift in Sources */,
 				71A788741CE6093700D5CE47 /* completeButton.swift in Sources */,
 				7165A5981CBB92C30088EA76 /* ReminderCell.swift in Sources */,

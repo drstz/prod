@@ -79,13 +79,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         allRemindersViewController.managedObjectContext = managedObjectContext
         
         if isFirstTime() {
-            print("*** First time")
+            print("*** First time - Creating list")
             let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as! List
             list.numberOfReminders = 0
             
             do {
                 try managedObjectContext.save()
-                print("Saved...")
+                print("Saved List")
                 print(list.numberOfReminders)
             } catch {
                 fatalCoreDataError(error)

@@ -63,13 +63,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         }
     }
     
-    var notifiedReminder: Reminder?
-    
     var list: List!
-    
-    var notificationID: NSManagedObjectID!
-    
-    var nothingDue = false
     
     var titleString = ""
     var nbOfReminders = 0
@@ -90,7 +84,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     }
     
     func quickViewViewControllerDidSnooze(controller: QuickViewViewController, didSnoozeReminder reminder: Reminder) {
-        reminder.scheduleNotifications(snooze: true)
+        let reminderNotificationHandler = reminder.notificationHandler
+        reminderNotificationHandler.scheduleNotifications(reminder, snooze: true)
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -103,9 +98,11 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
             if reminderReccurs {
                 let newDate = reminder.setNewDueDate()
                 reminder.dueDate = newDate
-                reminder.scheduleNotifications()
+                let reminderNotificationHandler = reminder.notificationHandler
+                reminderNotificationHandler.scheduleNotifications(reminder)
             } else {
-                reminder.deleteReminderNotifications()
+                let notificationHandler = reminder.notificationHandler
+                notificationHandler.deleteReminderNotifications(reminder)
             }
         } else {
             reminder.isComplete = false
@@ -268,18 +265,13 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     func completeButtonWasPressed(cell: ReminderCell) {
         let indexPath = tableView.indexPathForCell(cell)
         let reminder = fetchedResultsController.objectAtIndexPath(indexPath!) as! Reminder
-        if reminder.isComplete == false {
-            reminder.isComplete = true
-        } else {
-            reminder.isComplete = false 
-        }
+        reminder.complete()
         
         do {
             try managedObjectContext.save()
         } catch {
             fatalCoreDataError(error)
         }
-        print(reminder.isComplete)
     }
     
     // MARK: - REMINDERS
@@ -301,19 +293,9 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     // MARK: Reminder Actions
     
-    func completeReminder(reminder: Reminder) {
-        
-        print("Going to complete reminder")
-        reminderFromNotification?.isComplete = true
-        
-        let reminderReccurs = reminderFromNotification?.reminderIsRecurring()
-        
-        if reminderReccurs! {
-            let newDate = reminderFromNotification?.setNewDueDate()
-            reminderFromNotification?.dueDate = newDate!
-            reminderFromNotification?.scheduleNotifications()
-        } else {
-            reminderFromNotification?.deleteReminderNotifications()
+    func completeReminder() {
+        if let reminder = reminderFromNotification {
+            reminder.complete()
         }
         
         do {
@@ -325,11 +307,14 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     }
     
     func deferReminder() {
-        reminderFromNotification?.scheduleNotifications(snooze: true)
+        if let reminder = reminderFromNotification {
+            reminder.snooze()
+        }
     }
     
     func viewReminder() {
-        reminderFromNotification?.deleteReminderNotifications()
+        let reminderNotificationHandler = reminderFromNotification?.notificationHandler
+        reminderNotificationHandler?.deleteReminderNotifications(reminderFromNotification!)
         notificationHasGoneOff = true
         
         performSegueWithIdentifier("QuickView", sender: reminderFromNotification)
@@ -340,7 +325,10 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         if fetchedResultsController.indexPathForObject(reminder) != nil {
             let indexPath = fetchedResultsController.indexPathForObject(reminder)
             let reminderToDelete = fetchedResultsController.objectAtIndexPath(indexPath!) as! Reminder
-            reminder.deleteReminderNotifications()
+            
+            let reminderNotificationHandler = reminder.notificationHandler
+            reminderNotificationHandler.deleteReminderNotifications(reminder)
+            
             managedObjectContext.deleteObject(reminderToDelete)
             
             do {
@@ -397,7 +385,10 @@ extension AllRemindersViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         let reminder = fetchedResultsController.objectAtIndexPath(indexPath) as! Reminder
-        reminder.deleteReminderNotifications()
+        
+        let reminderNotificationHandler = reminder.notificationHandler
+        reminderNotificationHandler.deleteReminderNotifications(reminder)
+        
         managedObjectContext.deleteObject(reminder)
 
         do {

@@ -13,8 +13,29 @@ import UIKit
 
 class Reminder: NSManagedObject {
     
+    let notificationHandler = NotificationHandler()
+    
     deinit {
-        print("Reminder was deleted")
+        print("Reminder was deallocated")
+    }
+    
+    func complete() {
+        print("Going to complete reminder")
+        isComplete = true
+        
+        if reminderIsRecurring() {
+            let newDate = setNewDueDate()
+            dueDate = newDate
+            notificationHandler.scheduleNotifications(self)
+            print("Completed Reminder - New One Scheduled")
+        } else {
+            notificationHandler.deleteReminderNotifications(self)
+        }
+    }
+    
+    func snooze() {
+        print("Going to snooze reminder")
+        notificationHandler.scheduleNotifications(self, snooze: true)
     }
     
     func reminderIsRecurring() -> Bool {
@@ -37,69 +58,9 @@ class Reminder: NSManagedObject {
         return createNewDate(dueDate, typeOfInterval: typeOfInterval!, everyAmount: everyAmount! as Int)
     }
     
-    func deleteReminderNotifications()  {
-        if let notification = notificationForThisItem() {
-            UIApplication.sharedApplication().cancelLocalNotification(notification)
-            print("Notification was deleted")
-        } else {
-            print("No notifications were found")
-        }
-    }
-    
     func addIDtoReminder() {
         let idAsInteger = list.numberOfReminders.integerValue + idNumber.integerValue
         idNumber = NSNumber(integer: idAsInteger)
     }
-    
-    func notificationForThisItem() -> UILocalNotification? {
-        let allNotifications = UIApplication.sharedApplication().scheduledLocalNotifications!
-        
-        for notification in allNotifications {
-            if let reminderID = notification.userInfo?["ReminderID"]  as? Int where reminderID == idNumber {
-                print("Returning notifications")
-                return notification
-            }
-        }
-        print("Found no notifications")
-        return nil
-    }
-    
-    func scheduleNotifications(snooze isBeingDeferred: Bool = false) {
-        
-        deleteReminderNotifications()
-        
-        let localNotification = UILocalNotification()
-        
-        if isBeingDeferred {
-            // For testing
-            print("Deffered Notification")
-            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
-            localNotification.repeatInterval = .Minute
-//            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10 * 60)
-        } else {
-            // For testing
-            localNotification.fireDate = NSDate(timeIntervalSinceNow: 10)
-            localNotification.repeatInterval = .Minute
-            // localNotification.fireDate = dueDate
-            
-            
-        }
-
-        localNotification.timeZone = NSTimeZone.defaultTimeZone()
-        
-        localNotification.alertBody = name
-        localNotification.category = "CATEGORY"
-        localNotification.alertTitle = name
-        localNotification.soundName = UILocalNotificationDefaultSoundName
-        
-        localNotification.userInfo = ["ReminderID": idNumber]
-        
-        print(localNotification.fireDate)
-        print(dueDate)
-        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
-        print("Notification  was set")
-        
-    }
-    
 
 }

@@ -10,6 +10,12 @@ import Foundation
 
 // MARK: - Date Converter
 
+enum DateFormats: String {
+    case Day = "EEEE"
+    case WholeDate = "dd, MMMM, yy"
+    case Time = "HH:mm "
+}
+
 let languages = NSLocale.preferredLanguages()
 let preferredLanguage = languages[0]
 
@@ -51,28 +57,23 @@ func convertDateToString(dateToConvert date: NSDate) -> String {
     return formatter.stringFromDate(date)
 }
 
-func convertDateToString(dayFromDate date: NSDate) -> String {
+func convertDateToString(format: DateFormats, date: NSDate) -> String {
     let formatter = NSDateFormatter()
+    var dateFormat = ""
     formatter.locale = NSLocale(localeIdentifier: preferredLanguage)
-    formatter.dateFormat = "EEEE"
-    return formatter.stringFromDate(date)
     
-}
+    switch format {
+    case .WholeDate:
+        dateFormat = format.rawValue
+    case .Day:
+        dateFormat = format.rawValue
+    case .Time:
+        dateFormat = format.rawValue
+    }
+    
+    formatter.dateFormat = dateFormat
+    return formatter.stringFromDate(date)
 
-func convertDateToString(dateFromDate date: NSDate) -> String {
-    let formatter = NSDateFormatter()
-    formatter.locale = NSLocale(localeIdentifier: preferredLanguage)
-    formatter.dateFormat = "dd, MMMM, yy"
-    return formatter.stringFromDate(date)
-    
-}
-
-func convertDateToString(timeFromDate date: NSDate) -> String {
-    let formatter = NSDateFormatter()
-    formatter.locale = NSLocale(localeIdentifier: preferredLanguage)
-    formatter.dateFormat = "HH:mm "
-    return formatter.stringFromDate(date)
-    
 }
 
 func createNewDate(oldDate : NSDate, typeOfInterval: String, everyAmount: Int) -> NSDate {

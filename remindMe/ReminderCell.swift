@@ -61,9 +61,9 @@ class ReminderCell: UITableViewCell {
     
     func configureLabels(reminder: Reminder) {
         reminderLabel.text = "\(reminder.name)" + " " + "(\(reminder.idNumber))"
-        dayLabel.text = convertDateToString(dayFromDate: reminder.dueDate)
-        dateLabel.text = convertDateToString(dateFromDate: reminder.dueDate)
-        timeLabel.text = convertDateToString(timeFromDate: reminder.dueDate)
+        dayLabel.text = convertDateToString(.Day, date: reminder.dueDate)
+        dateLabel.text = convertDateToString(.WholeDate, date: reminder.dueDate)
+        timeLabel.text = convertDateToString(.Time, date: reminder.dueDate)
         if let nexty = reminder.nextDueDate {
             if reminder.everyAmount! != 1 {
                 nextDueDate.text = "Every " + "\(reminder.everyAmount!) " + "\(reminder.typeOfInterval!)" + "s"

@@ -24,7 +24,8 @@
 		71A788741CE6093700D5CE47 /* completeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A788731CE6093600D5CE47 /* completeButton.swift */; };
 		71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 71ABD7021CBF893300F0BF90 /* DataModel.xcdatamodeld */; };
 		71ABD70A1CC0A87600F0BF90 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ABD7091CC0A87600F0BF90 /* Date.swift */; };
-		71B294881CC8D4AE0069714E /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B294871CC8D4AE0069714E /* Notifications.swift */; };
+		71F6A5361CF6C0FD0010C135 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F6A5351CF6C0FD0010C135 /* NotificationHandler.swift */; };
+		71F6A5381CF6ECDE0010C135 /* CoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F6A5371CF6ECDE0010C135 /* CoreDataHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,7 +48,8 @@
 		71A788731CE6093600D5CE47 /* completeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = completeButton.swift; sourceTree = "<group>"; };
 		71ABD7031CBF893300F0BF90 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		71ABD7091CC0A87600F0BF90 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Date.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		71B294871CC8D4AE0069714E /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		71F6A5351CF6C0FD0010C135 /* NotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
+		71F6A5371CF6ECDE0010C135 /* CoreDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,10 +66,8 @@
 		710D67CE1CE38C380007143B /* List */ = {
 			isa = PBXGroup;
 			children = (
-				7165A57D1CBB6A310088EA76 /* AllRemindersViewController.swift */,
 				714CB6B41CCBA00E00723399 /* List.swift */,
 				714CB6B31CCBA00E00723399 /* List+CoreDataProperties.swift */,
-				7165A5971CBB92C30088EA76 /* ReminderCell.swift */,
 			);
 			name = List;
 			sourceTree = "<group>";
@@ -75,10 +75,10 @@
 		710D67CF1CE38C4E0007143B /* Reminder */ = {
 			isa = PBXGroup;
 			children = (
+				7165A57D1CBB6A310088EA76 /* AllRemindersViewController.swift */,
 				7165A5991CBCB4330088EA76 /* AddReminder.swift */,
 				71878B411CC49A9700AD0F27 /* Reminder.swift */,
 				71878B401CC49A9700AD0F27 /* Reminder+CoreDataProperties.swift */,
-				7165A5951CBB910B0088EA76 /* ReminderCell.xib */,
 			);
 			name = Reminder;
 			sourceTree = "<group>";
@@ -86,7 +86,6 @@
 		710D67D01CE38CC90007143B /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				71ABD7091CC0A87600F0BF90 /* Date.swift */,
 				71238DE01CD70AC100F9D706 /* UserDefaults.swift */,
 			);
 			name = Global;
@@ -95,24 +94,25 @@
 		71328A8B1CED9C78005A0D13 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
-				71B294871CC8D4AE0069714E /* Notifications.swift */,
+				71F6A5351CF6C0FD0010C135 /* NotificationHandler.swift */,
 			);
 			name = Notifications;
 			sourceTree = "<group>";
 		};
-		71386A421CC5EE5F007DF704 /* View */ = {
+		71386A421CC5EE5F007DF704 /* _StoryBoards */ = {
 			isa = PBXGroup;
 			children = (
 				7165A5841CBB6A310088EA76 /* LaunchScreen.storyboard */,
 				7165A57F1CBB6A310088EA76 /* Main.storyboard */,
 			);
-			name = View;
+			name = _StoryBoards;
 			sourceTree = "<group>";
 		};
 		714CB6B71CCBA01C00723399 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
 				71ABD7021CBF893300F0BF90 /* DataModel.xcdatamodeld */,
+				71F6A5371CF6ECDE0010C135 /* CoreDataHandler.swift */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -136,16 +136,18 @@
 		7165A57A1CBB6A310088EA76 /* remindMe */ = {
 			isa = PBXGroup;
 			children = (
+				7165A5871CBB6A310088EA76 /* Info.plist */,
 				7165A57B1CBB6A310088EA76 /* AppDelegate.swift */,
 				7165A5821CBB6A310088EA76 /* Assets.xcassets */,
+				71386A421CC5EE5F007DF704 /* _StoryBoards */,
 				714CB6B71CCBA01C00723399 /* Core Data */,
+				71F6A53A1CF722AF0010C135 /* Date */,
 				710D67D01CE38CC90007143B /* Global */,
-				7165A5871CBB6A310088EA76 /* Info.plist */,
 				710D67CE1CE38C380007143B /* List */,
 				71328A8B1CED9C78005A0D13 /* Notifications */,
 				710D67CF1CE38C4E0007143B /* Reminder */,
+				71F6A5391CF71F6B0010C135 /* Reminder Cell */,
 				71A7884C1CE5B54300D5CE47 /* Reminder View */,
-				71386A421CC5EE5F007DF704 /* View */,
 			);
 			path = remindMe;
 			sourceTree = "<group>";
@@ -157,6 +159,23 @@
 				71A788731CE6093600D5CE47 /* completeButton.swift */,
 			);
 			name = "Reminder View";
+			sourceTree = "<group>";
+		};
+		71F6A5391CF71F6B0010C135 /* Reminder Cell */ = {
+			isa = PBXGroup;
+			children = (
+				7165A5971CBB92C30088EA76 /* ReminderCell.swift */,
+				7165A5951CBB910B0088EA76 /* ReminderCell.xib */,
+			);
+			name = "Reminder Cell";
+			sourceTree = "<group>";
+		};
+		71F6A53A1CF722AF0010C135 /* Date */ = {
+			isa = PBXGroup;
+			children = (
+				71ABD7091CC0A87600F0BF90 /* Date.swift */,
+			);
+			name = Date;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,12 +252,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7165A57E1CBB6A310088EA76 /* AllRemindersViewController.swift in Sources */,
+				71F6A5381CF6ECDE0010C135 /* CoreDataHandler.swift in Sources */,
 				71A7884E1CE5B57400D5CE47 /* QuickViewViewController.swift in Sources */,
 				714CB6B51CCBA00E00723399 /* List+CoreDataProperties.swift in Sources */,
-				71B294881CC8D4AE0069714E /* Notifications.swift in Sources */,
 				71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */,
 				71ABD70A1CC0A87600F0BF90 /* Date.swift in Sources */,
 				7165A57C1CBB6A310088EA76 /* AppDelegate.swift in Sources */,
+				71F6A5361CF6C0FD0010C135 /* NotificationHandler.swift in Sources */,
 				714CB6B61CCBA00E00723399 /* List.swift in Sources */,
 				71A788741CE6093700D5CE47 /* completeButton.swift in Sources */,
 				7165A5981CBB92C30088EA76 /* ReminderCell.swift in Sources */,

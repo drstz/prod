@@ -19,6 +19,9 @@ func fatalCoreDataError(error: ErrorType) {
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    let coreDataHandler = CoreDataHandler()
+    let notificationHandler = NotificationHandler()
+    
     var firstTime = true
     
     var notificationWentOff = false
@@ -73,19 +76,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(#function)
         registerDefaults()
         
+        coreDataHandler.setObjectContext(managedObjectContext)
+        
         let navigationController = window!.rootViewController as! UINavigationController
         let navigationViewControllers = navigationController.viewControllers
         let allRemindersViewController = navigationViewControllers[0] as! AllRemindersViewController
         allRemindersViewController.managedObjectContext = managedObjectContext
         
         if isFirstTime() {
-            print("*** First time")
+            print("*** First time - Creating list")
             let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as! List
             list.numberOfReminders = 0
             
             do {
                 try managedObjectContext.save()
-                print("Saved...")
+                print("Saved List")
                 print(list.numberOfReminders)
             } catch {
                 fatalCoreDataError(error)
@@ -108,19 +113,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let fetchError = error as NSError
                 print(fetchError)
             }
-            
         }
         return true
     }
     
     func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
-        
         return true
-    }
-
-    func applicationWillResignActive(application: UIApplication) {
-        
-        
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
@@ -132,87 +130,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationWillEnterForegroundNotification, object: nil)
             notificationWentOff = false
         }
-        
-        
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
-        
-    }
-
-    func applicationWillTerminate(application: UIApplication) {
-        
-    }
-    
     func application(application: UIApplication,
                      handleActionWithIdentifier identifier: String?,
                      forLocalNotification notification: UILocalNotification,
                      completionHandler: () -> Void) {
         
-        let idFromNotification = notification.userInfo!["ReminderID"] as! Int
+        handleIncomingNotification(notification)
+        notificationHandler.handleActionInCategory(notification, actionIdentifier: identifier!)
         
-        let fetchRequest = NSFetchRequest(entityName: "Reminder")
-        let predicate = NSPredicate(format: "%K == %@", "idNumber", "\(idFromNotification)" )
-        fetchRequest.predicate = predicate
-        
-        do {
-            let result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
-            let reminder = result[0] as! NSManagedObject as! Reminder
-            
-            let navigationController = window!.rootViewController as! UINavigationController
-            let navigationViewControllers = navigationController.viewControllers
-            let allRemindersViewController = navigationViewControllers[0] as! AllRemindersViewController
-            allRemindersViewController.reminderFromNotification = reminder
-            
-        } catch {
-            let fetchError = error as NSError
-            print(fetchError)
-        }
-
-        if notification.category == "CATEGORY" {
-            if identifier == "Complete" {
-                NSNotificationCenter.defaultCenter().postNotificationName("completeReminder", object: nil)
-            }
-            
-            if identifier == "Defer" {
-                NSNotificationCenter.defaultCenter().postNotificationName("deferReminder", object: nil)
-            }
-        }
         completionHandler()
     }
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         notificationWentOff = true
         
-        let idFromNotification = notification.userInfo!["ReminderID"] as! Int
-        
-        let fetchRequest = NSFetchRequest(entityName: "Reminder")
-        let predicate = NSPredicate(format: "%K == %@", "idNumber", "\(idFromNotification)" )
-        fetchRequest.predicate = predicate
-        
-        do {
-            let result = try self.managedObjectContext.executeFetchRequest(fetchRequest)
-            let reminder = result[0] as! NSManagedObject as! Reminder
-            
-            let navigationController = window!.rootViewController as! UINavigationController
-            let navigationViewControllers = navigationController.viewControllers
-            let allRemindersViewController = navigationViewControllers[0] as! AllRemindersViewController
-            allRemindersViewController.reminderFromNotification = reminder
-            
-
-            
-        } catch {
-            let fetchError = error as NSError
-            print(fetchError)
-        }
-        
-        if application.applicationState == .Inactive {
-            print("Handling notification from the background")
-            NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
-        } else {
-            print("Handling notification from app")
-            // NSNotificationCenter.defaultCenter().postNotificationName("showNotificationHasGoneOff", object: nil)
-        }
+        handleIncomingNotification(notification)
+        notificationHandler.recieveLocalNotificationWithState(application.applicationState)
+    }
+    
+    func sendReminderToController(reminder: Reminder) {
+        let navigationController = window!.rootViewController as! UINavigationController
+        let navigationViewControllers = navigationController.viewControllers
+        let allRemindersViewController = navigationViewControllers[0] as! AllRemindersViewController
+        allRemindersViewController.reminderFromNotification = reminder
+    }
+    
+    func handleIncomingNotification(notification: UILocalNotification) {
+        let reminderID = notificationHandler.reminderID(notification)
+        let reminder = coreDataHandler.getReminderWithID(reminderID)
+        sendReminderToController(reminder!)
     }
     
     

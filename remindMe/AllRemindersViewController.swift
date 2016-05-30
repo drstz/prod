@@ -164,22 +164,18 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     // MARK: Segues
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Add Reminder
-        if segue.identifier == "AddReminder" {
+        let segueIdentifier = segue.identifier!
+        let navigationController = segue.destinationViewController as! UINavigationController
+        
+        switch segueIdentifier {
             
-            let navigationController = segue.destinationViewController as! UINavigationController
+        case "AddReminder":
             let controller = navigationController.topViewController as! AddReminderViewController
-            
-            
             controller.delegate = self
             controller.managedObjectContext = managedObjectContext
             controller.list = list
-            
-            // Edit Reminder
-        } else if segue.identifier == "EditReminder" {
-            let navigationController = segue.destinationViewController as! UINavigationController
+        case "EditReminder":
             let controller = navigationController.topViewController as! AddReminderViewController
-            
             controller.delegate = self
             controller.managedObjectContext = managedObjectContext
             
@@ -187,8 +183,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
                 let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
                 controller.reminderToEdit = reminder
             }
-        } else if segue.identifier == "QuickView" {
-            let navigationController = segue.destinationViewController as! UINavigationController
+            
+        case "QuickView":
             let controller = navigationController.topViewController as! QuickViewViewController
             controller.delegate = self
             
@@ -200,16 +196,19 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
                 controller.managedObjectContext = managedObjectContext
                 controller.notificationHasGoneOff = notificationHasGoneOff
             } else {
-                
                 if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
                     let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
                     controller.incomingReminder = reminder
                     controller.managedObjectContext = managedObjectContext
                 }
             }
+            
+        default:
+            break
+            
         }
     }
-    
+
     func setNumberOfReminders() {
         
         nbOfReminders = tableView.numberOfRowsInSection(0)
@@ -222,6 +221,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         self.title = titleString
         
     }
+        
+        
     
     func completeButtonWasPressed(cell: ReminderCell) {
         let indexPath = tableView.indexPathForCell(cell)

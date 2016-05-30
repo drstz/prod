@@ -133,10 +133,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        coreDataHandler.setObjectContext(managedObjectContext)
-        coreDataHandler.setFetchedResultsController("Reminder", cacheName: "Reminder")
-        coreDataHandler.fetchedResultsController.delegate = self
-        performFetch()
+        setUpCoreData()
         
         loadCell()
         
@@ -159,6 +156,13 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
         tableView.rowHeight = 200
+    }
+    
+    func setUpCoreData() {
+        coreDataHandler.setObjectContext(managedObjectContext)
+        coreDataHandler.setFetchedResultsController("Reminder", cacheName: "Reminder")
+        coreDataHandler.fetchedResultsController.delegate = self
+        coreDataHandler.performFetch()
     }
     
     // MARK: Segues
@@ -238,10 +242,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     func updateList() {        
         tableView.reloadData()
-    }
-    
-    func performFetch() {
-        coreDataHandler.performFetch()
     }
     
     // MARK: Reminder Actions

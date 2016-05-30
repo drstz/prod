@@ -159,7 +159,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func handleIncomingNotification(notification: UILocalNotification) {
         let reminderID = notificationHandler.reminderID(notification)
-        let reminder = coreDataHandler.getReminderWithID(reminderID)
+        let reminder = coreDataHandler.getReminderWithID(reminderID, from: "Reminder")
         sendReminderToController(reminder!)
     }
     

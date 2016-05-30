@@ -27,6 +27,7 @@ class CoreDataHandler {
     
     func getReminderWithID(idFromNotification : Int, from entity: String) -> Reminder? {
         let fetchRequest = NSFetchRequest(entityName: entity)
+        
         let predicate = NSPredicate(format: "%K == %@", "idNumber", "\(idFromNotification)" )
         fetchRequest.predicate = predicate
         

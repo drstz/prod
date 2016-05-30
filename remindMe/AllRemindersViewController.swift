@@ -147,7 +147,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
     }
     
-    
     override func viewWillAppear(animated: Bool) {
         setNumberOfReminders()
     }
@@ -234,7 +233,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     // MARK: - REMINDERS
     
-
     // MARK: Reminder list
     
     func updateList() {        
@@ -292,7 +290,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
 extension AllRemindersViewController: UITableViewDataSource {
     func tableView(tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
-        
         
         let sectionInfo = coreDataHandler.fetchedResultsController.sections![section]
         return sectionInfo.numberOfObjects

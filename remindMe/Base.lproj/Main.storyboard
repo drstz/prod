@@ -45,7 +45,7 @@
                                 <segment title="Complete"/>
                             </segments>
                             <connections>
-                                <action selector="showCompleteReminders" destination="BYZ-38-t0r" eventType="valueChanged" id="GRs-Nu-lUR"/>
+                                <action selector="changeSegment" destination="BYZ-38-t0r" eventType="valueChanged" id="Soa-LP-LWn"/>
                             </connections>
                         </segmentedControl>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="xkf-GL-rPd">

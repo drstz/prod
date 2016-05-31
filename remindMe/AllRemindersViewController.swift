@@ -20,7 +20,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     // MARK: - Outlets
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var filterButton: UIBarButtonItem!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     // MARK: - Core Date
@@ -54,9 +53,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     // MARK: - IBActions
     
-    @IBAction func showCompleteReminders() {
+    @IBAction func changeSegment() {
         print("Button was pressed")
-        
         let segment = segmentedControl.selectedSegmentIndex
         if segment == 0 {
             showingCompleteReminders = false
@@ -67,6 +65,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         loadCell()
         tableView.reloadData()
         setNumberOfReminders()
+        
     }
 
     // MARK: - Delegate Methods

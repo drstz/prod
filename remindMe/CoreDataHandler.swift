@@ -71,7 +71,7 @@ class CoreDataHandler {
             fetchRequest: fetchRequest,
             managedObjectContext: managedObjectContext,
             sectionNameKeyPath: nil,
-            cacheName: cacheName
+            cacheName: nil
         )
         
         fetchedResultsController = newFetchedResultsController

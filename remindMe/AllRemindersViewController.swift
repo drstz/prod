@@ -20,6 +20,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     // MARK: - Outlets
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var filterButton: UIBarButtonItem!
     
     // MARK: - Core Date
     
@@ -48,6 +49,27 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     var notificationHasGoneOff = false
     
+    var showingCompleteReminders = false {
+        didSet {
+            if showingCompleteReminders{
+                filterButton.title = "Completed"
+            } else {
+                filterButton.title = "Incomplete"
+            }
+        }
+    }
+    
+    // MARK: - IBActions
+    
+    @IBAction func showCompleteReminders() {
+        print("Button was pressed")
+        showingCompleteReminders = !showingCompleteReminders
+        setUpCoreData()
+        loadCell()
+        tableView.reloadData()
+        setNumberOfReminders()
+    }
+
     // MARK: - Delegate Methods
     
     // MARK: Quick View
@@ -134,9 +156,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         super.viewDidLoad()
         
         setUpCoreData()
-        
         loadCell()
-        
         setNumberOfReminders()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
@@ -160,9 +180,14 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     func setUpCoreData() {
         coreDataHandler.setObjectContext(managedObjectContext)
-        coreDataHandler.setFetchedResultsController("Reminder", cacheName: "IncompleteReminders", filterBy: .Incomplete)
+        if !showingCompleteReminders {
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "IncompleteReminders", filterBy: .Incomplete)
+        } else {
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "CompleteReminders", filterBy: .Complete)
+        }
         coreDataHandler.fetchedResultsController.delegate = self
         coreDataHandler.performFetch()
+        
     }
     
     // MARK: Segues
@@ -234,6 +259,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         reminder.complete()
         
         coreDataHandler.save()
+        setNumberOfReminders()
     }
     
     // MARK: - REMINDERS
@@ -252,7 +278,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         }
         
         coreDataHandler.save()
-
     }
     
     func deferReminder() {
@@ -267,7 +292,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         notificationHasGoneOff = true
         
         performSegueWithIdentifier("QuickView", sender: reminderFromNotification)
-        
     }
 
     func deleteReminder(reminder: Reminder) {

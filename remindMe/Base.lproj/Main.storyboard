@@ -36,6 +36,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="n3W-EJ-gSN">
+                        <barButtonItem key="leftBarButtonItem" title="Incomplete" id="qu6-QT-q6J">
+                            <connections>
+                                <action selector="showCompleteReminders" destination="BYZ-38-t0r" id="BCI-ZE-L0K"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="xkf-GL-rPd">
                             <connections>
                                 <segue destination="EXe-5T-xJU" kind="presentation" identifier="AddReminder" id="VcW-Tq-td7"/>
@@ -43,6 +48,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="filterButton" destination="qu6-QT-q6J" id="M2c-Yg-KdO"/>
                         <outlet property="tableView" destination="izq-nV-FBg" id="maa-dz-lVZ"/>
                         <segue destination="EXe-5T-xJU" kind="presentation" identifier="EditReminder" id="XiK-Cj-5ub"/>
                         <segue destination="JzB-DQ-DW5" kind="presentation" identifier="QuickView" id="9BS-ej-vCI"/>
@@ -455,6 +461,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="v7Q-ZB-wc4"/>
+        <segue reference="XiK-Cj-5ub"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -99,7 +99,7 @@ class ReminderCell: UITableViewCell {
     
     func configureColor(reminder: Reminder) {
         if reminderIsEnabled {
-            backgroundColor = UIColor(red: 0, green: 0, blue: 1, alpha: 1)
+            backgroundColor = UIColor(red: 174/255, green: 198/255, blue: 207/255, alpha: 1)
         } else {
             backgroundColor = UIColor(red: 0.5, green: 0, blue: 0, alpha: 1)
         }

@@ -160,7 +160,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     func setUpCoreData() {
         coreDataHandler.setObjectContext(managedObjectContext)
-        coreDataHandler.setFetchedResultsController("Reminder", cacheName: "Reminder")
+        coreDataHandler.setFetchedResultsController("Reminder", cacheName: "IncompleteReminders", filterBy: .Incomplete)
         coreDataHandler.fetchedResultsController.delegate = self
         coreDataHandler.performFetch()
     }

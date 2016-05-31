@@ -36,11 +36,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="n3W-EJ-gSN">
-                        <barButtonItem key="leftBarButtonItem" title="Incomplete" id="qu6-QT-q6J">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="eUi-Dz-PKw">
+                            <rect key="frame" x="180" y="7" width="240" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Upcoming"/>
+                                <segment title="Complete"/>
+                            </segments>
                             <connections>
-                                <action selector="showCompleteReminders" destination="BYZ-38-t0r" id="BCI-ZE-L0K"/>
+                                <action selector="showCompleteReminders" destination="BYZ-38-t0r" eventType="valueChanged" id="GRs-Nu-lUR"/>
                             </connections>
-                        </barButtonItem>
+                        </segmentedControl>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="xkf-GL-rPd">
                             <connections>
                                 <segue destination="EXe-5T-xJU" kind="presentation" identifier="AddReminder" id="VcW-Tq-td7"/>
@@ -48,7 +55,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="filterButton" destination="qu6-QT-q6J" id="M2c-Yg-KdO"/>
+                        <outlet property="segmentedControl" destination="eUi-Dz-PKw" id="YUW-3r-ffB"/>
                         <outlet property="tableView" destination="izq-nV-FBg" id="maa-dz-lVZ"/>
                         <segue destination="EXe-5T-xJU" kind="presentation" identifier="EditReminder" id="XiK-Cj-5ub"/>
                         <segue destination="JzB-DQ-DW5" kind="presentation" identifier="QuickView" id="9BS-ej-vCI"/>

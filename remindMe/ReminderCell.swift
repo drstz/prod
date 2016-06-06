@@ -24,15 +24,6 @@ class ReminderCell: UITableViewCell {
     
     weak var delegate : ReminderCellDelegate?
     
-    var reminderIsEnabled = false
-    
-    @IBAction func completeReminder () {
-
-        delegate?.completeButtonWasPressed(self)
-        print(#function)
-        
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -45,15 +36,12 @@ class ReminderCell: UITableViewCell {
     }
     
     func configureForReminder(reminder: Reminder) {
-        print(#function)
-        
-        enableReminderCell(reminder)
         configureLabels(reminder)
         configureColor(reminder)
     }
     
     func configureLabels(reminder: Reminder) {
-        reminderLabel.text = "\(reminder.name)" + " " + "(\(reminder.idNumber))"
+        reminderLabel.text = "\(reminder.name)"
         dayLabel.text = convertDateToString(.Day, date: reminder.dueDate)
         timeLabel.text = convertDateToString(.Time, date: reminder.dueDate)
         if let nexty = reminder.nextDueDate {
@@ -63,24 +51,11 @@ class ReminderCell: UITableViewCell {
                 nextDueDate.text = "Every " + "\(reminder.typeOfInterval!)"
             }
         } else {
-            nextDueDate.text = "No recurrence"
-        }
-    }
-    
-    func enableReminderCell (reminder: Reminder) {
-        print(#function)
-        if reminder.isEnabled == 1 {
-            reminderIsEnabled = true
-        } else {
-            reminderIsEnabled = false
+            nextDueDate.text = "Never"
         }
     }
     
     func configureColor(reminder: Reminder) {
-        if reminderIsEnabled {
-            backgroundColor = UIColor(red: 174/255, green: 198/255, blue: 207/255, alpha: 1)
-        } else {
-            backgroundColor = UIColor(red: 0.5, green: 0, blue: 0, alpha: 1)
-        }
+        backgroundColor = UIColor(red: 174/255, green: 198/255, blue: 207/255, alpha: 1)
     }
 }

@@ -20,13 +20,6 @@ class ReminderCell: UITableViewCell {
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    
-    @IBOutlet weak var countdownLabel: UILabel!
-    
-    @IBOutlet weak var isEnabledLabel: UILabel!
-    @IBOutlet weak var completeButton: UIButton!
-    
-    
     @IBOutlet weak var nextDueDate: UILabel!
     
     weak var delegate : ReminderCellDelegate?
@@ -62,7 +55,6 @@ class ReminderCell: UITableViewCell {
     func configureLabels(reminder: Reminder) {
         reminderLabel.text = "\(reminder.name)" + " " + "(\(reminder.idNumber))"
         dayLabel.text = convertDateToString(.Day, date: reminder.dueDate)
-        dateLabel.text = convertDateToString(.WholeDate, date: reminder.dueDate)
         timeLabel.text = convertDateToString(.Time, date: reminder.dueDate)
         if let nexty = reminder.nextDueDate {
             if reminder.everyAmount! != 1 {
@@ -73,19 +65,6 @@ class ReminderCell: UITableViewCell {
         } else {
             nextDueDate.text = "No recurrence"
         }
-        
-        if reminderIsEnabled {
-            isEnabledLabel.text = "Enabled"
-        } else {
-            isEnabledLabel.text = "Disabled"
-        }
-        
-        if reminder.isComplete == true {
-            completeButton.setTitle("Reopen reminder", forState: .Normal)
-        } else {
-            completeButton.setTitle("Complete reminder", forState: .Normal)
-        }
-        
     }
     
     func enableReminderCell (reminder: Reminder) {

@@ -249,8 +249,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         
     }
         
-        
-    
     func completeButtonWasPressed(cell: ReminderCell) {
         let indexPath = tableView.indexPathForCell(cell)
         let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)

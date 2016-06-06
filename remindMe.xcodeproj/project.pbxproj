@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		71238DE11CD70AC100F9D706 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71238DE01CD70AC100F9D706 /* UserDefaults.swift */; };
+		7135B90D1D056E3D0021105F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7135B90C1D056E3D0021105F /* SettingsViewController.swift */; };
 		714CB6B51CCBA00E00723399 /* List+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714CB6B31CCBA00E00723399 /* List+CoreDataProperties.swift */; };
 		714CB6B61CCBA00E00723399 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714CB6B41CCBA00E00723399 /* List.swift */; };
 		7165A57C1CBB6A310088EA76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7165A57B1CBB6A310088EA76 /* AppDelegate.swift */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		71238DE01CD70AC100F9D706 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		7135B90C1D056E3D0021105F /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		714CB6B31CCBA00E00723399 /* List+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "List+CoreDataProperties.swift"; path = "../List+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		714CB6B41CCBA00E00723399 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = List.swift; path = ../List.swift; sourceTree = "<group>"; };
 		7165A5781CBB6A310088EA76 /* remindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = remindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,6 +101,14 @@
 			name = Notifications;
 			sourceTree = "<group>";
 		};
+		7135B90B1D056E030021105F /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				7135B90C1D056E3D0021105F /* SettingsViewController.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		71386A421CC5EE5F007DF704 /* _StoryBoards */ = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +146,7 @@
 		7165A57A1CBB6A310088EA76 /* remindMe */ = {
 			isa = PBXGroup;
 			children = (
+				7135B90B1D056E030021105F /* Settings */,
 				7165A5871CBB6A310088EA76 /* Info.plist */,
 				7165A57B1CBB6A310088EA76 /* AppDelegate.swift */,
 				7165A5821CBB6A310088EA76 /* Assets.xcassets */,
@@ -258,6 +269,7 @@
 				71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */,
 				71ABD70A1CC0A87600F0BF90 /* Date.swift in Sources */,
 				7165A57C1CBB6A310088EA76 /* AppDelegate.swift in Sources */,
+				7135B90D1D056E3D0021105F /* SettingsViewController.swift in Sources */,
 				71F6A5361CF6C0FD0010C135 /* NotificationHandler.swift in Sources */,
 				714CB6B61CCBA00E00723399 /* List.swift in Sources */,
 				71A788741CE6093700D5CE47 /* completeButton.swift in Sources */,

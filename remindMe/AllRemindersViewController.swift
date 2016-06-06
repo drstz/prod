@@ -173,7 +173,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     func loadCell() {
         let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
-        tableView.rowHeight = 200
+        tableView.rowHeight = 100
     }
     
     func setUpCoreData() {
@@ -249,8 +249,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         
     }
         
-        
-    
     func completeButtonWasPressed(cell: ReminderCell) {
         let indexPath = tableView.indexPathForCell(cell)
         let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)

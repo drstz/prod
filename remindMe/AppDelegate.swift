@@ -78,40 +78,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         coreDataHandler.setObjectContext(managedObjectContext)
         
-        let navigationController = window!.rootViewController as! UINavigationController
-        let navigationViewControllers = navigationController.viewControllers
-        let allRemindersViewController = navigationViewControllers[0] as! AllRemindersViewController
-        allRemindersViewController.managedObjectContext = managedObjectContext
+        let tabBarController = window!.rootViewController as! UITabBarController
+        let tabs = tabBarController.viewControllers!
+        print("There are \(tabs) tabs")
         
-        if isFirstTime() {
-            print("*** First time - Creating list")
-            let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as! List
-            list.numberOfReminders = 0
+        for index in 0..<tabs.count {
+            let navigationController = tabs[index] as! UINavigationController
+            let viewControllers = navigationController.viewControllers
+            let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
+            allRemindersViewController.managedObjectContext = managedObjectContext
             
-            do {
-                try managedObjectContext.save()
-                print("Saved List")
-                print(list.numberOfReminders)
-            } catch {
-                fatalCoreDataError(error)
-            }
-            allRemindersViewController.list = list
-            
-        } else {
-            print("*** Fetching list")
-            let fetchRequest = NSFetchRequest()
-            let entityDescription = NSEntityDescription.entityForName("List", inManagedObjectContext: managedObjectContext)
-            
-            fetchRequest.entity = entityDescription
-            
-            do {
-                let result = try managedObjectContext.executeFetchRequest(fetchRequest)
-                let list = result[0] as! NSManagedObject as! List
-                print(list.numberOfReminders)
+            if isFirstTime() {
+                print("*** First time - Creating list")
+                let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as! List
+                list.numberOfReminders = 0
+                
+                do {
+                    try managedObjectContext.save()
+                    print("Saved List")
+                    print(list.numberOfReminders)
+                } catch {
+                    fatalCoreDataError(error)
+                }
                 allRemindersViewController.list = list
-            } catch {
-                let fetchError = error as NSError
-                print(fetchError)
+                
+            } else {
+                print("*** Fetching list")
+                let fetchRequest = NSFetchRequest()
+                let entityDescription = NSEntityDescription.entityForName("List", inManagedObjectContext: managedObjectContext)
+                
+                fetchRequest.entity = entityDescription
+                
+                do {
+                    let result = try managedObjectContext.executeFetchRequest(fetchRequest)
+                    let list = result[0] as! NSManagedObject as! List
+                    print(list.numberOfReminders)
+                    allRemindersViewController.list = list
+                } catch {
+                    let fetchError = error as NSError
+                    print(fetchError)
+                }
             }
         }
         return true

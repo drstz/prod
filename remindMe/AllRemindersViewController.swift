@@ -240,18 +240,16 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         }
     }
     
-
-
     func setNumberOfReminders() {
         
-        nbOfReminders = tableView.numberOfRowsInSection(0)
-        
-        if nbOfReminders > 1 || nbOfReminders == 0 {
-            titleString = "You have \(nbOfReminders) reminders"
-        } else {
-            titleString = "You have \(nbOfReminders) reminder"
-        }
-        self.title = titleString
+//        nbOfReminders = tableView.numberOfRowsInSection(0)
+//        
+//        if nbOfReminders > 1 || nbOfReminders == 0 {
+//            titleString = "You have \(nbOfReminders) reminders"
+//        } else {
+//            titleString = "You have \(nbOfReminders) reminder"
+//        }
+//        self.title = titleString
         
     }
         

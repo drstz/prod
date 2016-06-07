@@ -15,6 +15,7 @@ enum ReminderFilter {
     case Date
     case ID
     case None
+    case Favorite
 }
 
 class CoreDataHandler {
@@ -108,6 +109,10 @@ class CoreDataHandler {
             let comparer = filterBy(filter)
             let predicate = NSPredicate(format: "%K == %@", comparer, false)
             fetchRequest.predicate = predicate
+        case .Favorite:
+            let comparer = filterBy(filter)
+            let predicate = NSPredicate(format: "%K == %@", comparer, true)
+            fetchRequest.predicate = predicate
         default:
             break
         }
@@ -123,6 +128,8 @@ class CoreDataHandler {
             return "dueDate"
         case .None:
             return ""
+        case .Favorite:
+            return "isFavorite"
         }
     }
 

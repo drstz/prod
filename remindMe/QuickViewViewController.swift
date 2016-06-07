@@ -35,6 +35,8 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
     @IBOutlet weak var snoozeButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     
+    @IBOutlet weak var addToFavoritesButton: UIBarButtonItem!
+    
     // MARK: - Delegates
     
     weak var delegate: QuickViewViewControllerDelegate?
@@ -62,6 +64,22 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
     
     @IBAction func cancel() {
         delegate?.quickViewViewControllerDidCancel(self)
+    }
+    
+    @IBAction func addToFavorites() {
+        if let reminder = incomingReminder {
+            print("Changing favorite statuts")
+            if reminder.isFavorite == false {
+                reminder.isFavorite = true
+                addToFavoritesButton.title = "Remove from favorites"
+            } else {
+                reminder.isFavorite = false
+                addToFavoritesButton.title = "Add to favorites"
+            }
+        }
+        let coreDataHandler = CoreDataHandler()
+        coreDataHandler.setObjectContext(managedObjectContext)
+        coreDataHandler.save()
     }
     
     // Bottom Buttons
@@ -213,6 +231,9 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
         reminderNameLabel.text = reminder.name
         reminderDueDateLabel.text = convertDateToString(.WholeDate, date: reminder.dueDate)
         reminderDueTimeLabel.text = convertDateToString(.Time, date: reminder.dueDate)
+        if reminder.isFavorite == true {
+            addToFavoritesButton.title = "Remove from favorites"
+        }
     }
     
     func setCompleteButton(with reminder: Reminder) {

@@ -87,6 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let viewControllers = navigationController.viewControllers
             let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
             allRemindersViewController.managedObjectContext = managedObjectContext
+            tabBarController.delegate = allRemindersViewController
             
             if isFirstTime() {
                 print("*** First time - Creating list")
@@ -157,10 +158,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func sendReminderToController(reminder: Reminder) {
-        let navigationController = window!.rootViewController as! UINavigationController
-        let navigationViewControllers = navigationController.viewControllers
-        let allRemindersViewController = navigationViewControllers[0] as! AllRemindersViewController
-        allRemindersViewController.reminderFromNotification = reminder
+        let tabBarController = window!.rootViewController as! UITabBarController
+        let tabs = tabBarController.viewControllers!
+        
+        for index in 0..<tabs.count {
+            let navigationController = tabs[index] as! UINavigationController
+            let viewControllers = navigationController.viewControllers
+            let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
+            allRemindersViewController.reminderFromNotification = reminder
+            
+            
+        }
     }
     
     func handleIncomingNotification(notification: UILocalNotification) {

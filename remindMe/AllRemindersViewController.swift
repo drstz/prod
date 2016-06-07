@@ -15,7 +15,7 @@ protocol AllRemindersViewControllerDelegate: class {
                                                                    reminder: Reminder)
 }
 
-class AllRemindersViewController: UIViewController, AddReminderViewControllerDelegate, ReminderCellDelegate, QuickViewViewControllerDelegate {
+class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, AddReminderViewControllerDelegate, ReminderCellDelegate, QuickViewViewControllerDelegate {
     
     // MARK: - Outlets
     
@@ -28,6 +28,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     var managedObjectContext: NSManagedObjectContext!
     var fetchedResultsController: NSFetchedResultsController!
     
+    var selectedTab = 0
     // MARK: - Delegates
     
     weak var delegate: AllRemindersViewControllerDelegate?
@@ -54,7 +55,6 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     // MARK: - IBActions
     
     @IBAction func changeSegment() {
-        print("Button was pressed")
         let segment = segmentedControl.selectedSegmentIndex
         if segment == 0 {
             showingCompleteReminders = false
@@ -73,6 +73,11 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     }
 
     // MARK: - Delegate Methods
+    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        selectedTab = tabBarController.selectedIndex
+        print(#function)
+    }
     
     // MARK: Quick View
     
@@ -139,6 +144,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
     // MARK: - Methods
     
     // MARK: Init & Deinit
@@ -155,6 +161,9 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     // MARK: View
     
     override func viewDidLoad() {
+        print(#function)
+        print("--------------------")
+        print("")
         super.viewDidLoad()
         
         setUpCoreData()
@@ -166,8 +175,26 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    
+    override func viewDidAppear(animated: Bool) {
+        print("--------------------")
+        super.viewDidAppear(animated)
+        print(#function)
+        setUpCoreData()
+        loadCell()
         setNumberOfReminders()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        print("--------------------")
+        super.viewDidDisappear(animated)
+        print(#function)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        print("--------------------")
+        super.viewWillAppear(animated)
+        print(#function)
     }
     
     override func didReceiveMemoryWarning() {
@@ -182,10 +209,16 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     func setUpCoreData() {
         coreDataHandler.setObjectContext(managedObjectContext)
-        if !showingCompleteReminders {
+//        if !showingCompleteReminders {
+//            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "IncompleteReminders", filterBy: .Incomplete)
+//        } else {
+//            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "CompleteReminders", filterBy: .Complete)
+//        }
+        
+        if selectedTab == 0 {
             coreDataHandler.setFetchedResultsController("Reminder", cacheName: "IncompleteReminders", filterBy: .Incomplete)
         } else {
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "CompleteReminders", filterBy: .Complete)
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "FavoriteReminders", filterBy: .Favorite)
         }
         coreDataHandler.fetchedResultsController.delegate = self
         coreDataHandler.performFetch()

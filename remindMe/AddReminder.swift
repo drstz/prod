@@ -137,6 +137,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         } else {
             reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as? Reminder
             reminder?.isComplete = false
+            reminder?.isFavorite = false
             reminder?.list = list
             let nbOfReminders = list.numberOfReminders.integerValue
             list.numberOfReminders = NSNumber(integer: nbOfReminders + 1)

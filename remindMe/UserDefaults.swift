@@ -9,7 +9,9 @@
 import Foundation
     
 func registerDefaults() {
-    let dictionary = ["FirstTime": true]
+    let dictionary = ["FirstTime": true,
+                      "SnoozeTime": "10 seconds"]
+    
     NSUserDefaults.standardUserDefaults().registerDefaults(dictionary)
 }
 
@@ -22,6 +24,12 @@ func isFirstTime() -> Bool {
         return true
     }
     return false
+}
+
+func setDefaultSnoozeTime(snoozeTime: String) {
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    userDefaults.setObject(snoozeTime, forKey: "SnoozeTime")
+    userDefaults.synchronize()
 }
 
 

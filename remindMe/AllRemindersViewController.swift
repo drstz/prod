@@ -67,6 +67,10 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         setNumberOfReminders()
         
     }
+    
+    @IBAction func doneSettings(segue: UIStoryboardSegue) {
+        
+    }
 
     // MARK: - Delegate Methods
     
@@ -235,6 +239,8 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
             
         }
     }
+    
+
 
     func setNumberOfReminders() {
         

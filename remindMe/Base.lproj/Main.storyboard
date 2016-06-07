@@ -37,8 +37,14 @@
                     </view>
                     <navigationItem key="navigationItem" id="n3W-EJ-gSN">
                         <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" image="Settings-50" style="plain" id="jkG-J1-qee">
+                            <inset key="imageInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                            <connections>
+                                <segue destination="HWa-R0-kJR" kind="presentation" identifier="settings" id="B86-1C-mHr"/>
+                            </connections>
+                        </barButtonItem>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="eUi-Dz-PKw">
-                            <rect key="frame" x="180" y="7" width="240" height="30"/>
+                            <rect key="frame" x="224" y="7" width="153" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Upcoming"/>
@@ -466,7 +472,18 @@
             </objects>
             <point key="canvasLocation" x="201" y="-211"/>
         </scene>
+        <!--Settings-->
+        <scene sceneID="9f1-eG-3hx">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Settings" id="HWa-R0-kJR" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wmH-AB-ylR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="506" y="1754"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="Settings-50" width="50" height="50"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="XiK-Cj-5ub"/>
     </inferredMetricsTieBreakers>

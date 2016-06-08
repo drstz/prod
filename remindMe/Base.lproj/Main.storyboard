@@ -42,14 +42,14 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="378" y="-83"/>
+            <point key="canvasLocation" x="369" y="29"/>
         </scene>
-        <!--Complete-->
+        <!--All-->
         <scene sceneID="oEx-gD-f38">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dhw-z0-gmh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="BTn-SY-CS2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Complete" id="Yd8-Y8-xeq"/>
+                    <tabBarItem key="tabBarItem" title="All" id="Yd8-Y8-xeq"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="T8k-ES-3GV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -59,7 +59,7 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="369" y="1488"/>
+            <point key="canvasLocation" x="369" y="796"/>
         </scene>
         <!--All Reminders View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -93,7 +93,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="n3W-EJ-gSN">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" image="8EA22479-15AB-4C96-A0CB-2694F0B4A4C5" style="plain" id="jkG-J1-qee">
+                        <barButtonItem key="leftBarButtonItem" image="32C6EDE3-1F5E-42F8-98D4-A9F9D3A75695" style="plain" id="jkG-J1-qee">
                             <inset key="imageInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                             <connections>
                                 <segue destination="HWa-R0-kJR" kind="presentation" identifier="settings" id="B86-1C-mHr"/>
@@ -525,12 +525,12 @@
             </objects>
             <point key="canvasLocation" x="1589.5" y="290"/>
         </scene>
-        <!--Incomplete-->
+        <!--All(No favorites)-->
         <scene sceneID="nKZ-k5-Iej">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vSS-OZ-nmt" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="AmV-vP-fCX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Incomplete" id="64u-6f-NDX"/>
+                    <tabBarItem key="tabBarItem" title="All(No favorites)" id="64u-6f-NDX"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Dmv-IK-xID">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -540,14 +540,14 @@
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="369" y="712"/>
+            <point key="canvasLocation" x="369" y="1516"/>
         </scene>
-        <!--All (Incomplete)-->
+        <!--All-->
         <scene sceneID="KIt-cR-Yf9">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wag-W8-Cak" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OLI-8q-xTi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="All (Incomplete)" id="dyR-Me-7GN"/>
+                    <tabBarItem key="tabBarItem" title="All" id="dyR-Me-7GN"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="N3h-HL-t7I">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -563,7 +563,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="8EA22479-15AB-4C96-A0CB-2694F0B4A4C5" width="50" height="50">
+        <image name="32C6EDE3-1F5E-42F8-98D4-A9F9D3A75695" width="50" height="50">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -802,6 +802,6 @@ iDWLNZA1mDWbNa01sDW1AAAAAAAAAgEAAAAAAAAAPgAAAAAAAAAAAAAAAAAANbc
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="v7Q-ZB-wc4"/>
-        <segue reference="lHw-Mo-mKb"/>
+        <segue reference="ILD-KC-BtR"/>
     </inferredMetricsTieBreakers>
 </document>

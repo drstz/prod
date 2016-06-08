@@ -57,12 +57,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     // MARK: - IBActions
     
     @IBAction func changeSegment() {
-        let segment = segmentedControl.selectedSegmentIndex
-        if segment == 0 {
-            showingCompleteReminders = false
-        } else {
-            showingCompleteReminders = true
-        }
+       
         setUpCoreData()
         loadCell()
         tableView.reloadData()
@@ -199,18 +194,34 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         coreDataHandler.setObjectContext(managedObjectContext)
         
         let selectedIndex = myTabBarController.selectedIndex
+        let segment = segmentedControl.selectedSegmentIndex
+        var status: ReminderStatus = .Complete
+        var filter: ReminderFilter = .All
+        
+        if segment == 0 {
+            status = .Incomplete
+            print("Status for reminders is set to incomplete")
+        } else {
+            status = .Complete
+            print("Status for reminders is set to complete")
+        }
        
         switch selectedIndex {
         case 0:
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "IncompleteReminders", filterBy: .Incomplete)
+            filter = .All
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "IncompleteReminders", filterBy: filter, status: status)
         case 1:
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "FavoriteReminders", filterBy: .Favorite)
+            filter = .Favorite
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "FavoriteReminders", filterBy: filter, status: status)
         case 2:
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "CompleteReminders", filterBy: .Complete)
+            filter = .All
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "CompleteReminders", filterBy: filter, status: status)
         case 3:
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "SomeReminders", filterBy: .Incomplete)
+            filter = .NoFavorites 
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "SomeReminders", filterBy: filter, status: status)
         default:
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "SomeReminders", filterBy: .Incomplete)
+            filter = .All
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "SomeReminders", filterBy: filter, status: status)
         }
         
         coreDataHandler.fetchedResultsController.delegate = self

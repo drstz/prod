@@ -49,6 +49,19 @@ func roundSecondsToZero(date: NSDate) -> NSDate {
     return newDate!
 }
 
+func midnight(date: NSDate) -> NSDate {
+    let calendar = NSCalendar.currentCalendar()
+    let newDate = calendar.dateBySettingHour(23, minute: 59, second: 59, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
+    return newDate!
+}
+
+func sevenDaysFromNow(date: NSDate) -> NSDate {
+    let calendar = NSCalendar.currentCalendar()
+    let newDate = calendar.dateByAddingUnit([.Day], value: 7, toDate: date, options: [])
+    print(newDate)
+    return newDate!
+}
+
 func convertDateToString(dateToConvert date: NSDate) -> String {
     let formatter = NSDateFormatter()
     formatter.locale = NSLocale(localeIdentifier: preferredLanguage)

@@ -81,7 +81,6 @@
 		710D67CF1CE38C4E0007143B /* Reminder */ = {
 			isa = PBXGroup;
 			children = (
-				7165A57D1CBB6A310088EA76 /* AllRemindersViewController.swift */,
 				7165A5991CBCB4330088EA76 /* AddReminder.swift */,
 				71878B411CC49A9700AD0F27 /* Reminder.swift */,
 				71878B401CC49A9700AD0F27 /* Reminder+CoreDataProperties.swift */,
@@ -164,6 +163,7 @@
 				71F6A5391CF71F6B0010C135 /* Reminder Cell */,
 				71A7884C1CE5B54300D5CE47 /* Reminder View */,
 				7135B90B1D056E030021105F /* Settings */,
+				71D86C451D06A07D002A5CAE /* Tabs */,
 				710D67D01CE38CC90007143B /* User Defaults */,
 			);
 			path = remindMe;
@@ -176,6 +176,14 @@
 				71A788731CE6093600D5CE47 /* completeButton.swift */,
 			);
 			name = "Reminder View";
+			sourceTree = "<group>";
+		};
+		71D86C451D06A07D002A5CAE /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				7165A57D1CBB6A310088EA76 /* AllRemindersViewController.swift */,
+			);
+			name = Tabs;
 			sourceTree = "<group>";
 		};
 		71F6A5391CF71F6B0010C135 /* Reminder Cell */ = {

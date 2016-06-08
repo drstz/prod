@@ -10,11 +10,16 @@ import Foundation
 import CoreData
 
 enum ReminderFilter {
+    case Favorite
+    case All
+    case Today
+    case Week
+    case NoFavorites
+}
+
+enum ReminderStatus {
     case Complete
     case Incomplete
-    case Date
-    case ID
-    case None
 }
 
 class CoreDataHandler {
@@ -64,8 +69,8 @@ class CoreDataHandler {
     
     // MARK: Fetch Request
     
-    func setFetchedResultsController(entity: String, cacheName: String, filterBy filter: ReminderFilter){
-        let fetchRequest = prepareFetchRequest(entity, filter: filter)
+    func setFetchedResultsController(entity: String, cacheName: String, filterBy filter: ReminderFilter, status: ReminderStatus){
+        let fetchRequest = prepareFetchRequest(entity, filter: filter, status: status)
         
         let newFetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
@@ -77,13 +82,13 @@ class CoreDataHandler {
         fetchedResultsController = newFetchedResultsController
     }
     
-    func prepareFetchRequest(entity: String, filter: ReminderFilter) -> NSFetchRequest {
+    func prepareFetchRequest(entity: String, filter: ReminderFilter, status: ReminderStatus) -> NSFetchRequest {
         let fetchRequest = NSFetchRequest()
         fetchRequest.fetchBatchSize = 20
         
         setEntity(entity, fetchRequest: fetchRequest)
         setSortDescriptors(fetchRequest)
-        setPredicate(fetchRequest, filter: filter)
+        setPredicate(fetchRequest, filter: filter, status: status)
         
         return fetchRequest
     }
@@ -98,31 +103,85 @@ class CoreDataHandler {
         fetchRequest.sortDescriptors = [sortDescriptor]
     }
     
-    func setPredicate(fetchRequest: NSFetchRequest, filter: ReminderFilter){
+    func setPredicate(fetchRequest: NSFetchRequest, filter: ReminderFilter, status: ReminderStatus){
+        let parameter = filterBy(filter)
+        let statusString = filterStatus(status)
+
         switch filter {
-        case .Complete:
-            let comparer = filterBy(filter)
-            let predicate = NSPredicate(format: "%K == %@", comparer, true)
-            fetchRequest.predicate = predicate
-        case .Incomplete:
-            let comparer = filterBy(filter)
-            let predicate = NSPredicate(format: "%K == %@", comparer, false)
-            fetchRequest.predicate = predicate
+        case .All:
+            switch status {
+            case .Complete:
+                let predicate = NSPredicate(format: "%K == %@", statusString, true)
+                fetchRequest.predicate = predicate
+            case .Incomplete:
+                let predicate = NSPredicate(format: "%K == %@", statusString, false)
+                fetchRequest.predicate = predicate
+            }
+        case .Favorite:
+            switch status {
+            case .Complete:
+                let predicate = NSPredicate(format: "%K == %@ AND %K == %@", statusString, true, parameter, true)
+                fetchRequest.predicate = predicate
+            case .Incomplete:
+                let predicate = NSPredicate(format: "%K == %@ AND %K == %@", statusString, false, parameter, true)
+                fetchRequest.predicate = predicate
+            }
+        case .NoFavorites:
+            switch status {
+            case .Complete:
+                let predicate = NSPredicate(format: "%K == %@ AND %K == %@", statusString, true, parameter, false)
+                fetchRequest.predicate = predicate
+            case .Incomplete:
+                let predicate = NSPredicate(format: "%K == %@ AND %K == %@", statusString, false, parameter, false)
+                fetchRequest.predicate = predicate
+            }
+        case .Today:
+            let today = NSDate()
+            let justBeforeMidnight = midnight(today)
+            switch status {
+                
+            case .Complete:
+                let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", statusString, true, parameter, justBeforeMidnight)
+                fetchRequest.predicate = predicate
+            case .Incomplete:
+                let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", statusString, false, parameter, justBeforeMidnight)
+                fetchRequest.predicate = predicate
+            }
+        case .Week:
+            let today = NSDate()
+            let week = sevenDaysFromNow(today)
+            switch status {
+                
+            case .Complete:
+                let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", statusString, true, parameter, week)
+                fetchRequest.predicate = predicate
+            case .Incomplete:
+                let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", statusString, false, parameter, week)
+                fetchRequest.predicate = predicate
+            }
+            
         default:
-            break
+            let predicate = NSPredicate(format: "")
+            fetchRequest.predicate = predicate
         }
     }
     
     func filterBy(filter: ReminderFilter) -> String {
         switch filter {
+        case .Favorite, .NoFavorites:
+            return "isFavorite"
+        case .Today, .Week:
+            return "dueDate"
+        default:
+            return ""
+        }
+        
+    }
+    
+    func filterStatus(status: ReminderStatus) -> String {
+        switch status {
         case .Complete, .Incomplete:
             return "isComplete"
-        case .ID:
-            return "idNumber"
-        case .Date:
-            return "dueDate"
-        case .None:
-            return ""
         }
     }
 

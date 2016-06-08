@@ -15,7 +15,7 @@ protocol AllRemindersViewControllerDelegate: class {
                                                                    reminder: Reminder)
 }
 
-class AllRemindersViewController: UIViewController, AddReminderViewControllerDelegate, ReminderCellDelegate, QuickViewViewControllerDelegate {
+class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, AddReminderViewControllerDelegate, ReminderCellDelegate, QuickViewViewControllerDelegate {
     
     // MARK: - Outlets
     
@@ -27,6 +27,9 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     let coreDataHandler = CoreDataHandler()
     var managedObjectContext: NSManagedObjectContext!
     var fetchedResultsController: NSFetchedResultsController!
+    
+    
+    var myTabBarController: UITabBarController!
     
     // MARK: - Delegates
     
@@ -54,13 +57,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     // MARK: - IBActions
     
     @IBAction func changeSegment() {
-        print("Button was pressed")
-        let segment = segmentedControl.selectedSegmentIndex
-        if segment == 0 {
-            showingCompleteReminders = false
-        } else {
-            showingCompleteReminders = true
-        }
+       
         setUpCoreData()
         loadCell()
         tableView.reloadData()
@@ -139,6 +136,7 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
     // MARK: - Methods
     
     // MARK: Init & Deinit
@@ -155,6 +153,9 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     // MARK: View
     
     override func viewDidLoad() {
+        print(#function)
+        print("--------------------")
+        print("")
         super.viewDidLoad()
         
         setUpCoreData()
@@ -166,8 +167,17 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    
+    override func viewDidAppear(animated: Bool) {
+        print("--------------------")
+        super.viewDidAppear(animated)
+        print(#function)
+        setUpCoreData()
+        loadCell()
         setNumberOfReminders()
+        
+        print("Selected Index: \(myTabBarController.selectedIndex)")
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -182,11 +192,38 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
     
     func setUpCoreData() {
         coreDataHandler.setObjectContext(managedObjectContext)
-        if !showingCompleteReminders {
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "IncompleteReminders", filterBy: .Incomplete)
+        
+        let selectedIndex = myTabBarController.selectedIndex
+        let segment = segmentedControl.selectedSegmentIndex
+        var status: ReminderStatus = .Complete
+        var filter: ReminderFilter = .All
+        
+        if segment == 0 {
+            status = .Incomplete
+            print("Status for reminders is set to incomplete")
         } else {
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "CompleteReminders", filterBy: .Complete)
+            status = .Complete
+            print("Status for reminders is set to complete")
         }
+       
+        switch selectedIndex {
+        case 0:
+            filter = .All
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "IncompleteReminders", filterBy: filter, status: status)
+        case 1:
+            filter = .Favorite
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "FavoriteReminders", filterBy: filter, status: status)
+        case 2:
+            filter = .Today 
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "CompleteReminders", filterBy: filter, status: status)
+        case 3:
+            filter = .Week
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "SomeReminders", filterBy: filter, status: status)
+        default:
+            filter = .All
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "SomeReminders", filterBy: filter, status: status)
+        }
+        
         coreDataHandler.fetchedResultsController.delegate = self
         coreDataHandler.performFetch()
         
@@ -240,18 +277,16 @@ class AllRemindersViewController: UIViewController, AddReminderViewControllerDel
         }
     }
     
-
-
     func setNumberOfReminders() {
         
-        nbOfReminders = tableView.numberOfRowsInSection(0)
-        
-        if nbOfReminders > 1 || nbOfReminders == 0 {
-            titleString = "You have \(nbOfReminders) reminders"
-        } else {
-            titleString = "You have \(nbOfReminders) reminder"
-        }
-        self.title = titleString
+//        nbOfReminders = tableView.numberOfRowsInSection(0)
+//        
+//        if nbOfReminders > 1 || nbOfReminders == 0 {
+//            titleString = "You have \(nbOfReminders) reminders"
+//        } else {
+//            titleString = "You have \(nbOfReminders) reminder"
+//        }
+//        self.title = titleString
         
     }
         

@@ -28,7 +28,9 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     var managedObjectContext: NSManagedObjectContext!
     var fetchedResultsController: NSFetchedResultsController!
     
-    var selectedTab = 0
+    
+    var myTabBarController: UITabBarController!
+    
     // MARK: - Delegates
     
     weak var delegate: AllRemindersViewControllerDelegate?
@@ -73,11 +75,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     }
 
     // MARK: - Delegate Methods
-    
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-        selectedTab = tabBarController.selectedIndex
-        print(#function)
-    }
     
     // MARK: Quick View
     
@@ -183,18 +180,9 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         setUpCoreData()
         loadCell()
         setNumberOfReminders()
-    }
-    
-    override func viewDidDisappear(animated: Bool) {
-        print("--------------------")
-        super.viewDidDisappear(animated)
-        print(#function)
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        print("--------------------")
-        super.viewWillAppear(animated)
-        print(#function)
+        
+        print("Selected Index: \(myTabBarController.selectedIndex)")
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -209,17 +197,22 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     
     func setUpCoreData() {
         coreDataHandler.setObjectContext(managedObjectContext)
-//        if !showingCompleteReminders {
-//            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "IncompleteReminders", filterBy: .Incomplete)
-//        } else {
-//            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "CompleteReminders", filterBy: .Complete)
-//        }
         
-        if selectedTab == 0 {
+        let selectedIndex = myTabBarController.selectedIndex
+       
+        switch selectedIndex {
+        case 0:
             coreDataHandler.setFetchedResultsController("Reminder", cacheName: "IncompleteReminders", filterBy: .Incomplete)
-        } else {
+        case 1:
             coreDataHandler.setFetchedResultsController("Reminder", cacheName: "FavoriteReminders", filterBy: .Favorite)
+        case 2:
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "CompleteReminders", filterBy: .Complete)
+        case 3:
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "SomeReminders", filterBy: .Incomplete)
+        default:
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "SomeReminders", filterBy: .Incomplete)
         }
+        
         coreDataHandler.fetchedResultsController.delegate = self
         coreDataHandler.performFetch()
         

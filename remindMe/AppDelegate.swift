@@ -80,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let tabBarController = window!.rootViewController as! UITabBarController
         let tabs = tabBarController.viewControllers!
-        print("There are \(tabs) tabs")
+        print("There are \(tabs.count) tabs")
         
         for index in 0..<tabs.count {
             let navigationController = tabs[index] as! UINavigationController
@@ -88,6 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
             allRemindersViewController.managedObjectContext = managedObjectContext
             tabBarController.delegate = allRemindersViewController
+            allRemindersViewController.myTabBarController = tabBarController
             
             if isFirstTime() {
                 print("*** First time - Creating list")

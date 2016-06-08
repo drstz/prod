@@ -214,10 +214,10 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
             filter = .Favorite
             coreDataHandler.setFetchedResultsController("Reminder", cacheName: "FavoriteReminders", filterBy: filter, status: status)
         case 2:
-            filter = .All
+            filter = .Today 
             coreDataHandler.setFetchedResultsController("Reminder", cacheName: "CompleteReminders", filterBy: filter, status: status)
         case 3:
-            filter = .NoFavorites 
+            filter = .Week
             coreDataHandler.setFetchedResultsController("Reminder", cacheName: "SomeReminders", filterBy: filter, status: status)
         default:
             filter = .All

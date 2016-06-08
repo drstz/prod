@@ -135,6 +135,30 @@ class CoreDataHandler {
                 let predicate = NSPredicate(format: "%K == %@ AND %K == %@", statusString, false, parameter, false)
                 fetchRequest.predicate = predicate
             }
+        case .Today:
+            let today = NSDate()
+            let justBeforeMidnight = midnight(today)
+            switch status {
+                
+            case .Complete:
+                let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", statusString, true, parameter, justBeforeMidnight)
+                fetchRequest.predicate = predicate
+            case .Incomplete:
+                let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", statusString, false, parameter, justBeforeMidnight)
+                fetchRequest.predicate = predicate
+            }
+        case .Week:
+            let today = NSDate()
+            let week = sevenDaysFromNow(today)
+            switch status {
+                
+            case .Complete:
+                let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", statusString, true, parameter, week)
+                fetchRequest.predicate = predicate
+            case .Incomplete:
+                let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", statusString, false, parameter, week)
+                fetchRequest.predicate = predicate
+            }
             
         default:
             let predicate = NSPredicate(format: "")
@@ -146,6 +170,8 @@ class CoreDataHandler {
         switch filter {
         case .Favorite, .NoFavorites:
             return "isFavorite"
+        case .Today, .Week:
+            return "dueDate"
         default:
             return ""
         }

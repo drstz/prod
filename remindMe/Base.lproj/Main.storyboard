@@ -44,12 +44,12 @@
             </objects>
             <point key="canvasLocation" x="369" y="29"/>
         </scene>
-        <!--All-->
+        <!--Today-->
         <scene sceneID="oEx-gD-f38">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dhw-z0-gmh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="BTn-SY-CS2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="All" id="Yd8-Y8-xeq"/>
+                    <tabBarItem key="tabBarItem" title="Today" id="Yd8-Y8-xeq"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="T8k-ES-3GV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -93,7 +93,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="n3W-EJ-gSN">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" image="32C6EDE3-1F5E-42F8-98D4-A9F9D3A75695" style="plain" id="jkG-J1-qee">
+                        <barButtonItem key="leftBarButtonItem" image="9BEFAA38-F37A-40DF-96C8-3093C8A23A77" style="plain" id="jkG-J1-qee">
                             <inset key="imageInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                             <connections>
                                 <segue destination="HWa-R0-kJR" kind="presentation" identifier="settings" id="B86-1C-mHr"/>
@@ -525,12 +525,12 @@
             </objects>
             <point key="canvasLocation" x="1589.5" y="290"/>
         </scene>
-        <!--All(No favorites)-->
+        <!--Week-->
         <scene sceneID="nKZ-k5-Iej">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vSS-OZ-nmt" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="AmV-vP-fCX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="All(No favorites)" id="64u-6f-NDX"/>
+                    <tabBarItem key="tabBarItem" title="Week" id="64u-6f-NDX"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Dmv-IK-xID">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -563,7 +563,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="32C6EDE3-1F5E-42F8-98D4-A9F9D3A75695" width="50" height="50">
+        <image name="9BEFAA38-F37A-40DF-96C8-3093C8A23A77" width="50" height="50">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -802,6 +802,6 @@ iDWLNZA1mDWbNa01sDW1AAAAAAAAAgEAAAAAAAAAPgAAAAAAAAAAAAAAAAAANbc
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="v7Q-ZB-wc4"/>
-        <segue reference="ILD-KC-BtR"/>
+        <segue reference="lHw-Mo-mKb"/>
     </inferredMetricsTieBreakers>
 </document>

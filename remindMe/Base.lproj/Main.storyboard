@@ -10,7 +10,6 @@
         <!--Tab Bar Controller-->
         <scene sceneID="KuU-QV-uOx">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xBI-Pf-dqL" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tabBarController id="EFl-GD-4wn" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="lZm-Lz-csF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -24,13 +23,13 @@
                         <segue destination="AmV-vP-fCX" kind="relationship" relationship="viewControllers" id="I7o-5y-aBt"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xBI-Pf-dqL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-606" y="938"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BHx-qb-Sh3">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4UM-OG-GP0" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="lB2-6B-RLm" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="favorites" id="LSN-Dk-Cx6"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="RFW-e1-HYN">
@@ -41,13 +40,13 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="e1F-Pi-sXX"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4UM-OG-GP0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="369" y="29"/>
         </scene>
         <!--Today-->
         <scene sceneID="oEx-gD-f38">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Dhw-z0-gmh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="BTn-SY-CS2" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Today" id="Yd8-Y8-xeq"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="T8k-ES-3GV">
@@ -58,13 +57,13 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="fhu-Tq-aJn"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dhw-z0-gmh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="369" y="796"/>
         </scene>
         <!--All Reminders View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="AllRemindersViewController" customModule="remindMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
@@ -123,6 +122,7 @@
                         <segue destination="JzB-DQ-DW5" kind="presentation" identifier="QuickView" id="9BS-ej-vCI"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1633" y="-363"/>
         </scene>
@@ -528,7 +528,6 @@
         <!--Week-->
         <scene sceneID="nKZ-k5-Iej">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vSS-OZ-nmt" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="AmV-vP-fCX" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Week" id="64u-6f-NDX"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Dmv-IK-xID">
@@ -539,13 +538,13 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="lHw-Mo-mKb"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vSS-OZ-nmt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="369" y="1516"/>
         </scene>
         <!--All-->
         <scene sceneID="KIt-cR-Yf9">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Wag-W8-Cak" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OLI-8q-xTi" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="All" id="dyR-Me-7GN"/>
                     <toolbarItems/>
@@ -558,6 +557,7 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="ILD-KC-BtR"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wag-W8-Cak" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="369" y="-879"/>
         </scene>

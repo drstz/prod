@@ -43,19 +43,17 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
 
     
     // The Date
+    var selectedDate: NSDate?
     
-    var dueDate: NSDate?
+    var selectedInterval: String? = "minute"
+    var selectedFrequency: Int? = 1
+    
     var dueDateIsSet = false
     
     var nextReminderDate: NSDate?
     var reminderRepeats = false
     var recurringDateWasSet = false
     
-    var recurringAmount = 1
-    
-    var intervalType: String?
-    var everyAmount: Int?
-    var timeInterval = "minute"
     
     var willSetNewDate = false
     
@@ -116,29 +114,32 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         var reminder : Reminder?
         
         func getReminderDetails(inout reminder: Reminder) {
-            reminder.name = reminderNameField.text!
-            reminder.dueDate = dueDate!
+            
+            reminder.setTitle(reminderNameField.text!)
+            reminder.setDate(selectedDate!)
+            
             if let nextDueDate = nextReminderDate {
-                reminder.nextDueDate = nextDueDate
-                reminder.typeOfInterval = timeInterval
-                reminder.everyAmount = recurringAmount
+                reminder.setNextDate(nextDueDate)
+                reminder.setRepeatInterval(selectedInterval)
+                reminder.setRepeatFrequency(selectedFrequency)
             } else {
-                reminder.nextDueDate = nil
-                reminder.typeOfInterval = nil
-                reminder.everyAmount = nil
+                reminder.setNextDate(nil)
+                reminder.setRepeatInterval(nil)
+                reminder.setRepeatFrequency(nil)
             }
-            reminder.isEnabled = enableReminderSwitch.on
-            reminder.isRecurring = recurringDateWasSet
-            reminder.isComplete = false 
+            reminder.setEnabledStatus(enableReminderSwitch.on)
+            reminder.setRecurring(recurringDateWasSet)
+            reminder.setCompletionStatus(false)
         }
 
         if reminderToEdit != nil {
             reminder = reminderToEdit
         } else {
             reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as? Reminder
-            reminder?.isComplete = false
-            reminder?.isFavorite = false
-            reminder?.list = list
+            reminder?.setCompletionStatus(false)
+            reminder?.setFavorite(false)
+            reminder?.addToList(list)
+            
             let nbOfReminders = list.numberOfReminders.integerValue
             list.numberOfReminders = NSNumber(integer: nbOfReminders + 1)
             reminder?.addIDtoReminder()
@@ -181,47 +182,14 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     // MARK: Reminder Actions
     
-    
-    @IBAction func completeReminder() {
- 
-        reminderToEdit?.isComplete = true
-        
-        let reminderRepeats = reminderToEdit?.reminderIsRecurring()
-        
-        if reminderRepeats! {
-            let newDate = reminderToEdit?.setNewDueDate()
-            reminderToEdit?.dueDate = newDate!
-            
-            let reminderNotificationHandler = reminderToEdit?.notificationHandler
-            reminderNotificationHandler?.scheduleNotifications(reminderToEdit!)
-        } else {
-            let reminderNotificationHandler = reminderToEdit?.notificationHandler
-            reminderNotificationHandler?.deleteReminderNotifications(reminderToEdit!)
-        }
-        
-        do {
-            try managedObjectContext.save()
-        } catch {
-            fatalCoreDataError(error)
-        }
-        
-        delegate?.addReminderViewController(self, didFinishEditingReminder: reminderToEdit!)
-        
-    }
-    
-    @IBAction func deleteReminder() {
-        delegate?.addReminderViewController(self, didChooseToDeleteReminder: reminderToEdit!)
-        
-    }
-    
     // MARK: Date Picker
     
     @IBAction func listenToDate(datePicker: UIDatePicker) {
         print(#function)
-        dueDate = roundSecondsToZero(datePicker.date)
+        selectedDate = roundSecondsToZero(datePicker.date)
         dueDateIsSet = true
         reminderRepeatsSwitch.enabled = true
-        setDueDateLabel(with: dueDate!)
+        setDueDateLabel(with: selectedDate!)
     }
     
     // MARK: - VIEW
@@ -248,9 +216,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         
         reminderNameField.text = reminder.name
         
-        dueDate = reminder.dueDate
+        selectedDate = reminder.dueDate
         dueDateIsSet = true
-        setDueDateLabel(with: dueDate!)
+        setDueDateLabel(with: selectedDate!)
         
         reminderRepeatsSwitch.enabled = true
         
@@ -264,11 +232,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             nextReminderDate = recurringDate
             
             if let interval = reminderToEdit?.typeOfInterval {
-                timeInterval = interval
+                selectedInterval = interval
             }
             
             if let amount = reminderToEdit?.everyAmount {
-                recurringAmount = amount as Int
+                selectedFrequency = amount as Int
             }
             
             setRecurringPicker()
@@ -478,7 +446,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         
         datePicker.minimumDate = NSDate()
         
-        if let date = dueDate {
+        if let date = selectedDate {
             datePicker.setDate(date, animated: false)
         } else {
             let now = NSDate()
@@ -486,7 +454,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             
             datePicker.setDate(nowWithDelay, animated: false)
             
-            dueDate = datePicker.date 
+            selectedDate = datePicker.date
             dueDateIsSet = true
             setDueDateLabel(with: datePicker.date)
             reminderRepeatsSwitch.enabled = true
@@ -520,10 +488,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     // MARK: - Reccurring Picker
     
     func updateRecurringLabel() {
-        if recurringAmount != 1 {
-            recurringDateLabel.text = "every " + "\(recurringAmount) " + "\(timeInterval)" + "s"
-        } else if recurringAmount == 1 {
-            recurringDateLabel.text = "every " + "\(timeInterval)"
+        if selectedFrequency != 1 {
+            recurringDateLabel.text = "every " + "\(selectedFrequency) " + "\(selectedInterval)" + "s"
+        } else if selectedFrequency == 1 {
+            recurringDateLabel.text = "every " + "\(selectedInterval)"
         } else {
             recurringDateLabel.text = "Doesn't repeat"
         }
@@ -550,7 +518,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         updateRecurringLabel()
         recurringDateWasSet = true
         
-        nextReminderDate = addRecurringDate(recurringAmount, delayType: timeInterval, date: dueDate!)
+        nextReminderDate = addRecurringDate(selectedFrequency!, delayType: selectedInterval!, date: selectedDate!)
         
     }
 
@@ -619,32 +587,31 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == 0 {
-            recurringAmount = row + 1
+            selectedFrequency = row + 1
             
         } else {
             switch row {
             case 0:
-                timeInterval = "minute"
+                selectedInterval = "minute"
             case 1:
-                timeInterval = "hour"
+                selectedInterval = "hour"
             case 2:
-                timeInterval = "day"
+                selectedInterval = "day"
             case 3:
-                timeInterval = "week"
+                selectedInterval = "week"
             case 4:
-                timeInterval = "month"
+                selectedInterval = "month"
             case 5:
-                timeInterval = "year"
+                selectedInterval = "year"
             default:
                 print("Error")
             }
-            
         }
         updateRecurringLabel()
         
         recurringDateWasSet = true
         
-        nextReminderDate = addRecurringDate(recurringAmount, delayType: timeInterval, date: dueDate!)
+        nextReminderDate = addRecurringDate(selectedFrequency!, delayType: selectedInterval!, date: selectedDate!)
         
         print(nextReminderDate!)
         

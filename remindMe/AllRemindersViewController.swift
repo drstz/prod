@@ -89,23 +89,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     }
     
     func quickViewViewControllerDidComplete(controller: QuickViewViewController, didCompleteReminder reminder: Reminder) {
-        print("Going to complete reminder")
-        if reminder.isComplete == false {
-            reminder.isComplete = true
-            let reminderReccurs = reminder.reminderIsRecurring()
-            
-            if reminderReccurs {
-                let newDate = reminder.setNewDueDate()
-                reminder.dueDate = newDate
-                let reminderNotificationHandler = reminder.notificationHandler
-                reminderNotificationHandler.scheduleNotifications(reminder)
-            } else {
-                let notificationHandler = reminder.notificationHandler
-                notificationHandler.deleteReminderNotifications(reminder)
-            }
-        } else {
-            reminder.isComplete = false
-        }
+        reminder.complete()
         coreDataHandler.save()
         dismissViewControllerAnimated(true, completion: nil)
     }

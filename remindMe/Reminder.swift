@@ -21,7 +21,7 @@ class Reminder: NSManagedObject {
     
     func complete() {
         print("Going to complete reminder")
-        isComplete = true
+        
         
         if reminderIsRecurring() {
             let newDate = setNewDueDate()
@@ -29,6 +29,7 @@ class Reminder: NSManagedObject {
             notificationHandler.scheduleNotifications(self)
             print("Completed Reminder - New One Scheduled")
         } else {
+            isComplete = true
             notificationHandler.deleteReminderNotifications(self)
         }
     }
@@ -61,6 +62,46 @@ class Reminder: NSManagedObject {
     func addIDtoReminder() {
         let idAsInteger = list.numberOfReminders.integerValue + idNumber.integerValue
         idNumber = NSNumber(integer: idAsInteger)
+    }
+    
+    func setTitle(title: String)  {
+        name = title
+    }
+    
+    func setDate(date: NSDate) {
+        dueDate = date
+    }
+    
+    func setNextDate(date: NSDate?) {
+        nextDueDate = date
+    }
+    
+    func setRepeatInterval(interval: String?) {
+        typeOfInterval = interval
+    }
+    
+    func setRepeatFrequency(frequency: Int?) {
+        everyAmount = frequency
+    }
+    
+    func setCompletionStatus(status: Bool) {
+        isComplete = status
+    }
+    
+    func setEnabledStatus(status: Bool) {
+        isEnabled = status
+    }
+    
+    func setFavorite(choice: Bool) {
+        isFavorite = choice
+    }
+    
+    func setRecurring(choice: Bool) {
+        isRecurring = choice
+    }
+    
+    func addToList(list: List) {
+        self.list = list
     }
 
 }

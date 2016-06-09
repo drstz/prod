@@ -75,7 +75,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     // Switches
     
-    @IBOutlet weak var enableReminderSwitch : UISwitch!
     @IBOutlet weak var reminderRepeatsSwitch: UISwitch!
     
     // Pickers
@@ -127,7 +126,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
                 reminder.setRepeatInterval(nil)
                 reminder.setRepeatFrequency(nil)
             }
-            reminder.setEnabledStatus(enableReminderSwitch.on)
             reminder.setRecurring(recurringDateWasSet)
             reminder.setCompletionStatus(false)
         }
@@ -222,7 +220,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         
         reminderRepeatsSwitch.enabled = true
         
-        enableReminderSwitch.on = reminder.isEnabled as Bool
         reminderRepeatsSwitch.on = reminder.isRecurring as Bool
         
         reminderRepeats = reminder.isRecurring as Bool
@@ -394,11 +391,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         //print(#function)
         if textFieldHasText {
             textField.resignFirstResponder()
-            if creatingReminder {
-                print("Changing switch")
-                enableReminderSwitch.setOn(true, animated: true)
-                enableReminderSwitch.on = true
-            }
             showDatePicker()
         } else {
             textField.placeholder = "You have to give your reminder a name"

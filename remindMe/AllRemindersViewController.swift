@@ -15,6 +15,8 @@ protocol AllRemindersViewControllerDelegate: class {
                                                                    reminder: Reminder)
 }
 
+var segmentChoice = 0
+
 class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, AddReminderViewControllerDelegate, ReminderCellDelegate, QuickViewViewControllerDelegate {
     
     // MARK: - Outlets
@@ -54,6 +56,10 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     
     var showingCompleteReminders = false
     
+    
+    
+    
+    
     // MARK: - IBActions
     
     @IBAction func changeSegment() {
@@ -62,6 +68,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         loadCell()
         tableView.reloadData()
         setNumberOfReminders()
+        segmentChoice = segmentedControl.selectedSegmentIndex
         
     }
     
@@ -70,6 +77,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     }
 
     // MARK: - Delegate Methods
+    
     
     // MARK: Quick View
     
@@ -151,16 +159,23 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        segmentedControl.selectedSegmentIndex = segmentChoice
+    }
+    
     
     override func viewDidAppear(animated: Bool) {
         print("--------------------")
         super.viewDidAppear(animated)
         print(#function)
+        
         setUpCoreData()
         loadCell()
         setNumberOfReminders()
         
-        print("Selected Index: \(myTabBarController.selectedIndex)")
+        print("Selected Index: \(myTabBarController.selectedIndex) and Segment = \(segmentChoice)")
+        
         
     }
     

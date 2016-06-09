@@ -31,7 +31,7 @@
         <scene sceneID="BHx-qb-Sh3">
             <objects>
                 <navigationController id="lB2-6B-RLm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Week" id="LSN-Dk-Cx6"/>
+                    <tabBarItem key="tabBarItem" title="Week" image="Week View-30" id="LSN-Dk-Cx6"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="RFW-e1-HYN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -48,7 +48,7 @@
         <scene sceneID="oEx-gD-f38">
             <objects>
                 <navigationController id="BTn-SY-CS2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="All" id="Yd8-Y8-xeq"/>
+                    <tabBarItem key="tabBarItem" title="All" image="Infinity-30" id="Yd8-Y8-xeq"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="T8k-ES-3GV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -99,11 +99,11 @@
                             </connections>
                         </barButtonItem>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="eUi-Dz-PKw">
-                            <rect key="frame" x="224" y="7" width="153" height="30"/>
+                            <rect key="frame" x="250" y="7" width="100" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
-                                <segment title="Upcoming"/>
-                                <segment title="Complete"/>
+                                <segment title="" image="Future-30"/>
+                                <segment title="" image="Checkmark-30"/>
                             </segments>
                             <connections>
                                 <action selector="changeSegment" destination="BYZ-38-t0r" eventType="valueChanged" id="Soa-LP-LWn"/>
@@ -519,7 +519,7 @@
         <scene sceneID="KIt-cR-Yf9">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OLI-8q-xTi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Today" id="dyR-Me-7GN"/>
+                    <tabBarItem key="tabBarItem" title="Today" image="Present-30" id="dyR-Me-7GN"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="N3h-HL-t7I">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -536,10 +536,15 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Checkmark-30" width="30" height="30"/>
+        <image name="Future-30" width="30" height="30"/>
+        <image name="Infinity-30" width="30" height="30"/>
+        <image name="Present-30" width="30" height="30"/>
         <image name="Settings-50" width="50" height="50"/>
+        <image name="Week View-30" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lHw-Mo-mKb"/>
+        <segue reference="fhu-Tq-aJn"/>
         <segue reference="XiK-Cj-5ub"/>
     </inferredMetricsTieBreakers>
 </document>

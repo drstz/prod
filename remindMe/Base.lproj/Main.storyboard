@@ -27,11 +27,11 @@
             </objects>
             <point key="canvasLocation" x="-606" y="938"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Week-->
         <scene sceneID="BHx-qb-Sh3">
             <objects>
                 <navigationController id="lB2-6B-RLm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="favorites" id="LSN-Dk-Cx6"/>
+                    <tabBarItem key="tabBarItem" title="Week" id="LSN-Dk-Cx6"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="RFW-e1-HYN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -44,11 +44,11 @@
             </objects>
             <point key="canvasLocation" x="369" y="29"/>
         </scene>
-        <!--Today-->
+        <!--All-->
         <scene sceneID="oEx-gD-f38">
             <objects>
                 <navigationController id="BTn-SY-CS2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Today" id="Yd8-Y8-xeq"/>
+                    <tabBarItem key="tabBarItem" title="All" id="Yd8-Y8-xeq"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="T8k-ES-3GV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -498,11 +498,11 @@
             </objects>
             <point key="canvasLocation" x="1589.5" y="290"/>
         </scene>
-        <!--Week-->
+        <!--Navigation Controller-->
         <scene sceneID="nKZ-k5-Iej">
             <objects>
                 <navigationController id="AmV-vP-fCX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Week" id="64u-6f-NDX"/>
+                    <tabBarItem key="tabBarItem" title="" systemItem="favorites" id="64u-6f-NDX"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Dmv-IK-xID">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -515,11 +515,11 @@
             </objects>
             <point key="canvasLocation" x="369" y="1516"/>
         </scene>
-        <!--All-->
+        <!--Today-->
         <scene sceneID="KIt-cR-Yf9">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OLI-8q-xTi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="All" id="dyR-Me-7GN"/>
+                    <tabBarItem key="tabBarItem" title="Today" id="dyR-Me-7GN"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="N3h-HL-t7I">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -539,7 +539,7 @@
         <image name="Settings-50" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="lHw-Mo-mKb"/>
         <segue reference="XiK-Cj-5ub"/>
-        <segue reference="e1F-Pi-sXX"/>
     </inferredMetricsTieBreakers>
 </document>

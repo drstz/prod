@@ -192,20 +192,20 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
        
         switch selectedIndex {
         case 0:
-            filter = .All
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "IncompleteReminders", filterBy: filter, status: status)
+            filter = .Today
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "TodayReminders", filterBy: filter, status: status)
         case 1:
+            filter = .Week
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "WeekReminders", filterBy: filter, status: status)
+        case 2:
+            filter = .All
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
+        case 3:
             filter = .Favorite
             coreDataHandler.setFetchedResultsController("Reminder", cacheName: "FavoriteReminders", filterBy: filter, status: status)
-        case 2:
-            filter = .Today 
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "CompleteReminders", filterBy: filter, status: status)
-        case 3:
-            filter = .Week
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "SomeReminders", filterBy: filter, status: status)
         default:
             filter = .All
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "SomeReminders", filterBy: filter, status: status)
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
         }
         
         coreDataHandler.fetchedResultsController.delegate = self

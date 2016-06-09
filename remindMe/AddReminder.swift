@@ -156,8 +156,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         } catch {
             fatalCoreDataError(error)
         }
-
-        
     }
     
     // MARK: Switches
@@ -205,8 +203,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         }
         
         enableDoneButton()
-        
-        
     }
     
     func prepareViewForReminder(reminder: Reminder) {
@@ -239,10 +235,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             setRecurringPicker()
             updateRecurringLabel()
         }
-        
-        
-        
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -481,9 +473,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     func updateRecurringLabel() {
         if selectedFrequency != 1 {
-            recurringDateLabel.text = "every " + "\(selectedFrequency) " + "\(selectedInterval)" + "s"
+            recurringDateLabel.text = "every " + "\(selectedFrequency!) " + "\(selectedInterval!)" + "s"
         } else if selectedFrequency == 1 {
-            recurringDateLabel.text = "every " + "\(selectedInterval)"
+            recurringDateLabel.text = "every " + "\(selectedInterval!)"
         } else {
             recurringDateLabel.text = "Doesn't repeat"
         }

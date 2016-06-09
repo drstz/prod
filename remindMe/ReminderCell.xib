@@ -16,14 +16,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reminder Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cNe-HO-hOr">
-                        <rect key="frame" x="8" y="8" width="186" height="28"/>
+                        <rect key="frame" x="8" y="8" width="167" height="28"/>
                         <fontDescription key="fontDescription" type="system" pointSize="23"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RT5-B8-dMw">
-                        <rect key="frame" x="255" y="64" width="57" height="24"/>
+                        <rect key="frame" x="214" y="64" width="98" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="57" id="UNE-3m-WD7"/>
+                            <constraint firstAttribute="width" constant="98" id="UNE-3m-WD7"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                         <nil key="highlightedColor"/>
@@ -46,11 +46,20 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="day" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pcd-jg-yJM">
-                        <rect key="frame" x="214" y="8" width="98" height="24"/>
+                        <rect key="frame" x="183" y="8" width="129" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="98" id="6mg-Mw-lig"/>
+                            <constraint firstAttribute="width" constant="129" id="6mg-Mw-lig"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jiE-5L-44b">
+                        <rect key="frame" x="266" y="35" width="46" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="46" id="PdY-LF-R5y"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -59,11 +68,13 @@
                     <constraint firstItem="Bcl-hb-zg4" firstAttribute="leading" secondItem="inR-4p-X3F" secondAttribute="trailing" constant="8" symbolic="YES" id="BvH-dd-inX"/>
                     <constraint firstAttribute="bottomMargin" secondItem="RT5-B8-dMw" secondAttribute="bottom" constant="3" id="Gyi-qO-FpG"/>
                     <constraint firstItem="cNe-HO-hOr" firstAttribute="top" secondItem="qdg-uO-bVj" secondAttribute="topMargin" id="LDY-6G-lSI"/>
-                    <constraint firstItem="cNe-HO-hOr" firstAttribute="centerX" secondItem="Bcl-hb-zg4" secondAttribute="centerX" constant="-32.5" id="UgV-bS-5Jr"/>
+                    <constraint firstItem="jiE-5L-44b" firstAttribute="top" secondItem="Pcd-jg-yJM" secondAttribute="bottom" constant="3" id="RGF-XQ-Gm9"/>
+                    <constraint firstItem="cNe-HO-hOr" firstAttribute="centerX" secondItem="Bcl-hb-zg4" secondAttribute="centerX" constant="-42" id="UgV-bS-5Jr"/>
                     <constraint firstItem="inR-4p-X3F" firstAttribute="baseline" secondItem="Bcl-hb-zg4" secondAttribute="baseline" id="cJK-WJ-Y5e"/>
                     <constraint firstItem="cNe-HO-hOr" firstAttribute="leading" secondItem="qdg-uO-bVj" secondAttribute="leadingMargin" id="dW3-nA-DlG"/>
                     <constraint firstItem="Pcd-jg-yJM" firstAttribute="trailing" secondItem="qdg-uO-bVj" secondAttribute="trailingMargin" id="o88-56-dQ4"/>
                     <constraint firstItem="cNe-HO-hOr" firstAttribute="leading" secondItem="inR-4p-X3F" secondAttribute="leading" id="qHY-0i-4kI"/>
+                    <constraint firstItem="jiE-5L-44b" firstAttribute="trailing" secondItem="qdg-uO-bVj" secondAttribute="trailingMargin" id="wdt-SO-Fdf"/>
                     <constraint firstItem="Pcd-jg-yJM" firstAttribute="top" secondItem="qdg-uO-bVj" secondAttribute="topMargin" id="x95-Wb-Mkc"/>
                     <constraint firstItem="inR-4p-X3F" firstAttribute="top" secondItem="cNe-HO-hOr" secondAttribute="bottom" constant="36" id="yAY-q8-pTT"/>
                 </constraints>
@@ -72,6 +83,7 @@
                 <outlet property="dayLabel" destination="Pcd-jg-yJM" id="iTp-aU-9th"/>
                 <outlet property="nextDueDate" destination="Bcl-hb-zg4" id="Ory-QI-8CW"/>
                 <outlet property="reminderLabel" destination="cNe-HO-hOr" id="fcN-PF-5Ps"/>
+                <outlet property="shortDateLabel" destination="jiE-5L-44b" id="0Ac-f7-S2i"/>
                 <outlet property="timeLabel" destination="RT5-B8-dMw" id="Xrj-CX-qAm"/>
             </connections>
             <point key="canvasLocation" x="561" y="739"/>

@@ -20,6 +20,7 @@ class ReminderCell: UITableViewCell {
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var shortDateLabel: UILabel!
     @IBOutlet weak var nextDueDate: UILabel!
     
     weak var delegate : ReminderCellDelegate?
@@ -44,6 +45,7 @@ class ReminderCell: UITableViewCell {
         reminderLabel.text = "\(reminder.name)"
         dayLabel.text = convertDateToString(.Day, date: reminder.dueDate)
         timeLabel.text = convertDateToString(.Time, date: reminder.dueDate)
+        shortDateLabel.text = convertDateToString(.ShortDate, date: reminder.dueDate)
         if let nexty = reminder.nextDueDate {
             if reminder.everyAmount! != 1 {
                 nextDueDate.text = "Every " + "\(reminder.everyAmount!) " + "\(reminder.typeOfInterval!)" + "s"

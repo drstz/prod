@@ -14,6 +14,7 @@ enum DateFormats: String {
     case Day = "EEEE"
     case WholeDate = "dd, MMMM, yy"
     case Time = "HH:mm "
+    case ShortDate = "dd MMMM"
 }
 
 let languages = NSLocale.preferredLanguages()
@@ -78,10 +79,9 @@ func tomorrowMidnight() -> NSDate {
 }
 
 func sevenDaysFromNow(date: NSDate) -> NSDate {
-    let calendar = NSCalendar.currentCalendar()
-    let newDate = calendar.dateByAddingUnit([.Day], value: 7, toDate: date, options: [])
+    let newDate = setTime(23, minute: 59, second: 59, addedDay: 6)
     print(newDate)
-    return newDate!
+    return newDate
 }
 
 
@@ -109,6 +109,8 @@ func convertDateToString(format: DateFormats, date: NSDate) -> String {
     case .Day:
         dateFormat = format.rawValue
     case .Time:
+        dateFormat = format.rawValue
+    case .ShortDate:
         dateFormat = format.rawValue
     }
     

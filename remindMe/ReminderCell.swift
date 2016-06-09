@@ -41,7 +41,7 @@ class ReminderCell: UITableViewCell {
     }
     
     func configureLabels(reminder: Reminder) {
-        reminderLabel.text = "\(reminder.name) C: \(reminder.isComplete)"
+        reminderLabel.text = "\(reminder.name)"
         dayLabel.text = convertDateToString(.Day, date: reminder.dueDate)
         timeLabel.text = convertDateToString(.Time, date: reminder.dueDate)
         if let nexty = reminder.nextDueDate {

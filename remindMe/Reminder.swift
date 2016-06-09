@@ -88,10 +88,6 @@ class Reminder: NSManagedObject {
         isComplete = status
     }
     
-    func setEnabledStatus(status: Bool) {
-        isEnabled = status
-    }
-    
     func setFavorite(choice: Bool) {
         isFavorite = choice
     }

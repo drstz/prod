@@ -14,6 +14,7 @@ enum DateFormats: String {
     case Day = "EEEE"
     case WholeDate = "dd, MMMM, yy"
     case Time = "HH:mm "
+    case ShortDate = "dd MMMM"
 }
 
 let languages = NSLocale.preferredLanguages()
@@ -55,12 +56,34 @@ func midnight(date: NSDate) -> NSDate {
     return newDate!
 }
 
-func sevenDaysFromNow(date: NSDate) -> NSDate {
+func setTime(hour: Int, minute: Int, second: Int, addedDay: Int ) -> NSDate {
+    let now = NSDate()
     let calendar = NSCalendar.currentCalendar()
-    let newDate = calendar.dateByAddingUnit([.Day], value: 7, toDate: date, options: [])
-    print(newDate)
+    var newDate = calendar.dateBySettingHour(
+        hour, minute: minute, second: second,
+        ofDate: now,
+        options: NSCalendarOptions.init(rawValue: 0)
+    )
+    newDate = calendar.dateByAddingUnit(
+        .Day,
+        value: addedDay,
+        toDate: newDate!,
+        options: NSCalendarOptions.init(rawValue: 0)
+    )
     return newDate!
 }
+
+func tomorrowMidnight() -> NSDate {
+    let tomorrowMidnight = setTime(23, minute: 59, second: 59, addedDay: 1)
+    return tomorrowMidnight
+}
+
+func sevenDaysFromNow(date: NSDate) -> NSDate {
+    let newDate = setTime(23, minute: 59, second: 59, addedDay: 6)
+    print(newDate)
+    return newDate
+}
+
 
 func convertDateToString(dateToConvert date: NSDate) -> String {
     let formatter = NSDateFormatter()
@@ -70,7 +93,12 @@ func convertDateToString(dateToConvert date: NSDate) -> String {
     return formatter.stringFromDate(date)
 }
 
+
+
 func convertDateToString(format: DateFormats, date: NSDate) -> String {
+    let now = NSDate()
+    let mNight = midnight(now)
+    let earlierDate = date.earlierDate(mNight)
     let formatter = NSDateFormatter()
     var dateFormat = ""
     formatter.locale = NSLocale(localeIdentifier: preferredLanguage)
@@ -82,11 +110,25 @@ func convertDateToString(format: DateFormats, date: NSDate) -> String {
         dateFormat = format.rawValue
     case .Time:
         dateFormat = format.rawValue
+    case .ShortDate:
+        dateFormat = format.rawValue
     }
     
     formatter.dateFormat = dateFormat
+    
+    if format == .Day {
+        if earlierDate == date {
+            return "Today"
+        } else if earlierDate == mNight {
+            let earlyDate = date.earlierDate(tomorrowMidnight())
+            if earlyDate == date {
+                return "Tomorrow"
+            }
+        }
+        
+    }
+    
     return formatter.stringFromDate(date)
-
 }
 
 func createNewDate(oldDate : NSDate, typeOfInterval: String, everyAmount: Int) -> NSDate {
@@ -110,9 +152,22 @@ func createNewDate(oldDate : NSDate, typeOfInterval: String, everyAmount: Int) -
     }
     
     let calculateDate = NSCalendar.currentCalendar().dateByAddingComponents(newDateComponents, toDate: oldDate, options: NSCalendarOptions.init(rawValue: 0))
-    print(calculateDate!)
     return calculateDate!
     
+}
+
+func calculateDateDifference(date: NSDate) -> NSDateComponents {
+    let now = NSDate()
+    
+    let difference = NSCalendar.currentCalendar().components(
+        [.Year, .Month, .Day, .Hour, .Minute, .Second],
+        fromDate: date,
+        toDate: now,
+        options: NSCalendarOptions.init(rawValue: 0)
+    )
+    
+    return difference
+
 }
 
 func recurringInterval(typeOfInterval: String) -> NSCalendarUnit {

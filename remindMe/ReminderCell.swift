@@ -27,12 +27,14 @@ class ReminderCell: UITableViewCell {
     weak var delegate : ReminderCellDelegate?
     
     var longPress: UILongPressGestureRecognizer!
+    var wasSelected = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(recognizeLongPress))
         self.addGestureRecognizer(longPress)
+        self.selectionStyle = .Blue
         // Initialization code
     }
 
@@ -67,6 +69,9 @@ class ReminderCell: UITableViewCell {
         backgroundColor = UIColor(red: 174/255, green: 198/255, blue: 207/255, alpha: 1)
         if reminder.isFavorite == true {
             backgroundColor = UIColor(red: 1, green: 223/255, blue: 0, alpha: 1)
+        }
+        if wasSelected {
+            backgroundColor = UIColor(red: 69/255, green: 61/255, blue: 85/255, alpha: 1)
         }
     }
     

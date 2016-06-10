@@ -31,21 +31,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     var fetchedResultsController: NSFetchedResultsController!
     
     var myTabBarController: UITabBarController!
-    
-    var selectedIndexPaths: [NSIndexPath] = [] {
-        didSet {
-            print("There are \(selectedIndexPaths.count) selected paths")
-        }
-    }
-    var selectedReminders: [Reminder] = [] {
-        didSet {
-            print("There are \(selectedReminders.count) selected reminders")
-        }
-    }
-    
-    
-    
-    
+
     // MARK: - Delegates
     
     weak var delegate: AllRemindersViewControllerDelegate?
@@ -77,6 +63,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         loadCell()
         tableView.reloadData()
         setNumberOfReminders()
+        clearSelectedIndexPaths()
     
         
     }
@@ -140,27 +127,15 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     // Cell
     
     func cellWasLongPressed(cell: ReminderCell, longPress: UILongPressGestureRecognizer) {
-        
         let indexPath = tableView.indexPathForCell(cell)
-        if !selectedIndexPaths.contains(indexPath!) {
-            selectedIndexPaths.append(indexPath!)
-        }
         
-    
         if longPress.state == .Began {
-            let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)
-            
-            addReminders(selectedIndexPaths)
-
-            cell.wasSelected = true
-            cell.configureColor(reminder)
-            
+            tableView.allowsMultipleSelection = true
+            tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .None)
+   
             let completeText = "Complete"
             let favoriteText = "Favorite"
 
-            
-            
-            
             let complete = UIBarButtonItem.init(title: completeText, style: .Plain, target: self, action: #selector(tBarCompleteThisReminder))
             let favorite = UIBarButtonItem.init(title: favoriteText, style: .Plain, target: self, action: #selector(tBarFavThisReminder))
             let delete = UIBarButtonItem.init(title: "Delete", style: .Plain, target: self, action: #selector(tBarDeleteThisReminder))
@@ -169,20 +144,10 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
             
             if navigationController?.toolbarHidden == true {
                 navigationController?.setToolbarHidden(false, animated: true)
-                navigationController?.setNavigationBarHidden(true, animated: true)
             } else {
                 navigationController?.setToolbarHidden(true, animated: true)
-                navigationController?.setNavigationBarHidden(false, animated: true)
             }
         }
-    }
-    
-    func addReminders(indexpaths: [NSIndexPath]) {
-        for indexPath in indexpaths {
-            let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-            selectedReminders.append(reminder)
-        }
-        
     }
     
     // MARK: - Methods
@@ -205,6 +170,10 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         print("--------------------")
         print("")
         super.viewDidLoad()
+        tableView.separatorColor = UIColor.blackColor()
+        tableView.separatorInset = UIEdgeInsetsMake(100, 0, 100, 0)
+        
+        
         
         setUpCoreData()
         loadCell()
@@ -216,78 +185,53 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     }
     
     func tBarCompleteThisReminder() {
-        for reminder in selectedReminders {
-            reminder.complete()
-            
-            for index in selectedIndexPaths {
-                let cell = tableView.cellForRowAtIndexPath(index) as! ReminderCell
-                cell.wasSelected = false
-                cell.configureColor(reminder)
+        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
+            for indexPath in selectedIndexPaths {
+                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                reminder.complete()
             }
         }
-        
-        selectedIndexPaths.removeAll()
-        selectedReminders.removeAll()
-        
-        coreDataHandler.save()
 
+        coreDataHandler.save()
         navigationController?.setToolbarHidden(true, animated: true)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        
     }
     
     func tBarDeleteThisReminder() {
-        for reminder in selectedReminders {
-            deleteReminder(reminder)
-            
-            for index in selectedIndexPaths {
-                let cell = tableView.cellForRowAtIndexPath(index) as! ReminderCell
-                cell.wasSelected = false
-                cell.configureColor(reminder)
+        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
+            for indexPath in selectedIndexPaths {
+                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                deleteReminder(reminder)
             }
         }
         
-        selectedIndexPaths.removeAll()
-        selectedReminders.removeAll()
-        
         coreDataHandler.save()
-        
         navigationController?.setToolbarHidden(true, animated: true)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        
     }
     
     func tBarFavThisReminder() {
-        for reminder in selectedReminders {
-            if reminder.isFavorite == false {
-                reminder.setFavorite(true)
-            } else {
-                reminder.setFavorite(false)
-            }
-            
-            for index in selectedIndexPaths {
-                let cell = tableView.cellForRowAtIndexPath(index) as! ReminderCell
-                cell.wasSelected = false
+        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
+            for indexPath in selectedIndexPaths {
+                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
+                let cell = tableView.cellForRowAtIndexPath(indexPath) as! ReminderCell
+                
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                if reminder.isFavorite == false {
+                    reminder.setFavorite(true)
+                } else {
+                    reminder.setFavorite(false)
+                }
                 cell.configureColor(reminder)
             }
         }
-        selectedIndexPaths.removeAll()
-        selectedReminders.removeAll()
-        
-        
-        
         coreDataHandler.save()
-        
-        
         navigationController?.setToolbarHidden(true, animated: true)
-        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-
     }
-    
     
     override func viewDidAppear(animated: Bool) {
         print("--------------------")
@@ -297,10 +241,21 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         setUpCoreData()
         loadCell()
         setNumberOfReminders()
-        
+    }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        
+        clearSelectedIndexPaths()
+    }
+    
+    func clearSelectedIndexPaths() {
+        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
+            for indexPath in selectedIndexPaths {
+                tableView.deselectRowAtIndexPath(indexPath, animated: false)
+            }
+        }
+        navigationController?.setToolbarHidden(true, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -498,46 +453,20 @@ extension AllRemindersViewController: UITableViewDelegate {
     // MARK: - Selection
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if navigationController?.toolbarHidden == true {
             performSegueWithIdentifier("QuickView", sender: tableView.cellForRowAtIndexPath(indexPath))
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        } else {
-            print("There are \(selectedIndexPaths.count) indexPaths")
-            if selectedIndexPaths.contains(indexPath) {
-                let cell = tableView.cellForRowAtIndexPath(indexPath) as! ReminderCell
-                cell.wasSelected = true
-                cell.backgroundColor = UIColor(red: 174/255, green: 198/255, blue: 207/255, alpha: 1)
-                let position = selectedIndexPaths.indexOf(indexPath)
-                selectedIndexPaths.removeAtIndex(position!)
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                
-                if selectedReminders.contains(reminder) {
-                    let position = selectedReminders.indexOf(reminder)
-                    selectedReminders.removeAtIndex(position!)
-                }
-                if selectedIndexPaths.count == 0 {
-                    navigationController?.setToolbarHidden(true, animated: true)
-                    navigationController?.setNavigationBarHidden(false, animated: true)
-                }
-            } else {
-                let cell = tableView.cellForRowAtIndexPath(indexPath) as! ReminderCell
-                cell.backgroundColor = UIColor(red: 69/255, green: 61/255, blue: 85/255, alpha: 1)
-                cell.wasSelected = true
-                cell.configureColor(reminder)
-                selectedIndexPaths.append(indexPath)
-                
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                selectedReminders.append(reminder)
-                
-            }
         }
-        
-        
+        let selectedIndexPathsCount = tableView.indexPathsForSelectedRows?.count
+        print("There are \(selectedIndexPathsCount) selected rows")
+    }
     
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        let selectedIndexPathsCount = tableView.indexPathsForSelectedRows?.count
+        print("There are \(selectedIndexPathsCount) selected rows")
+        if selectedIndexPathsCount == nil {
+            navigationController?.setToolbarHidden(true, animated: true)
+        }
         
     }
     

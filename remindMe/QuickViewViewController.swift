@@ -28,11 +28,11 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
     @IBOutlet weak var reminderNameLabel: UILabel!
     @IBOutlet weak var reminderDueDateLabel: UILabel!
     @IBOutlet weak var reminderDueTimeLabel: UILabel!
+    @IBOutlet weak var reminderShortDateLabel: UILabel!
     
     // MARK: Buttons
     
     @IBOutlet weak var completeButton: UIButton!
-    @IBOutlet weak var snoozeButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     
     @IBOutlet weak var addToFavoritesButton: UIBarButtonItem!
@@ -132,7 +132,7 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
     // MARK: AllReminder
     
     func allRemindersViewControllerDelegateDidReceiveNotification(controller: AllRemindersViewController, reminder: Reminder) {
-        showNotificationHasGoneOffAlert(reminder)
+        
     }
     
     // MARK: - Methods
@@ -140,27 +140,10 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
     override func viewDidLoad() {
         print(#function)
         super.viewDidLoad()
+                
         
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: #selector(addSnoozeButton),
-            name: UIApplicationWillEnterForegroundNotification,
-            object: nil
-        )
-        
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: #selector(showNotificationHasGoneOffAlert),
-            name: "showNotificationHasGoneOff",
-            object: nil
-        )
         
         if let reminder = incomingReminder {
-            if !notificationHasGoneOff {
-                snoozeButton.hidden = true
-                let superViewTrailingAnchor = completeButton.superview?.trailingAnchor
-                completeButton.trailingAnchor.constraintEqualToAnchor(superViewTrailingAnchor).active = true
-            }
             updateLabels(with: reminder)
             setCompleteButton(with: reminder)
         }
@@ -171,66 +154,14 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
         super.viewDidAppear(animated)
     }
     
-    func showNotificationHasGoneOffAlert(reminder: Reminder) {
-        let alert = UIAlertController(
-            title: "You have a reminder",
-            message: reminder.name,
-            preferredStyle: .Alert
-        )
-        
-        var actions: [UIAlertAction] = []
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-        actions.append(cancelAction)
-        
-        let viewAction = UIAlertAction(title: "View", style: .Default, handler: { viewAction in
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let controller = storyboard.instantiateViewControllerWithIdentifier("QuickView") as! QuickViewViewController
-            controller.incomingReminder = reminder
-            
-            controller.delegate = self.delegate
-            
-            let navigationItem = UINavigationItem()
-            navigationItem.title = "Here is your reminder"
-            let navigationBar = UINavigationBar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44))
-            let leftButton = UIBarButtonItem(title: "Back", style: .Plain, target: self, action: nil)
-            
-            navigationItem.leftBarButtonItem = leftButton
-            
-            navigationBar.items = [navigationItem]
-            
-            
-            controller.view.addSubview(navigationBar)
-            
-            
-            
-            self.presentViewController(controller, animated: true, completion: nil)
-            
-        })
-        actions.append(viewAction)
-        
-        for action in actions {
-            alert.addAction(action)
-        }
-        
-        alert.preferredAction = alert.actions[1]
-        
-        presentViewController(alert, animated: true, completion: nil)
-        
-    }
     
-    func addSnoozeButton() {
-        print(#function)
-        snoozeButton.hidden = false
-        let snoozeButtonLeadingAnchor = snoozeButton.leadingAnchor
-        completeButton.trailingAnchor.constraintEqualToAnchor(snoozeButtonLeadingAnchor).active = true
-        
-    }
     
     func updateLabels(with reminder: Reminder) {
         reminderNameLabel.text = reminder.name
-        reminderDueDateLabel.text = convertDateToString(.WholeDate, date: reminder.dueDate)
+        reminderDueDateLabel.text = convertDateToString(.Day, date: reminder.dueDate)
         reminderDueTimeLabel.text = convertDateToString(.Time, date: reminder.dueDate)
+        reminderShortDateLabel.text = convertDateToString(.ShortDate, date: reminder.dueDate)
+        
         if reminder.isFavorite == true {
             addToFavoritesButton.title = "Remove from favorites"
         }

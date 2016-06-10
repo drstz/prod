@@ -15,7 +15,7 @@ protocol AllRemindersViewControllerDelegate: class {
                                                                    reminder: Reminder)
 }
 
-var segmentChoice = 0
+
 
 class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, AddReminderViewControllerDelegate, ReminderCellDelegate, QuickViewViewControllerDelegate {
     
@@ -30,8 +30,10 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     var managedObjectContext: NSManagedObjectContext!
     var fetchedResultsController: NSFetchedResultsController!
     
-    
     var myTabBarController: UITabBarController!
+    
+    
+    
     
     // MARK: - Delegates
     
@@ -56,10 +58,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     
     var showingCompleteReminders = false
     
-    
-    
-    
-    
     // MARK: - IBActions
     
     @IBAction func changeSegment() {
@@ -68,7 +66,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         loadCell()
         tableView.reloadData()
         setNumberOfReminders()
-        segmentChoice = segmentedControl.selectedSegmentIndex
+    
         
     }
     
@@ -128,6 +126,45 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // Cell
+    
+    func cellWasLongPressed(cell: ReminderCell, longPress: UILongPressGestureRecognizer) {
+        
+        let indexPath = tableView.indexPathForCell(cell)
+    
+        if longPress.state == .Began {
+            tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Middle)
+            let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)
+            
+            var completeText = ""
+            var favoriteText = ""
+
+            if reminder.isComplete == 0 {
+                completeText = "Complete"
+            } else {
+                completeText = "Set date"
+            }
+            if reminder.isFavorite == 0 {
+                favoriteText = "Favorite"
+            } else {
+                favoriteText = "Undo Favorite"
+            }
+            
+            
+            let complete = UIBarButtonItem.init(title: completeText, style: .Plain, target: self, action: #selector(tBarCompleteThisReminder))
+            let favorite = UIBarButtonItem.init(title: favoriteText, style: .Plain, target: self, action: #selector(tBarFavThisReminder))
+            let delete = UIBarButtonItem.init(title: "Delete", style: .Plain, target: self, action: #selector(tBarDeleteThisReminder))
+            let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+            toolbarItems = [complete, spacer, delete, spacer, favorite]
+            
+            if navigationController?.toolbarHidden == true {
+                navigationController?.setToolbarHidden(false, animated: true)
+            } else {
+                navigationController?.setToolbarHidden(true, animated: true)
+            }
+    
+        }
+    }
     
     // MARK: - Methods
     
@@ -159,9 +196,50 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
     }
     
+    func tBarCompleteThisReminder() {
+        let indexPath = tableView.indexPathForSelectedRow
+        let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)
+        tableView.deselectRowAtIndexPath(indexPath!, animated: true)
+        reminder.complete()
+        
+        coreDataHandler.save()
+
+        navigationController?.setToolbarHidden(true, animated: true)
+        
+    }
+    
+    func tBarDeleteThisReminder() {
+        let indexPath = tableView.indexPathForSelectedRow
+        let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)
+        tableView.deselectRowAtIndexPath(indexPath!, animated: true)
+        deleteReminder(reminder)
+        
+        coreDataHandler.save()
+        
+        navigationController?.setToolbarHidden(true, animated: true)
+        
+    }
+    
+    func tBarFavThisReminder() {
+        let indexPath = tableView.indexPathForSelectedRow
+        let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)
+        tableView.deselectRowAtIndexPath(indexPath!, animated: true)
+        if reminder.isFavorite == false {
+            reminder.setFavorite(true)
+        } else {
+            reminder.setFavorite(false)
+        }
+        
+        coreDataHandler.save()
+        
+        
+        navigationController?.setToolbarHidden(true, animated: true)
+        
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        segmentedControl.selectedSegmentIndex = segmentChoice
+
     }
     
     
@@ -174,7 +252,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         loadCell()
         setNumberOfReminders()
         
-        print("Selected Index: \(myTabBarController.selectedIndex) and Segment = \(segmentChoice)")
+    
         
         
     }
@@ -374,8 +452,12 @@ extension AllRemindersViewController: UITableViewDelegate {
     // MARK: - Selection
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        
+        
+        
         performSegueWithIdentifier("QuickView", sender: tableView.cellForRowAtIndexPath(indexPath))
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {

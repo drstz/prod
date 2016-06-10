@@ -160,9 +160,7 @@ class CoreDataHandler {
                 fetchRequest.predicate = predicate
             }
             
-        default:
-            let predicate = NSPredicate(format: "")
-            fetchRequest.predicate = predicate
+        
         }
     }
     

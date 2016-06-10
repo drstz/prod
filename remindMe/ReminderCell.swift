@@ -10,6 +10,7 @@ import UIKit
 
 protocol ReminderCellDelegate: class {
     func completeButtonWasPressed (cell : ReminderCell)
+    func cellWasLongPressed(cell: ReminderCell, longPress: UILongPressGestureRecognizer)
 }
 
 
@@ -25,8 +26,13 @@ class ReminderCell: UITableViewCell {
     
     weak var delegate : ReminderCellDelegate?
     
+    var longPress: UILongPressGestureRecognizer!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(recognizeLongPress))
+        self.addGestureRecognizer(longPress)
         // Initialization code
     }
 
@@ -46,7 +52,7 @@ class ReminderCell: UITableViewCell {
         dayLabel.text = convertDateToString(.Day, date: reminder.dueDate)
         timeLabel.text = convertDateToString(.Time, date: reminder.dueDate)
         shortDateLabel.text = convertDateToString(.ShortDate, date: reminder.dueDate)
-        if let nexty = reminder.nextDueDate {
+        if reminder.nextDueDate != nil {
             if reminder.everyAmount! != 1 {
                 nextDueDate.text = "Every " + "\(reminder.everyAmount!) " + "\(reminder.typeOfInterval!)" + "s"
             } else {
@@ -62,5 +68,15 @@ class ReminderCell: UITableViewCell {
         if reminder.isFavorite == true {
             backgroundColor = UIColor(red: 1, green: 223/255, blue: 0, alpha: 1)
         }
+    }
+    
+    func recognizeLongPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        longPress = longPressGestureRecognizer
+        delegate?.cellWasLongPressed(self, longPress: longPress)
+        
+    }
+    
+    func longPressF(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        
     }
 }

@@ -70,9 +70,6 @@ class ReminderCell: UITableViewCell {
         if reminder.isFavorite == true {
             backgroundColor = UIColor(red: 1, green: 223/255, blue: 0, alpha: 1)
         }
-        if wasSelected {
-            backgroundColor = UIColor(red: 69/255, green: 61/255, blue: 85/255, alpha: 1)
-        }
     }
     
     func recognizeLongPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {

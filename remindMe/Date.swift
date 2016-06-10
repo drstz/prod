@@ -45,7 +45,9 @@ func addRecurringDate(delayAmount: Int, delayType : String, date: NSDate) -> NSD
 
 func roundSecondsToZero(date: NSDate) -> NSDate {
     let calendar = NSCalendar.currentCalendar()
-    let newDate = calendar.dateBySettingUnit(.Second, value: 0, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
+    let components = calendar.components([.Hour, .Minute], fromDate: date)
+    let newDate = calendar.dateBySettingHour(components.hour, minute: components.minute, second: 0, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
+    // let newDate = calendar.dateBySettingUnit(.Second, value: 0, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
     print(newDate)
     return newDate!
 }

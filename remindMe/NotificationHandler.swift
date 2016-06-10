@@ -72,7 +72,7 @@ class NotificationHandler {
             localNotification = deferNotification()
         } else {
             print("Setting notification for \(reminder.name)")
-            localNotification = scheduleNotification()
+            localNotification = scheduleNotification(forDate: reminder.dueDate)
         }
         
         localNotification = setNotificationSettings(localNotification, reminder: reminder)
@@ -93,10 +93,10 @@ class NotificationHandler {
         return localNotification
     }
     
-    func scheduleNotification() -> UILocalNotification {
-        let timeInterval: NSTimeInterval = 10
+    func scheduleNotification(forDate date: NSDate) -> UILocalNotification {
+        // let timeInterval: NSTimeInterval = 10
         let localNotification = UILocalNotification()
-        let dueDate = NSDate(timeIntervalSinceNow: timeInterval)
+        let dueDate = date
 
         localNotification.fireDate = dueDate
         localNotification.repeatInterval = .Minute

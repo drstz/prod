@@ -58,6 +58,12 @@ func midnight(date: NSDate) -> NSDate {
     return newDate!
 }
 
+func startOfDay(date: NSDate) -> NSDate {
+    let calendar = NSCalendar.currentCalendar()
+    let newDate = calendar.dateBySettingHour(0, minute: 0, second: 0, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
+    return newDate!
+}
+
 func setTime(hour: Int, minute: Int, second: Int, addedDay: Int ) -> NSDate {
     let now = NSDate()
     let calendar = NSCalendar.currentCalendar()
@@ -99,8 +105,10 @@ func convertDateToString(dateToConvert date: NSDate) -> String {
 
 func convertDateToString(format: DateFormats, date: NSDate) -> String {
     let now = NSDate()
+    let firstHour = startOfDay(now)
     let mNight = midnight(now)
     let earlierDate = date.earlierDate(mNight)
+    let earlierBetweenMorningAndDate = firstHour.earlierDate(date)
     let formatter = NSDateFormatter()
     var dateFormat = ""
     formatter.locale = NSLocale(localeIdentifier: preferredLanguage)
@@ -120,7 +128,11 @@ func convertDateToString(format: DateFormats, date: NSDate) -> String {
     
     if format == .Day {
         if earlierDate == date {
-            return "Today"
+            if earlierBetweenMorningAndDate == firstHour {
+                return "Today"
+            } else {
+                return formatter.stringFromDate(date)
+            }
         } else if earlierDate == mNight {
             let earlyDate = date.earlierDate(tomorrowMidnight())
             if earlyDate == date {

@@ -26,6 +26,9 @@ class NotificationHandler {
     }
     
     func setNotificationActions() -> [UIMutableUserNotificationAction]  {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let time = userDefaults.objectForKey("SnoozeTime") as! String
+        let deferAmount = getDeferString(time)
         
         let completeAction = UIMutableUserNotificationAction()
         completeAction.identifier = "Complete"
@@ -36,7 +39,7 @@ class NotificationHandler {
         
         let deferAction = UIMutableUserNotificationAction()
         deferAction.identifier = "Defer"
-        deferAction.title = "+10 min"
+        deferAction.title = deferAmount
         deferAction.activationMode = UIUserNotificationActivationMode.Background
         deferAction.authenticationRequired = false
         deferAction.destructive = false
@@ -45,6 +48,24 @@ class NotificationHandler {
         
         return actions
     }
+    
+    func getDeferString(deferAmount: String) -> String {
+        switch deferAmount {
+        case "10 seconds":
+            return "+10s"
+        case "5 minutes":
+            return "+5m"
+        case "10 minutes":
+            return "+10m"
+        case "30 minutes":
+            return "+30m"
+        case "1 hour":
+            return "+1h"
+        default:
+            return "!!!"
+        }
+    }
+    
     
     func setNotificationCategories(actions : [UIMutableUserNotificationAction]) -> Set<UIMutableUserNotificationCategory>  {
         
@@ -84,10 +105,13 @@ class NotificationHandler {
     }
     
     func deferNotification() -> UILocalNotification {
-        let timeInterval: NSTimeInterval = 10
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let time = userDefaults.objectForKey("SnoozeTime") as! String
+        let deferAmount = getDeferAmount(time)
+        
         let localNotification = UILocalNotification()
         
-        localNotification.fireDate = NSDate(timeIntervalSinceNow: timeInterval)
+        localNotification.fireDate = NSDate(timeIntervalSinceNow: deferAmount)
         localNotification.repeatInterval = .Minute
         
         return localNotification

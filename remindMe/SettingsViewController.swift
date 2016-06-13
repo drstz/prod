@@ -14,6 +14,7 @@ class SettingsViewController: UITableViewController {
     var snoozeTime = ""
     
     @IBAction func snoozePickerDidPickSnoozeTime(segue: UIStoryboardSegue) {
+        print(#function)
         let controller = segue.sourceViewController as! SnoozePickerViewController
         snoozeTime = controller.selectedSnoozeTime
         
@@ -24,6 +25,7 @@ class SettingsViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
+        print(#function)
         super.viewDidLoad()
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
@@ -33,9 +35,11 @@ class SettingsViewController: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        print(#function)
         if segue.identifier == "PickSnoozeTime" {
             let controller = segue.destinationViewController as! SnoozePickerViewController
             controller.selectedSnoozeTime = snoozeTime
         }
     }
 }
+

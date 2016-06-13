@@ -47,7 +47,6 @@ func roundSecondsToZero(date: NSDate) -> NSDate {
     let calendar = NSCalendar.currentCalendar()
     let components = calendar.components([.Hour, .Minute], fromDate: date)
     let newDate = calendar.dateBySettingHour(components.hour, minute: components.minute, second: 0, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
-    // let newDate = calendar.dateBySettingUnit(.Second, value: 0, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
     print(newDate)
     return newDate!
 }
@@ -203,6 +202,25 @@ func recurringInterval(typeOfInterval: String) -> NSCalendarUnit {
         print("Error")
     }
     return calendarUnit
+    
+}
+
+func getDeferAmount(deferAmount: String) -> NSTimeInterval {
+    switch deferAmount {
+    case "10 seconds":
+        return 10
+    case "5 minutes":
+        return 60 * 5
+    case "10 minutes":
+        return 60 * 10
+    case "30 minutes":
+        return 60 * 30
+    case "1 hour":
+        return 60 * 60
+    default:
+        return 0
+    }
+    
     
 }
 

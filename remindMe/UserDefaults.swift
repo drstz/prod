@@ -7,6 +7,14 @@
 //
 
 import Foundation
+
+enum SnoozeDefaults {
+    case TenSeconds
+    case FiveMinutes
+    case TenMinutes
+    case ThirtyMinutes
+    case Hour
+}
     
 func registerDefaults() {
     let dictionary = [
@@ -29,10 +37,24 @@ func isFirstTime() -> Bool {
     return false
 }
 
-func setDefaultSnoozeTime(snoozeTime: String) {
+func setDefaultSnoozeTime(snoozeTime: SnoozeDefaults) {
+    let snoozeDefault = choiceForSnoozeTime(snoozeTime)
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    userDefaults.setObject(snoozeTime, forKey: "SnoozeTime")
+    userDefaults.setObject(snoozeDefault, forKey: "SnoozeTime")
     userDefaults.synchronize()
 }
 
-
+func choiceForSnoozeTime(snoozeDefaults: SnoozeDefaults) -> String {
+    switch snoozeDefaults {
+    case .TenSeconds:
+        return "10 seconds"
+    case .FiveMinutes:
+        return "5 minutes"
+    case .TenMinutes:
+        return "10 minutes"
+    case .ThirtyMinutes:
+        return "30 minutes"
+    case .Hour:
+        return "1 hour"
+    }
+}

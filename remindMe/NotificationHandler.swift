@@ -105,25 +105,35 @@ class NotificationHandler {
     }
     
     func deferNotification() -> UILocalNotification {
+        
+        
         let userDefaults = NSUserDefaults.standardUserDefaults()
+        let autoSnoozeOn = userDefaults.boolForKey("AutoSnoozeEnabled")
         let time = userDefaults.objectForKey("SnoozeTime") as! String
         let deferAmount = getDeferAmount(time)
         
         let localNotification = UILocalNotification()
         
         localNotification.fireDate = NSDate(timeIntervalSinceNow: deferAmount)
-        localNotification.repeatInterval = .Minute
+        if autoSnoozeOn {
+            localNotification.repeatInterval = .Minute
+        }
+        
         
         return localNotification
     }
     
     func scheduleNotification(forDate date: NSDate) -> UILocalNotification {
-        // let timeInterval: NSTimeInterval = 10
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let autoSnoozeOn = userDefaults.boolForKey("AutoSnoozeEnabled")
+        
         let localNotification = UILocalNotification()
         let dueDate = date
 
         localNotification.fireDate = dueDate
-        localNotification.repeatInterval = .Minute
+        if autoSnoozeOn {
+            localNotification.repeatInterval = .Minute
+        }
         
         return localNotification
         

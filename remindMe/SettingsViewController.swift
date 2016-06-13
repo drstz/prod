@@ -10,6 +10,9 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
     @IBOutlet weak var snoozeTimeLabel: UILabel!
+    @IBOutlet weak var autoSnoozeSwitch: UISwitch!
+    
+    
     
     var snoozeTime = ""
     
@@ -24,12 +27,22 @@ class SettingsViewController: UITableViewController {
         snoozeTimeLabel.text = time
     }
     
+    @IBAction func setAutoSnoozeFromSwitch() {
+        let enabled = autoSnoozeSwitch.on
+        setAutoSnooze(enabled)
+    }
+    
+    
     override func viewDidLoad() {
         print(#function)
         super.viewDidLoad()
         
         let userDefaults = NSUserDefaults.standardUserDefaults()
         let time = userDefaults.objectForKey("SnoozeTime") as! String
+        let autoSnoozeOn = userDefaults.boolForKey("AutoSnoozeEnabled")
+        print(autoSnoozeOn)
+        
+        autoSnoozeSwitch.setOn(autoSnoozeOn, animated: false)
         snoozeTime = time
         snoozeTimeLabel.text = snoozeTime
     }

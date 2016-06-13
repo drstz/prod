@@ -20,6 +20,7 @@ func registerDefaults() {
     let dictionary = [
         "FirstTime": true,
         "SnoozeTime": "10 seconds",
+        "AutoSnoozeEnabled" : true,
         "AutoSnooze": "minute"
     ]
     
@@ -41,6 +42,12 @@ func setDefaultSnoozeTime(snoozeTime: SnoozeDefaults) {
     let snoozeDefault = choiceForSnoozeTime(snoozeTime)
     let userDefaults = NSUserDefaults.standardUserDefaults()
     userDefaults.setObject(snoozeDefault, forKey: "SnoozeTime")
+    userDefaults.synchronize()
+}
+
+func setAutoSnooze(enabled: Bool) {
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    userDefaults.setBool(enabled, forKey: "AutoSnoozeEnabled")
     userDefaults.synchronize()
 }
 

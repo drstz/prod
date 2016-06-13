@@ -10,11 +10,12 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
     @IBOutlet weak var snoozeTimeLabel: UILabel!
+    @IBOutlet weak var autoSnoozeLabel: UILabel!
+    
     @IBOutlet weak var autoSnoozeSwitch: UISwitch!
     
-    
-    
     var snoozeTime = ""
+    var autoSnoozeTime = ""
     
     @IBAction func snoozePickerDidPickSnoozeTime(segue: UIStoryboardSegue) {
         print(#function)
@@ -27,6 +28,17 @@ class SettingsViewController: UITableViewController {
         snoozeTimeLabel.text = time
     }
     
+    @IBAction func autoSnoozePickerDidPickAutoSnoozeTime(segue: UIStoryboardSegue) {
+        print(#function)
+        let controller = segue.sourceViewController as! AutoSnoozePickerViewController
+        autoSnoozeTime = controller.selectedAutoSnoozeTime
+        
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let time = userDefaults.objectForKey("AutoSnoozeTime") as! String
+        
+        autoSnoozeLabel.text = time
+    }
+    
     @IBAction func setAutoSnoozeFromSwitch() {
         let enabled = autoSnoozeSwitch.on
         setAutoSnooze(enabled)
@@ -37,14 +49,23 @@ class SettingsViewController: UITableViewController {
         print(#function)
         super.viewDidLoad()
         
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
         let userDefaults = NSUserDefaults.standardUserDefaults()
         let time = userDefaults.objectForKey("SnoozeTime") as! String
+        let anAutoSnoozeTime = userDefaults.objectForKey("AutoSnoozeTime") as! String
         let autoSnoozeOn = userDefaults.boolForKey("AutoSnoozeEnabled")
         print(autoSnoozeOn)
         
         autoSnoozeSwitch.setOn(autoSnoozeOn, animated: false)
         snoozeTime = time
-        snoozeTimeLabel.text = snoozeTime
+        autoSnoozeTime = anAutoSnoozeTime
+        print(anAutoSnoozeTime)
+        autoSnoozeLabel.text = "every " + autoSnoozeTime
+        snoozeTimeLabel.text = "for " + snoozeTime
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -52,6 +73,9 @@ class SettingsViewController: UITableViewController {
         if segue.identifier == "PickSnoozeTime" {
             let controller = segue.destinationViewController as! SnoozePickerViewController
             controller.selectedSnoozeTime = snoozeTime
+        } else if segue.identifier == "PickAutoSnoozeTime" {
+            let controller = segue.destinationViewController as! AutoSnoozePickerViewController
+            controller.selectedAutoSnoozeTime = autoSnoozeTime
         }
     }
 }

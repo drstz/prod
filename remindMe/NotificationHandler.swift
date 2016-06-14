@@ -88,20 +88,26 @@ class NotificationHandler {
         
         deleteReminderNotifications(reminder)
         
-        if isBeingDeferred {
-            print("Snoozing notification for \(reminder.name)")
-            localNotification = deferNotification()
+        let now = NSDate()
+        let earlierDate = reminder.dueDate.earlierDate(now)
+        
+        if earlierDate == now {
+            if isBeingDeferred {
+                print("Snoozing notification for \(reminder.name)")
+                localNotification = deferNotification()
+            } else {
+                print("Setting notification for \(reminder.name)")
+                localNotification = scheduleNotification(forDate: reminder.dueDate)
+            }
+            localNotification = setNotificationSettings(localNotification, reminder: reminder)
+            
+            UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+            
+            let numberOfNotifications = countAllNotifications()
+            print("Total of \(numberOfNotifications) notifications" )
         } else {
-            print("Setting notification for \(reminder.name)")
-            localNotification = scheduleNotification(forDate: reminder.dueDate)
+            print("No notification was set")
         }
-        
-        localNotification = setNotificationSettings(localNotification, reminder: reminder)
-        
-        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
-        
-        let numberOfNotifications = countAllNotifications()
-        print("Total of \(numberOfNotifications) notifications" )
     }
     
     func deferNotification() -> UILocalNotification {

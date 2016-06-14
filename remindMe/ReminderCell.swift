@@ -72,10 +72,20 @@ class ReminderCell: UITableViewCell {
         }
         let now = NSDate()
         let earlierDate = reminder.dueDate.earlierDate(now)
-        if earlierDate == reminder.dueDate && reminder.isComplete == false {
-            dayLabel.textColor = UIColor.redColor()
-            shortDateLabel.textColor = UIColor.redColor()
-            timeLabel.textColor = UIColor.redColor()
+        if earlierDate == reminder.dueDate{
+            if reminder.isComplete == false {
+                dayLabel.textColor = UIColor.redColor()
+                shortDateLabel.textColor = UIColor.redColor()
+                timeLabel.textColor = UIColor.redColor()
+            }
+            backgroundColor = UIColor(red: 174/255, green: 198/255, blue: 207/255, alpha: 0.3)
+            if reminder.isFavorite == true {
+                backgroundColor = UIColor(red: 1, green: 223/255, blue: 0, alpha: 0.3)
+            }
+        } else {
+            dayLabel.textColor = UIColor.blackColor()
+            shortDateLabel.textColor = UIColor.blackColor()
+            timeLabel.textColor = UIColor.blackColor()
         }
     }
     

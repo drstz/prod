@@ -434,9 +434,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             datePicker.setDate(date, animated: false)
         } else {
             let now = NSDate()
-            let nowWithDelay = now.dateByAddingTimeInterval(30*60)
-            
-            datePicker.setDate(nowWithDelay, animated: false)
+
+            datePicker.setDate(now, animated: false)
             
             selectedDate = datePicker.date
             dueDateIsSet = true

@@ -70,6 +70,13 @@ class ReminderCell: UITableViewCell {
         if reminder.isFavorite == true {
             backgroundColor = UIColor(red: 1, green: 223/255, blue: 0, alpha: 1)
         }
+        let now = NSDate()
+        let earlierDate = reminder.dueDate.earlierDate(now)
+        if earlierDate == reminder.dueDate && reminder.isComplete == false {
+            dayLabel.textColor = UIColor.redColor()
+            shortDateLabel.textColor = UIColor.redColor()
+            timeLabel.textColor = UIColor.redColor()
+        }
     }
     
     func recognizeLongPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {

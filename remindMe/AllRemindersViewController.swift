@@ -201,8 +201,8 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
             for indexPath in selectedIndexPaths {
                 let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                deleteReminder(reminder)
+                
+               deleteReminder(reminder, save: false)
             }
         }
         
@@ -214,7 +214,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
             for indexPath in selectedIndexPaths {
                 let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                let cell = tableView.cellForRowAtIndexPath(indexPath) as! ReminderCell
                 
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)
                 if reminder.isFavorite == false {
@@ -222,7 +221,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
                 } else {
                     reminder.setFavorite(false)
                 }
-                cell.configureColor(reminder)
             }
         }
         coreDataHandler.save()
@@ -409,16 +407,17 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         performSegueWithIdentifier("QuickView", sender: reminderFromNotification)
     }
 
-    func deleteReminder(reminder: Reminder) {
+    func deleteReminder(reminder: Reminder, save: Bool = true) {
+        print(#function)
         if coreDataHandler.fetchedResultsController.indexPathForObject(reminder) != nil {
-            let indexPath = coreDataHandler.fetchedResultsController.indexPathForObject(reminder)
-            let reminderToDelete = coreDataHandler.reminderFromIndexPath(indexPath!)
-            
             let reminderNotificationHandler = reminder.notificationHandler
             reminderNotificationHandler.deleteReminderNotifications(reminder)
             
-            coreDataHandler.delete(reminderToDelete)
-            coreDataHandler.save()
+            coreDataHandler.delete(reminder)
+            if save {
+                coreDataHandler.save()
+            }
+            
             
             setNumberOfReminders()
         }

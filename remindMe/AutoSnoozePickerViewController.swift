@@ -1,22 +1,19 @@
 //
-//  SnoozePickerViewController.swift
+//  AutoSnoozePickerViewController.swift
 //  remindMe
 //
-//  Created by Duane Stoltz on 07/06/2016.
+//  Created by Duane Stoltz on 13/06/2016.
 //  Copyright © 2016 Duane Stoltz. All rights reserved.
 //
 
 import UIKit
 
-class SnoozePickerViewController: UITableViewController {
-    var selectedSnoozeTimeIndex = 0
-    var selectedSnoozeTime = ""
+class AutoSnoozePickerViewController: UITableViewController {
+    var selectedAutoSnoozeTimeIndex = 0
+    var selectedAutoSnoozeTime = ""
     
-    let snoozeTime = [
-        "10 seconds",
-        "5 minutes",
-        "10 minutes",
-        "30 minutes",
+    let autoSnoozeTime = [
+        "1 minute",
         "1 hour"
     ]
     
@@ -25,8 +22,8 @@ class SnoozePickerViewController: UITableViewController {
     override func viewDidLoad() {
         print(#function)
         super.viewDidLoad()
-        for i in 0..<snoozeTime.count {
-            if snoozeTime[i] == selectedSnoozeTime {
+        for i in 0..<autoSnoozeTime.count {
+            if autoSnoozeTime[i] == selectedAutoSnoozeTime {
                 selectedIndexPath = NSIndexPath(forRow: i, inSection: 0)
                 break
             }
@@ -35,16 +32,16 @@ class SnoozePickerViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print(#function)
-        return snoozeTime.count
+        return autoSnoozeTime.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         print(#function)
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        let snoozeTime = self.snoozeTime[indexPath.row]
-        cell.textLabel!.text = snoozeTime
+        let autoSnoozeTime = self.autoSnoozeTime[indexPath.row]
+        cell.textLabel!.text = autoSnoozeTime
         
-        if snoozeTime == selectedSnoozeTime {
+        if autoSnoozeTime == selectedAutoSnoozeTime {
             cell.accessoryType = .Checkmark
         } else {
             cell.accessoryType = .None
@@ -70,21 +67,15 @@ class SnoozePickerViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         print(#function)
-        if segue.identifier == "PickedSnoozeTime" {
+        if segue.identifier == "PickedAutoSnoozeTime" {
             let cell = sender as! UITableViewCell
             if let indexPath = tableView.indexPathForCell(cell) {
-                selectedSnoozeTimeIndex = indexPath.row
-                switch selectedSnoozeTimeIndex {
+                selectedAutoSnoozeTimeIndex = indexPath.row
+                switch selectedAutoSnoozeTimeIndex {
                 case 0:
-                    setDefaultSnoozeTime(.TenSeconds)
+                    setDefaultAutoSnoozeTime(.Minute)
                 case 1:
-                    setDefaultSnoozeTime(.FiveMinutes)
-                case 2:
-                    setDefaultSnoozeTime(.TenMinutes)
-                case 3:
-                    setDefaultSnoozeTime(.ThirtyMinutes)
-                case 4:
-                    setDefaultSnoozeTime(.Hour)
+                    setDefaultAutoSnoozeTime(.Hour)
                 default:
                     break
                     
@@ -94,3 +85,4 @@ class SnoozePickerViewController: UITableViewController {
         }
     }
 }
+

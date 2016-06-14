@@ -25,6 +25,7 @@
 		71A788741CE6093700D5CE47 /* completeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A788731CE6093600D5CE47 /* completeButton.swift */; };
 		71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 71ABD7021CBF893300F0BF90 /* DataModel.xcdatamodeld */; };
 		71ABD70A1CC0A87600F0BF90 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ABD7091CC0A87600F0BF90 /* Date.swift */; };
+		71C3EFB01D0ED79A00A87525 /* AutoSnoozePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C3EFAF1D0ED79A00A87525 /* AutoSnoozePickerViewController.swift */; };
 		71D86C401D067929002A5CAE /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71D86C3E1D067929002A5CAE /* Settings.storyboard */; };
 		71D86C421D067BEB002A5CAE /* SnoozePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D86C411D067BEB002A5CAE /* SnoozePickerViewController.swift */; };
 		71F6A5361CF6C0FD0010C135 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F6A5351CF6C0FD0010C135 /* NotificationHandler.swift */; };
@@ -52,6 +53,7 @@
 		71A788731CE6093600D5CE47 /* completeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = completeButton.swift; sourceTree = "<group>"; };
 		71ABD7031CBF893300F0BF90 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		71ABD7091CC0A87600F0BF90 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Date.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		71C3EFAF1D0ED79A00A87525 /* AutoSnoozePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoSnoozePickerViewController.swift; sourceTree = "<group>"; };
 		71D86C3F1D067929002A5CAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		71D86C411D067BEB002A5CAE /* SnoozePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnoozePickerViewController.swift; sourceTree = "<group>"; };
 		71F6A5351CF6C0FD0010C135 /* NotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			children = (
 				7135B90C1D056E3D0021105F /* SettingsViewController.swift */,
 				71D86C411D067BEB002A5CAE /* SnoozePickerViewController.swift */,
+				71C3EFAF1D0ED79A00A87525 /* AutoSnoozePickerViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				7165A57E1CBB6A310088EA76 /* AllRemindersViewController.swift in Sources */,
 				71D86C421D067BEB002A5CAE /* SnoozePickerViewController.swift in Sources */,
 				71F6A5381CF6ECDE0010C135 /* CoreDataHandler.swift in Sources */,
+				71C3EFB01D0ED79A00A87525 /* AutoSnoozePickerViewController.swift in Sources */,
 				71A7884E1CE5B57400D5CE47 /* QuickViewViewController.swift in Sources */,
 				714CB6B51CCBA00E00723399 /* List+CoreDataProperties.swift in Sources */,
 				71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */,

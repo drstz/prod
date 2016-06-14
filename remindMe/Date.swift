@@ -45,7 +45,8 @@ func addRecurringDate(delayAmount: Int, delayType : String, date: NSDate) -> NSD
 
 func roundSecondsToZero(date: NSDate) -> NSDate {
     let calendar = NSCalendar.currentCalendar()
-    let newDate = calendar.dateBySettingUnit(.Second, value: 0, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
+    let components = calendar.components([.Hour, .Minute], fromDate: date)
+    let newDate = calendar.dateBySettingHour(components.hour, minute: components.minute, second: 0, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
     print(newDate)
     return newDate!
 }
@@ -53,6 +54,12 @@ func roundSecondsToZero(date: NSDate) -> NSDate {
 func midnight(date: NSDate) -> NSDate {
     let calendar = NSCalendar.currentCalendar()
     let newDate = calendar.dateBySettingHour(23, minute: 59, second: 59, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
+    return newDate!
+}
+
+func startOfDay(date: NSDate) -> NSDate {
+    let calendar = NSCalendar.currentCalendar()
+    let newDate = calendar.dateBySettingHour(0, minute: 0, second: 0, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
     return newDate!
 }
 
@@ -97,8 +104,10 @@ func convertDateToString(dateToConvert date: NSDate) -> String {
 
 func convertDateToString(format: DateFormats, date: NSDate) -> String {
     let now = NSDate()
+    let firstHour = startOfDay(now)
     let mNight = midnight(now)
     let earlierDate = date.earlierDate(mNight)
+    let earlierBetweenMorningAndDate = firstHour.earlierDate(date)
     let formatter = NSDateFormatter()
     var dateFormat = ""
     formatter.locale = NSLocale(localeIdentifier: preferredLanguage)
@@ -118,7 +127,11 @@ func convertDateToString(format: DateFormats, date: NSDate) -> String {
     
     if format == .Day {
         if earlierDate == date {
-            return "Today"
+            if earlierBetweenMorningAndDate == firstHour {
+                return "Today"
+            } else {
+                return formatter.stringFromDate(date)
+            }
         } else if earlierDate == mNight {
             let earlyDate = date.earlierDate(tomorrowMidnight())
             if earlyDate == date {
@@ -189,6 +202,25 @@ func recurringInterval(typeOfInterval: String) -> NSCalendarUnit {
         print("Error")
     }
     return calendarUnit
+    
+}
+
+func getDeferAmount(deferAmount: String) -> NSTimeInterval {
+    switch deferAmount {
+    case "10 seconds":
+        return 10
+    case "5 minutes":
+        return 60 * 5
+    case "10 minutes":
+        return 60 * 10
+    case "30 minutes":
+        return 60 * 30
+    case "1 hour":
+        return 60 * 60
+    default:
+        return 0
+    }
+    
     
 }
 

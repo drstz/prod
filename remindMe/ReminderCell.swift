@@ -29,6 +29,15 @@ class ReminderCell: UITableViewCell {
     var longPress: UILongPressGestureRecognizer!
     var wasSelected = false
     
+    let favoriteColor = UIColor(red: 1, green: 223/255, blue: 0, alpha: 1)
+    let favoriteColorDimmed = UIColor(red: 1, green: 223/255, blue: 0, alpha: 0.3)
+    
+    let cellBackgroundColor = UIColor(red: 64/255, green: 224/255, blue: 208/255, alpha: 1)
+    let cellBackgroundColorDimmed = UIColor(red: 64/255, green: 224/255, blue: 208/255, alpha: 0.3)
+    
+    let lateColor = UIColor.redColor()
+    let normalTextColor = UIColor.blackColor()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -45,47 +54,64 @@ class ReminderCell: UITableViewCell {
     }
     
     func configureForReminder(reminder: Reminder) {
-        configureLabels(reminder)
-        configureColor(reminder)
+        let isLate = reminderIsLate(reminder.dueDate)
+        let isFavorite = reminder.isFavorite as! Bool
+        let isComplete = reminder.isComplete as Bool
+        
+        configureLabels(reminder.name, dueDate: reminder.dueDate, nextDate: reminder.nextDueDate, frequency: reminder.everyAmount as? Int, interval: reminder.typeOfInterval)
+        configureBackgroundColors(isFavorite, isLate: isLate)
+        configureLabelColors(isComplete, isLate: isLate)
     }
     
-    func configureLabels(reminder: Reminder) {
-        reminderLabel.text = "\(reminder.name)"
-        dayLabel.text = convertDateToString(.Day, date: reminder.dueDate)
-        timeLabel.text = convertDateToString(.Time, date: reminder.dueDate)
-        shortDateLabel.text = convertDateToString(.ShortDate, date: reminder.dueDate)
-        if reminder.nextDueDate != nil {
-            if reminder.everyAmount! != 1 {
-                nextDueDate.text = "Every " + "\(reminder.everyAmount!) " + "\(reminder.typeOfInterval!)" + "s"
+    func reminderIsLate(dueDate: NSDate) -> Bool {
+        let now = NSDate()
+        let earlierDate = dueDate.earlierDate(now)
+        
+        return earlierDate == dueDate
+    }
+    
+    func configureLabels(name: String, dueDate: NSDate, nextDate: NSDate?, frequency: Int?, interval: String?) {
+        reminderLabel.text = name
+        dayLabel.text = convertDateToString(.Day, date: dueDate)
+        timeLabel.text = convertDateToString(.Time, date: dueDate)
+        shortDateLabel.text = convertDateToString(.ShortDate, date: dueDate)
+        
+        if nextDate != nil {
+            if frequency != 1 {
+                nextDueDate.text = "Every " + "\(frequency) " + "\(interval)" + "s"
             } else {
-                nextDueDate.text = "Every " + "\(reminder.typeOfInterval!)"
+                nextDueDate.text = "Every " + "\(interval)"
             }
         } else {
             nextDueDate.text = "Never"
         }
     }
     
-    func configureColor(reminder: Reminder) {
-        backgroundColor = UIColor(red: 174/255, green: 198/255, blue: 207/255, alpha: 1)
-        if reminder.isFavorite == true {
-            backgroundColor = UIColor(red: 1, green: 223/255, blue: 0, alpha: 1)
-        }
-        let now = NSDate()
-        let earlierDate = reminder.dueDate.earlierDate(now)
-        if earlierDate == reminder.dueDate{
-            if reminder.isComplete == false {
-                dayLabel.textColor = UIColor.redColor()
-                shortDateLabel.textColor = UIColor.redColor()
-                timeLabel.textColor = UIColor.redColor()
-            }
-            backgroundColor = UIColor(red: 174/255, green: 198/255, blue: 207/255, alpha: 0.3)
-            if reminder.isFavorite == true {
-                backgroundColor = UIColor(red: 1, green: 223/255, blue: 0, alpha: 0.3)
+    func configureBackgroundColors(isFavorite: Bool, isLate: Bool) {
+        if isFavorite == true {
+            if isLate {
+                backgroundColor = favoriteColorDimmed
+            } else {
+                backgroundColor = favoriteColor
             }
         } else {
-            dayLabel.textColor = UIColor.blackColor()
-            shortDateLabel.textColor = UIColor.blackColor()
-            timeLabel.textColor = UIColor.blackColor()
+            if isLate {
+                backgroundColor = cellBackgroundColorDimmed
+            } else {
+                 backgroundColor = cellBackgroundColor
+            }
+        }
+    }
+    
+    func configureLabelColors(isComplete: Bool, isLate: Bool) {
+        if isComplete || !isLate {
+            dayLabel.textColor = normalTextColor
+            shortDateLabel.textColor = normalTextColor
+            timeLabel.textColor = normalTextColor
+        } else {
+            dayLabel.textColor = lateColor
+            shortDateLabel.textColor = lateColor
+            timeLabel.textColor = lateColor
         }
     }
     

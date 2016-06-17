@@ -26,7 +26,8 @@ func registerDefaults() {
         "FirstTime": true,
         "SnoozeTime": "10 seconds",
         "AutoSnoozeEnabled" : true,
-        "AutoSnoozeTime": "1 minute"
+        "AutoSnoozeTime": "1 minute",
+        "SelectedTab" : 1
     ]
     NSUserDefaults.standardUserDefaults().registerDefaults(dictionary)
 }
@@ -60,6 +61,16 @@ func setDefaultAutoSnoozeTime(autoSnoozeTime: AutoSnoozeDefaults) {
     let userDefaults = NSUserDefaults.standardUserDefaults()
     userDefaults.setObject(autoSnoozeDefault, forKey: "AutoSnoozeTime")
     userDefaults.synchronize()
+}
+
+func saveSelectedTab(selectedTabIndex: Int) {
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    userDefaults.setInteger(selectedTabIndex, forKey: "SelectedTab")
+}
+
+func getSavedTab() -> Int {
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    return userDefaults.integerForKey("SelectedTab")
 }
 
 func choiceForSnoozeTime(snoozeDefaults: SnoozeDefaults) -> String {

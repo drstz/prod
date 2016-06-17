@@ -17,13 +17,11 @@ protocol ReminderCellBackGroundDelegate: class {
     func changeBackgroundColor(color: UIColor)
 }
 
-
 class ReminderCell: UITableViewCell {
     
     @IBOutlet weak var reminderLabel: UILabel!
     
     @IBOutlet weak var dayLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var shortDateLabel: UILabel!
     @IBOutlet weak var nextDueDate: UILabel!
@@ -46,12 +44,16 @@ class ReminderCell: UITableViewCell {
     let lateColor = UIColor.redColor()
     let normalTextColor = UIColor.whiteColor()
     
+    let selectionColor = UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1)
+    
+    let cornerRadius: CGFloat = 5
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = UIColor.clearColor()
-        reminderBackgroundView.layer.cornerRadius = 5
-        reminderSelectionView.layer.cornerRadius = 5
+        reminderBackgroundView.layer.cornerRadius = cornerRadius
+        reminderSelectionView.layer.cornerRadius = cornerRadius
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(recognizeLongPress))
         self.addGestureRecognizer(longPress)
         selectionStyle = .None
@@ -63,7 +65,7 @@ class ReminderCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         print(#function)
         if self.selected {
-            reminderSelectionView?.backgroundColor = UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1)
+            reminderSelectionView?.backgroundColor = selectionColor
         } else {
             reminderSelectionView?.backgroundColor = UIColor.clearColor()
         }
@@ -87,6 +89,10 @@ class ReminderCell: UITableViewCell {
     }
     
     func configureLabels(name: String, dueDate: NSDate, nextDate: NSDate?, frequency: Int?, interval: String?) {
+        let frequencyAsPlural = "Every " + "\(frequency) " + "\(interval)" + "s"
+        let frequencyAsSingular = "Every " + "\(interval)"
+        let neverRepeats = "Never"
+        
         reminderLabel.text = name
         dayLabel.text = convertDateToString(.Day, date: dueDate)
         timeLabel.text = convertDateToString(.Time, date: dueDate)
@@ -94,12 +100,12 @@ class ReminderCell: UITableViewCell {
         
         if nextDate != nil {
             if frequency != 1 {
-                nextDueDate.text = "Every " + "\(frequency) " + "\(interval)" + "s"
+                nextDueDate.text = frequencyAsPlural
             } else {
-                nextDueDate.text = "Every " + "\(interval)"
+                nextDueDate.text = frequencyAsSingular
             }
         } else {
-            nextDueDate.text = "Never"
+            nextDueDate.text = neverRepeats
         }
     }
     

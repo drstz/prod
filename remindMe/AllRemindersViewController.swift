@@ -58,14 +58,10 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     // MARK: - IBActions
     
     @IBAction func changeSegment() {
-       
         setUpCoreData()
         loadCell()
         tableView.reloadData()
-        setNumberOfReminders()
         clearSelectedIndexPaths()
-    
-        
     }
     
     @IBAction func doneSettings(segue: UIStoryboardSegue) {
@@ -107,7 +103,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     
     func addReminderViewController(controller:AddReminderViewController,
                                    didFinishAddingReminder reminder: Reminder) {
-        setNumberOfReminders()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -119,8 +114,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     
     func addReminderViewController(controller: AddReminderViewController,
                                    didFinishEditingReminder reminder: Reminder) {
-        
-        setNumberOfReminders()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -173,7 +166,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         tableView.separatorColor = UIColor.clearColor()
         setUpCoreData()
         loadCell()
-        setNumberOfReminders()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
@@ -234,7 +226,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         
         setUpCoreData()
         loadCell()
-        setNumberOfReminders()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -348,19 +339,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
             
         }
     }
-    
-    func setNumberOfReminders() {
-        
-//        nbOfReminders = tableView.numberOfRowsInSection(0)
-//        
-//        if nbOfReminders > 1 || nbOfReminders == 0 {
-//            titleString = "You have \(nbOfReminders) reminders"
-//        } else {
-//            titleString = "You have \(nbOfReminders) reminder"
-//        }
-//        self.title = titleString
-        
-    }
         
     func completeButtonWasPressed(cell: ReminderCell) {
         let indexPath = tableView.indexPathForCell(cell)
@@ -368,7 +346,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         reminder.complete()
         
         coreDataHandler.save()
-        setNumberOfReminders()
     }
     
     // MARK: - REMINDERS
@@ -413,9 +390,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
             if save {
                 coreDataHandler.save()
             }
-            
-            
-            setNumberOfReminders()
         }
     }
 }
@@ -476,8 +450,6 @@ extension AllRemindersViewController: UITableViewDelegate {
         
         coreDataHandler.delete(reminder)
         coreDataHandler.save()
-        
-        setNumberOfReminders()
     }
     
 }
@@ -485,7 +457,6 @@ extension AllRemindersViewController: UITableViewDelegate {
 extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         tableView.beginUpdates()
-        setNumberOfReminders()
     }
     
     func controller(controller: NSFetchedResultsController,
@@ -516,8 +487,6 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         }
-        setNumberOfReminders()
-        
     }
     
     func controller(controller: NSFetchedResultsController,
@@ -541,12 +510,10 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
         case .Move:
             print("*** NSFetchedResultsChangeMove (section)")
         }
-        setNumberOfReminders()
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         print("*** controllerDidChangeContent")
-        setNumberOfReminders()
         tableView.endUpdates()
     }
 }

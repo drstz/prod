@@ -13,6 +13,10 @@ protocol ReminderCellDelegate: class {
     func cellWasLongPressed(cell: ReminderCell, longPress: UILongPressGestureRecognizer)
 }
 
+protocol ReminderCellBackGroundDelegate: class {
+    func changeBackgroundColor(color: UIColor)
+}
+
 
 class ReminderCell: UITableViewCell {
     
@@ -24,7 +28,11 @@ class ReminderCell: UITableViewCell {
     @IBOutlet weak var shortDateLabel: UILabel!
     @IBOutlet weak var nextDueDate: UILabel!
     
+    @IBOutlet weak var reminderBackgroundView: ReminderCellBackground!
+    @IBOutlet weak var reminderSelectionView: UIView!
+    
     weak var delegate : ReminderCellDelegate?
+    weak var backgroundDelegate: ReminderCellBackGroundDelegate?
     
     var longPress: UILongPressGestureRecognizer!
     var wasSelected = false
@@ -36,21 +44,29 @@ class ReminderCell: UITableViewCell {
     let cellBackgroundColorDimmed = UIColor(red: 64/255, green: 224/255, blue: 208/255, alpha: 0.3)
     
     let lateColor = UIColor.redColor()
-    let normalTextColor = UIColor.blackColor()
+    let normalTextColor = UIColor.whiteColor()
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        backgroundColor = UIColor.clearColor()
+        reminderBackgroundView.layer.cornerRadius = 5
+        reminderSelectionView.layer.cornerRadius = 5
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(recognizeLongPress))
         self.addGestureRecognizer(longPress)
-        self.selectionStyle = .Blue
+        selectionStyle = .None
+        backgroundDelegate = reminderBackgroundView
         // Initialization code
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        print(#function)
+        if self.selected {
+            reminderSelectionView?.backgroundColor = UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1)
+        } else {
+            reminderSelectionView?.backgroundColor = UIColor.clearColor()
+        }
     }
     
     func configureForReminder(reminder: Reminder) {
@@ -90,15 +106,15 @@ class ReminderCell: UITableViewCell {
     func configureBackgroundColors(isFavorite: Bool, isLate: Bool) {
         if isFavorite == true {
             if isLate {
-                backgroundColor = favoriteColorDimmed
+                backgroundDelegate?.changeBackgroundColor(favoriteColorDimmed)
             } else {
-                backgroundColor = favoriteColor
+                backgroundDelegate?.changeBackgroundColor(favoriteColor)
             }
         } else {
             if isLate {
-                backgroundColor = cellBackgroundColorDimmed
+                backgroundDelegate?.changeBackgroundColor(tintColor)
             } else {
-                 backgroundColor = cellBackgroundColor
+                backgroundDelegate?.changeBackgroundColor(tintColor)
             }
         }
     }

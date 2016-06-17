@@ -170,11 +170,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         print("--------------------")
         print("")
         super.viewDidLoad()
-        tableView.separatorColor = UIColor.blackColor()
-        tableView.separatorInset = UIEdgeInsetsMake(100, 0, 100, 0)
-        
-        
-        
+        tableView.separatorColor = UIColor.clearColor()
         setUpCoreData()
         loadCell()
         setNumberOfReminders()
@@ -470,9 +466,7 @@ extension AllRemindersViewController: UITableViewDelegate {
     }
     
     
-    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        return indexPath
-    }
+    
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         let reminder = coreDataHandler.reminderFromIndexPath(indexPath)

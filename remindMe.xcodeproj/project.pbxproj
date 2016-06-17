@@ -92,14 +92,6 @@
 			name = Reminder;
 			sourceTree = "<group>";
 		};
-		710D67D01CE38CC90007143B /* User Defaults */ = {
-			isa = PBXGroup;
-			children = (
-				71238DE01CD70AC100F9D706 /* UserDefaults.swift */,
-			);
-			name = "User Defaults";
-			sourceTree = "<group>";
-		};
 		71328A8B1CED9C78005A0D13 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,9 +103,10 @@
 		7135B90B1D056E030021105F /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				71C3EFAF1D0ED79A00A87525 /* AutoSnoozePickerViewController.swift */,
 				7135B90C1D056E3D0021105F /* SettingsViewController.swift */,
 				71D86C411D067BEB002A5CAE /* SnoozePickerViewController.swift */,
-				71C3EFAF1D0ED79A00A87525 /* AutoSnoozePickerViewController.swift */,
+				71238DE01CD70AC100F9D706 /* UserDefaults.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -131,8 +124,8 @@
 		714CB6B71CCBA01C00723399 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				71ABD7021CBF893300F0BF90 /* DataModel.xcdatamodeld */,
 				71F6A5371CF6ECDE0010C135 /* CoreDataHandler.swift */,
+				71ABD7021CBF893300F0BF90 /* DataModel.xcdatamodeld */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -169,7 +162,6 @@
 				71A7884C1CE5B54300D5CE47 /* Reminder View */,
 				7135B90B1D056E030021105F /* Settings */,
 				71D86C451D06A07D002A5CAE /* Tabs */,
-				710D67D01CE38CC90007143B /* User Defaults */,
 			);
 			path = remindMe;
 			sourceTree = "<group>";
@@ -177,8 +169,8 @@
 		71A7884C1CE5B54300D5CE47 /* Reminder View */ = {
 			isa = PBXGroup;
 			children = (
-				71A7884D1CE5B57400D5CE47 /* QuickViewViewController.swift */,
 				71A788731CE6093600D5CE47 /* completeButton.swift */,
+				71A7884D1CE5B57400D5CE47 /* QuickViewViewController.swift */,
 			);
 			name = "Reminder View";
 			sourceTree = "<group>";
@@ -195,8 +187,8 @@
 			isa = PBXGroup;
 			children = (
 				7165A5971CBB92C30088EA76 /* ReminderCell.swift */,
-				7165A5951CBB910B0088EA76 /* ReminderCell.xib */,
 				71DDE3B41D12908B0046F8DD /* ReminderCellBackground.swift */,
+				7165A5951CBB910B0088EA76 /* ReminderCell.xib */,
 			);
 			name = "Reminder Cell";
 			sourceTree = "<group>";

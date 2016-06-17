@@ -35,6 +35,8 @@ class ReminderCell: UITableViewCell {
     var longPress: UILongPressGestureRecognizer!
     var wasSelected = false
     
+    // MARK: Colors
+    
     let favoriteColor = UIColor(red: 1, green: 223/255, blue: 0, alpha: 1)
     let favoriteColorDimmed = UIColor(red: 1, green: 223/255, blue: 0, alpha: 0.3)
     
@@ -48,6 +50,7 @@ class ReminderCell: UITableViewCell {
     
     let cornerRadius: CGFloat = 5
     
+    // MARK: Methods
     
     override func awakeFromNib() {
         super.awakeFromNib()

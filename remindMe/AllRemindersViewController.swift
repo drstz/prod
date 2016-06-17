@@ -160,9 +160,8 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     
     override func viewDidLoad() {
         print(#function)
-        print("--------------------")
-        print("")
         super.viewDidLoad()
+        
         tableView.separatorColor = UIColor.clearColor()
         setUpCoreData()
         loadCell()
@@ -171,8 +170,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
     }
-    
-    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)

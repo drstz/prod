@@ -129,9 +129,9 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
             let completeText = "Complete"
             let favoriteText = "Favorite"
 
-            let complete = UIBarButtonItem.init(title: completeText, style: .Plain, target: self, action: #selector(tBarCompleteThisReminder))
-            let favorite = UIBarButtonItem.init(title: favoriteText, style: .Plain, target: self, action: #selector(tBarFavThisReminder))
-            let delete = UIBarButtonItem.init(title: "Delete", style: .Plain, target: self, action: #selector(tBarDeleteThisReminder))
+            let complete = UIBarButtonItem.init(title: completeText, style: .Plain, target: self, action: #selector(toolbarComplete))
+            let favorite = UIBarButtonItem.init(title: favoriteText, style: .Plain, target: self, action: #selector(toolbarFavorite))
+            let delete = UIBarButtonItem.init(title: "Delete", style: .Plain, target: self, action: #selector(toolbarDelete))
             let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             toolbarItems = [complete, spacer, delete, spacer, favorite]
             
@@ -172,48 +172,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
     }
     
-    func tBarCompleteThisReminder() {
-        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedIndexPaths {
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                reminder.complete()
-            }
-        }
-
-        coreDataHandler.save()
-        navigationController?.setToolbarHidden(true, animated: true)
-    }
     
-    func tBarDeleteThisReminder() {
-        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedIndexPaths {
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                
-               deleteReminder(reminder, save: false)
-            }
-        }
-        
-        coreDataHandler.save()
-        navigationController?.setToolbarHidden(true, animated: true)
-    }
-    
-    func tBarFavThisReminder() {
-        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedIndexPaths {
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                if reminder.isFavorite == false {
-                    reminder.setFavorite(true)
-                } else {
-                    reminder.setFavorite(false)
-                }
-            }
-        }
-        coreDataHandler.save()
-        navigationController?.setToolbarHidden(true, animated: true)
-    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -290,6 +249,50 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         coreDataHandler.fetchedResultsController.delegate = self
         coreDataHandler.performFetch()
         
+    }
+    
+    // MARK: Toolbar Actions
+    
+    func toolbarComplete() {
+        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
+            for indexPath in selectedIndexPaths {
+                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                reminder.complete()
+            }
+        }
+        
+        coreDataHandler.save()
+        navigationController?.setToolbarHidden(true, animated: true)
+    }
+    
+    func toolbarDelete() {
+        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
+            for indexPath in selectedIndexPaths {
+                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
+                deleteReminder(reminder, save: false)
+            }
+        }
+        
+        coreDataHandler.save()
+        navigationController?.setToolbarHidden(true, animated: true)
+    }
+    
+    func toolbarFavorite() {
+        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
+            for indexPath in selectedIndexPaths {
+                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
+                
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                if reminder.isFavorite == false {
+                    reminder.setFavorite(true)
+                } else {
+                    reminder.setFavorite(false)
+                }
+            }
+        }
+        coreDataHandler.save()
+        navigationController?.setToolbarHidden(true, animated: true)
     }
     
     // MARK: Segues

@@ -55,6 +55,8 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     
     var showingCompleteReminders = false
     
+    var upcomingTabNumber: Int?
+    
     // MARK: - IBActions
     
     @IBAction func changeSegment() {
@@ -69,6 +71,34 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     }
 
     // MARK: - Delegate Methods
+    
+    // MARK: TabBar
+    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        print("")
+        print(#function)
+        let selectedIndex = myTabBarController.selectedIndex
+        print("Selected tab is \(selectedIndex).")
+    }
+    
+    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+        print("")
+        print(#function)
+        let selectedIndex = myTabBarController.selectedIndex
+        print("Selected tab is \(selectedIndex).")
+        
+        let navigationController = viewController as! UINavigationController
+        let viewControllers = navigationController.viewControllers
+        let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
+        
+        let selectedViewControllerTab = allRemindersViewController.tabBarController?.selectedIndex
+        let selectedViewControllerTabItem = allRemindersViewController.tabBarController?.tabBar.selectedItem?.tag
+        print("Selected view controller's tab is \(selectedViewControllerTab).")
+        print("Selected view controller's tab  TAG is \(selectedViewControllerTabItem).")
+        
+
+        return true
+    }
     
     
     // MARK: Quick View
@@ -159,6 +189,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     // MARK: View
     
     override func viewDidLoad() {
+        print("")
         print(#function)
         super.viewDidLoad()
         
@@ -169,25 +200,43 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
+        
+        let selectedIndex = myTabBarController.selectedIndex
+        print("Selected tab is \(selectedIndex).")
     }
     
     override func viewWillAppear(animated: Bool) {
+        print("")
+        print(#function)
         super.viewWillAppear(animated)
+        
+        let selectedIndex = myTabBarController.selectedIndex
+        print("Selected tab is \(selectedIndex).")
     }
     
     override func viewDidAppear(animated: Bool) {
-        print("--------------------")
-        super.viewDidAppear(animated)
+        print("")
         print(#function)
-        
+        super.viewDidAppear(animated)
+    
         setUpCoreData()
         loadCell()
+        
+        let selectedIndex = myTabBarController.selectedIndex
+        print("Selected tab is \(selectedIndex).")
     }
     
+    
+    
     override func viewWillDisappear(animated: Bool) {
+        print("")
+        print(#function)
         super.viewWillDisappear(animated)
         
         clearSelectedIndexPaths()
+        let selectedIndex = myTabBarController.selectedIndex
+        print("Selected tab is \(selectedIndex).")
+        print(" - - - -")
     }
     
     func clearSelectedIndexPaths() {
@@ -219,10 +268,10 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         
         if segment == 0 {
             status = .Incomplete
-            print("Status for reminders is set to incomplete")
+            // print("Status for reminders is set to incomplete")
         } else {
             status = .Complete
-            print("Status for reminders is set to complete")
+            // print("Status for reminders is set to complete")
         }
        
         switch selectedIndex {

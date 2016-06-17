@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "remindMe/AllRemindersViewController.swift"
-            timestampString = "487838211.318979"
+            timestampString = "487846302.976874"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "560"
-            endingLineNumber = "560">
+            startingLineNumber = "609"
+            endingLineNumber = "609">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -34,11 +34,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "remindMe/AllRemindersViewController.swift"
-            timestampString = "487838211.318979"
+            timestampString = "487846302.976874"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "564"
-            endingLineNumber = "564">
+            startingLineNumber = "613"
+            endingLineNumber = "613">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -48,11 +48,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "remindMe/AllRemindersViewController.swift"
-            timestampString = "487838211.318979"
+            timestampString = "487846302.976874"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "565"
-            endingLineNumber = "565">
+            startingLineNumber = "614"
+            endingLineNumber = "614">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -62,11 +62,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "remindMe/AllRemindersViewController.swift"
-            timestampString = "487838211.318979"
+            timestampString = "487846302.976874"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "567"
-            endingLineNumber = "567">
+            startingLineNumber = "616"
+            endingLineNumber = "616">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -76,11 +76,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "remindMe/AllRemindersViewController.swift"
-            timestampString = "487838211.318979"
+            timestampString = "487846302.976874"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "566"
-            endingLineNumber = "566">
+            startingLineNumber = "615"
+            endingLineNumber = "615">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "remindMe/AllRemindersViewController.swift"
-            timestampString = "487838211.318979"
+            timestampString = "487846302.976874"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "527"
-            endingLineNumber = "527">
+            startingLineNumber = "576"
+            endingLineNumber = "576">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

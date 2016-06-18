@@ -31,7 +31,7 @@
         <scene sceneID="BHx-qb-Sh3">
             <objects>
                 <navigationController id="lB2-6B-RLm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Week" image="Week View-30" id="LSN-Dk-Cx6"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="Week" image="Week View-30" id="LSN-Dk-Cx6"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="RFW-e1-HYN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -48,7 +48,7 @@
         <scene sceneID="oEx-gD-f38">
             <objects>
                 <navigationController id="BTn-SY-CS2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="All" image="Infinity-30" id="Yd8-Y8-xeq"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="All" image="Infinity-30" id="Yd8-Y8-xeq"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="T8k-ES-3GV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -505,7 +505,7 @@
         <scene sceneID="nKZ-k5-Iej">
             <objects>
                 <navigationController id="AmV-vP-fCX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" systemItem="favorites" id="64u-6f-NDX"/>
+                    <tabBarItem key="tabBarItem" tag="3" title="" systemItem="favorites" id="64u-6f-NDX"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Dmv-IK-xID">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -547,7 +547,7 @@
         <image name="Week View-30" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ILD-KC-BtR"/>
+        <segue reference="lHw-Mo-mKb"/>
         <segue reference="v7Q-ZB-wc4"/>
     </inferredMetricsTieBreakers>
 </document>

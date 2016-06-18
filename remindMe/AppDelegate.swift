@@ -77,52 +77,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         registerDefaults()
         
         coreDataHandler.setObjectContext(managedObjectContext)
-        
+        let savedTab = getSavedTab()
+        print("Loaded to tab \(savedTab)")
         let tabBarController = window!.rootViewController as! UITabBarController
         let tabs = tabBarController.viewControllers!
-        print("There are \(tabs.count) tabs")
-        
-        for index in 0..<tabs.count {
-            let navigationController = tabs[index] as! UINavigationController
-            let viewControllers = navigationController.viewControllers
-            let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
-            allRemindersViewController.managedObjectContext = managedObjectContext
-            tabBarController.delegate = allRemindersViewController
-            allRemindersViewController.myTabBarController = tabBarController
-            
-            if isFirstTime() {
-                print("*** First time - Creating list")
-                let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as! List
-                list.numberOfReminders = 0
-                
-                do {
-                    try managedObjectContext.save()
-                    print("Saved List")
-                    print(list.numberOfReminders)
-                } catch {
-                    fatalCoreDataError(error)
-                }
-                allRemindersViewController.list = list
-                
-            } else {
-                print("*** Fetching list")
-                let fetchRequest = NSFetchRequest()
-                let entityDescription = NSEntityDescription.entityForName("List", inManagedObjectContext: managedObjectContext)
-                
-                fetchRequest.entity = entityDescription
-                
-                do {
-                    let result = try managedObjectContext.executeFetchRequest(fetchRequest)
-                    let list = result[0] as! NSManagedObject as! List
-                    print(list.numberOfReminders)
-                    allRemindersViewController.list = list
-                } catch {
-                    let fetchError = error as NSError
-                    print(fetchError)
-                }
+        let tabItems = tabBarController.tabBar.items
+        var selectedTab: UITabBarItem?
+        for tabItem in tabItems! {
+            if tabItem.tag == savedTab {
+                print(tabItem.tag)
+                selectedTab = tabItem
             }
         }
+        let navigationController = tabs[savedTab] as! UINavigationController
+        let viewControllers = navigationController.viewControllers
+        let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
+        allRemindersViewController.managedObjectContext = managedObjectContext
+        tabBarController.delegate = allRemindersViewController
+        allRemindersViewController.myTabBarController = tabBarController
+        
+        if isFirstTime() {
+            setUpFirstTime(allRemindersViewController)
+        } else {
+            loadList(allRemindersViewController)
+        }
+        
+        tabBarController.selectedIndex = savedTab
+        
         return true
+    }
+    
+    func setUpFirstTime(allRemindersViewController: AllRemindersViewController) {
+        print("*** First time - Creating list")
+        let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as! List
+        list.numberOfReminders = 0
+        
+        do {
+            try managedObjectContext.save()
+            print("Saved List")
+            print(list.numberOfReminders)
+        } catch {
+            fatalCoreDataError(error)
+        }
+        allRemindersViewController.list = list
+    }
+    
+    func loadList(allRemindersViewController: AllRemindersViewController) {
+        print("*** Fetching list")
+        let fetchRequest = NSFetchRequest()
+        let entityDescription = NSEntityDescription.entityForName("List", inManagedObjectContext: managedObjectContext)
+        
+        fetchRequest.entity = entityDescription
+        
+        do {
+            let result = try managedObjectContext.executeFetchRequest(fetchRequest)
+            let list = result[0] as! NSManagedObject as! List
+            print(list.numberOfReminders)
+            allRemindersViewController.list = list
+        } catch {
+            let fetchError = error as NSError
+            print(fetchError)
+        }
     }
     
     func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
@@ -161,15 +176,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func sendReminderToController(reminder: Reminder) {
         let tabBarController = window!.rootViewController as! UITabBarController
         let tabs = tabBarController.viewControllers!
+        let savedTab = getSavedTab()
         
-        for index in 0..<tabs.count {
-            let navigationController = tabs[index] as! UINavigationController
-            let viewControllers = navigationController.viewControllers
-            let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
-            allRemindersViewController.reminderFromNotification = reminder
-            
-            
-        }
+        
+        let navigationController = tabs[savedTab] as! UINavigationController
+        let viewControllers = navigationController.viewControllers
+        let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
+        allRemindersViewController.reminderFromNotification = reminder
     }
     
     func handleIncomingNotification(notification: UILocalNotification) {

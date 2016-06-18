@@ -15,8 +15,6 @@ protocol AllRemindersViewControllerDelegate: class {
                                                                    reminder: Reminder)
 }
 
-
-
 class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, AddReminderViewControllerDelegate, ReminderCellDelegate, QuickViewViewControllerDelegate {
     
     // MARK: - Outlets
@@ -31,6 +29,8 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     var fetchedResultsController: NSFetchedResultsController!
     
     var myTabBarController: UITabBarController!
+    
+    var sentMessage = "I came from nowhere"
 
     // MARK: - Delegates
     
@@ -55,17 +55,15 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     
     var showingCompleteReminders = false
     
+    var upcomingTabNumber: Int?
+    
     // MARK: - IBActions
     
     @IBAction func changeSegment() {
-       
         setUpCoreData()
         loadCell()
         tableView.reloadData()
-        setNumberOfReminders()
         clearSelectedIndexPaths()
-    
-        
     }
     
     @IBAction func doneSettings(segue: UIStoryboardSegue) {
@@ -73,6 +71,42 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     }
 
     // MARK: - Delegate Methods
+    
+    // MARK: TabBar
+    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        print("")
+        print(#function)
+        let selectedIndex = myTabBarController.selectedIndex
+        print("Selected tab is \(selectedIndex).")
+    }
+    
+    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+        print("")
+        print(#function)
+        let selectedIndex = myTabBarController.selectedIndex
+        print("Selected tab is \(selectedIndex).")
+        
+        let navigationController = viewController as! UINavigationController
+        let viewControllers = navigationController.viewControllers
+        let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
+        
+        let selectedViewControllerTab = allRemindersViewController.tabBarController?.selectedIndex
+        let selectedViewControllerTag = allRemindersViewController.tabBarController?.tabBar.selectedItem?.tag
+        
+        
+        allRemindersViewController.sentMessage = "I came from tab \(selectedIndex)"
+        
+        allRemindersViewController.managedObjectContext = managedObjectContext
+        allRemindersViewController.list = list
+        tabBarController.delegate = allRemindersViewController
+        allRemindersViewController.myTabBarController = tabBarController
+        
+        print("Selected view controller's tab is \(selectedViewControllerTab).")
+        print("Selected view controller's tab  TAG is \(selectedViewControllerTag!).")
+
+        return true
+    }
     
     
     // MARK: Quick View
@@ -107,7 +141,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     
     func addReminderViewController(controller:AddReminderViewController,
                                    didFinishAddingReminder reminder: Reminder) {
-        setNumberOfReminders()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -119,8 +152,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     
     func addReminderViewController(controller: AddReminderViewController,
                                    didFinishEditingReminder reminder: Reminder) {
-        
-        setNumberOfReminders()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -136,9 +167,9 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
             let completeText = "Complete"
             let favoriteText = "Favorite"
 
-            let complete = UIBarButtonItem.init(title: completeText, style: .Plain, target: self, action: #selector(tBarCompleteThisReminder))
-            let favorite = UIBarButtonItem.init(title: favoriteText, style: .Plain, target: self, action: #selector(tBarFavThisReminder))
-            let delete = UIBarButtonItem.init(title: "Delete", style: .Plain, target: self, action: #selector(tBarDeleteThisReminder))
+            let complete = UIBarButtonItem.init(title: completeText, style: .Plain, target: self, action: #selector(toolbarComplete))
+            let favorite = UIBarButtonItem.init(title: favoriteText, style: .Plain, target: self, action: #selector(toolbarFavorite))
+            let delete = UIBarButtonItem.init(title: "Delete", style: .Plain, target: self, action: #selector(toolbarDelete))
             let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             toolbarItems = [complete, spacer, delete, spacer, favorite]
             
@@ -161,90 +192,68 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     
     deinit {
         fetchedResultsController.delegate = nil
+        print("All Reminders was deallocated")
     }
     
     // MARK: View
     
     override func viewDidLoad() {
-        print(#function)
-        print("--------------------")
         print("")
+        print(#function)
         super.viewDidLoad()
-        tableView.separatorColor = UIColor.blackColor()
-        tableView.separatorInset = UIEdgeInsetsMake(100, 0, 100, 0)
+       
         
+        tableView.separatorColor = UIColor.clearColor()
         
-        
+        let selectedIndex = myTabBarController.selectedIndex
+        print("Selected tab is \(selectedIndex).")
         setUpCoreData()
         loadCell()
-        setNumberOfReminders()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
-    }
-    
-    func tBarCompleteThisReminder() {
-        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedIndexPaths {
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                reminder.complete()
-            }
-        }
-
-        coreDataHandler.save()
-        navigationController?.setToolbarHidden(true, animated: true)
-    }
-    
-    func tBarDeleteThisReminder() {
-        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedIndexPaths {
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                
-               deleteReminder(reminder, save: false)
-            }
-        }
         
-        coreDataHandler.save()
-        navigationController?.setToolbarHidden(true, animated: true)
-    }
-    
-    func tBarFavThisReminder() {
-        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedIndexPaths {
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                if reminder.isFavorite == false {
-                    reminder.setFavorite(true)
-                } else {
-                    reminder.setFavorite(false)
-                }
-            }
-        }
-        coreDataHandler.save()
-        navigationController?.setToolbarHidden(true, animated: true)
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {
+        print("")
+        print(#function)
         super.viewWillAppear(animated)
+        
+        let selectedIndex = myTabBarController.selectedIndex
+        print("Selected tab is \(selectedIndex).")
     }
     
     override func viewDidAppear(animated: Bool) {
-        print("--------------------")
-        super.viewDidAppear(animated)
+        print("")
         print(#function)
-        
+        super.viewDidAppear(animated)
+    
         setUpCoreData()
         loadCell()
-        setNumberOfReminders()
+        
+        let selectedIndex = myTabBarController.selectedIndex
+        print("Selected tab is \(selectedIndex).")
+        print("Here comes the sent message: \(sentMessage)")
+        
+        saveSelectedTab(selectedIndex)
+        print(getSavedTab())
     }
     
+    
+    
     override func viewWillDisappear(animated: Bool) {
+        print("")
+        print(#function)
         super.viewWillDisappear(animated)
         
         clearSelectedIndexPaths()
+        let selectedIndex = myTabBarController.selectedIndex
+        print("Selected tab is \(selectedIndex).")
+        print(" - - - -")
     }
     
     func clearSelectedIndexPaths() {
@@ -276,10 +285,10 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         
         if segment == 0 {
             status = .Incomplete
-            print("Status for reminders is set to incomplete")
+            // print("Status for reminders is set to incomplete")
         } else {
             status = .Complete
-            print("Status for reminders is set to complete")
+            // print("Status for reminders is set to complete")
         }
        
         switch selectedIndex {
@@ -303,6 +312,50 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         coreDataHandler.fetchedResultsController.delegate = self
         coreDataHandler.performFetch()
         
+    }
+    
+    // MARK: Toolbar Actions
+    
+    func toolbarComplete() {
+        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
+            for indexPath in selectedIndexPaths {
+                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                reminder.complete()
+            }
+        }
+        
+        coreDataHandler.save()
+        navigationController?.setToolbarHidden(true, animated: true)
+    }
+    
+    func toolbarDelete() {
+        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
+            for indexPath in selectedIndexPaths {
+                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
+                deleteReminder(reminder, save: false)
+            }
+        }
+        
+        coreDataHandler.save()
+        navigationController?.setToolbarHidden(true, animated: true)
+    }
+    
+    func toolbarFavorite() {
+        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
+            for indexPath in selectedIndexPaths {
+                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
+                
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                if reminder.isFavorite == false {
+                    reminder.setFavorite(true)
+                } else {
+                    reminder.setFavorite(false)
+                }
+            }
+        }
+        coreDataHandler.save()
+        navigationController?.setToolbarHidden(true, animated: true)
     }
     
     // MARK: Segues
@@ -352,19 +405,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
             
         }
     }
-    
-    func setNumberOfReminders() {
-        
-//        nbOfReminders = tableView.numberOfRowsInSection(0)
-//        
-//        if nbOfReminders > 1 || nbOfReminders == 0 {
-//            titleString = "You have \(nbOfReminders) reminders"
-//        } else {
-//            titleString = "You have \(nbOfReminders) reminder"
-//        }
-//        self.title = titleString
-        
-    }
         
     func completeButtonWasPressed(cell: ReminderCell) {
         let indexPath = tableView.indexPathForCell(cell)
@@ -372,7 +412,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         reminder.complete()
         
         coreDataHandler.save()
-        setNumberOfReminders()
     }
     
     // MARK: - REMINDERS
@@ -417,9 +456,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
             if save {
                 coreDataHandler.save()
             }
-            
-            
-            setNumberOfReminders()
         }
     }
 }
@@ -470,9 +506,7 @@ extension AllRemindersViewController: UITableViewDelegate {
     }
     
     
-    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        return indexPath
-    }
+    
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
@@ -482,8 +516,6 @@ extension AllRemindersViewController: UITableViewDelegate {
         
         coreDataHandler.delete(reminder)
         coreDataHandler.save()
-        
-        setNumberOfReminders()
     }
     
 }
@@ -491,7 +523,6 @@ extension AllRemindersViewController: UITableViewDelegate {
 extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         tableView.beginUpdates()
-        setNumberOfReminders()
     }
     
     func controller(controller: NSFetchedResultsController,
@@ -522,8 +553,6 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         }
-        setNumberOfReminders()
-        
     }
     
     func controller(controller: NSFetchedResultsController,
@@ -547,12 +576,10 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
         case .Move:
             print("*** NSFetchedResultsChangeMove (section)")
         }
-        setNumberOfReminders()
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         print("*** controllerDidChangeContent")
-        setNumberOfReminders()
         tableView.endUpdates()
     }
 }

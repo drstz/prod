@@ -66,7 +66,6 @@ class NotificationHandler {
         }
     }
     
-    
     func setNotificationCategories(actions : [UIMutableUserNotificationAction]) -> Set<UIMutableUserNotificationCategory>  {
         
         let category = UIMutableUserNotificationCategory()

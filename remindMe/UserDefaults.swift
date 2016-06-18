@@ -27,7 +27,7 @@ func registerDefaults() {
         "SnoozeTime": "10 seconds",
         "AutoSnoozeEnabled" : true,
         "AutoSnoozeTime": "1 minute",
-        "SelectedTab" : 1
+        "SelectedTab" : 0
     ]
     NSUserDefaults.standardUserDefaults().registerDefaults(dictionary)
 }

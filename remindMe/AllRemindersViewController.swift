@@ -15,8 +15,6 @@ protocol AllRemindersViewControllerDelegate: class {
                                                                    reminder: Reminder)
 }
 
-
-
 class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, AddReminderViewControllerDelegate, ReminderCellDelegate, QuickViewViewControllerDelegate {
     
     // MARK: - Outlets
@@ -100,6 +98,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         allRemindersViewController.sentMessage = "I came from tab \(selectedIndex)"
         
         allRemindersViewController.managedObjectContext = managedObjectContext
+        allRemindersViewController.list = list
         tabBarController.delegate = allRemindersViewController
         allRemindersViewController.myTabBarController = tabBarController
         
@@ -193,6 +192,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     
     deinit {
         fetchedResultsController.delegate = nil
+        print("All Reminders was deallocated")
     }
     
     // MARK: View

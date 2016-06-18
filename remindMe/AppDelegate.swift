@@ -89,11 +89,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 selectedTab = tabItem
             }
         }
-        
-        print(selectedTab?.tag)
-        tabBarController.tabBar.selectedItem = selectedTab
-        
-        
         let navigationController = tabs[savedTab] as! UINavigationController
         let viewControllers = navigationController.viewControllers
         let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
@@ -106,6 +101,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             loadList(allRemindersViewController)
         }
+        
+        tabBarController.selectedIndex = savedTab
         
         return true
     }

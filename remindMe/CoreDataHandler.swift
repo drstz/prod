@@ -30,6 +30,12 @@ class CoreDataHandler {
     
     var fetchedResultsController: NSFetchedResultsController!
     
+    deinit {
+        print("")
+        print(#function)
+        print("Coredata handler was deallocated")
+    }
+    
     // MARK: - Methods
     
     func setObjectContext(mObjectContext : NSManagedObjectContext) {

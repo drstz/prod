@@ -12,6 +12,8 @@ import UIKit
 class NotificationHandler {
     
     deinit {
+        print("")
+        print(#function)
         print("Notification Handler was deallocated")
     }
     

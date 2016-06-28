@@ -64,13 +64,21 @@ func setDefaultAutoSnoozeTime(autoSnoozeTime: AutoSnoozeDefaults) {
 }
 
 func saveSelectedTab(selectedTabIndex: Int) {
+    print("")
+    print(#function)
     let userDefaults = NSUserDefaults.standardUserDefaults()
+    print("Going to save tab as tab #\(selectedTabIndex)")
     userDefaults.setInteger(selectedTabIndex, forKey: "SelectedTab")
+    
+    let savedTab = userDefaults.integerForKey("SelectedTab")
+    print("Tab was saved as tab #\(savedTab)")
 }
 
 func getSavedTab() -> Int {
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    return userDefaults.integerForKey("SelectedTab")
+    let savedTab = userDefaults.integerForKey("SelectedTab")
+    print("The saved tab is tab #\(savedTab)")
+    return savedTab
 }
 
 func choiceForSnoozeTime(snoozeDefaults: SnoozeDefaults) -> String {

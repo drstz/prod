@@ -337,53 +337,20 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bz9-7n-K33">
-                                <rect key="frame" x="0.0" y="400" width="600" height="200"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SDX-Ah-eUr">
-                                        <rect key="frame" x="0.0" y="150" width="600" height="50"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="I4e-OJ-DOu"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="22"/>
-                                        <state key="normal" title="Delete">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="deleteReminder" destination="Shj-iq-C6Z" eventType="touchUpInside" id="NKC-ha-l05"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s2b-pA-Jpa">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="150"/>
-                                        <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="600" id="O7C-wk-H8Y"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="27"/>
-                                        <state key="normal" title="Complete">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="completeReminder" destination="Shj-iq-C6Z" eventType="touchUpInside" id="UC4-1b-GZ4"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.015686274510000001" green="0.66274509800000003" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SDX-Ah-eUr">
+                                <rect key="frame" x="0.0" y="550" width="600" height="50"/>
+                                <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="SDX-Ah-eUr" firstAttribute="leading" secondItem="Bz9-7n-K33" secondAttribute="leading" id="Dxx-rv-0Bu"/>
-                                    <constraint firstItem="s2b-pA-Jpa" firstAttribute="leading" secondItem="Bz9-7n-K33" secondAttribute="leading" id="Ks2-dN-Wou"/>
-                                    <constraint firstItem="s2b-pA-Jpa" firstAttribute="leading" secondItem="Bz9-7n-K33" secondAttribute="leading" id="P2t-l9-EIB"/>
-                                    <constraint firstAttribute="trailing" secondItem="SDX-Ah-eUr" secondAttribute="trailing" id="QDF-f2-2H8"/>
-                                    <constraint firstItem="SDX-Ah-eUr" firstAttribute="top" secondItem="s2b-pA-Jpa" secondAttribute="bottom" id="RJN-4L-REs"/>
-                                    <constraint firstItem="s2b-pA-Jpa" firstAttribute="top" secondItem="Bz9-7n-K33" secondAttribute="top" id="cmg-9D-eHD"/>
-                                    <constraint firstAttribute="trailing" secondItem="s2b-pA-Jpa" secondAttribute="trailing" id="dGz-JI-tiV"/>
-                                    <constraint firstItem="s2b-pA-Jpa" firstAttribute="top" secondItem="Bz9-7n-K33" secondAttribute="top" id="fJQ-Bz-0YG"/>
-                                    <constraint firstItem="SDX-Ah-eUr" firstAttribute="top" secondItem="s2b-pA-Jpa" secondAttribute="bottom" id="lkP-jb-10w"/>
-                                    <constraint firstAttribute="bottom" secondItem="SDX-Ah-eUr" secondAttribute="bottom" id="wRS-fR-sfD"/>
-                                    <constraint firstAttribute="height" constant="200" id="xsa-aG-rXp"/>
+                                    <constraint firstAttribute="height" constant="50" id="Erl-qz-qmn"/>
                                 </constraints>
-                            </view>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="22"/>
+                                <state key="normal" title="Delete">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteReminder" destination="Shj-iq-C6Z" eventType="touchUpInside" id="NKC-ha-l05"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9oo-ZG-edg">
                                 <rect key="frame" x="20" y="133" width="560" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="33"/>
@@ -405,21 +372,38 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s2b-pA-Jpa">
+                                <rect key="frame" x="0.0" y="451" width="600" height="99"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="99" id="net-qp-uQO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="27"/>
+                                <state key="normal" title="Complete">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="completeReminder" destination="Shj-iq-C6Z" eventType="touchUpInside" id="UC4-1b-GZ4"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.58284711150000001" green="0.58225021430000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.094117647058823528" green="0.36862745098039218" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="9oo-ZG-edg" firstAttribute="trailing" secondItem="tVO-dH-n8V" secondAttribute="trailingMargin" id="B7J-MQ-Pxx"/>
                             <constraint firstItem="F9u-Z7-yBu" firstAttribute="trailing" secondItem="tVO-dH-n8V" secondAttribute="trailingMargin" id="Hzc-NJ-jIV"/>
                             <constraint firstItem="9oo-ZG-edg" firstAttribute="leading" secondItem="tVO-dH-n8V" secondAttribute="leadingMargin" id="L85-X7-e1e"/>
-                            <constraint firstAttribute="trailing" secondItem="Bz9-7n-K33" secondAttribute="trailing" id="byH-R0-UPt"/>
+                            <constraint firstItem="s2b-pA-Jpa" firstAttribute="leading" secondItem="tVO-dH-n8V" secondAttribute="leading" id="Mwr-A4-OES"/>
+                            <constraint firstAttribute="trailing" secondItem="SDX-Ah-eUr" secondAttribute="trailing" id="SjC-Mz-c6s"/>
+                            <constraint firstAttribute="trailing" secondItem="s2b-pA-Jpa" secondAttribute="trailing" id="aaS-Nn-Uyo"/>
                             <constraint firstItem="9oo-ZG-edg" firstAttribute="top" secondItem="F9u-Z7-yBu" secondAttribute="bottom" constant="21" id="dUc-ef-ygW"/>
+                            <constraint firstItem="KQz-I8-JfX" firstAttribute="top" secondItem="SDX-Ah-eUr" secondAttribute="bottom" id="eHC-r7-g7i"/>
                             <constraint firstItem="F9u-Z7-yBu" firstAttribute="top" secondItem="HCE-Xf-Qwf" secondAttribute="bottom" constant="8" id="fhd-si-NGH"/>
                             <constraint firstItem="zYB-Rf-a58" firstAttribute="leading" secondItem="tVO-dH-n8V" secondAttribute="leadingMargin" id="gMq-v0-68q"/>
+                            <constraint firstItem="SDX-Ah-eUr" firstAttribute="leading" secondItem="tVO-dH-n8V" secondAttribute="leading" id="jqM-Tn-xiT"/>
                             <constraint firstItem="zYB-Rf-a58" firstAttribute="trailing" secondItem="tVO-dH-n8V" secondAttribute="trailingMargin" id="jrp-Eq-bd8"/>
                             <constraint firstItem="F9u-Z7-yBu" firstAttribute="leading" secondItem="tVO-dH-n8V" secondAttribute="leadingMargin" id="kc1-KS-mAT"/>
-                            <constraint firstItem="Bz9-7n-K33" firstAttribute="leading" secondItem="tVO-dH-n8V" secondAttribute="leading" id="mby-8H-Wmf"/>
                             <constraint firstItem="ff3-OM-zLw" firstAttribute="top" secondItem="9oo-ZG-edg" secondAttribute="bottom" constant="8" id="o60-Wl-fYC"/>
-                            <constraint firstItem="KQz-I8-JfX" firstAttribute="top" secondItem="Bz9-7n-K33" secondAttribute="bottom" id="oDO-Lp-f9o"/>
+                            <constraint firstItem="SDX-Ah-eUr" firstAttribute="top" secondItem="s2b-pA-Jpa" secondAttribute="bottom" id="o9G-fd-3P5"/>
                             <constraint firstItem="zYB-Rf-a58" firstAttribute="top" secondItem="ff3-OM-zLw" secondAttribute="bottom" constant="8" id="rAa-j4-vwh"/>
                             <constraint firstItem="ff3-OM-zLw" firstAttribute="leading" secondItem="tVO-dH-n8V" secondAttribute="leadingMargin" id="tlg-9n-ruu"/>
                         </constraints>
@@ -547,7 +531,7 @@
         <image name="Week View-30" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lHw-Mo-mKb"/>
+        <segue reference="e1F-Pi-sXX"/>
         <segue reference="v7Q-ZB-wc4"/>
     </inferredMetricsTieBreakers>
 </document>

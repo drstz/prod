@@ -140,9 +140,8 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
     override func viewDidLoad() {
         print(#function)
         super.viewDidLoad()
+    
                 
-        
-        
         if let reminder = incomingReminder {
             updateLabels(with: reminder)
             setCompleteButton(with: reminder)
@@ -153,8 +152,6 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
         print(#function)
         super.viewDidAppear(animated)
     }
-    
-    
     
     func updateLabels(with reminder: Reminder) {
         reminderNameLabel.text = reminder.name

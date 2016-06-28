@@ -100,8 +100,6 @@ func convertDateToString(dateToConvert date: NSDate) -> String {
     return formatter.stringFromDate(date)
 }
 
-
-
 func convertDateToString(format: DateFormats, date: NSDate) -> String {
     let now = NSDate()
     let firstHour = startOfDay(now)

@@ -16,6 +16,8 @@ class Reminder: NSManagedObject {
     let notificationHandler = NotificationHandler()
     
     deinit {
+        print("")
+        print(#function)
         print("Reminder was deallocated")
     }
     

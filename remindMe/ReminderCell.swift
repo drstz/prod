@@ -40,10 +40,10 @@ class ReminderCell: UITableViewCell {
     let favoriteColor = UIColor(red: 1, green: 223/255, blue: 0, alpha: 1)
     let favoriteColorDimmed = UIColor(red: 1, green: 223/255, blue: 0, alpha: 0.3)
     
-    let cellBackgroundColor = UIColor(red: 64/255, green: 224/255, blue: 208/255, alpha: 1)
-    let cellBackgroundColorDimmed = UIColor(red: 64/255, green: 224/255, blue: 208/255, alpha: 0.3)
+    let cellBackgroundColor = UIColor.whiteColor()
+    let cellBackgroundColorDimmed = UIColor.whiteColor()
     
-    let lateColor = UIColor.redColor()
+    let lateColor = UIColor.whiteColor()
     let normalTextColor = UIColor.whiteColor()
     
     let selectionColor = UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1)
@@ -52,7 +52,15 @@ class ReminderCell: UITableViewCell {
     
     // MARK: Methods
     
+    deinit {
+        print("")
+        print(#function)
+    }
+    
     override func awakeFromNib() {
+        print("")
+        print(#function)
+        
         super.awakeFromNib()
         backgroundColor = UIColor.clearColor()
         reminderBackgroundView.layer.cornerRadius = cornerRadius

@@ -41,7 +41,8 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     var reminders = [Reminder]()
     var reminderFromNotification: Reminder? {
         didSet {
-            print("\"All reminders\" has reminder \"\(reminderFromNotification!.name)\"", separator:"", terminator: "\n")
+            print("Tab \(tabBarController?.selectedIndex) has reminder \"\(reminderFromNotification!.name)")
+            print("")
             delegate?.allRemindersViewControllerDelegateDidReceiveNotification(self, reminder: reminderFromNotification!)
         }
     }
@@ -60,6 +61,9 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     // MARK: - IBActions
     
     @IBAction func changeSegment() {
+        print("")
+        print(#function)
+        
         setUpCoreData()
         loadCell()
         tableView.reloadData()
@@ -201,8 +205,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         print("")
         print(#function)
         super.viewDidLoad()
-       
-        
+    
         tableView.separatorColor = UIColor.clearColor()
         
         let selectedIndex = myTabBarController.selectedIndex
@@ -213,9 +216,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
-        
-        
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -240,7 +240,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         print("Here comes the sent message: \(sentMessage)")
         
         saveSelectedTab(selectedIndex)
-        print(getSavedTab())
     }
     
     
@@ -253,7 +252,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         clearSelectedIndexPaths()
         let selectedIndex = myTabBarController.selectedIndex
         print("Selected tab is \(selectedIndex).")
-        print(" - - - -")
+        print("- - - -")
     }
     
     func clearSelectedIndexPaths() {
@@ -276,6 +275,9 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     }
     
     func setUpCoreData() {
+        print("")
+        print(#function)
+        
         coreDataHandler.setObjectContext(managedObjectContext)
         
         let selectedIndex = myTabBarController.selectedIndex

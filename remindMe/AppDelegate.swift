@@ -73,25 +73,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        print("")
         print(#function)
-        registerDefaults()
         
+        registerDefaults()
         coreDataHandler.setObjectContext(managedObjectContext)
+        
         let savedTab = getSavedTab()
         print("Loaded to tab \(savedTab)")
+        
         let tabBarController = window!.rootViewController as! UITabBarController
         let tabs = tabBarController.viewControllers!
-        let tabItems = tabBarController.tabBar.items
-        var selectedTab: UITabBarItem?
-        for tabItem in tabItems! {
-            if tabItem.tag == savedTab {
-                print(tabItem.tag)
-                selectedTab = tabItem
-            }
-        }
         let navigationController = tabs[savedTab] as! UINavigationController
         let viewControllers = navigationController.viewControllers
         let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
+        
         allRemindersViewController.managedObjectContext = managedObjectContext
         tabBarController.delegate = allRemindersViewController
         allRemindersViewController.myTabBarController = tabBarController
@@ -108,6 +104,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func setUpFirstTime(allRemindersViewController: AllRemindersViewController) {
+        print("")
+        print(#function)
+        
         print("*** First time - Creating list")
         let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as! List
         list.numberOfReminders = 0
@@ -115,7 +114,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do {
             try managedObjectContext.save()
             print("Saved List")
-            print(list.numberOfReminders)
         } catch {
             fatalCoreDataError(error)
         }
@@ -123,6 +121,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func loadList(allRemindersViewController: AllRemindersViewController) {
+        print("")
+        print(#function)
+        
         print("*** Fetching list")
         let fetchRequest = NSFetchRequest()
         let entityDescription = NSEntityDescription.entityForName("List", inManagedObjectContext: managedObjectContext)
@@ -132,7 +133,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do {
             let result = try managedObjectContext.executeFetchRequest(fetchRequest)
             let list = result[0] as! NSManagedObject as! List
-            print(list.numberOfReminders)
             allRemindersViewController.list = list
         } catch {
             let fetchError = error as NSError
@@ -141,14 +141,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+        print("")
+        print(#function)
         return true
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
+        print("")
+        print(#function)
         NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationWillResignActiveNotification, object: nil)
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
+        print("")
+        print(#function)
         if notificationWentOff {
             NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationWillEnterForegroundNotification, object: nil)
             notificationWentOff = false
@@ -159,6 +165,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      handleActionWithIdentifier identifier: String?,
                      forLocalNotification notification: UILocalNotification,
                      completionHandler: () -> Void) {
+        print("")
+        print(#function)
         
         handleIncomingNotification(notification)
         notificationHandler.handleActionInCategory(notification, actionIdentifier: identifier!)
@@ -167,6 +175,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        print("")
+        print(#function)
+        
         notificationWentOff = true
         
         handleIncomingNotification(notification)
@@ -174,6 +185,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func sendReminderToController(reminder: Reminder) {
+        print("")
+        print(#function)
+        
         let tabBarController = window!.rootViewController as! UITabBarController
         let tabs = tabBarController.viewControllers!
         let savedTab = getSavedTab()
@@ -186,6 +200,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func handleIncomingNotification(notification: UILocalNotification) {
+        print("")
+        print(#function)
+        
         let reminderID = notificationHandler.reminderID(notification)
         let reminder = coreDataHandler.getReminderWithID(reminderID, from: "Reminder")
         sendReminderToController(reminder!)

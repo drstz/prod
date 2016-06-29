@@ -28,6 +28,7 @@ class ReminderCell: UITableViewCell {
     
     @IBOutlet weak var reminderBackgroundView: ReminderCellBackground!
     @IBOutlet weak var reminderSelectionView: UIView!
+    @IBOutlet weak var reminderIsDueView: UIView!
     
     weak var delegate : ReminderCellDelegate?
     weak var backgroundDelegate: ReminderCellBackGroundDelegate?
@@ -65,6 +66,7 @@ class ReminderCell: UITableViewCell {
         backgroundColor = UIColor.clearColor()
         reminderBackgroundView.layer.cornerRadius = cornerRadius
         reminderSelectionView.layer.cornerRadius = cornerRadius
+        reminderIsDueView.layer.cornerRadius = 10
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(recognizeLongPress))
         self.addGestureRecognizer(longPress)
         selectionStyle = .None
@@ -123,13 +125,15 @@ class ReminderCell: UITableViewCell {
     func configureBackgroundColors(isFavorite: Bool, isLate: Bool) {
         if isFavorite == true {
             if isLate {
-                backgroundDelegate?.changeBackgroundColor(favoriteColorDimmed)
+                backgroundDelegate?.changeBackgroundColor(favoriteColor)
+                reminderIsDueView.backgroundColor = UIColor.redColor()
             } else {
                 backgroundDelegate?.changeBackgroundColor(favoriteColor)
             }
         } else {
             if isLate {
                 backgroundDelegate?.changeBackgroundColor(tintColor)
+                reminderIsDueView.backgroundColor = UIColor.redColor()
             } else {
                 backgroundDelegate?.changeBackgroundColor(tintColor)
             }

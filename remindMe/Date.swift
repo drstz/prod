@@ -57,6 +57,14 @@ func midnight(date: NSDate) -> NSDate {
     return newDate!
 }
 
+func addMinutes(minutes: Int, date: NSDate) -> NSDate {
+    let calendar = NSCalendar.currentCalendar()
+    let components = NSDateComponents()
+    components.setValue(minutes, forComponent: .Minute)
+    let newDate = calendar.dateByAddingComponents(components, toDate: date, options: NSCalendarOptions.init(rawValue: 0))
+    return newDate!
+}
+
 func startOfDay(date: NSDate) -> NSDate {
     let calendar = NSCalendar.currentCalendar()
     let newDate = calendar.dateBySettingHour(0, minute: 0, second: 0, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))

@@ -55,7 +55,7 @@ class ReminderCell: UITableViewCell {
     
     deinit {
         print("")
-        print(#function)
+        print("Reminder Cell was deallocated")
     }
     
     override func awakeFromNib() {
@@ -85,23 +85,18 @@ class ReminderCell: UITableViewCell {
     }
     
     func configureForReminder(reminder: Reminder) {
-        let isLate = reminderIsLate(reminder.dueDate)
+        print(#function)
+        let isDue = reminder.isDue()
         let isFavorite = reminder.isFavorite as! Bool
         let isComplete = reminder.isComplete as Bool
         
         configureLabels(reminder.name, dueDate: reminder.dueDate, nextDate: reminder.nextDueDate, frequency: reminder.everyAmount as? Int, interval: reminder.typeOfInterval)
-        configureBackgroundColors(isFavorite, isLate: isLate)
-        configureLabelColors(isComplete, isLate: isLate)
-    }
-    
-    func reminderIsLate(dueDate: NSDate) -> Bool {
-        let now = NSDate()
-        let earlierDate = dueDate.earlierDate(now)
-        
-        return earlierDate == dueDate
+        configureBackgroundColors(isFavorite, isLate: isDue)
+        configureLabelColors(isComplete, isLate: isDue)
     }
     
     func configureLabels(name: String, dueDate: NSDate, nextDate: NSDate?, frequency: Int?, interval: String?) {
+        print(#function)
         let frequencyAsPlural = "Every " + "\(frequency) " + "\(interval)" + "s"
         let frequencyAsSingular = "Every " + "\(interval)"
         let neverRepeats = "Never"
@@ -123,12 +118,14 @@ class ReminderCell: UITableViewCell {
     }
     
     func configureBackgroundColors(isFavorite: Bool, isLate: Bool) {
+        print(#function)
         if isFavorite == true {
             if isLate {
                 backgroundDelegate?.changeBackgroundColor(favoriteColor)
                 reminderIsDueView.backgroundColor = UIColor.redColor()
             } else {
                 backgroundDelegate?.changeBackgroundColor(favoriteColor)
+                reminderIsDueView.backgroundColor = UIColor.clearColor()
             }
         } else {
             if isLate {
@@ -136,11 +133,13 @@ class ReminderCell: UITableViewCell {
                 reminderIsDueView.backgroundColor = UIColor.redColor()
             } else {
                 backgroundDelegate?.changeBackgroundColor(tintColor)
+                reminderIsDueView.backgroundColor = UIColor.clearColor()
             }
         }
     }
     
     func configureLabelColors(isComplete: Bool, isLate: Bool) {
+        print(#function)
         if isComplete || !isLate {
             dayLabel.textColor = normalTextColor
             shortDateLabel.textColor = normalTextColor
@@ -153,6 +152,7 @@ class ReminderCell: UITableViewCell {
     }
     
     func recognizeLongPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        print(#function)
         longPress = longPressGestureRecognizer
         delegate?.cellWasLongPressed(self, longPress: longPress)
         

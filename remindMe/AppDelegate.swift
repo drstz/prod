@@ -70,10 +70,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     // MARK: - The Rest
-
+    
+    func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+        print(#function)
+        return true
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        print("")
         print(#function)
         
         registerDefaults()
@@ -100,11 +103,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         tabBarController.selectedIndex = savedTab
         
+        print("")
         return true
     }
     
     func setUpFirstTime(allRemindersViewController: AllRemindersViewController) {
-        print("")
         print(#function)
         
         print("*** First time - Creating list")
@@ -121,7 +124,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func loadList(allRemindersViewController: AllRemindersViewController) {
-        print("")
         print(#function)
         
         print("*** Fetching list")
@@ -140,12 +142,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
-        print("")
-        print(#function)
-        return true
-    }
-
+    
     func applicationDidEnterBackground(application: UIApplication) {
         print("")
         print(#function)
@@ -175,6 +172,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        // App must be running to recieve this event
         print("")
         print(#function)
         
@@ -185,7 +183,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func sendReminderToController(reminder: Reminder) {
-        print("")
         print(#function)
         
         let tabBarController = window!.rootViewController as! UITabBarController
@@ -200,7 +197,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func handleIncomingNotification(notification: UILocalNotification) {
-        print("")
         print(#function)
         
         let reminderID = notificationHandler.reminderID(notification)

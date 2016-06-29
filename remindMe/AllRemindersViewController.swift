@@ -125,8 +125,8 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     }
     
     func quickViewViewControllerDidSnooze(controller: QuickViewViewController, didSnoozeReminder reminder: Reminder) {
-        let reminderNotificationHandler = reminder.notificationHandler
-        reminderNotificationHandler.scheduleNotifications(reminder, snooze: true)
+        reminder.snooze()
+        coreDataHandler.save()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -202,7 +202,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     // MARK: View
     
     override func viewDidLoad() {
-        print("")
         print(#function)
         super.viewDidLoad()
     
@@ -210,8 +209,8 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         
         let selectedIndex = myTabBarController.selectedIndex
         print("Selected tab is \(selectedIndex).")
-        setUpCoreData()
-        loadCell()
+//        setUpCoreData()
+//        loadCell()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
@@ -219,9 +218,11 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     }
     
     override func viewWillAppear(animated: Bool) {
-        print("")
         print(#function)
         super.viewWillAppear(animated)
+        
+        setUpCoreData()
+        loadCell()
         
         let selectedIndex = myTabBarController.selectedIndex
         print("Selected tab is \(selectedIndex).")
@@ -240,19 +241,19 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         print("Here comes the sent message: \(sentMessage)")
         
         saveSelectedTab(selectedIndex)
+        print("")
     }
     
     
     
     override func viewWillDisappear(animated: Bool) {
-        print("")
         print(#function)
         super.viewWillDisappear(animated)
         
         clearSelectedIndexPaths()
         let selectedIndex = myTabBarController.selectedIndex
         print("Selected tab is \(selectedIndex).")
-        print("- - - -")
+        print("")
     }
     
     func clearSelectedIndexPaths() {
@@ -269,13 +270,13 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     }
     
     func loadCell() {
+        print(#function)
         let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
         tableView.rowHeight = 100
     }
     
     func setUpCoreData() {
-        print("")
         print(#function)
         
         coreDataHandler.setObjectContext(managedObjectContext)
@@ -391,10 +392,12 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
             delegate = controller
             
             if let reminder = sender as? Reminder {
+                // When coming from notification
                 controller.incomingReminder = reminder
                 controller.managedObjectContext = managedObjectContext
                 controller.notificationHasGoneOff = notificationHasGoneOff
             } else {
+                // When coming from list
                 if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
                     let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
                     controller.incomingReminder = reminder
@@ -438,11 +441,13 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         if let reminder = reminderFromNotification {
             reminder.snooze()
         }
+        coreDataHandler.save() 
     }
     
     func viewReminder() {
-        let reminderNotificationHandler = reminderFromNotification?.notificationHandler
-        reminderNotificationHandler?.deleteReminderNotifications(reminderFromNotification!)
+        print(#function)
+//        let reminderNotificationHandler = reminderFromNotification?.notificationHandler
+//        reminderNotificationHandler?.deleteReminderNotifications(reminderFromNotification!)
         notificationHasGoneOff = true
         
         performSegueWithIdentifier("QuickView", sender: reminderFromNotification)

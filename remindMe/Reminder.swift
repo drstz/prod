@@ -38,6 +38,8 @@ class Reminder: NSManagedObject {
     
     func snooze() {
         print("Going to snooze reminder")
+        let newDate = addMinutes(30, date: dueDate)
+        dueDate = newDate
         notificationHandler.scheduleNotifications(self, snooze: true)
     }
     
@@ -47,6 +49,14 @@ class Reminder: NSManagedObject {
         } else {
             return true
         }
+    }
+    
+    func isDue() -> Bool {
+        print(#function)
+        let now = NSDate()
+        let earlierDate = dueDate.earlierDate(now)
+        
+        return earlierDate == dueDate
     }
     
     func reminderIsComplete() -> Bool {

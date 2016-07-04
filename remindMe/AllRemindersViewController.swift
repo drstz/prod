@@ -429,29 +429,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     
     // MARK: Reminder Actions
     
-    func completeReminder() {
-        if let reminder = reminderFromNotification {
-            reminder.complete()
-        }
-        
-        coreDataHandler.save()
-    }
     
-    func deferReminder() {
-        if let reminder = reminderFromNotification {
-            reminder.snooze()
-        }
-        coreDataHandler.save() 
-    }
-    
-    func viewReminder() {
-        print(#function)
-//        let reminderNotificationHandler = reminderFromNotification?.notificationHandler
-//        reminderNotificationHandler?.deleteReminderNotifications(reminderFromNotification!)
-        notificationHasGoneOff = true
-        
-        performSegueWithIdentifier("QuickView", sender: reminderFromNotification)
-    }
 
     func deleteReminder(reminder: Reminder, save: Bool = true) {
         print(#function)
@@ -511,9 +489,6 @@ extension AllRemindersViewController: UITableViewDelegate {
         }
         
     }
-    
-    
-    
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         let reminder = coreDataHandler.reminderFromIndexPath(indexPath)

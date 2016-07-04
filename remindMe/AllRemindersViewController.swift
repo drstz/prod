@@ -22,6 +22,10 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
+    @IBOutlet weak var noReminderScreen: UIView!
+    
+    @IBOutlet weak var noReminderLabel: UILabel!
+    
     // MARK: - Coredata
     
     let coreDataHandler = CoreDataHandler()
@@ -75,6 +79,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         tableView.reloadData()
         clearSelectedIndexPaths()
         selectedSegment = segmentedControl.selectedSegmentIndex
+        setNoReminderView()
     }
     
     @IBAction func doneSettings(segue: UIStoryboardSegue) {
@@ -239,6 +244,9 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         print("Selected tab is \(selectedIndex).")
         
         segmentedControl.selectedSegmentIndex = selectedSegment
+        
+        
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -254,6 +262,9 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         print("Here comes the sent message: \(sentMessage)")
         
         saveSelectedTab(selectedIndex)
+        setNoReminderView()
+        
+        
         print("")
     }
     
@@ -328,6 +339,46 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         
         coreDataHandler.fetchedResultsController.delegate = self
         coreDataHandler.performFetch()
+        
+    }
+    
+    // MARK: Handle no reminders
+    
+    func setNoReminderView() {
+        if tableView.numberOfRowsInSection(0) == 0 {
+            print("There are no reminders")
+            noReminderScreen.hidden = false
+            setNoReminderLabel()
+        } else {
+            print("There are reminders")
+            noReminderScreen.hidden = true
+        }
+    }
+    
+    func setNoReminderLabel() {
+        var completedText = ""
+        var text = ""
+        
+        if selectedSegment == 0 {
+            completedText = "upcoming"
+        } else {
+            completedText = "completed"
+        }
+        if let selectedTabIndex = tabBarController?.selectedIndex {
+            switch selectedTabIndex {
+            case 0:
+                text = "No \(completedText) reminders for today"
+            case 1:
+                text = "No \(completedText) reminders for the week"
+            case 2:
+                text = "No \(completedText) reminders"
+            case 3:
+                text = "No \(completedText) favorites"
+            default:
+                text = "Error"
+            }
+            noReminderLabel.text = text
+        }
         
     }
     

@@ -69,6 +69,8 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         print("*** controllerDidChangeContent")
+        
         tableView.endUpdates()
+        setNoReminderView()
     }
 }

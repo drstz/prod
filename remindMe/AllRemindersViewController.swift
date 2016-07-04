@@ -22,16 +22,16 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
-    // MARK: - Core Date
+    // MARK: - Coredata
     
     let coreDataHandler = CoreDataHandler()
     var managedObjectContext: NSManagedObjectContext!
     var fetchedResultsController: NSFetchedResultsController!
     
+    // MARK: - Tabbar
+    
     var myTabBarController: UITabBarController!
     
-    var sentMessage = "I came from nowhere"
-
     // MARK: - Delegates
     
     weak var delegate: AllRemindersViewControllerDelegate?
@@ -57,6 +57,8 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     var showingCompleteReminders = false
     
     var upcomingTabNumber: Int?
+    
+    var sentMessage = "I came from nowhere"
     
     // MARK: - IBActions
     
@@ -159,7 +161,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // Cell
+    // MARK: Cell
     
     func cellWasLongPressed(cell: ReminderCell, longPress: UILongPressGestureRecognizer) {
         let indexPath = tableView.indexPathForCell(cell)
@@ -256,6 +258,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         print("")
     }
     
+    // MARK: Selection
     func clearSelectedIndexPaths() {
         if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
             for indexPath in selectedIndexPaths {
@@ -265,9 +268,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         navigationController?.setToolbarHidden(true, animated: true)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
+    // MARK: Cell
     
     func loadCell() {
         print(#function)
@@ -275,6 +276,8 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
         tableView.rowHeight = 100
     }
+    
+    // MARK: Coredata
     
     func setUpCoreData() {
         print(#function)
@@ -317,49 +320,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         
     }
     
-    // MARK: Toolbar Actions
     
-    func toolbarComplete() {
-        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedIndexPaths {
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                reminder.complete()
-            }
-        }
-        
-        coreDataHandler.save()
-        navigationController?.setToolbarHidden(true, animated: true)
-    }
-    
-    func toolbarDelete() {
-        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedIndexPaths {
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                deleteReminder(reminder, save: false)
-            }
-        }
-        
-        coreDataHandler.save()
-        navigationController?.setToolbarHidden(true, animated: true)
-    }
-    
-    func toolbarFavorite() {
-        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedIndexPaths {
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                if reminder.isFavorite == false {
-                    reminder.setFavorite(true)
-                } else {
-                    reminder.setFavorite(false)
-                }
-            }
-        }
-        coreDataHandler.save()
-        navigationController?.setToolbarHidden(true, animated: true)
-    }
     
     // MARK: Segues
     
@@ -444,125 +405,3 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         }
     }
 }
-
-// MARK: - Extensions
-
-extension AllRemindersViewController: UITableViewDataSource {
-    func tableView(tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int {
-        
-        let sectionInfo = coreDataHandler.fetchedResultsController.sections![section]
-        return sectionInfo.numberOfObjects
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as! ReminderCell
-
-        let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-        cell.configureForReminder(reminder)
-        
-        // Make this view controller the delegate of ReminderCell
-        cell.delegate = self
-        
-        return cell
-    }
-    
-}
-
-extension AllRemindersViewController: UITableViewDelegate {
-    // MARK: - Selection
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if navigationController?.toolbarHidden == true {
-            performSegueWithIdentifier("QuickView", sender: tableView.cellForRowAtIndexPath(indexPath))
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        }
-        let selectedIndexPathsCount = tableView.indexPathsForSelectedRows?.count
-        print("There are \(selectedIndexPathsCount) selected rows")
-    }
-    
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedIndexPathsCount = tableView.indexPathsForSelectedRows?.count
-        print("There are \(selectedIndexPathsCount) selected rows")
-        if selectedIndexPathsCount == nil {
-            navigationController?.setToolbarHidden(true, animated: true)
-        }
-        
-    }
-    
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-        
-        let reminderNotificationHandler = reminder.notificationHandler
-        reminderNotificationHandler.deleteReminderNotifications(reminder)
-        
-        coreDataHandler.delete(reminder)
-        coreDataHandler.save()
-    }
-    
-}
-
-extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        tableView.beginUpdates()
-    }
-    
-    func controller(controller: NSFetchedResultsController,
-                    didChangeObject anObject: AnyObject,
-                    atIndexPath indexPath: NSIndexPath?,
-                    forChangeType type: NSFetchedResultsChangeType,
-                    newIndexPath: NSIndexPath?) {
-        
-        switch type {
-        case .Insert:
-            print("*** NSFetchedResultsChangeInsert (object)")
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-            
-            
-        case .Delete:
-            print("*** NSFethedResultsChangeDelete (object)")
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            
-        case .Update:
-            print("*** NSFetchedResultsChangeUpdate (object")
-            if let cell = tableView.cellForRowAtIndexPath(indexPath!) as? ReminderCell {
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)
-                cell.configureForReminder(reminder)
-            }
-            
-        case .Move:
-            print("*** NSFetchedResultsChangeMove (object)")
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-        }
-    }
-    
-    func controller(controller: NSFetchedResultsController,
-                    didChangeSection sectionInfo: NSFetchedResultsSectionInfo,
-                    atIndex sectionIndex: Int,
-                    forChangeType type: NSFetchedResultsChangeType) {
-        switch type {
-        case .Insert:
-            print("*** NSFetchedResultsChangeInsert (section)")
-            tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-
-            
-        case .Delete:
-            print("*** NSFetchedResultsChangeDelete (section)")
-            tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-
-            
-        case .Update:
-            print("*** NSFetchedResultsChangeUpdate (section)")
-            
-        case .Move:
-            print("*** NSFetchedResultsChangeMove (section)")
-        }
-    }
-    
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        print("*** controllerDidChangeContent")
-        tableView.endUpdates()
-    }
-}
-

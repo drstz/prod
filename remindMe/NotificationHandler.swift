@@ -69,6 +69,7 @@ class NotificationHandler {
     }
     
     func setNotificationCategories(actions : [UIMutableUserNotificationAction]) -> Set<UIMutableUserNotificationCategory>  {
+        print(#function)
         
         let category = UIMutableUserNotificationCategory()
         
@@ -85,6 +86,7 @@ class NotificationHandler {
     // MARK: - Handling Notifications
     
     func scheduleNotifications(reminder: Reminder, snooze isBeingDeferred: Bool = false) {
+        print(#function)
         var localNotification = UILocalNotification()
         
         deleteReminderNotifications(reminder)
@@ -112,6 +114,7 @@ class NotificationHandler {
     }
     
     func deferNotification() -> UILocalNotification {
+        print(#function)
         let userDefaults = NSUserDefaults.standardUserDefaults()
         let time = userDefaults.objectForKey("SnoozeTime") as! String
         let deferAmount = getDeferAmount(time)
@@ -125,6 +128,7 @@ class NotificationHandler {
     }
     
     func scheduleNotification(forDate date: NSDate) -> UILocalNotification {
+        print(#function)
         let dueDate = date
         
         let localNotification = UILocalNotification()
@@ -137,6 +141,7 @@ class NotificationHandler {
     }
     
     func setAutoSnooze(notification: UILocalNotification) {
+        print(#function)
         let userDefaults = NSUserDefaults.standardUserDefaults()
         let autoSnoozeOn = userDefaults.boolForKey("AutoSnoozeEnabled")
         if autoSnoozeOn {

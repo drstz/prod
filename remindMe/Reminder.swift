@@ -37,9 +37,18 @@ class Reminder: NSManagedObject {
     
     func snooze() {
         print("Going to snooze reminder")
-        let newDate = addMinutes(30, date: dueDate)
-        dueDate = newDate
+        let newDate = calculateNewDate()
+        setDate(newDate)
+        
         notificationHandler.scheduleNotifications(self, snooze: true)
+    }
+    
+    func calculateNewDate() -> NSDate {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let time = userDefaults.objectForKey("SnoozeTime") as! String
+        let deferInterval = getDeferAmount(time)
+        
+        return NSDate(timeIntervalSinceNow: deferInterval)
     }
     
     func reminderIsRecurring() -> Bool {

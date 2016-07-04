@@ -4,7 +4,7 @@
 //
 //  Created by Duane Stoltz on 11/04/2016.
 //  Copyright © 2016 Duane Stoltz. All rights reserved.
-//
+// 
 
 import UIKit
 import Foundation
@@ -31,6 +31,10 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     // MARK: - Tabbar
     
     var myTabBarController: UITabBarController!
+    
+    // MARK: - Segment
+    
+    var selectedSegment = 0
     
     // MARK: - Delegates
     
@@ -70,6 +74,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         loadCell()
         tableView.reloadData()
         clearSelectedIndexPaths()
+        selectedSegment = segmentedControl.selectedSegmentIndex
     }
     
     @IBAction func doneSettings(segue: UIStoryboardSegue) {
@@ -107,6 +112,8 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         allRemindersViewController.list = list
         tabBarController.delegate = allRemindersViewController
         allRemindersViewController.myTabBarController = tabBarController
+        
+        allRemindersViewController.selectedSegment = selectedSegment
         
         print("Selected view controller's tab is \(selectedViewControllerTab).")
         print("Selected view controller's tab  TAG is \(selectedViewControllerTag!).")
@@ -217,6 +224,8 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -228,6 +237,8 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         
         let selectedIndex = myTabBarController.selectedIndex
         print("Selected tab is \(selectedIndex).")
+        
+        segmentedControl.selectedSegmentIndex = selectedSegment
     }
     
     override func viewDidAppear(animated: Bool) {

@@ -23,8 +23,7 @@ class Reminder: NSManagedObject {
     
     func complete() {
         print("Going to complete reminder")
-        
-        
+    
         if reminderIsRecurring() {
             let newDate = setNewDueDate()
             dueDate = newDate

@@ -112,43 +112,38 @@ class NotificationHandler {
     }
     
     func deferNotification() -> UILocalNotification {
-        
-        
         let userDefaults = NSUserDefaults.standardUserDefaults()
-        let autoSnoozeOn = userDefaults.boolForKey("AutoSnoozeEnabled")
         let time = userDefaults.objectForKey("SnoozeTime") as! String
-        let anInterval = userDefaults.objectForKey("AutoSnoozeTime") as! String
-        let repeatInterval = getRepeatInterval(anInterval)
         let deferAmount = getDeferAmount(time)
         
-        
         let localNotification = UILocalNotification()
-        
         localNotification.fireDate = NSDate(timeIntervalSinceNow: deferAmount)
-        if autoSnoozeOn {
-            localNotification.repeatInterval = repeatInterval
-        }
         
+        setAutoSnooze(localNotification)
         
         return localNotification
     }
     
     func scheduleNotification(forDate date: NSDate) -> UILocalNotification {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let autoSnoozeOn = userDefaults.boolForKey("AutoSnoozeEnabled")
-        
-        let anInterval = userDefaults.objectForKey("AutoSnoozeTime") as! String
-        let repeatInterval = getRepeatInterval(anInterval)
+        let dueDate = date
         
         let localNotification = UILocalNotification()
-        let dueDate = date
-
         localNotification.fireDate = dueDate
-        if autoSnoozeOn {
-            localNotification.repeatInterval = repeatInterval
-        }
+        
+        setAutoSnooze(localNotification)
         
         return localNotification
+        
+    }
+    
+    func setAutoSnooze(notification: UILocalNotification) {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let autoSnoozeOn = userDefaults.boolForKey("AutoSnoozeEnabled")
+        if autoSnoozeOn {
+            let anInterval = userDefaults.objectForKey("AutoSnoozeTime") as! String
+            let repeatInterval = getRepeatInterval(anInterval)
+            notification.repeatInterval = repeatInterval
+        }
         
     }
     

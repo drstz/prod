@@ -86,8 +86,6 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
     
     // Bottom Buttons
     
-    
-    
     @IBAction func completeReminder() {
         if let reminder = incomingReminder {
             if reminder.isComplete == true {
@@ -147,8 +145,7 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
         super.viewDidLoad()
         
         snoozeButton.layer.cornerRadius = 10
-    
-                
+
         if let reminder = incomingReminder {
             updateLabels(with: reminder)
             setCompleteButton(with: reminder)

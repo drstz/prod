@@ -35,6 +35,8 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
     @IBOutlet weak var completeButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     
+    @IBOutlet weak var snoozeButton: UIButton!
+    
     @IBOutlet weak var addToFavoritesButton: UIBarButtonItem!
     
     // MARK: - Delegates
@@ -132,6 +134,7 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
     // MARK: AllReminder
     
     func allRemindersViewControllerDelegateDidReceiveNotification(controller: AllRemindersViewController, reminder: Reminder) {
+        print("Quick View is recieving notification")
         
     }
     
@@ -140,12 +143,18 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
     override func viewDidLoad() {
         print(#function)
         super.viewDidLoad()
-    
-                
+        
+        snoozeButton.layer.cornerRadius = 10
+
         if let reminder = incomingReminder {
             updateLabels(with: reminder)
             setCompleteButton(with: reminder)
+            
+            if reminder.isDue() {
+                snoozeButton.hidden = false
+            }
         }
+        
     }
     
     override func viewDidAppear(animated: Bool) {

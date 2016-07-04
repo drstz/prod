@@ -81,13 +81,33 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="dCq-62-gOZ"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bsd-RS-vSF">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No reminders" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHh-K8-F3j">
+                                        <rect key="frame" x="249" y="233" width="103" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.67602093360000004" green="0.98907664029999998" blue="0.1412680456" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="centerY" secondItem="Bsd-RS-vSF" secondAttribute="centerY" id="Gu2-Ij-8OM"/>
+                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="centerX" secondItem="Bsd-RS-vSF" secondAttribute="centerX" id="Rlc-ae-XNF"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Bsd-RS-vSF" secondAttribute="bottom" id="8og-TV-RDC"/>
                             <constraint firstItem="izq-nV-FBg" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="EvJ-po-Cng"/>
                             <constraint firstItem="izq-nV-FBg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="MOg-IR-ZUf"/>
                             <constraint firstAttribute="trailing" secondItem="izq-nV-FBg" secondAttribute="trailing" id="T4G-fY-eJE"/>
+                            <constraint firstAttribute="trailing" secondItem="Bsd-RS-vSF" secondAttribute="trailing" id="n6Y-g2-4LB"/>
+                            <constraint firstItem="Bsd-RS-vSF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="oWY-Gd-nKR"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="izq-nV-FBg" secondAttribute="bottom" constant="-49" id="uTK-t8-59p"/>
+                            <constraint firstItem="Bsd-RS-vSF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="zOB-xs-Ava"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="n3W-EJ-gSN">
@@ -549,7 +569,7 @@
         <image name="Week View-30" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="XiK-Cj-5ub"/>
         <segue reference="e1F-Pi-sXX"/>
-        <segue reference="v7Q-ZB-wc4"/>
     </inferredMetricsTieBreakers>
 </document>

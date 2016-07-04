@@ -11,6 +11,7 @@ import Foundation
 extension AllRemindersViewController {
     
     func completeReminder() {
+        print(#function)
         if let reminder = reminderFromNotification {
             reminder.complete()
         }
@@ -19,6 +20,7 @@ extension AllRemindersViewController {
     }
     
     func deferReminder() {
+        print(#function)
         if let reminder = reminderFromNotification {
             reminder.snooze()
         }

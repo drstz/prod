@@ -89,14 +89,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     // MARK: - Delegate Methods
     
     // MARK: TabBar
-    
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-        print("")
-        print(#function)
-        let selectedIndex = myTabBarController.selectedIndex
-        print("Selected tab is \(selectedIndex).")
-    }
-    
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         print("")
         print(#function)
@@ -111,7 +103,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         let selectedViewControllerTag = allRemindersViewController.tabBarController?.tabBar.selectedItem?.tag
         
         
-        allRemindersViewController.sentMessage = "I came from tab \(selectedIndex)"
         
         allRemindersViewController.managedObjectContext = managedObjectContext
         allRemindersViewController.list = list
@@ -120,9 +111,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         
         allRemindersViewController.selectedSegment = selectedSegment
         
-        print("Selected view controller's tab is \(selectedViewControllerTab).")
-        print("Selected view controller's tab  TAG is \(selectedViewControllerTag!).")
-
         return true
     }
     
@@ -223,8 +211,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         
         let selectedIndex = myTabBarController.selectedIndex
         print("Selected tab is \(selectedIndex).")
-//        setUpCoreData()
-//        loadCell()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
@@ -236,6 +222,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     override func viewWillAppear(animated: Bool) {
         print(#function)
         super.viewWillAppear(animated)
+        
         
         setUpCoreData()
         loadCell()
@@ -254,16 +241,12 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         print(#function)
         super.viewDidAppear(animated)
     
-        setUpCoreData()
-        loadCell()
         
         let selectedIndex = myTabBarController.selectedIndex
         print("Selected tab is \(selectedIndex).")
-        print("Here comes the sent message: \(sentMessage)")
         
         saveSelectedTab(selectedIndex)
         setNoReminderView()
-        
         
         print("")
     }
@@ -446,7 +429,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     
     // MARK: Reminder list
     
-    func updateList() {        
         tableView.reloadData()
     }
     

@@ -59,8 +59,8 @@ class ReminderCell: UITableViewCell {
     }
     
     override func awakeFromNib() {
-        print("")
-        print(#function)
+//        print("")
+//        print(#function)
         
         super.awakeFromNib()
         backgroundColor = UIColor.clearColor()
@@ -76,7 +76,7 @@ class ReminderCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        print(#function)
+        //print(#function)
         if self.selected {
             reminderSelectionView?.backgroundColor = selectionColor
         } else {
@@ -85,7 +85,7 @@ class ReminderCell: UITableViewCell {
     }
     
     func configureForReminder(reminder: Reminder) {
-        print(#function)
+        //print(#function)
         let isDue = reminder.isDue()
         let isFavorite = reminder.isFavorite as! Bool
         let isComplete = reminder.isComplete as Bool
@@ -96,7 +96,7 @@ class ReminderCell: UITableViewCell {
     }
     
     func configureLabels(name: String, dueDate: NSDate, nextDate: NSDate?, frequency: Int?, interval: String?) {
-        print(#function)
+        //print(#function)
         let frequencyAsPlural = "Every " + "\(frequency) " + "\(interval)" + "s"
         let frequencyAsSingular = "Every " + "\(interval)"
         let neverRepeats = "Never"
@@ -118,7 +118,7 @@ class ReminderCell: UITableViewCell {
     }
     
     func configureBackgroundColors(isFavorite: Bool, isLate: Bool) {
-        print(#function)
+        //print(#function)
         if isFavorite == true {
             if isLate {
                 backgroundDelegate?.changeBackgroundColor(favoriteColor)
@@ -139,7 +139,7 @@ class ReminderCell: UITableViewCell {
     }
     
     func configureLabelColors(isComplete: Bool, isLate: Bool) {
-        print(#function)
+        //print(#function)
         if isComplete || !isLate {
             dayLabel.textColor = normalTextColor
             shortDateLabel.textColor = normalTextColor
@@ -152,7 +152,7 @@ class ReminderCell: UITableViewCell {
     }
     
     func recognizeLongPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
-        print(#function)
+        //print(#function)
         longPress = longPressGestureRecognizer
         delegate?.cellWasLongPressed(self, longPress: longPress)
         

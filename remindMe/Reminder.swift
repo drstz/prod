@@ -60,7 +60,7 @@ class Reminder: NSManagedObject {
     }
     
     func isDue() -> Bool {
-        print(#function)
+        //print(#function)
         let now = NSDate()
         let earlierDate = dueDate.earlierDate(now)
         

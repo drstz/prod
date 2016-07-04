@@ -12,6 +12,7 @@ extension AllRemindersViewController {
     // MARK: Toolbar Actions
     
     func toolbarComplete() {
+        print(#function)
         if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
             for indexPath in selectedIndexPaths {
                 let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
@@ -25,6 +26,7 @@ extension AllRemindersViewController {
     }
     
     func toolbarDelete() {
+        print(#function)
         if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
             for indexPath in selectedIndexPaths {
                 let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
@@ -37,6 +39,7 @@ extension AllRemindersViewController {
     }
     
     func toolbarFavorite() {
+        print(#function)
         if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
             for indexPath in selectedIndexPaths {
                 let reminder = coreDataHandler.reminderFromIndexPath(indexPath)

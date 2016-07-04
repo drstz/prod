@@ -18,7 +18,7 @@ class ReminderCellBackground: UIView, ReminderCellBackGroundDelegate {
     
     func changeBackgroundColor(color: UIColor) {
         backColor = color
-        print("Changed background color")
+        //print("Changed background color")
         
     }
 }

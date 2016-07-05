@@ -27,11 +27,11 @@
             </objects>
             <point key="canvasLocation" x="-606" y="938"/>
         </scene>
-        <!--Week-->
+        <!--Next 7 days-->
         <scene sceneID="BHx-qb-Sh3">
             <objects>
                 <navigationController id="lB2-6B-RLm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="1" title="Week" image="Week View-30" id="LSN-Dk-Cx6"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="Next 7 days" image="Week View-30" id="LSN-Dk-Cx6"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="RFW-e1-HYN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -574,7 +574,7 @@
         <image name="Week View-30" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="e1F-Pi-sXX"/>
         <segue reference="XiK-Cj-5ub"/>
-        <segue reference="lHw-Mo-mKb"/>
     </inferredMetricsTieBreakers>
 </document>

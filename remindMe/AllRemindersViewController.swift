@@ -272,6 +272,8 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         setUpCoreData()
         loadCell()
         
+        tableView.reloadData()
+        
         let selectedIndex = myTabBarController.selectedIndex
         print("Current tab is \(selectedIndex).")
         print("I want to be tab \(myTabIndex).")
@@ -368,10 +370,10 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         
         if segment == 0 {
             status = .Incomplete
-            // print("Status for reminders is set to incomplete")
+            print("Fetching incomplete reminders")
         } else {
             status = .Complete
-            // print("Status for reminders is set to complete")
+            print("Fetching complete reminders")
         }
        
         switch selectedIndex {

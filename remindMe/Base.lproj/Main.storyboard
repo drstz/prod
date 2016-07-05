@@ -87,8 +87,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No reminders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHh-K8-F3j">
                                         <rect key="frame" x="151" y="226" width="298" height="21"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="298" id="6ZC-3J-GhR"/>
-                                            <constraint firstAttribute="height" constant="21" id="BYm-7k-bud"/>
+                                            <constraint firstAttribute="width" constant="298" id="LOv-Ub-Zfr"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -97,8 +96,8 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="top" secondItem="Bsd-RS-vSF" secondAttribute="top" constant="226" id="TKW-CN-RGh"/>
-                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="leading" secondItem="Bsd-RS-vSF" secondAttribute="leading" constant="151" id="bv9-dC-8SN"/>
+                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="top" secondItem="Bsd-RS-vSF" secondAttribute="top" constant="226" id="TAy-VL-Kif"/>
+                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="centerX" secondItem="Bsd-RS-vSF" secondAttribute="centerX" id="fdK-AB-QWN"/>
                                 </constraints>
                             </view>
                         </subviews>

@@ -15,7 +15,7 @@ protocol AllRemindersViewControllerDelegate: class {
                                                                    reminder: Reminder)
 }
 
-class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, AddReminderViewControllerDelegate, ReminderCellDelegate, QuickViewViewControllerDelegate {
+class AllRemindersViewController: UIViewController {
     
     // MARK: - Outlets
     
@@ -93,134 +93,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     @IBAction func doneSettings(segue: UIStoryboardSegue) {
         
     }
-
-    // MARK: - Delegate Methods
-    
-    // MARK: TabBar
-
-    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
-        print("")
-        
-        print("___________________")
-        print(#function)
-        let selectedIndex = myTabBarController.selectedIndex
-        
-        
-        let navigationController = viewController as! UINavigationController
-        let viewControllers = navigationController.viewControllers
-        let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
-        
-        let selectedViewControllerTab = allRemindersViewController.tabBarController?.selectedIndex
-        
-        
-        
-        let selectedViewControllerTag = allRemindersViewController.tabBarController?.tabBar.selectedItem?.tag
-        print("CHANGING TAB \(selectedIndex) ---> \(selectedViewControllerTag!) ")
-        print("Segment is \(segmentedControl.selectedSegmentIndex)")
-        
-        
-        let messageToSend = "I came from tab \(selectedIndex)"
-        allRemindersViewController.sentMessage = messageToSend
-    
-        
-        allRemindersViewController.managedObjectContext = managedObjectContext
-        allRemindersViewController.list = list
-        tabBarController.delegate = allRemindersViewController
-        allRemindersViewController.myTabBarController = tabBarController
-        
-        allRemindersViewController.selectedSegment = selectedSegment
-        
-        allRemindersViewController.myTabIndex = selectedViewControllerTag!
-        
-        return true
-    }
-    
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-        print("")
-        print("")
-        print("")
-        print("___________________")
-        print(#function)
-        print("Here comes the recieved message: \(sentMessage)")
-        let selectedIndex = myTabBarController.selectedIndex
-        print("Current tab is \(selectedIndex).")
-        print("I want to be tab \(myTabIndex).")
-        print("Segment is \(segmentedControl.selectedSegmentIndex)")
-        
-    }
-    
-    
-    // MARK: Quick View
-    
-    func quickViewViewControllerDidCancel(controller: QuickViewViewController) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func quickViewViewControllerDidDelete(controller: QuickViewViewController, didDeleteReminder reminder: Reminder) {
-        deleteReminder(reminder)
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func quickViewViewControllerDidSnooze(controller: QuickViewViewController, didSnoozeReminder reminder: Reminder) {
-        reminder.snooze()
-        coreDataHandler.save()
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func quickViewViewControllerDidComplete(controller: QuickViewViewController, didCompleteReminder reminder: Reminder) {
-        reminder.complete()
-        coreDataHandler.save()
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    // MARK: Add/Edit Reminders
-    
-    func addReminderViewControllerDidCancel(controller: AddReminderViewController) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    
-    func addReminderViewController(controller:AddReminderViewController,
-                                   didFinishAddingReminder reminder: Reminder) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func addReminderViewController(controller:AddReminderViewController,
-                                   didChooseToDeleteReminder reminder: Reminder) {
-        deleteReminder(reminder)
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func addReminderViewController(controller: AddReminderViewController,
-                                   didFinishEditingReminder reminder: Reminder) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    // MARK: Cell
-    
-    func cellWasLongPressed(cell: ReminderCell, longPress: UILongPressGestureRecognizer) {
-        let indexPath = tableView.indexPathForCell(cell)
-        
-        if longPress.state == .Began {
-            tableView.allowsMultipleSelection = true
-            tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .None)
-   
-            let completeText = "Complete"
-            let favoriteText = "Favorite"
-
-            let complete = UIBarButtonItem.init(title: completeText, style: .Plain, target: self, action: #selector(toolbarComplete))
-            let favorite = UIBarButtonItem.init(title: favoriteText, style: .Plain, target: self, action: #selector(toolbarFavorite))
-            let delete = UIBarButtonItem.init(title: "Delete", style: .Plain, target: self, action: #selector(toolbarDelete))
-            let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-            toolbarItems = [complete, spacer, delete, spacer, favorite]
-            
-            if navigationController?.toolbarHidden == true {
-                navigationController?.setToolbarHidden(false, animated: true)
-            } else {
-                navigationController?.setToolbarHidden(true, animated: true)
-            }
-        }
-    }
     
     // MARK: - Methods
     
@@ -266,8 +138,6 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         print(#function)
         super.viewWillAppear(animated)
         
-        
-        // TODO: This must be done or else runtime error. Why?
         segmentedControl.selectedSegmentIndex = selectedSegment
         setUpCoreData()
         loadCell()

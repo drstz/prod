@@ -14,6 +14,26 @@ extension NSDate {
         return NSCalendar.currentCalendar()
     }
     
+    var today: NSDate {
+        return NSDate()
+    }
+    
+    var tomorrow: NSDate {
+        return today.nextDay()
+    }
+    
+    var yesterday: NSDate {
+        return today.previousDay()
+    }
+    
+    var tonight: NSDate {
+        return today.endOfDay
+    }
+    
+    var thisMorning: NSDate {
+        return today.startOfDay
+    }
+    
     var startOfDay: NSDate {
         return calendar.dateBySettingHour(0, minute: 0, second: 0, ofDate: self, options: NSCalendarOptions.init(rawValue: 0))!
         
@@ -46,4 +66,43 @@ extension NSDate {
     func addMonths(nbOfMonths: Int) -> NSDate {
         return calendar.dateByAddingUnit(.Month, value: nbOfMonths, toDate: self, options: NSCalendarOptions.init(rawValue: 0))!
     }
+    
+    func nextDay() -> NSDate {
+        return self.addDays(1)
+    }
+    
+    
+    func nextMorning() -> NSDate {
+        return nextDay().startOfDay
+    }
+    
+    func nextNight() -> NSDate {
+        return nextDay().endOfDay
+    }
+    
+    func previousDay() -> NSDate {
+        return self.addDays(-1)
+    }
+    
+    func previousMorning() -> NSDate {
+        return previousDay().startOfDay
+    }
+    
+    func previousNight() -> NSDate {
+        return previousDay().endOfDay
+    }
+    
+    func isToday() -> Bool {
+        return thisMorning.laterDate(self) == self && tonight.earlierDate(self) == self
+    }
+    
+    func isTomorrow() -> Bool {
+        return tomorrow.startOfDay.laterDate(self) == self && tomorrow.endOfDay.earlierDate(self) == self
+    }
+    
+    func isYesterday() -> Bool {
+        return yesterday.startOfDay.laterDate(self) == self && yesterday.endOfDay.earlierDate(self) == self
+    }
+    
+    
 }

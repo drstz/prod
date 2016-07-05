@@ -39,12 +39,22 @@ extension NSDate {
     func addMonths(nbOfMonths: Int) -> NSDate {
         return calendar.dateByAddingUnit(.Month, value: nbOfMonths, toDate: self, options: NSCalendarOptions.init(rawValue: 0))!
     }
+    
+    func previousDay() -> NSDate {
+        return self.addDays(-1)
+    }
+    
+    func previousNight() -> NSDate {
+        return previousDay().endOfDay
+    }
 }
 
 let now = NSDate()
 let next7Days = now.addDays(6)
 let weekFromNow = now.addWeeks(4)
 let monthFromNow = now.addMonths(1)
+let yesterday = now.previousDay()
+let yesterdayMidnight = now.previousNight()
 
 
 

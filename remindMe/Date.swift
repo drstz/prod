@@ -43,15 +43,6 @@ func addRecurringDate(delayAmount: Int, delayType : String, date: NSDate) -> NSD
     return calculateDate!
 }
 
-//func roundSecondsToZero(date: NSDate) -> NSDate {
-//    let calendar = NSCalendar.currentCalendar()
-//    let components = calendar.components([.Hour, .Minute], fromDate: date)
-//    let newDate = calendar.dateBySettingHour(components.hour, minute: components.minute, second: 0, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
-//    print(newDate)
-//    return newDate!
-//}
-
-
 func setTime(hour: Int, minute: Int, second: Int, addedDay: Int ) -> NSDate {
     let now = NSDate()
     let calendar = NSCalendar.currentCalendar()
@@ -70,8 +61,8 @@ func setTime(hour: Int, minute: Int, second: Int, addedDay: Int ) -> NSDate {
 }
 
 func tomorrowMidnight() -> NSDate {
-    let tomorrowMidnight = setTime(23, minute: 59, second: 59, addedDay: 1)
-    return tomorrowMidnight
+    let today = NSDate()
+    return today.endOfDay.addDays(1)
 }
 
 func nextSevenDays() -> NSDate {
@@ -111,20 +102,31 @@ func convertDateToString(format: DateFormats, date: NSDate) -> String {
     
     formatter.dateFormat = dateFormat
     
+//    if format == .Day {
+//        if earlierDate == date {
+//            if earlierBetweenMorningAndDate == startOfDay {
+//                return "Today"
+//            } else {
+//                return formatter.stringFromDate(date)
+//            }
+//        } else if earlierDate == endOfDay {
+//            let earlyDate = date.earlierDate(tomorrowMidnight())
+//            if earlyDate == date {
+//                return "Tomorrow"
+//            }
+//        }
+//    }
+    
     if format == .Day {
-        if earlierDate == date {
-            if earlierBetweenMorningAndDate == startOfDay {
-                return "Today"
-            } else {
-                return formatter.stringFromDate(date)
-            }
-        } else if earlierDate == endOfDay {
-            let earlyDate = date.earlierDate(tomorrowMidnight())
-            if earlyDate == date {
-                return "Tomorrow"
-            }
+        if date.isToday() {
+            return "Today"
+        } else if date.isTomorrow() {
+            return "Tomorrow"
+        } else if date.isYesterday() {
+            return "Yesterday"
+        } else {
+            return formatter.stringFromDate(date)
         }
-        
     }
     
     return formatter.stringFromDate(date)

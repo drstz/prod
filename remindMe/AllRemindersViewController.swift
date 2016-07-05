@@ -78,16 +78,11 @@ class AllRemindersViewController: UIViewController {
         setUpCoreData()
         loadCell()
         tableView.reloadData()
+        
         clearSelectedIndexPaths()
         selectedSegment = segmentedControl.selectedSegmentIndex
         
-        numberOfRemindersInSection()
-        
         setNoReminderView()
-        
-        let selectedIndex = myTabBarController.selectedIndex
-        print("Current tab is \(selectedIndex).")
-        print("I want to be tab \(myTabIndex).")
     }
     
     @IBAction func doneSettings(segue: UIStoryboardSegue) {
@@ -111,30 +106,17 @@ class AllRemindersViewController: UIViewController {
     // MARK: View
     
     override func viewDidLoad() {
-        print("")
-        print("___________________")
         print(#function)
         super.viewDidLoad()
     
         tableView.separatorColor = UIColor.clearColor()
-        
-        let selectedIndex = myTabBarController.selectedIndex
-        print("Current tab is \(selectedIndex).")
-        print("I want to be tab \(myTabIndex).")
-        print("Segment is \(segmentedControl.selectedSegmentIndex)")
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
-        
-        print(#function)
-        print("___________________")
-        print("")
-        
     }
     
     override func viewWillAppear(animated: Bool) {
-        print("")
-        print("___________________")
         print(#function)
         super.viewWillAppear(animated)
         
@@ -145,44 +127,17 @@ class AllRemindersViewController: UIViewController {
         tableView.reloadData()
         
         setNoReminderView()
-        
-        let selectedIndex = myTabBarController.selectedIndex
-        print("Current tab is \(selectedIndex).")
-        print("I want to be tab \(myTabIndex).")
-        print("Segment is \(segmentedControl.selectedSegmentIndex)")
-        
-        print("Here comes the recieved message: \(sentMessage)")
-        numberOfRemindersInSection()
-        print(#function)
-        print("___________________")
-        print("")
-        
-        
+
     }
     
     override func viewDidAppear(animated: Bool) {
-        print("")
-        print("___________________")
         print(#function)
         super.viewDidAppear(animated)
-    
-        numberOfRemindersInSection()
-        
-//        setUpCoreData()
-//        loadCell()
-        
+
         let selectedIndex = myTabBarController.selectedIndex
-        print("Current tab is \(selectedIndex).")
-        print("I want to be tab \(myTabIndex).")
-        print("Here comes the recieved message: \(sentMessage)")
-        
         saveSelectedTab(selectedIndex)
         
-        
-        numberOfRemindersInSection()
-        print(#function)
-        print("___________________")
-        print("")
+
     }
     
     func numberOfRemindersInSection() {
@@ -191,22 +146,11 @@ class AllRemindersViewController: UIViewController {
         print("There are \(numberOfRows) rows")
     }
     
-    
-    
     override func viewWillDisappear(animated: Bool) {
-        print("")
-        print("___________________")
-        print("___________________")
         print(#function)
         super.viewWillDisappear(animated)
         print("Here comes the recieved message: \(sentMessage)")
         clearSelectedIndexPaths()
-        let selectedIndex = myTabBarController.selectedIndex
-        print("Current tab is \(selectedIndex).")
-        print("I want to be tab \(myTabIndex).")
-        print(#function)
-        print("___________________")
-        print("")
     }
     
     // MARK: Selection
@@ -318,8 +262,6 @@ class AllRemindersViewController: UIViewController {
         
     }
     
-    
-    
     // MARK: Segues
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -391,8 +333,6 @@ class AllRemindersViewController: UIViewController {
     
     // MARK: Reminder Actions
     
-    
-
     func deleteReminder(reminder: Reminder, save: Bool = true) {
         print(#function)
         if coreDataHandler.fetchedResultsController.indexPathForObject(reminder) != nil {

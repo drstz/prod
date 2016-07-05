@@ -76,37 +76,41 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="izq-nV-FBg">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="Bsd-RS-vSF">
-                                    <rect key="frame" x="0.0" y="64" width="600" height="487"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No reminders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHh-K8-F3j">
-                                            <rect key="frame" x="151" y="233" width="298" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="298" id="7sY-9f-2ot"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstItem="yHh-K8-F3j" firstAttribute="centerY" secondItem="Bsd-RS-vSF" secondAttribute="centerY" id="ETJ-4S-ILy"/>
-                                        <constraint firstItem="yHh-K8-F3j" firstAttribute="centerX" secondItem="Bsd-RS-vSF" secondAttribute="centerX" id="x96-Wa-P8y"/>
-                                    </constraints>
-                                </view>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="14W-TG-jdO"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="dCq-62-gOZ"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bsd-RS-vSF">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No reminders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHh-K8-F3j">
+                                        <rect key="frame" x="151" y="226" width="298" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="298" id="6ZC-3J-GhR"/>
+                                            <constraint firstAttribute="height" constant="21" id="BYm-7k-bud"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="top" secondItem="Bsd-RS-vSF" secondAttribute="top" constant="226" id="TKW-CN-RGh"/>
+                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="leading" secondItem="Bsd-RS-vSF" secondAttribute="leading" constant="151" id="bv9-dC-8SN"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Bsd-RS-vSF" secondAttribute="trailing" id="2ts-hQ-1zH"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Bsd-RS-vSF" secondAttribute="bottom" id="Cax-Al-VLV"/>
                             <constraint firstItem="izq-nV-FBg" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="EvJ-po-Cng"/>
+                            <constraint firstItem="Bsd-RS-vSF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="HQc-Hp-5il"/>
                             <constraint firstItem="izq-nV-FBg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="MOg-IR-ZUf"/>
                             <constraint firstAttribute="trailing" secondItem="izq-nV-FBg" secondAttribute="trailing" id="T4G-fY-eJE"/>
+                            <constraint firstItem="Bsd-RS-vSF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="iiC-Q1-s6V"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="izq-nV-FBg" secondAttribute="bottom" constant="-49" id="uTK-t8-59p"/>
                         </constraints>
                     </view>

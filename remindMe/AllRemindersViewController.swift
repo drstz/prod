@@ -274,6 +274,8 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         
         tableView.reloadData()
         
+        setNoReminderView()
+        
         let selectedIndex = myTabBarController.selectedIndex
         print("Current tab is \(selectedIndex).")
         print("I want to be tab \(myTabIndex).")
@@ -305,7 +307,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         print("Here comes the recieved message: \(sentMessage)")
         
         saveSelectedTab(selectedIndex)
-        setNoReminderView()
+        
         
         numberOfRemindersInSection()
         print(#function)

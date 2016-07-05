@@ -81,12 +81,35 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="dCq-62-gOZ"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bsd-RS-vSF">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No reminders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHh-K8-F3j">
+                                        <rect key="frame" x="151" y="226" width="298" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="298" id="LOv-Ub-Zfr"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="top" secondItem="Bsd-RS-vSF" secondAttribute="top" constant="226" id="TAy-VL-Kif"/>
+                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="centerX" secondItem="Bsd-RS-vSF" secondAttribute="centerX" id="fdK-AB-QWN"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Bsd-RS-vSF" secondAttribute="trailing" id="2ts-hQ-1zH"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Bsd-RS-vSF" secondAttribute="bottom" id="Cax-Al-VLV"/>
                             <constraint firstItem="izq-nV-FBg" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="EvJ-po-Cng"/>
+                            <constraint firstItem="Bsd-RS-vSF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="HQc-Hp-5il"/>
                             <constraint firstItem="izq-nV-FBg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="MOg-IR-ZUf"/>
                             <constraint firstAttribute="trailing" secondItem="izq-nV-FBg" secondAttribute="trailing" id="T4G-fY-eJE"/>
+                            <constraint firstItem="Bsd-RS-vSF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="iiC-Q1-s6V"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="izq-nV-FBg" secondAttribute="bottom" constant="-49" id="uTK-t8-59p"/>
                         </constraints>
                     </view>
@@ -116,6 +139,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="noReminderLabel" destination="yHh-K8-F3j" id="Sva-bn-ejb"/>
+                        <outlet property="noReminderScreen" destination="Bsd-RS-vSF" id="sbJ-5v-ckG"/>
                         <outlet property="segmentedControl" destination="eUi-Dz-PKw" id="YUW-3r-ffB"/>
                         <outlet property="tableView" destination="izq-nV-FBg" id="maa-dz-lVZ"/>
                         <segue destination="EXe-5T-xJU" kind="presentation" identifier="EditReminder" id="XiK-Cj-5ub"/>
@@ -549,7 +574,7 @@
         <image name="Week View-30" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="e1F-Pi-sXX"/>
-        <segue reference="v7Q-ZB-wc4"/>
+        <segue reference="XiK-Cj-5ub"/>
+        <segue reference="lHw-Mo-mKb"/>
     </inferredMetricsTieBreakers>
 </document>

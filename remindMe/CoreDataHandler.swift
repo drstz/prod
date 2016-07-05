@@ -192,8 +192,11 @@ class CoreDataHandler {
     // MARK: Fetching
     
     func performFetch() {
+        print(#function)
         do {
             try fetchedResultsController.performFetch()
+            print("Object count: ")
+            print(fetchedResultsController.fetchedObjects?.count)
         } catch {
             fatalCoreDataError(error)
         }
@@ -202,6 +205,7 @@ class CoreDataHandler {
     // MARK: Saving / Editing
     
     func save() {
+        print(#function)
         do {
             try managedObjectContext.save()
         } catch {

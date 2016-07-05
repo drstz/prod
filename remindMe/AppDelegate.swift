@@ -92,6 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
         
         allRemindersViewController.managedObjectContext = managedObjectContext
+        allRemindersViewController.myTabIndex = savedTab
         tabBarController.delegate = allRemindersViewController
         allRemindersViewController.myTabBarController = tabBarController
         

@@ -22,6 +22,10 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
+    @IBOutlet weak var noReminderScreen: UIView!
+    
+    @IBOutlet weak var noReminderLabel: UILabel!
+    
     // MARK: - Coredata
     
     let coreDataHandler = CoreDataHandler()
@@ -31,6 +35,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     // MARK: - Tabbar
     
     var myTabBarController: UITabBarController!
+    var myTabIndex = 0
     
     // MARK: - Segment
     
@@ -75,6 +80,14 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         tableView.reloadData()
         clearSelectedIndexPaths()
         selectedSegment = segmentedControl.selectedSegmentIndex
+        
+        numberOfRemindersInSection()
+        
+        setNoReminderView()
+        
+        let selectedIndex = myTabBarController.selectedIndex
+        print("Current tab is \(selectedIndex).")
+        print("I want to be tab \(myTabIndex).")
     }
     
     @IBAction func doneSettings(segue: UIStoryboardSegue) {
@@ -84,29 +97,31 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     // MARK: - Delegate Methods
     
     // MARK: TabBar
-    
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-        print("")
-        print(#function)
-        let selectedIndex = myTabBarController.selectedIndex
-        print("Selected tab is \(selectedIndex).")
-    }
-    
+
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         print("")
+        
+        print("___________________")
         print(#function)
         let selectedIndex = myTabBarController.selectedIndex
-        print("Selected tab is \(selectedIndex).")
+        
         
         let navigationController = viewController as! UINavigationController
         let viewControllers = navigationController.viewControllers
         let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
         
         let selectedViewControllerTab = allRemindersViewController.tabBarController?.selectedIndex
+        
+        
+        
         let selectedViewControllerTag = allRemindersViewController.tabBarController?.tabBar.selectedItem?.tag
+        print("CHANGING TAB \(selectedIndex) ---> \(selectedViewControllerTag!) ")
+        print("Segment is \(segmentedControl.selectedSegmentIndex)")
         
         
-        allRemindersViewController.sentMessage = "I came from tab \(selectedIndex)"
+        let messageToSend = "I came from tab \(selectedIndex)"
+        allRemindersViewController.sentMessage = messageToSend
+    
         
         allRemindersViewController.managedObjectContext = managedObjectContext
         allRemindersViewController.list = list
@@ -115,10 +130,23 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         
         allRemindersViewController.selectedSegment = selectedSegment
         
-        print("Selected view controller's tab is \(selectedViewControllerTab).")
-        print("Selected view controller's tab  TAG is \(selectedViewControllerTag!).")
-
+        allRemindersViewController.myTabIndex = selectedViewControllerTag!
+        
         return true
+    }
+    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        print("")
+        print("")
+        print("")
+        print("___________________")
+        print(#function)
+        print("Here comes the recieved message: \(sentMessage)")
+        let selectedIndex = myTabBarController.selectedIndex
+        print("Current tab is \(selectedIndex).")
+        print("I want to be tab \(myTabIndex).")
+        print("Segment is \(segmentedControl.selectedSegmentIndex)")
+        
     }
     
     
@@ -211,61 +239,103 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     // MARK: View
     
     override func viewDidLoad() {
+        print("")
+        print("___________________")
         print(#function)
         super.viewDidLoad()
     
         tableView.separatorColor = UIColor.clearColor()
         
         let selectedIndex = myTabBarController.selectedIndex
-        print("Selected tab is \(selectedIndex).")
-//        setUpCoreData()
-//        loadCell()
-        
+        print("Current tab is \(selectedIndex).")
+        print("I want to be tab \(myTabIndex).")
+        print("Segment is \(segmentedControl.selectedSegmentIndex)")
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
         
+        print(#function)
+        print("___________________")
+        print("")
         
     }
     
     override func viewWillAppear(animated: Bool) {
+        print("")
+        print("___________________")
         print(#function)
         super.viewWillAppear(animated)
         
+        
+        // TODO: This must be done or else runtime error. Why?
+        segmentedControl.selectedSegmentIndex = selectedSegment
         setUpCoreData()
         loadCell()
         
-        let selectedIndex = myTabBarController.selectedIndex
-        print("Selected tab is \(selectedIndex).")
+        tableView.reloadData()
         
-        segmentedControl.selectedSegmentIndex = selectedSegment
+        setNoReminderView()
+        
+        let selectedIndex = myTabBarController.selectedIndex
+        print("Current tab is \(selectedIndex).")
+        print("I want to be tab \(myTabIndex).")
+        print("Segment is \(segmentedControl.selectedSegmentIndex)")
+        
+        print("Here comes the recieved message: \(sentMessage)")
+        numberOfRemindersInSection()
+        print(#function)
+        print("___________________")
+        print("")
+        
+        
     }
     
     override func viewDidAppear(animated: Bool) {
         print("")
+        print("___________________")
         print(#function)
         super.viewDidAppear(animated)
     
-        setUpCoreData()
-        loadCell()
+        numberOfRemindersInSection()
+        
+//        setUpCoreData()
+//        loadCell()
         
         let selectedIndex = myTabBarController.selectedIndex
-        print("Selected tab is \(selectedIndex).")
-        print("Here comes the sent message: \(sentMessage)")
+        print("Current tab is \(selectedIndex).")
+        print("I want to be tab \(myTabIndex).")
+        print("Here comes the recieved message: \(sentMessage)")
         
         saveSelectedTab(selectedIndex)
+        
+        
+        numberOfRemindersInSection()
+        print(#function)
+        print("___________________")
         print("")
+    }
+    
+    func numberOfRemindersInSection() {
+        print(#function)
+        let numberOfRows = tableView.numberOfRowsInSection(0)
+        print("There are \(numberOfRows) rows")
     }
     
     
     
     override func viewWillDisappear(animated: Bool) {
+        print("")
+        print("___________________")
+        print("___________________")
         print(#function)
         super.viewWillDisappear(animated)
-        
+        print("Here comes the recieved message: \(sentMessage)")
         clearSelectedIndexPaths()
         let selectedIndex = myTabBarController.selectedIndex
-        print("Selected tab is \(selectedIndex).")
+        print("Current tab is \(selectedIndex).")
+        print("I want to be tab \(myTabIndex).")
+        print(#function)
+        print("___________________")
         print("")
     }
     
@@ -282,7 +352,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     // MARK: Cell
     
     func loadCell() {
-        print(#function)
+        //print(#function)
         let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
         tableView.rowHeight = 100
@@ -295,33 +365,38 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         
         coreDataHandler.setObjectContext(managedObjectContext)
         
-        let selectedIndex = myTabBarController.selectedIndex
+        let selectedIndex = myTabIndex
         let segment = segmentedControl.selectedSegmentIndex
         var status: ReminderStatus = .Complete
         var filter: ReminderFilter = .All
         
         if segment == 0 {
             status = .Incomplete
-            // print("Status for reminders is set to incomplete")
+            print("Fetching incomplete reminders")
         } else {
             status = .Complete
-            // print("Status for reminders is set to complete")
+            print("Fetching complete reminders")
         }
        
         switch selectedIndex {
         case 0:
+            print("Filtering for index \(selectedIndex)")
             filter = .Today
             coreDataHandler.setFetchedResultsController("Reminder", cacheName: "TodayReminders", filterBy: filter, status: status)
         case 1:
+            print("Filtering for index \(selectedIndex)")
             filter = .Week
             coreDataHandler.setFetchedResultsController("Reminder", cacheName: "WeekReminders", filterBy: filter, status: status)
         case 2:
+            print("Filtering for index \(selectedIndex)")
             filter = .All
             coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
         case 3:
+            print("Filtering for index \(selectedIndex)")
             filter = .Favorite
             coreDataHandler.setFetchedResultsController("Reminder", cacheName: "FavoriteReminders", filterBy: filter, status: status)
         default:
+            print("Filtering for default")
             filter = .All
             coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
         }
@@ -331,11 +406,54 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
         
     }
     
+    // MARK: Handle no reminders
+    
+    func setNoReminderView() {
+        print(#function)
+        if tableView.numberOfRowsInSection(0) == 0 {
+            print("There are no reminders")
+            noReminderScreen.hidden = false
+            setNoReminderLabel()
+        } else {
+            print("There are reminders")
+            noReminderScreen.hidden = true
+        }
+    }
+    
+    func setNoReminderLabel() {
+        print(#function)
+        var completedText = ""
+        var text = ""
+        
+        if selectedSegment == 0 {
+            completedText = "upcoming"
+        } else {
+            completedText = "completed"
+        }
+        if let selectedTabIndex = tabBarController?.selectedIndex {
+            switch selectedTabIndex {
+            case 0:
+                text = "No \(completedText) reminders for today"
+            case 1:
+                text = "No \(completedText) reminders for the week"
+            case 2:
+                text = "No \(completedText) reminders"
+            case 3:
+                text = "No \(completedText) favorites"
+            default:
+                text = "Error"
+            }
+            noReminderLabel.text = text
+        }
+        
+    }
+    
     
     
     // MARK: Segues
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        print(#function)
         let segueIdentifier = segue.identifier!
         let navigationController = segue.destinationViewController as! UINavigationController
         
@@ -384,6 +502,7 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     }
         
     func completeButtonWasPressed(cell: ReminderCell) {
+        print(#function)
         let indexPath = tableView.indexPathForCell(cell)
         let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)
         reminder.complete()
@@ -395,7 +514,8 @@ class AllRemindersViewController: UIViewController, UITabBarControllerDelegate, 
     
     // MARK: Reminder list
     
-    func updateList() {        
+    func updateList() {
+        print(#function)
         tableView.reloadData()
     }
     

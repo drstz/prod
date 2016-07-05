@@ -10,7 +10,9 @@ import Foundation
 import CoreData
 
 extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
+    
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        print(#function)
         tableView.beginUpdates()
     }
     
@@ -48,6 +50,7 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
                     didChangeSection sectionInfo: NSFetchedResultsSectionInfo,
                                      atIndex sectionIndex: Int,
                                              forChangeType type: NSFetchedResultsChangeType) {
+        print(#function)
         switch type {
         case .Insert:
             print("*** NSFetchedResultsChangeInsert (section)")
@@ -68,7 +71,10 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        print(#function)
         print("*** controllerDidChangeContent")
+        
         tableView.endUpdates()
+        setNoReminderView()
     }
 }

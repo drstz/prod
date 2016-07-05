@@ -43,33 +43,14 @@ func addRecurringDate(delayAmount: Int, delayType : String, date: NSDate) -> NSD
     return calculateDate!
 }
 
-func roundSecondsToZero(date: NSDate) -> NSDate {
-    let calendar = NSCalendar.currentCalendar()
-    let components = calendar.components([.Hour, .Minute], fromDate: date)
-    let newDate = calendar.dateBySettingHour(components.hour, minute: components.minute, second: 0, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
-    print(newDate)
-    return newDate!
-}
+//func roundSecondsToZero(date: NSDate) -> NSDate {
+//    let calendar = NSCalendar.currentCalendar()
+//    let components = calendar.components([.Hour, .Minute], fromDate: date)
+//    let newDate = calendar.dateBySettingHour(components.hour, minute: components.minute, second: 0, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
+//    print(newDate)
+//    return newDate!
+//}
 
-func midnight(date: NSDate) -> NSDate {
-    let calendar = NSCalendar.currentCalendar()
-    let newDate = calendar.dateBySettingHour(23, minute: 59, second: 59, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
-    return newDate!
-}
-
-func addMinutes(minutes: Int, date: NSDate) -> NSDate {
-    let calendar = NSCalendar.currentCalendar()
-    let components = NSDateComponents()
-    components.setValue(minutes, forComponent: .Minute)
-    let newDate = calendar.dateByAddingComponents(components, toDate: date, options: NSCalendarOptions.init(rawValue: 0))
-    return newDate!
-}
-
-func startOfDay(date: NSDate) -> NSDate {
-    let calendar = NSCalendar.currentCalendar()
-    let newDate = calendar.dateBySettingHour(0, minute: 0, second: 0, ofDate: date, options: NSCalendarOptions.init(rawValue: 0))
-    return newDate!
-}
 
 func setTime(hour: Int, minute: Int, second: Int, addedDay: Int ) -> NSDate {
     let now = NSDate()
@@ -93,10 +74,9 @@ func tomorrowMidnight() -> NSDate {
     return tomorrowMidnight
 }
 
-func sevenDaysFromNow(date: NSDate) -> NSDate {
-    let newDate = setTime(23, minute: 59, second: 59, addedDay: 6)
-    print(newDate)
-    return newDate
+func nextSevenDays() -> NSDate {
+    let today = NSDate()
+    return today.endOfDay.addDays(6)
 }
 
 
@@ -109,11 +89,11 @@ func convertDateToString(dateToConvert date: NSDate) -> String {
 }
 
 func convertDateToString(format: DateFormats, date: NSDate) -> String {
-    let now = NSDate()
-    let firstHour = startOfDay(now)
-    let mNight = midnight(now)
-    let earlierDate = date.earlierDate(mNight)
-    let earlierBetweenMorningAndDate = firstHour.earlierDate(date)
+    let today = NSDate()
+    let startOfDay = today.startOfDay
+    let endOfDay = today.endOfDay
+    let earlierDate = date.earlierDate(endOfDay)
+    let earlierBetweenMorningAndDate = startOfDay.earlierDate(date)
     let formatter = NSDateFormatter()
     var dateFormat = ""
     formatter.locale = NSLocale(localeIdentifier: preferredLanguage)
@@ -133,12 +113,12 @@ func convertDateToString(format: DateFormats, date: NSDate) -> String {
     
     if format == .Day {
         if earlierDate == date {
-            if earlierBetweenMorningAndDate == firstHour {
+            if earlierBetweenMorningAndDate == startOfDay {
                 return "Today"
             } else {
                 return formatter.stringFromDate(date)
             }
-        } else if earlierDate == mNight {
+        } else if earlierDate == endOfDay {
             let earlyDate = date.earlierDate(tomorrowMidnight())
             if earlyDate == date {
                 return "Tomorrow"

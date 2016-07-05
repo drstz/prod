@@ -182,7 +182,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     @IBAction func listenToDate(datePicker: UIDatePicker) {
         print(#function)
-        selectedDate = roundSecondsToZero(datePicker.date)
+        selectedDate = datePicker.date.roundSecondsToZero()
         dueDateIsSet = true
         reminderRepeatsSwitch.enabled = true
         setDueDateLabel(with: selectedDate!)

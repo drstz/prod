@@ -140,6 +140,10 @@ class AllRemindersViewController: UIViewController {
 
     }
     
+    override func viewDidLayoutSubviews() {
+        
+    }
+    
     func numberOfRemindersInSection() {
         print(#function)
         let numberOfRows = tableView.numberOfRowsInSection(0)
@@ -170,6 +174,7 @@ class AllRemindersViewController: UIViewController {
         let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
         tableView.rowHeight = 100
+        
     }
     
     // MARK: Coredata

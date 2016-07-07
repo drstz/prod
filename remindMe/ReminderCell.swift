@@ -97,8 +97,7 @@ class ReminderCell: UITableViewCell {
     
     func configureLabels(name: String, dueDate: NSDate, nextDate: NSDate?, frequency: Int?, interval: String?) {
         //print(#function)
-        let frequencyAsPlural = "Every " + "\(frequency) " + "\(interval)" + "s"
-        let frequencyAsSingular = "Every " + "\(interval)"
+        
         let neverRepeats = "Never"
         
         reminderLabel.text = name
@@ -107,6 +106,8 @@ class ReminderCell: UITableViewCell {
         shortDateLabel.text = convertDateToString(.ShortDate, date: dueDate)
         
         if nextDate != nil {
+            let frequencyAsPlural = "Every " + "\(frequency!) " + "\(interval!)" + "s"
+            let frequencyAsSingular = "Every " + "\(interval!)"
             if frequency != 1 {
                 nextDueDate.text = frequencyAsPlural
             } else {

@@ -9,7 +9,6 @@
 import UIKit
 
 protocol ReminderCellDelegate: class {
-    func completeButtonWasPressed (cell : ReminderCell)
     func cellWasLongPressed(cell: ReminderCell, longPress: UILongPressGestureRecognizer)
 }
 

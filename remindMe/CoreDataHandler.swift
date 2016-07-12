@@ -42,8 +42,6 @@ class CoreDataHandler {
         managedObjectContext = mObjectContext
     }
     
-    
-    
     // MARK: Search Reminder
     
     func getReminderWithID(idFromNotification : Int, from entity: String) -> Reminder? {
@@ -193,8 +191,6 @@ class CoreDataHandler {
         print(#function)
         do {
             try fetchedResultsController.performFetch()
-            print("Object count: ")
-            print(fetchedResultsController.fetchedObjects?.count)
         } catch {
             fatalCoreDataError(error)
         }

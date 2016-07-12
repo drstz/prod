@@ -317,16 +317,7 @@ class AllRemindersViewController: UIViewController {
             
         }
     }
-        
-    func completeButtonWasPressed(cell: ReminderCell) {
-        print(#function)
-        let indexPath = tableView.indexPathForCell(cell)
-        let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)
-        reminder.complete()
-        
-        coreDataHandler.save()
-    }
-    
+            
     // MARK: - REMINDERS
     
     // MARK: Reminder list

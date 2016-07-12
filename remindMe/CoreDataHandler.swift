@@ -79,7 +79,7 @@ class CoreDataHandler {
         let newFetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
             managedObjectContext: managedObjectContext,
-            sectionNameKeyPath: nil,
+            sectionNameKeyPath: "section",
             cacheName: nil
         )
         

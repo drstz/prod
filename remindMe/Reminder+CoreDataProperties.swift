@@ -29,5 +29,30 @@ extension Reminder {
     @NSManaged var isFavorite: NSNumber?
  
     @NSManaged var list: List
+    
+    var section: String? {
+        print("Creating section")
+        
+        if isDue() {
+            return "Due"
+        }
+        
+        if dueDate.isToday() {
+            return "Today"
+        }
+        
+        if dueDate.isTomorrow() {
+            return "Tomorrow"
+        }
+        
+        if dueDate.lessThanWeekFromNow() {
+            return dueDate.writtenDay()
+        }
+        
+        
+        
+        return dueDate.writtenDayPlusMonth()
+        
+    }
 
 }

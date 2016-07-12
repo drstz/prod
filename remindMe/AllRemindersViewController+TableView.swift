@@ -8,8 +8,18 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 extension AllRemindersViewController: UITableViewDataSource {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return (coreDataHandler.fetchedResultsController.sections?.count)! 
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let sectionInfo = coreDataHandler.fetchedResultsController.sections! as [NSFetchedResultsSectionInfo]
+        return sectionInfo[section].name
+    }
+    
     func tableView(tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
         

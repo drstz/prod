@@ -145,9 +145,9 @@ class ReminderCell: UITableViewCell {
             shortDateLabel.textColor = normalTextColor
             timeLabel.textColor = normalTextColor
         } else {
-            dayLabel.textColor = lateColor
+            dayLabel.backgroundColor = lateColor
             shortDateLabel.textColor = lateColor
-            timeLabel.textColor = lateColor
+            timeLabel.backgroundColor = UIColor(red: 95/255, green: 2/255, blue: 31/255, alpha: 1)
         }
     }
     

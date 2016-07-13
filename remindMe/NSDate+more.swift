@@ -115,6 +115,24 @@ extension NSDate {
         }
     }
     
+    func underMonths(months amount: Int) -> Bool {
+        let monthsFromNow = today.addMonths(amount)
+        if monthsFromNow.earlierDate(self) == self {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func underWeek(weeks amount: Int) -> Bool {
+        let weeksFromNow = today.addWeeks(amount)
+        if weeksFromNow.earlierDate(self) == self {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func writtenDay() -> String {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "EEEE"

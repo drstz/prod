@@ -50,14 +50,28 @@ extension Reminder {
             return "Yesterday"
         }
         
-        if dueDate.lessThanWeekFromNow() && dueDate.isPresent() {
-            return dueDate.writtenDay()
+        if dueDate.isPresent() {
+            if dueDate.underMonths(months: 2) {
+                if dueDate.underMonths(months: 1) {
+                    if dueDate.underWeek(weeks: 1) {
+                        if dueDate.lessThanWeekFromNow() && dueDate.isPresent() {
+                            return dueDate.writtenDay()
+                        } else if dueDate.isPresent() {
+                            return "In over a week"
+                        }
+                    } else {
+                        return "In over a week"
+                    }
+                } else {
+                    return "In over a month"
+                }
+            } else {
+                return "Later"
+            }
         }
         
         
-        
         return dueDate.writtenDayPlusMonth()
-        
     }
 
 }

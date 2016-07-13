@@ -90,7 +90,7 @@ class ReminderCell: UITableViewCell {
         let isComplete = reminder.isComplete as Bool
         
         configureLabels(reminder.name, dueDate: reminder.dueDate, nextDate: reminder.nextDueDate, frequency: reminder.everyAmount as? Int, interval: reminder.typeOfInterval)
-        configureBackgroundColors(isFavorite, isLate: isDue)
+        configureBackgroundColors(isFavorite, isLate: isDue, isComplete: isComplete)
         configureLabelColors(isComplete, isLate: isDue)
     }
     
@@ -117,10 +117,10 @@ class ReminderCell: UITableViewCell {
         }
     }
     
-    func configureBackgroundColors(isFavorite: Bool, isLate: Bool) {
+    func configureBackgroundColors(isFavorite: Bool, isLate: Bool, isComplete: Bool) {
         //print(#function)
         if isFavorite == true {
-            if isLate {
+            if isLate && !isComplete {
                 backgroundDelegate?.changeBackgroundColor(favoriteColor)
                 reminderIsDueView.backgroundColor = UIColor.redColor()
             } else {
@@ -128,7 +128,7 @@ class ReminderCell: UITableViewCell {
                 reminderIsDueView.backgroundColor = UIColor.clearColor()
             }
         } else {
-            if isLate {
+            if isLate && !isComplete {
                 backgroundDelegate?.changeBackgroundColor(tintColor)
                 reminderIsDueView.backgroundColor = UIColor.redColor()
             } else {

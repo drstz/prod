@@ -30,10 +30,11 @@ extension Reminder {
  
     @NSManaged var list: List
     
+    // Seperate reminders into different sections
     var section: String? {
         print("Creating section")
         
-        if isDue() {
+        if isDue() && isComplete == false {
             return "Due"
         }
         
@@ -45,7 +46,11 @@ extension Reminder {
             return "Tomorrow"
         }
         
-        if dueDate.lessThanWeekFromNow() {
+        if dueDate.isYesterday() {
+            return "Yesterday"
+        }
+        
+        if dueDate.lessThanWeekFromNow() && dueDate.isPresent() {
             return dueDate.writtenDay()
         }
         

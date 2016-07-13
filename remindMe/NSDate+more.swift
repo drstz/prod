@@ -127,5 +127,9 @@ extension NSDate {
         return formatter.stringFromDate(self)
     }
     
+    func isPresent() -> Bool {
+        return today.laterDate(self) == self
+    }
+    
     
 }

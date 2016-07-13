@@ -20,9 +20,7 @@ extension AllRemindersViewController: UITableViewDataSource {
         return sectionInfo[section].name
     }
     
-    func tableView(tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int {
-        
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = coreDataHandler.fetchedResultsController.sections![section]
         return sectionInfo.numberOfObjects
     }

@@ -4,7 +4,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Tab Bar Controller-->
@@ -460,18 +459,11 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="AjG-ZK-GOu">
-                        <leftBarButtonItems>
-                            <barButtonItem title="Back" id="WdJ-C9-pZb">
-                                <connections>
-                                    <action selector="cancel" destination="Shj-iq-C6Z" id="LCm-ga-pKA"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Add to favorites" id="W8G-y4-Rkf">
-                                <connections>
-                                    <action selector="addToFavorites" destination="Shj-iq-C6Z" id="NxF-11-z8x"/>
-                                </connections>
-                            </barButtonItem>
-                        </leftBarButtonItems>
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="WdJ-C9-pZb">
+                            <connections>
+                                <action selector="cancel" destination="Shj-iq-C6Z" id="LCm-ga-pKA"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="iBh-XQ-5XE">
                             <connections>
                                 <segue destination="EXe-5T-xJU" kind="presentation" identifier="EditReminder" id="v7Q-ZB-wc4"/>
@@ -479,7 +471,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addToFavoritesButton" destination="W8G-y4-Rkf" id="IrX-7g-AMh"/>
                         <outlet property="completeButton" destination="s2b-pA-Jpa" id="ug8-wO-Jhw"/>
                         <outlet property="deleteButton" destination="SDX-Ah-eUr" id="whZ-uK-GMn"/>
                         <outlet property="favoriteStar" destination="7MZ-br-JnK" id="xep-dq-f5S"/>

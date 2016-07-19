@@ -173,6 +173,8 @@ class AllRemindersViewController: UIViewController {
         //print(#function)
         let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
+        let nib = UINib(nibName: "TableSectionHeader", bundle: nil)
+        tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: "TableSectionHeader")
         tableView.rowHeight = 100
         
     }

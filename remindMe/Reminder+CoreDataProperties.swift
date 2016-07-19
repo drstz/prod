@@ -29,5 +29,49 @@ extension Reminder {
     @NSManaged var isFavorite: NSNumber?
  
     @NSManaged var list: List
+    
+    // Seperate reminders into different sections
+    var section: String? {
+        print("Creating section")
+        
+        if isDue() && isComplete == false {
+            return "Due"
+        }
+        
+        if dueDate.isToday() {
+            return "Today"
+        }
+        
+        if dueDate.isTomorrow() {
+            return "Tomorrow"
+        }
+        
+        if dueDate.isYesterday() {
+            return "Yesterday"
+        }
+        
+        if dueDate.isPresent() {
+            if dueDate.underMonths(months: 2) {
+                if dueDate.underMonths(months: 1) {
+                    if dueDate.underWeek(weeks: 1) {
+                        if dueDate.lessThanWeekFromNow() && dueDate.isPresent() {
+                            return dueDate.writtenDay()
+                        } else if dueDate.isPresent() {
+                            return "In over a week"
+                        }
+                    } else {
+                        return "In over a week"
+                    }
+                } else {
+                    return "In over a month"
+                }
+            } else {
+                return "Later"
+            }
+        }
+        
+        
+        return dueDate.writtenDayPlusMonth()
+    }
 
 }

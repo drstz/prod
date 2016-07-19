@@ -104,5 +104,50 @@ extension NSDate {
         return yesterday.startOfDay.laterDate(self) == self && yesterday.endOfDay.earlierDate(self) == self
     }
     
+    func lessThanWeekFromNow() -> Bool {
+        let now = NSDate()
+        let sixDaysFromNow = now.addDays(6)
+        let earlierDate = sixDaysFromNow.earlierDate(self)
+        if earlierDate == self {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func underMonths(months amount: Int) -> Bool {
+        let monthsFromNow = today.addMonths(amount)
+        if monthsFromNow.earlierDate(self) == self {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func underWeek(weeks amount: Int) -> Bool {
+        let weeksFromNow = today.addWeeks(amount)
+        if weeksFromNow.earlierDate(self) == self {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func writtenDay() -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "EEEE"
+        return formatter.stringFromDate(self)
+    }
+    
+    func writtenDayPlusMonth() -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "EEEE, dd MMMM"
+        return formatter.stringFromDate(self)
+    }
+    
+    func isPresent() -> Bool {
+        return today.laterDate(self) == self
+    }
+    
     
 }

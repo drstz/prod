@@ -79,7 +79,8 @@ class CoreDataHandler {
         let newFetchedResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,
             managedObjectContext: managedObjectContext,
-            sectionNameKeyPath: nil,
+            // This allows the app to seperate reminders into sections
+            sectionNameKeyPath: "section",
             cacheName: nil
         )
         

@@ -8,22 +8,42 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 extension AllRemindersViewController: UITableViewDataSource {
-    func tableView(tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return (coreDataHandler.fetchedResultsController.sections?.count)! 
+    }
+    
+    
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let sectionInfo = coreDataHandler.fetchedResultsController.sections! as [NSFetchedResultsSectionInfo]
+        let text = sectionInfo[section].name
         
+        // Dequeue with the reuse identifier
+        let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("TableSectionHeader")
+        let header = view as! TableSectionHeader
+        
+        header.titleLabel.text = text
+        
+        return view
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = coreDataHandler.fetchedResultsController.sections![section]
         return sectionInfo.numberOfObjects
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as! ReminderCell
-        
         let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-        cell.configureForReminder(reminder)
         
-        // Make this view controller the delegate of ReminderCell
+        cell.configureForReminder(reminder)
         cell.delegate = self
         
         return cell

@@ -357,7 +357,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feed the cat" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="F9u-Z7-yBu">
-                                <rect key="frame" x="20" y="72" width="560" height="33"/>
+                                <rect key="frame" x="20" y="72" width="457" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="AhI-QZ-F6f"/>
                                 </constraints>
@@ -422,6 +422,13 @@
                                     <action selector="deleteReminder" destination="Shj-iq-C6Z" eventType="touchUpInside" id="NKC-ha-l05"/>
                                 </connections>
                             </button>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Star Filled-44 (1)" translatesAutoresizingMaskIntoConstraints="NO" id="7MZ-br-JnK">
+                                <rect key="frame" x="547" y="72" width="33" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="33" id="XAy-On-Dmj"/>
+                                    <constraint firstAttribute="height" constant="33" id="maK-Ft-4TS"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.094117647058823528" green="0.36862745098039218" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -429,8 +436,9 @@
                             <constraint firstItem="ff3-OM-zLw" firstAttribute="top" secondItem="9oo-ZG-edg" secondAttribute="bottom" constant="8" id="HD5-pd-rGF"/>
                             <constraint firstAttribute="leadingMargin" secondItem="zYB-Rf-a58" secondAttribute="leading" id="J2B-oN-oNE"/>
                             <constraint firstItem="eoa-yc-v8G" firstAttribute="top" secondItem="ff3-OM-zLw" secondAttribute="bottom" constant="8" id="L0t-Xf-JOw"/>
-                            <constraint firstItem="F9u-Z7-yBu" firstAttribute="trailing" secondItem="tVO-dH-n8V" secondAttribute="trailingMargin" id="MqT-eL-Y0f"/>
+                            <constraint firstItem="F9u-Z7-yBu" firstAttribute="trailing" secondItem="tVO-dH-n8V" secondAttribute="trailingMargin" constant="-103" id="MqT-eL-Y0f"/>
                             <constraint firstItem="s2b-pA-Jpa" firstAttribute="leading" secondItem="tVO-dH-n8V" secondAttribute="leading" id="Mwr-A4-OES"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="7MZ-br-JnK" secondAttribute="trailing" id="PpI-SV-cVa"/>
                             <constraint firstItem="9oo-ZG-edg" firstAttribute="top" secondItem="F9u-Z7-yBu" secondAttribute="bottom" constant="28" id="RA8-h4-bH7"/>
                             <constraint firstAttribute="trailing" secondItem="SDX-Ah-eUr" secondAttribute="trailing" id="SjC-Mz-c6s"/>
                             <constraint firstItem="eoa-yc-v8G" firstAttribute="leading" secondItem="zYB-Rf-a58" secondAttribute="trailing" constant="8" id="Vaa-dZ-vJ2"/>
@@ -443,6 +451,7 @@
                             <constraint firstItem="9oo-ZG-edg" firstAttribute="top" secondItem="F9u-Z7-yBu" secondAttribute="bottom" constant="8" id="uAX-Rz-CVm"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ff3-OM-zLw" secondAttribute="leading" id="vhR-fV-RkL"/>
                             <constraint firstItem="F9u-Z7-yBu" firstAttribute="leading" secondItem="tVO-dH-n8V" secondAttribute="leadingMargin" id="vtF-EU-i6Z"/>
+                            <constraint firstItem="7MZ-br-JnK" firstAttribute="top" secondItem="HCE-Xf-Qwf" secondAttribute="bottom" constant="8" id="yPY-dy-95r"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -473,6 +482,7 @@
                         <outlet property="addToFavoritesButton" destination="W8G-y4-Rkf" id="IrX-7g-AMh"/>
                         <outlet property="completeButton" destination="s2b-pA-Jpa" id="ug8-wO-Jhw"/>
                         <outlet property="deleteButton" destination="SDX-Ah-eUr" id="whZ-uK-GMn"/>
+                        <outlet property="favoriteStar" destination="7MZ-br-JnK" id="xep-dq-f5S"/>
                         <outlet property="reminderDueDateLabel" destination="9oo-ZG-edg" id="cdv-As-Yp5"/>
                         <outlet property="reminderDueTimeLabel" destination="zYB-Rf-a58" id="131-MD-HCE"/>
                         <outlet property="reminderNameLabel" destination="F9u-Z7-yBu" id="crw-eb-Pjc"/>
@@ -571,6 +581,7 @@
         <image name="Infinity-30" width="30" height="30"/>
         <image name="Present-30" width="30" height="30"/>
         <image name="Settings-50" width="50" height="50"/>
+        <image name="Star Filled-44 (1)" width="44" height="44"/>
         <image name="Week View-30" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>

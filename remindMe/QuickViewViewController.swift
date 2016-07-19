@@ -39,6 +39,8 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
     
     @IBOutlet weak var addToFavoritesButton: UIBarButtonItem!
     
+    @IBOutlet weak var favoriteStar: UIImageView!
+    
     // MARK: - Delegates
     
     weak var delegate: QuickViewViewControllerDelegate?
@@ -105,6 +107,31 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
         delegate?.quickViewViewControllerDidDelete(self, didDeleteReminder: incomingReminder!)
     }
     
+    func favoriteReminder() {
+        if let reminder = incomingReminder {
+            if reminder.isFavorite == true {
+                reminder.setFavorite(false)
+            } else {
+                reminder.setFavorite(true)
+            }
+        }
+        let coreDataHandler = CoreDataHandler()
+        coreDataHandler.setObjectContext(managedObjectContext)
+        coreDataHandler.save()
+        setFavoriteStar()
+        
+    }
+    
+    func setFavoriteStar() {
+        if let reminder = incomingReminder {
+            if reminder.isFavorite == true {
+                favoriteStar.image = UIImage.init(named: "Star Filled-44 (1).png")
+            } else {
+                favoriteStar.image = UIImage.init(named: "Star Filled-44.png")
+            }
+        }
+    }
+    
     // MARK: - Delegate Methods
     
     // MARK: AddReminder
@@ -140,12 +167,10 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
     
     // MARK: - Methods
     
-    override func viewDidLoad() {
-        print(#function)
-        super.viewDidLoad()
-        
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         snoozeButton.layer.cornerRadius = 10
-
+        
         if let reminder = incomingReminder {
             updateLabels(with: reminder)
             setCompleteButton(with: reminder)
@@ -153,7 +178,19 @@ class QuickViewViewController: UIViewController, AddReminderViewControllerDelega
             if reminder.isDue() {
                 snoozeButton.hidden = false
             }
+            
         }
+        setFavoriteStar()
+        
+    }
+    
+    override func viewDidLoad() {
+        print(#function)
+        super.viewDidLoad()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(favoriteReminder))
+        favoriteStar.addGestureRecognizer(tapGesture)
+        
+        
         
     }
     

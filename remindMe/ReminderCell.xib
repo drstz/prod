@@ -21,13 +21,21 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q7C-O2-8PD">
                         <rect key="frame" x="0.0" y="8" width="312" height="91"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w38-s8-8YQ">
-                                <rect key="frame" x="8" y="8" width="20" height="20"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Star Filled-44 (1)" translatesAutoresizingMaskIntoConstraints="NO" id="scb-NO-84Z">
+                                <rect key="frame" x="8" y="8" width="23" height="23"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="20" id="vhs-L3-aJ3"/>
-                                    <constraint firstAttribute="height" constant="20" id="yUa-vd-zn8"/>
+                                    <constraint firstAttribute="width" constant="23" id="Aaj-N3-vGI"/>
+                                    <constraint firstAttribute="height" constant="23" id="wkI-V7-ckd"/>
                                 </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reminder Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cNe-HO-hOr">
+                                <rect key="frame" x="34" y="8" width="137" height="23"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w38-s8-8YQ">
+                                <rect key="frame" x="34" y="36" width="20" height="20"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="day" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pcd-jg-yJM">
                                 <rect key="frame" x="277" y="63" width="27" height="20"/>
@@ -40,19 +48,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Repeats:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="inR-4p-X3F">
-                                <rect key="frame" x="36" y="69" width="46" height="14"/>
+                                <rect key="frame" x="34" y="69" width="46" height="14"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NDate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcl-hb-zg4">
-                                <rect key="frame" x="90" y="69" width="33" height="14"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reminder Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cNe-HO-hOr">
-                                <rect key="frame" x="36" y="8" width="137" height="23"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Short Date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jiE-5L-44b">
@@ -61,27 +59,32 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NDate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcl-hb-zg4">
+                                <rect key="frame" x="86" y="69" width="33" height="14"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="cNe-HO-hOr" firstAttribute="top" secondItem="q7C-O2-8PD" secondAttribute="top" constant="8" id="74h-fF-DX4"/>
-                            <constraint firstItem="RT5-B8-dMw" firstAttribute="top" secondItem="q7C-O2-8PD" secondAttribute="top" constant="8" id="9HP-cG-y4g"/>
-                            <constraint firstAttribute="trailing" secondItem="jiE-5L-44b" secondAttribute="trailing" constant="8" id="Azk-IL-W7F"/>
-                            <constraint firstAttribute="bottom" secondItem="Pcd-jg-yJM" secondAttribute="bottom" constant="8" id="Fv8-mT-MOH"/>
-                            <constraint firstItem="w38-s8-8YQ" firstAttribute="leading" secondItem="q7C-O2-8PD" secondAttribute="leading" constant="8" id="ISr-sm-jPn"/>
-                            <constraint firstItem="w38-s8-8YQ" firstAttribute="top" secondItem="q7C-O2-8PD" secondAttribute="top" constant="8" id="O1R-aD-zpb"/>
-                            <constraint firstItem="inR-4p-X3F" firstAttribute="leading" secondItem="q7C-O2-8PD" secondAttribute="leading" constant="36" id="Vdu-Zx-USt"/>
+                            <constraint firstAttribute="bottom" secondItem="Bcl-hb-zg4" secondAttribute="bottom" constant="8" id="3bh-SP-DWH"/>
+                            <constraint firstAttribute="trailing" secondItem="jiE-5L-44b" secondAttribute="trailing" constant="8" id="7cM-gY-Xam"/>
+                            <constraint firstItem="Bcl-hb-zg4" firstAttribute="leading" secondItem="inR-4p-X3F" secondAttribute="trailing" constant="6" id="C1Y-Uc-34G"/>
+                            <constraint firstItem="scb-NO-84Z" firstAttribute="leading" secondItem="q7C-O2-8PD" secondAttribute="leading" constant="8" id="Fdn-RR-nPl"/>
+                            <constraint firstAttribute="trailing" secondItem="Pcd-jg-yJM" secondAttribute="trailing" constant="8" id="GPn-mh-TVz"/>
+                            <constraint firstAttribute="bottom" secondItem="inR-4p-X3F" secondAttribute="bottom" constant="8" id="JjT-bn-MP7"/>
+                            <constraint firstItem="RT5-B8-dMw" firstAttribute="top" secondItem="q7C-O2-8PD" secondAttribute="top" constant="8" id="KEP-na-rA1"/>
+                            <constraint firstItem="cNe-HO-hOr" firstAttribute="top" secondItem="q7C-O2-8PD" secondAttribute="top" constant="8" id="KFf-vo-fje"/>
+                            <constraint firstItem="jiE-5L-44b" firstAttribute="top" secondItem="RT5-B8-dMw" secondAttribute="bottom" constant="4" id="Mca-Ns-5tp"/>
+                            <constraint firstAttribute="trailing" secondItem="RT5-B8-dMw" secondAttribute="trailing" constant="8" id="ULk-DN-K8k"/>
                             <constraint firstItem="inR-4p-X3F" firstAttribute="top" secondItem="cNe-HO-hOr" secondAttribute="bottom" constant="8" id="X1o-Ux-w7a"/>
                             <constraint firstItem="cNe-HO-hOr" firstAttribute="leading" secondItem="q7C-O2-8PD" secondAttribute="leading" constant="36" id="X6n-Wf-oeP"/>
                             <constraint firstAttribute="bottom" secondItem="cNe-HO-hOr" secondAttribute="bottom" constant="63" id="b81-rJ-8Td"/>
-                            <constraint firstItem="cNe-HO-hOr" firstAttribute="leading" secondItem="w38-s8-8YQ" secondAttribute="trailing" constant="8" id="c38-R9-ehU"/>
-                            <constraint firstAttribute="bottom" secondItem="Bcl-hb-zg4" secondAttribute="bottom" constant="8" id="cAJ-Eh-kdn"/>
+                            <constraint firstItem="cNe-HO-hOr" firstAttribute="leading" secondItem="scb-NO-84Z" secondAttribute="trailing" constant="3" id="cZ9-Zb-90l"/>
                             <constraint firstItem="Pcd-jg-yJM" firstAttribute="leading" secondItem="cNe-HO-hOr" secondAttribute="trailing" constant="120" id="ciT-tc-kBO"/>
-                            <constraint firstAttribute="trailing" secondItem="Pcd-jg-yJM" secondAttribute="trailing" constant="8" id="jL0-De-s0k"/>
-                            <constraint firstItem="jiE-5L-44b" firstAttribute="top" secondItem="RT5-B8-dMw" secondAttribute="bottom" constant="4" id="kFM-qn-WlH"/>
-                            <constraint firstAttribute="bottom" secondItem="inR-4p-X3F" secondAttribute="bottom" constant="8" id="mzm-V0-Yxa"/>
-                            <constraint firstAttribute="trailing" secondItem="RT5-B8-dMw" secondAttribute="trailing" constant="8" id="v8O-Yu-Umd"/>
-                            <constraint firstItem="Bcl-hb-zg4" firstAttribute="leading" secondItem="inR-4p-X3F" secondAttribute="trailing" constant="8" id="yfl-lW-gWb"/>
+                            <constraint firstItem="scb-NO-84Z" firstAttribute="top" secondItem="q7C-O2-8PD" secondAttribute="top" constant="8" id="ntJ-Hw-93P"/>
+                            <constraint firstItem="inR-4p-X3F" firstAttribute="leading" secondItem="q7C-O2-8PD" secondAttribute="leading" constant="34" id="q5D-yg-9qB"/>
+                            <constraint firstAttribute="bottom" secondItem="Pcd-jg-yJM" secondAttribute="bottom" constant="8" id="zns-Ex-hgK"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -106,6 +109,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="dayLabel" destination="Pcd-jg-yJM" id="iTp-aU-9th"/>
+                <outlet property="favoriteStar" destination="scb-NO-84Z" id="j1I-tF-zty"/>
                 <outlet property="nextDueDate" destination="Bcl-hb-zg4" id="Ory-QI-8CW"/>
                 <outlet property="reminderBackgroundView" destination="k9z-bB-732" id="cer-wp-IPh"/>
                 <outlet property="reminderIsDueView" destination="w38-s8-8YQ" id="Ib9-ex-fIJ"/>
@@ -117,4 +121,7 @@
             <point key="canvasLocation" x="496" y="967"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="Star Filled-44 (1)" width="44" height="44"/>
+    </resources>
 </document>

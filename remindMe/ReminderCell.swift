@@ -29,6 +29,8 @@ class ReminderCell: UITableViewCell {
     @IBOutlet weak var reminderSelectionView: UIView!
     @IBOutlet weak var reminderIsDueView: UIView!
     
+    @IBOutlet weak var favoriteStar: UIImageView!
+    
     weak var delegate : ReminderCellDelegate?
     weak var backgroundDelegate: ReminderCellBackGroundDelegate?
     
@@ -43,7 +45,7 @@ class ReminderCell: UITableViewCell {
     let cellBackgroundColor = UIColor.whiteColor()
     let cellBackgroundColorDimmed = UIColor.whiteColor()
     
-    let lateColor = UIColor.whiteColor()
+    let lateColor = UIColor(red: 231/255, green: 76/255, blue: 60/255, alpha: 1)
     let normalTextColor = UIColor.whiteColor()
     
     let selectionColor = UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1)
@@ -120,20 +122,25 @@ class ReminderCell: UITableViewCell {
     func configureBackgroundColors(isFavorite: Bool, isLate: Bool, isComplete: Bool) {
         //print(#function)
         if isFavorite == true {
+            favoriteStar.hidden = false
             if isLate && !isComplete {
-                backgroundDelegate?.changeBackgroundColor(favoriteColor)
-                reminderIsDueView.backgroundColor = UIColor.redColor()
+                // backgroundDelegate?.changeBackgroundColor(favoriteColor)
+                backgroundDelegate?.changeBackgroundColor(lateColor)
+                //reminderIsDueView.backgroundColor = UIColor.redColor()
             } else {
-                backgroundDelegate?.changeBackgroundColor(favoriteColor)
-                reminderIsDueView.backgroundColor = UIColor.clearColor()
+                // backgroundDelegate?.changeBackgroundColor(favoriteColor)
+                backgroundDelegate?.changeBackgroundColor(tintColor)
+                //reminderIsDueView.backgroundColor = UIColor.clearColor()
+                
             }
         } else {
+            favoriteStar.hidden = true
             if isLate && !isComplete {
-                backgroundDelegate?.changeBackgroundColor(tintColor)
-                reminderIsDueView.backgroundColor = UIColor.redColor()
+                backgroundDelegate?.changeBackgroundColor(lateColor)
+                //reminderIsDueView.backgroundColor = UIColor.redColor()
             } else {
                 backgroundDelegate?.changeBackgroundColor(tintColor)
-                reminderIsDueView.backgroundColor = UIColor.clearColor()
+                //reminderIsDueView.backgroundColor = UIColor.clearColor()
             }
         }
     }
@@ -145,8 +152,8 @@ class ReminderCell: UITableViewCell {
             shortDateLabel.textColor = normalTextColor
             timeLabel.textColor = normalTextColor
         } else {
-            dayLabel.textColor = lateColor
-            shortDateLabel.textColor = lateColor
+            dayLabel.textColor = UIColor.whiteColor()
+            shortDateLabel.textColor = UIColor.whiteColor()
             timeLabel.textColor = UIColor.whiteColor()
         }
     }

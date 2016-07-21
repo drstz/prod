@@ -56,7 +56,8 @@ extension AllRemindersViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if navigationController?.toolbarHidden == true {
-            performSegueWithIdentifier("QuickView", sender: tableView.cellForRowAtIndexPath(indexPath))
+            //performSegueWithIdentifier("QuickView", sender: tableView.cellForRowAtIndexPath(indexPath))
+            performSegueWithIdentifier("Popup", sender: tableView.cellForRowAtIndexPath(indexPath))
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
         let selectedIndexPathsCount = tableView.indexPathsForSelectedRows?.count

@@ -318,7 +318,7 @@ class AllRemindersViewController: UIViewController {
         case "Popup":
             let popupViewController = segue.destinationViewController as! PopupViewController
             
-            // controller.delegate = self
+            popupViewController.delegate = self
             
             // Make Quick View a delegate of All Reminders
             // delegate = controller

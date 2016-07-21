@@ -113,6 +113,9 @@
                                                 <state key="normal" image="starWhite100">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="favorite" destination="Cxg-hC-dD1" eventType="touchUpInside" id="Hb7-ni-hRM"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tgk-4Q-gGl" userLabel="Delete">
                                                 <rect key="frame" x="120" y="90" width="120" height="90"/>
@@ -124,6 +127,9 @@
                                                 <state key="normal" title="Delete">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="delete" destination="Cxg-hC-dD1" eventType="touchUpInside" id="U8l-BF-zB3"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Axh-RT-VoZ" userLabel="Edit">
                                                 <rect key="frame" x="0.0" y="90" width="120" height="90"/>
@@ -135,6 +141,10 @@
                                                 <state key="normal" title="Edit">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="edit" destination="Cxg-hC-dD1" eventType="touchUpInside" id="M9b-OV-AOS"/>
+                                                    <segue destination="EXe-5T-xJU" kind="presentation" identifier="EditReminder" id="KGI-Le-5Ff"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -188,6 +198,9 @@
                                         <state key="normal" title="Snooze">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="snooze" destination="Cxg-hC-dD1" eventType="touchUpInside" id="0s8-hF-Rgw"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.15686274509803921" green="0.32549019607843138" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
@@ -219,6 +232,10 @@
                     </view>
                     <connections>
                         <outlet property="backgroundView" destination="jSN-w1-Pda" id="2MM-gS-Oie"/>
+                        <outlet property="completeButton" destination="HBV-pR-rmt" id="oPE-jc-kNE"/>
+                        <outlet property="deleteButton" destination="Tgk-4Q-gGl" id="nE2-ax-M1S"/>
+                        <outlet property="editButton" destination="Axh-RT-VoZ" id="fIX-P1-0FX"/>
+                        <outlet property="favoriteButton" destination="QYr-9d-yEg" id="cGg-TQ-w32"/>
                         <outlet property="popup" destination="07M-Fn-hT3" id="GkO-54-jDN"/>
                         <outlet property="reminderDayLabel" destination="nbo-6D-mqr" id="Ndz-3w-oXI"/>
                         <outlet property="reminderDueTimeLabel" destination="QVj-hn-ygk" id="ZiG-UZ-n1a"/>
@@ -229,7 +246,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uMd-44-IpN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1614" y="-1046"/>
+            <point key="canvasLocation" x="1990" y="-1208"/>
         </scene>
         <!--All Reminders View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -764,6 +781,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="e1F-Pi-sXX"/>
-        <segue reference="v7Q-ZB-wc4"/>
+        <segue reference="KGI-Le-5Ff"/>
     </inferredMetricsTieBreakers>
 </document>

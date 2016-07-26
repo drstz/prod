@@ -24,20 +24,18 @@ extension AllRemindersViewController {
         coreDataHandler.save()
         navigationController?.setToolbarHidden(true, animated: true)
     }
-    
-    func toolbarDelete() {
-        print(#function)
-        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedIndexPaths {
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                deleteReminder(reminder, save: false)
-            }
-        }
         
+    func toolbarDelete() {
+        let reminders = selectedReminders()
+        for reminder in reminders {
+            // Save == false because function saves every time. Avoid saving twice
+            deleteReminder(reminder, save: false)
+        }
         coreDataHandler.save()
+        deselectRows()
         navigationController?.setToolbarHidden(true, animated: true)
     }
-        
+    
     func selectionHasFavorite(selectedReminders: [Reminder]) -> Bool {
         for reminder in selectedReminders {
             if reminder.isFavorite == true {

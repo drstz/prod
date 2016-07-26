@@ -14,6 +14,7 @@ extension AllRemindersViewController: ReminderCellDelegate {
     // MARK: Cell
     
     func cellWasLongPressed(cell: ReminderCell, longPress: UILongPressGestureRecognizer) {
+        print(#function)
         let indexPath = tableView.indexPathForCell(cell)
         
         if longPress.state == .Began {

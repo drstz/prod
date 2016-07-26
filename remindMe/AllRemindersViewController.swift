@@ -278,6 +278,8 @@ class AllRemindersViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         print(#function)
+        let isOnMainThread = NSThread.isMainThread()
+        print("Is on main thread = \(isOnMainThread)")
         let segueIdentifier = segue.identifier!
         
         switch segueIdentifier {
@@ -321,6 +323,7 @@ class AllRemindersViewController: UIViewController {
                 }
             }
         case "Popup":
+            print("Preparing popup")
             let popupViewController = segue.destinationViewController as! PopupViewController
             
             popupViewController.delegate = self
@@ -341,6 +344,7 @@ class AllRemindersViewController: UIViewController {
                     popupViewController.managedObjectContext = managedObjectContext
                 }
             }
+            print("Done preparing popup")
         default:
             break
             

@@ -11,7 +11,6 @@ import Foundation
 extension AllRemindersViewController {
     // MARK: Toolbar Actions
     
-    
     func toolbarComplete() {
         let reminders = selectedReminders()
         for reminder in reminders {
@@ -31,6 +30,42 @@ extension AllRemindersViewController {
         coreDataHandler.save()
         deselectRows()
         navigationController?.setToolbarHidden(true, animated: true)
+    }
+    
+    
+    
+    func toolbarFavorite() {
+        let reminders = selectedReminders()
+        if selectionHasFavorite(reminders) && selectionIsMixed(reminders) {
+            for reminder in reminders {
+                reminder.setFavorite(true)
+            }
+        } else {
+            for reminder in reminders {
+                if reminder.isFavorite == false {
+                    reminder.setFavorite(true)
+                } else {
+                    reminder.setFavorite(false)
+                }
+            }
+        }
+        
+        coreDataHandler.save()
+        deselectRows()
+        navigationController?.setToolbarHidden(true, animated: true)
+    }
+    
+    // MARK: Selection and deselection
+    
+    func selectedReminders() -> [Reminder] {
+        var reminders = [Reminder]()
+        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
+            for indexPath in selectedIndexPaths {
+                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
+                reminders.append(reminder)
+            }
+        }
+        return reminders
     }
     
     func selectionHasFavorite(selectedReminders: [Reminder]) -> Bool {
@@ -54,38 +89,6 @@ extension AllRemindersViewController {
             }
         }
         return false
-    }
-    
-    func selectedReminders() -> [Reminder] {
-        var reminders = [Reminder]()
-        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedIndexPaths {
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                reminders.append(reminder)
-            }
-        }
-        return reminders
-    }
-    
-    func toolbarFavorite() {
-        let reminders = selectedReminders()
-        if selectionHasFavorite(reminders) && selectionIsMixed(reminders) {
-            for reminder in reminders {
-                reminder.setFavorite(true)
-            }
-        } else {
-            for reminder in reminders {
-                if reminder.isFavorite == false {
-                    reminder.setFavorite(true)
-                } else {
-                    reminder.setFavorite(false)
-                }
-            }
-        }
-        
-        coreDataHandler.save()
-        deselectRows()
-        navigationController?.setToolbarHidden(true, animated: true)
     }
     
     func deselectRows() {

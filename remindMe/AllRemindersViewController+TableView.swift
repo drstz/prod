@@ -71,9 +71,22 @@ extension AllRemindersViewController: UITableViewDelegate {
     // MARK: - Selection
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print(#function)
         if navigationController?.toolbarHidden == true {
             //performSegueWithIdentifier("QuickView", sender: tableView.cellForRowAtIndexPath(indexPath))
-            performSegueWithIdentifier("Popup", sender: tableView.cellForRowAtIndexPath(indexPath))
+            //performSegueWithIdentifier("Popup", sender: tableView.cellForRowAtIndexPath(indexPath))
+            
+            // This is a bug in iOS maybe. For some reason this doesn't happen on the main thread
+            // Should find where UI code is not on main thread for some reason or what causes a delay
+            // but no crash
+            
+            let isOnMainThread = NSThread.isMainThread()
+            print("Is on main thread = \(isOnMainThread)")
+            dispatch_async(dispatch_get_main_queue(),{
+               self.performSegueWithIdentifier("Popup",sender: tableView.cellForRowAtIndexPath(indexPath))
+            })
+            
+            
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
         let selectedIndexPathsCount = tableView.indexPathsForSelectedRows?.count
@@ -81,6 +94,7 @@ extension AllRemindersViewController: UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        print(#function)
         let selectedIndexPathsCount = tableView.indexPathsForSelectedRows?.count
         print("There are \(selectedIndexPathsCount) selected rows")
         if selectedIndexPathsCount == nil {

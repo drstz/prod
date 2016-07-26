@@ -11,20 +11,17 @@ import Foundation
 extension AllRemindersViewController {
     // MARK: Toolbar Actions
     
+    
     func toolbarComplete() {
-        print(#function)
-        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedIndexPaths {
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                reminder.complete()
-            }
+        let reminders = selectedReminders()
+        for reminder in reminders {
+           reminder.complete()
         }
-        
         coreDataHandler.save()
+        deselectRows()
         navigationController?.setToolbarHidden(true, animated: true)
     }
-        
+    
     func toolbarDelete() {
         let reminders = selectedReminders()
         for reminder in reminders {

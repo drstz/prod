@@ -37,14 +37,49 @@ extension AllRemindersViewController {
         coreDataHandler.save()
         navigationController?.setToolbarHidden(true, animated: true)
     }
+        
+    func selectionHasFavorite(selectedReminders: [Reminder]) -> Bool {
+        for reminder in selectedReminders {
+            if reminder.isFavorite == true {
+                return true
+            }
+        }
+        return false
+    }
     
-    func toolbarFavorite() {
-        print(#function)
+    func selectionIsMixed(selectedReminders: [Reminder]) -> Bool {
+        var isFavorite: Bool?
+        for reminder in selectedReminders {
+            if isFavorite == nil {
+                isFavorite = reminder.isFavorite as? Bool
+            } else {
+                if reminder.isFavorite != isFavorite {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    func selectedReminders() -> [Reminder] {
+        var reminders = [Reminder]()
         if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
             for indexPath in selectedIndexPaths {
                 let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                reminders.append(reminder)
+            }
+        }
+        return reminders
+    }
+    
+    func toolbarFavorite() {
+        let reminders = selectedReminders()
+        if selectionHasFavorite(reminders) && selectionIsMixed(reminders) {
+            for reminder in reminders {
+                reminder.setFavorite(true)
+            }
+        } else {
+            for reminder in reminders {
                 if reminder.isFavorite == false {
                     reminder.setFavorite(true)
                 } else {
@@ -52,8 +87,18 @@ extension AllRemindersViewController {
                 }
             }
         }
+        
         coreDataHandler.save()
+        deselectRows()
         navigationController?.setToolbarHidden(true, animated: true)
+    }
+    
+    func deselectRows() {
+        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
+            for indexPath in selectedIndexPaths {
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            }
+        }
     }
     
 }

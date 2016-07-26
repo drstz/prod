@@ -42,10 +42,10 @@ class ReminderCell: UITableViewCell {
     let favoriteColor = UIColor(red: 1, green: 223/255, blue: 0, alpha: 1)
     let favoriteColorDimmed = UIColor(red: 1, green: 223/255, blue: 0, alpha: 0.3)
     
-    let cellBackgroundColor = UIColor.whiteColor()
+    let cellBackgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
     let cellBackgroundColorDimmed = UIColor.whiteColor()
     
-    let lateColor = UIColor(red: 231/255, green: 76/255, blue: 60/255, alpha: 1)
+    let lateColor = UIColor(red: 149/255, green: 40/255, blue: 54/255, alpha: 1)
     let normalTextColor = UIColor.whiteColor()
     
     let selectionColor = UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1)
@@ -129,7 +129,7 @@ class ReminderCell: UITableViewCell {
                 //reminderIsDueView.backgroundColor = UIColor.redColor()
             } else {
                 // backgroundDelegate?.changeBackgroundColor(favoriteColor)
-                backgroundDelegate?.changeBackgroundColor(tintColor)
+                backgroundDelegate?.changeBackgroundColor(cellBackgroundColor)
                 //reminderIsDueView.backgroundColor = UIColor.clearColor()
                 
             }
@@ -139,19 +139,21 @@ class ReminderCell: UITableViewCell {
                 backgroundDelegate?.changeBackgroundColor(lateColor)
                 //reminderIsDueView.backgroundColor = UIColor.redColor()
             } else {
-                backgroundDelegate?.changeBackgroundColor(tintColor)
+                backgroundDelegate?.changeBackgroundColor(cellBackgroundColor)
                 //reminderIsDueView.backgroundColor = UIColor.clearColor()
             }
         }
     }
     
     func configureLabelColors(isComplete: Bool, isLate: Bool) {
-        //print(#function)
+        print(#function)
         if isComplete || !isLate {
-            dayLabel.textColor = normalTextColor
-            shortDateLabel.textColor = normalTextColor
-            timeLabel.textColor = normalTextColor
+            print("Chaning text to white")
+            dayLabel.textColor = UIColor.whiteColor()
+            shortDateLabel.textColor = UIColor.whiteColor()
+            timeLabel.textColor = UIColor.whiteColor()
         } else {
+            print("Chaning text to white")
             dayLabel.textColor = UIColor.whiteColor()
             shortDateLabel.textColor = UIColor.whiteColor()
             timeLabel.textColor = UIColor.whiteColor()

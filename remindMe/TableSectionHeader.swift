@@ -14,7 +14,16 @@ class TableSectionHeader: UITableViewHeaderFooterView {
     @IBOutlet weak var dateLabel: UILabel!
     
     override func awakeFromNib() {
+        print(#function)
         super.awakeFromNib()
+    
+        titleLabel.layer.cornerRadius = 3
+        titleLabel.layer.masksToBounds = true
+        // titleLabel.backgroundColor = UIColor(red: 40/255, green: 114/255, blue: 192/255, alpha: 1)
+        
+        titleLabel.backgroundColor = UIColor.clearColor()
+        titleLabel.textColor = UIColor.whiteColor()
+        
         
     }
 }

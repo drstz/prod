@@ -108,8 +108,13 @@ class AllRemindersViewController: UIViewController {
     override func viewDidLoad() {
         print(#function)
         super.viewDidLoad()
+        
+        navigationController?.navigationBar.tintColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        
+        navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
     
         tableView.separatorColor = UIColor.clearColor()
+        tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
@@ -274,16 +279,17 @@ class AllRemindersViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         print(#function)
         let segueIdentifier = segue.identifier!
-        let navigationController = segue.destinationViewController as! UINavigationController
         
         switch segueIdentifier {
             
         case "AddReminder":
+            let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! AddReminderViewController
             controller.delegate = self
             controller.managedObjectContext = managedObjectContext
             controller.list = list
         case "EditReminder":
+            let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! AddReminderViewController
             controller.delegate = self
             controller.managedObjectContext = managedObjectContext
@@ -294,6 +300,7 @@ class AllRemindersViewController: UIViewController {
             }
             
         case "QuickView":
+            let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! QuickViewViewController
             controller.delegate = self
             
@@ -313,7 +320,27 @@ class AllRemindersViewController: UIViewController {
                     controller.managedObjectContext = managedObjectContext
                 }
             }
+        case "Popup":
+            let popupViewController = segue.destinationViewController as! PopupViewController
             
+            popupViewController.delegate = self
+            
+            // Make Quick View a delegate of All Reminders
+            // delegate = controller
+            
+            if let reminder = sender as? Reminder {
+                // When coming from notification
+                popupViewController.incomingReminder = reminder
+                popupViewController.managedObjectContext = managedObjectContext
+                //controller.notificationHasGoneOff = notificationHasGoneOff
+            } else {
+                // When coming from list
+                if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
+                    let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
+                    popupViewController.incomingReminder = reminder
+                    popupViewController.managedObjectContext = managedObjectContext
+                }
+            }
         default:
             break
             

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="EFl-GD-4wn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="EFl-GD-4wn">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -104,12 +104,12 @@
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QYr-9d-yEg" userLabel="Favorite">
                                                 <rect key="frame" x="120" y="0.0" width="120" height="90"/>
-                                                <color key="backgroundColor" red="0.12549019607843137" green="0.21176470588235294" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" red="0.33138373952835382" green="0.56260358094708451" blue="0.76078431372549016" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="120" id="D3W-sJ-2bd"/>
                                                     <constraint firstAttribute="height" constant="90" id="MJh-Rd-a60"/>
                                                 </constraints>
-                                                <inset key="imageEdgeInsets" minX="35" minY="25" maxX="35" maxY="25"/>
+                                                <inset key="imageEdgeInsets" minX="42" minY="30" maxX="42" maxY="30"/>
                                                 <state key="normal" image="starWhite100">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -187,7 +187,7 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7E1-MU-1kD">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7E1-MU-1kD">
                                         <rect key="frame" x="146" y="125" width="64" height="30"/>
                                         <color key="backgroundColor" red="0.14117647058823529" green="0.56470588235294117" blue="0.81568627450980391" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -780,7 +780,7 @@
         <image name="starWhite100" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="XiK-Cj-5ub"/>
         <segue reference="e1F-Pi-sXX"/>
-        <segue reference="KGI-Le-5Ff"/>
     </inferredMetricsTieBreakers>
 </document>

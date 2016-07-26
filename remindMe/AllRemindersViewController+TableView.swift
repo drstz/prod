@@ -18,6 +18,7 @@ extension AllRemindersViewController: UITableViewDataSource {
     
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        print(#function)
         let sectionInfo = coreDataHandler.fetchedResultsController.sections! as [NSFetchedResultsSectionInfo]
         let text = sectionInfo[section].name
         
@@ -27,7 +28,22 @@ extension AllRemindersViewController: UITableViewDataSource {
         
         header.titleLabel.text = text
         
+        // header.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        
         return view
+    }
+    
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        print(#function)
+        let sectionInfo = coreDataHandler.fetchedResultsController.sections! as [NSFetchedResultsSectionInfo]
+        let text = sectionInfo[section].name
+        let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("TableSectionHeader")
+        let header = view as! TableSectionHeader
+        
+        header.titleLabel.text = text
+        header.titleLabel.backgroundColor = UIColor(red: 40/255, green: 114/255, blue: 192/255, alpha: 1)
+        
+        
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

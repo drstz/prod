@@ -134,6 +134,11 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         if let reminder = incomingReminder {
             setLabels(with: reminder)
             setFavoriteStar()
+            if reminder.isDue() && reminder.isComplete == false {
+                snoozeButton.hidden = false
+            } else {
+                snoozeButton.hidden = true
+            }
         }
         
     }

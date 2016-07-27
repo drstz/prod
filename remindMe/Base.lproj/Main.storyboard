@@ -73,7 +73,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view tag="123" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="07M-Fn-hT3" userLabel="Pop-up View">
-                                <rect key="frame" x="180" y="100" width="240" height="400"/>
+                                <rect key="frame" x="180" y="85" width="240" height="400"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Send email to Tim re New iPhone" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="if0-ro-VbL">
                                         <rect key="frame" x="12" y="8" width="216" height="63"/>
@@ -223,15 +223,33 @@
                                     <constraint firstAttribute="width" constant="240" id="qdG-ex-g3D"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e6o-eg-uX9">
+                                <rect key="frame" x="275" y="493" width="50" height="44"/>
+                                <color key="backgroundColor" red="0.12156862745098039" green="0.25490196078431371" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="8Zz-oT-wo9"/>
+                                    <constraint firstAttribute="width" constant="50" id="UqI-9T-ESJ"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                <state key="normal" image="deleteWhite100">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="close" destination="Cxg-hC-dD1" eventType="touchUpInside" id="rVC-Qm-7ag"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.92549019607843142" green="0.92549019607843142" blue="0.92549019607843142" alpha="0.94878771551724139" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="07M-Fn-hT3" firstAttribute="centerX" secondItem="jSN-w1-Pda" secondAttribute="centerX" id="Ox6-qg-cGD"/>
-                            <constraint firstItem="07M-Fn-hT3" firstAttribute="centerY" secondItem="jSN-w1-Pda" secondAttribute="centerY" id="dZ8-6R-IV1"/>
+                            <constraint firstItem="07M-Fn-hT3" firstAttribute="centerY" secondItem="jSN-w1-Pda" secondAttribute="centerY" constant="-15" id="dZ8-6R-IV1"/>
+                            <constraint firstItem="e6o-eg-uX9" firstAttribute="leading" secondItem="07M-Fn-hT3" secondAttribute="trailing" constant="-145" id="fzx-8N-Ti3"/>
+                            <constraint firstItem="e6o-eg-uX9" firstAttribute="top" secondItem="07M-Fn-hT3" secondAttribute="bottom" constant="8" id="jaD-Qw-KWK"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="backgroundView" destination="jSN-w1-Pda" id="2MM-gS-Oie"/>
+                        <outlet property="closeButton" destination="e6o-eg-uX9" id="LEK-zt-pwz"/>
                         <outlet property="completeButton" destination="HBV-pR-rmt" id="oPE-jc-kNE"/>
                         <outlet property="deleteButton" destination="Tgk-4Q-gGl" id="nE2-ax-M1S"/>
                         <outlet property="editButton" destination="Axh-RT-VoZ" id="fIX-P1-0FX"/>
@@ -774,6 +792,7 @@
         <image name="Settings-50" width="50" height="50"/>
         <image name="Star Filled-44 (1)" width="44" height="44"/>
         <image name="Week View-30" width="30" height="30"/>
+        <image name="deleteWhite100" width="100" height="100"/>
         <image name="starWhite100" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>

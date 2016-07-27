@@ -36,6 +36,8 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     
+    @IBOutlet weak var closeButton: UIButton!
+    
     // MARK: - Delegates
     
     weak var delegate: PopupViewControllerDelegate?
@@ -76,8 +78,8 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         
     }
     
-    @IBAction func edit() {
-
+    @IBAction func close() {
+         dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: - Delegate Methods
@@ -119,6 +121,7 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         popup.layer.masksToBounds = true
         popup.layer.cornerRadius = 10
         snoozeButton.layer.cornerRadius = 10
+        closeButton.layer.cornerRadius = 10
         
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(close))
@@ -150,9 +153,6 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         reminderShortDateLabel.text = convertDateToString(.ShortDate, date: reminder.dueDate)
     }
     
-    func close() {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
     
     func setFavoriteStar() {
         if let reminder = incomingReminder {

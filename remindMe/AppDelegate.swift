@@ -149,6 +149,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(#function)
         NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationWillResignActiveNotification, object: nil)
     }
+    
+    func applicationWillResignActive(application: UIApplication) {
+        
+         print(#function)
+    }
 
     func applicationWillEnterForeground(application: UIApplication) {
         print("")
@@ -157,6 +162,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationWillEnterForegroundNotification, object: nil)
             notificationWentOff = false
         }
+    }
+    
+    func applicationDidBecomeActive(application: UIApplication) {
+        print(#function)
     }
 
     func application(application: UIApplication,
@@ -173,7 +182,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        // App must be running to recieve this event
+        // Must tap notification for this or app must be running
         print("")
         print(#function)
         

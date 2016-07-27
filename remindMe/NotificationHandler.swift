@@ -224,11 +224,14 @@ class NotificationHandler {
     }
     
     func recieveLocalNotificationWithState(state: UIApplicationState) {
+        print(#function)
         if state == .Inactive {
+            print("---------------------")
             print("Handling notification from the background")
+            print("Notification was tapped")
             NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
         } else {
-            print("Handling notification from app")
+            print("Handling notification from app: doing nothing")
             // NSNotificationCenter.defaultCenter().postNotificationName("showNotificationHasGoneOff", object: nil)
         }
     }

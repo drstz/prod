@@ -14,7 +14,7 @@ class TableSectionHeader: UITableViewHeaderFooterView {
     @IBOutlet weak var dateLabel: UILabel!
     
     override func awakeFromNib() {
-        print(#function)
+//        print(#function)
         super.awakeFromNib()
     
         titleLabel.layer.cornerRadius = 3

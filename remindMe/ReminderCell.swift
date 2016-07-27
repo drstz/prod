@@ -55,8 +55,8 @@ class ReminderCell: UITableViewCell {
     // MARK: Methods
     
     deinit {
-        print("")
-        print("Reminder Cell was deallocated")
+//        print("")
+//        print("Reminder Cell was deallocated")
     }
     
     override func awakeFromNib() {
@@ -146,14 +146,14 @@ class ReminderCell: UITableViewCell {
     }
     
     func configureLabelColors(isComplete: Bool, isLate: Bool) {
-        print(#function)
+//        print(#function)
         if isComplete || !isLate {
-            print("Chaning text to white")
+//            print("Chaning text to white")
             dayLabel.textColor = UIColor.whiteColor()
             shortDateLabel.textColor = UIColor.whiteColor()
             timeLabel.textColor = UIColor.whiteColor()
         } else {
-            print("Chaning text to white")
+//            print("Chaning text to white")
             dayLabel.textColor = UIColor.whiteColor()
             shortDateLabel.textColor = UIColor.whiteColor()
             timeLabel.textColor = UIColor.whiteColor()

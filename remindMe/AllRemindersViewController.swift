@@ -100,7 +100,7 @@ class AllRemindersViewController: UIViewController {
     
     deinit {
         fetchedResultsController.delegate = nil
-        print("All Reminders was deallocated")
+//        print("All Reminders was deallocated")
     }
     
     // MARK: View
@@ -116,14 +116,16 @@ class AllRemindersViewController: UIViewController {
         tableView.separatorColor = UIColor.clearColor()
         tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
         print(#function)
         super.viewWillAppear(animated)
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
         
         segmentedControl.selectedSegmentIndex = selectedSegment
         setUpCoreData()
@@ -138,7 +140,7 @@ class AllRemindersViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         print(#function)
         super.viewDidAppear(animated)
-
+        
         let selectedIndex = myTabBarController.selectedIndex
         saveSelectedTab(selectedIndex)
         
@@ -160,6 +162,10 @@ class AllRemindersViewController: UIViewController {
         super.viewWillDisappear(animated)
         print("Here comes the recieved message: \(sentMessage)")
         clearSelectedIndexPaths()
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "completeReminder", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "deferReminder", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "viewReminder", object: nil)
+    
     }
     
     // MARK: Selection
@@ -187,7 +193,7 @@ class AllRemindersViewController: UIViewController {
     // MARK: Coredata
     
     func setUpCoreData() {
-        print(#function)
+//        print(#function)
         
         coreDataHandler.setObjectContext(managedObjectContext)
         
@@ -278,8 +284,7 @@ class AllRemindersViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         print(#function)
-        let isOnMainThread = NSThread.isMainThread()
-        print("Is on main thread = \(isOnMainThread)")
+        
         let segueIdentifier = segue.identifier!
         
         switch segueIdentifier {
@@ -310,6 +315,7 @@ class AllRemindersViewController: UIViewController {
             delegate = controller
             
             if let reminder = sender as? Reminder {
+                
                 // When coming from notification
                 controller.incomingReminder = reminder
                 controller.managedObjectContext = managedObjectContext
@@ -324,6 +330,7 @@ class AllRemindersViewController: UIViewController {
             }
         case "Popup":
             print("Preparing popup")
+    
             let popupViewController = segue.destinationViewController as! PopupViewController
             
             popupViewController.delegate = self
@@ -333,6 +340,7 @@ class AllRemindersViewController: UIViewController {
             
             if let reminder = sender as? Reminder {
                 // When coming from notification
+                print("Coming from notification")
                 popupViewController.incomingReminder = reminder
                 popupViewController.managedObjectContext = managedObjectContext
                 //controller.notificationHasGoneOff = notificationHasGoneOff

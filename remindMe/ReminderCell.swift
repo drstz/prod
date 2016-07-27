@@ -48,7 +48,7 @@ class ReminderCell: UITableViewCell {
     let lateColor = UIColor(red: 149/255, green: 40/255, blue: 54/255, alpha: 1)
     let normalTextColor = UIColor.whiteColor()
     
-    let selectionColor = UIColor(red: 192/255, green: 192/255, blue: 192/255, alpha: 1)
+    let selectionColor = UIColor(red: 148/255, green: 191/255, blue: 215/255, alpha: 1)
     
     let cornerRadius: CGFloat = 5
     

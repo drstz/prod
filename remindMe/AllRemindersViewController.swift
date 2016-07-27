@@ -242,7 +242,7 @@ class AllRemindersViewController: UIViewController {
     
     func setNoReminderView() {
         print(#function)
-        if tableView.numberOfRowsInSection(0) == 0 {
+        if tableView.numberOfSections == 0 {
             print("There are no reminders")
             noReminderScreen.hidden = false
             setNoReminderLabel()
@@ -262,8 +262,8 @@ class AllRemindersViewController: UIViewController {
         } else {
             completedText = "completed"
         }
-        if let selectedTabIndex = tabBarController?.selectedIndex {
-            switch selectedTabIndex {
+        if let selectedTabIndex = myTabBarController?.selectedIndex {
+            switch myTabIndex {
             case 0:
                 text = "No \(completedText) reminders for today"
             case 1:

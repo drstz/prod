@@ -268,23 +268,20 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="dCq-62-gOZ"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bsd-RS-vSF">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bsd-RS-vSF">
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No reminders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHh-K8-F3j">
-                                        <rect key="frame" x="151" y="226" width="298" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="298" id="LOv-Ub-Zfr"/>
-                                        </constraints>
+                                        <rect key="frame" x="249" y="233" width="103" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.12941176470588237" green="0.34509803921568627" blue="0.50980392156862742" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="top" secondItem="Bsd-RS-vSF" secondAttribute="top" constant="226" id="TAy-VL-Kif"/>
-                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="centerX" secondItem="Bsd-RS-vSF" secondAttribute="centerX" id="fdK-AB-QWN"/>
+                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="centerY" secondItem="Bsd-RS-vSF" secondAttribute="centerY" id="7lL-mQ-51j"/>
+                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="centerX" secondItem="Bsd-RS-vSF" secondAttribute="centerX" id="Lic-s8-bgy"/>
                                 </constraints>
                             </view>
                         </subviews>

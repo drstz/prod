@@ -9,8 +9,16 @@
 import UIKit
 
 class SnoozePickerViewController: UITableViewController {
+    @IBOutlet weak var customSnoozeLabel: UILabel!
+    
     var selectedSnoozeTimeIndex = 0
     var selectedSnoozeTime = ""
+    
+    var customSnoozeTime: String {
+        return (customSnoozeDelay + customSnoozeUnit)
+    }
+    var customSnoozeUnit = ""
+    var customSnoozeDelay = "None"
     
     let snoozeTime = [
         "10 seconds",
@@ -33,40 +41,74 @@ class SnoozePickerViewController: UITableViewController {
         }
     }
     
+    // MARK: - Table View
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(#function)
-        return snoozeTime.count
+        var rowCount = 0
+        
+        switch section {
+        case 0:
+            rowCount = snoozeTime.count
+        case 1:
+            rowCount = 1
+        default:
+            break
+        }
+        
+        return rowCount
+        
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         print(#function)
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        let snoozeTime = self.snoozeTime[indexPath.row]
-        cell.textLabel!.text = snoozeTime
-        
-        if snoozeTime == selectedSnoozeTime {
-            cell.accessoryType = .Checkmark
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("snoozeChoice", forIndexPath: indexPath)
+            let snoozeTime = self.snoozeTime[indexPath.row]
+            cell.textLabel!.text = snoozeTime
+            
+            if snoozeTime == selectedSnoozeTime {
+                cell.accessoryType = .Checkmark
+            } else {
+                cell.accessoryType = .None
+            }
+            
+            return cell
         } else {
-            cell.accessoryType = .None
+            let cell = tableView.dequeueReusableCellWithIdentifier("customSnoozeButton", forIndexPath: indexPath)
+            cell.detailTextLabel?.text = customSnoozeTime
+            return cell
         }
         
-        return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(#function)
-        if indexPath.row != selectedIndexPath.row {
-            if let newCell = tableView.cellForRowAtIndexPath(indexPath) {
-                newCell.accessoryType = .Checkmark
+        if indexPath.section == 0 {
+            if indexPath.row != selectedIndexPath.row {
+                if let newCell = tableView.cellForRowAtIndexPath(indexPath) {
+                    newCell.accessoryType = .Checkmark
+                }
+                
+                if let oldCell = tableView.cellForRowAtIndexPath(selectedIndexPath) {
+                    oldCell.accessoryType = .None
+                }
+                selectedIndexPath = indexPath
+                
             }
             
-            if let oldCell = tableView.cellForRowAtIndexPath(selectedIndexPath) {
-                oldCell.accessoryType = .None
-            }
-            selectedIndexPath = indexPath
-            
+        } else {
+            //performSegueWithIdentifier("setCustomSnoozeTime", sender: self)
         }
+        
     }
+    
+    // MARK: - Segues
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         print(#function)
@@ -91,6 +133,26 @@ class SnoozePickerViewController: UITableViewController {
                 }
                 
             }
+        } else if segue.identifier == "setCustomSnoozeTime" {
+            print("Sending data to custom snooze time")
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let controller = navigationController.topViewController as! CustomSnoozePickerController
+            controller.delegate = self
         }
+    }
+}
+
+extension SnoozePickerViewController: CustomSnoozePickerDelegate {
+    func customSnoozePickerDidCancel(controller: CustomSnoozePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func customSnoozePicker(controller: CustomSnoozePickerController, didChooseTime delay: Int, unit: String) {
+        dismissViewControllerAnimated(true, completion: nil)
+        customSnoozeDelay = "\(delay) "
+        customSnoozeUnit = unit
+        tableView.reloadData()
+        
+        
     }
 }

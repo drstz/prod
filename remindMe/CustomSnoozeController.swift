@@ -10,7 +10,7 @@ import UIKit
 
 protocol CustomSnoozePickerDelegate: class {
     func customSnoozePickerDidCancel(controller: CustomSnoozePickerController)
-    func customSnoozePicker(controller: CustomSnoozePickerController, didChooseTime delay: Int, unit: String)
+    func customSnoozePicker(controller: CustomSnoozePickerController, didChooseTime delay: Double, unit: SnoozeUnit)
 }
 
 class CustomSnoozePickerController: UITableViewController {
@@ -20,8 +20,10 @@ class CustomSnoozePickerController: UITableViewController {
     
     var delegate: CustomSnoozePickerDelegate?
     
-    var delay: Int?
-    var unit: String?
+    var delay: Double?
+    var unit: SnoozeUnit?
+    
+    
     
     @IBAction func cancel() {
         delegate?.customSnoozePickerDidCancel(self)
@@ -29,7 +31,7 @@ class CustomSnoozePickerController: UITableViewController {
     
     @IBAction func done() {
         if textField.text != nil {
-            delay = Int(textField.text!)
+            delay = Double(textField.text!)
         }
         if let chosenDelay = delay, let chosenUnit = unit {
             delegate?.customSnoozePicker(self, didChooseTime: chosenDelay, unit: chosenUnit)
@@ -67,13 +69,13 @@ extension CustomSnoozePickerController: UIPickerViewDelegate, UIPickerViewDataSo
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch row {
         case 0:
-            unit = "seconds"
+            unit = .Seconds
         case 1:
-            unit = "minutes"
+            unit = .Minutes
         case 2:
-            unit = "hours"
+            unit = .Hours
         case 3:
-            unit = "days"
+            unit = .Days
         default:
             unit = nil
         }

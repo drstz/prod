@@ -45,8 +45,13 @@ class Reminder: NSManagedObject {
     
     func calculateNewDate() -> NSDate {
         let userDefaults = NSUserDefaults.standardUserDefaults()
-        let time = userDefaults.objectForKey("SnoozeTime") as! String
-        let deferInterval = getDeferAmount(time)
+        let chosenUnit = userDefaults.objectForKey("SnoozeUnit") as! String
+        
+        
+        let duration = userDefaults.doubleForKey("SnoozeDuration")
+        let unit = SnoozeUnit(rawValue: chosenUnit)
+        
+        let deferInterval = snoozeDuration(duration, unit: unit!)
         
         return NSDate(timeIntervalSinceNow: deferInterval)
     }

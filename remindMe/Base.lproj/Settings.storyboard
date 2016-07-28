@@ -231,15 +231,12 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="Nrg-xY-3dX" kind="unwind" identifier="PickedSnoozeTime" unwindAction="snoozePickerDidPickSnoozeTime:" id="y2V-DB-bJy"/>
-                                </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="customSnoozeButton" textLabel="H4T-e2-xPz" detailTextLabel="Pz2-WC-f8p" style="IBUITableViewCellStyleValue1" id="Nm3-Dr-cal">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="customSnoozeButton" textLabel="H4T-e2-xPz" detailTextLabel="Pz2-WC-f8p" style="IBUITableViewCellStyleValue1" id="Nm3-Dr-cal">
                                 <rect key="frame" x="0.0" y="158" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nm3-Dr-cal" id="8YX-Sq-DG7">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Custom snooze time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="H4T-e2-xPz">
@@ -250,7 +247,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Pz2-WC-f8p">
-                                            <rect key="frame" x="523" y="12" width="42" height="20"/>
+                                            <rect key="frame" x="543" y="12" width="42" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
@@ -258,9 +255,23 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="fdi-kd-bTg" kind="presentation" identifier="setCustomSnoozeTime" id="6ef-YS-LwX"/>
-                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addCustomSnooze" id="3RV-zg-G9g">
+                                <rect key="frame" x="0.0" y="202" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3RV-zg-G9g" id="keE-62-lmZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YiN-jt-1c8">
+                                            <rect key="frame" x="15" y="7" width="131" height="30"/>
+                                            <state key="normal" title="Set custom snooze"/>
+                                            <connections>
+                                                <segue destination="fdi-kd-bTg" kind="presentation" identifier="setCustomSnoozeTime" id="68R-SR-ETg"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -268,6 +279,9 @@
                             <outlet property="delegate" destination="HjL-xw-Wes" id="dxA-bh-i2v"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="Nrg-xY-3dX" kind="unwind" identifier="PickedSnoozeTime" unwindAction="snoozePickerDidPickSnoozeTime:" id="Jl3-2x-QGM"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="85F-6z-tYL" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Nrg-xY-3dX" userLabel="Exit" sceneMemberID="exit"/>

@@ -16,6 +16,13 @@ enum SnoozeDefaults {
     case Hour
 }
 
+enum SnoozeUnit: String {
+    case Seconds = "sec"
+    case Minutes = "min"
+    case Hours = "hour"
+    case Days = "day"
+}
+
 enum AutoSnoozeDefaults {
     case Minute
     case Hour
@@ -27,7 +34,12 @@ func registerDefaults() {
         "SnoozeTime": "10 seconds",
         "AutoSnoozeEnabled" : true,
         "AutoSnoozeTime": "1 minute",
-        "SelectedTab" : 0
+        "SelectedTab" : 0,
+        "SnoozeDuration": 30,
+        "SnoozeUnit": "min",
+        "UsingCustomSnooze" : false,
+        "SavedSnoozeDuration" : 0,
+        "SavedSnoozeUnit" : "min"
     ]
     NSUserDefaults.standardUserDefaults().registerDefaults(dictionary)
 }
@@ -43,11 +55,66 @@ func isFirstTime() -> Bool {
     return false
 }
 
-func setDefaultSnoozeTime(snoozeTime: SnoozeDefaults) {
-    let snoozeDefault = choiceForSnoozeTime(snoozeTime)
+func isUsingCustomSnoozeTime() -> Bool {
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    userDefaults.setObject(snoozeDefault, forKey: "SnoozeTime")
+    let customSnooze = userDefaults.boolForKey("UsingCustomSnooze")
+    return customSnooze
+}
+
+func setUsingCustomSnoozeTime(enabled: Bool) {
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    userDefaults.setBool(enabled, forKey: "UsingCustomSnooze")
+    
+}
+
+//func setDefaultSnoozeTime(snoozeTime: SnoozeDefaults) {
+//    let snoozeDefault = choiceForSnoozeTime(snoozeTime)
+//    let userDefaults = NSUserDefaults.standardUserDefaults()
+//    userDefaults.setObject(snoozeDefault, forKey: "SnoozeTime")
+//    userDefaults.synchronize()
+//}
+
+func setSnoozeTime(duration: Double, unit: SnoozeUnit) {
+    print(#function)
+    let chosenUnit = choiceForSnoozeUnit(unit)
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    userDefaults.setObject(chosenUnit, forKey: "SnoozeUnit")
+    userDefaults.setDouble(duration, forKey: "SnoozeDuration")
     userDefaults.synchronize()
+}
+
+func getLabel(snoozeDuration: Double, snoozeUnit: SnoozeUnit) -> String {
+    var duration = ""
+    switch snoozeUnit {
+    case .Seconds:
+        duration = "second"
+    case .Minutes:
+        duration = "minute"
+    case .Hours:
+        duration = "hour"
+    case .Days:
+        duration = "day"
+    }
+    if snoozeDuration > 1 {
+        duration += "s"
+    }
+    return duration
+}
+
+func saveCustomSnoozeTime(duration: Double, unit: SnoozeUnit) {
+    let chosenUnit = choiceForSnoozeUnit(unit)
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    userDefaults.setObject(chosenUnit, forKey: "SavedSnoozeUnit")
+    userDefaults.setDouble(duration, forKey: "SavedSnoozeDuration")
+    userDefaults.synchronize()
+}
+
+func getCustomSnoozeTime() -> (Double, SnoozeUnit) {
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let duration = userDefaults.doubleForKey("SavedSnoozeDuration")
+    let unit = SnoozeUnit(rawValue: userDefaults.objectForKey("SavedSnoozeUnit") as! String)
+    let customSnoozeTime = (duration, unit!)
+    return customSnoozeTime
 }
 
 func setAutoSnooze(enabled: Bool) {
@@ -81,19 +148,23 @@ func getSavedTab() -> Int {
     return savedTab
 }
 
-func choiceForSnoozeTime(snoozeDefaults: SnoozeDefaults) -> String {
-    switch snoozeDefaults {
-    case .TenSeconds:
-        return "10 seconds"
-    case .FiveMinutes:
-        return "5 minutes"
-    case .TenMinutes:
-        return "10 minutes"
-    case .ThirtyMinutes:
-        return "30 minutes"
-    case .Hour:
-        return "1 hour"
-    }
+//func choiceForSnoozeTime(snoozeDefaults: SnoozeDefaults) -> String {
+//    switch snoozeDefaults {
+//    case .TenSeconds:
+//        return "10 seconds"
+//    case .FiveMinutes:
+//        return "5 minutes"
+//    case .TenMinutes:
+//        return "10 minutes"
+//    case .ThirtyMinutes:
+//        return "30 minutes"
+//    case .Hour:
+//        return "1 hour"
+//    }
+//}
+
+func choiceForSnoozeUnit(unit: SnoozeUnit) -> String {
+    return unit.rawValue
 }
 
 func choiceForAutoSnoozeTime(autoSnoozeDefaults: AutoSnoozeDefaults) -> String {

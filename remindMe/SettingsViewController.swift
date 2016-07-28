@@ -15,6 +15,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var autoSnoozeSwitch: UISwitch!
     
     var snoozeTime = ""
+    var snoozeDuration = 0.0
+    var snoozeUnit: SnoozeUnit = .Minutes
     var autoSnoozeTime = ""
     
     @IBAction func snoozePickerDidPickSnoozeTime(segue: UIStoryboardSegue) {
@@ -48,23 +50,42 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         print(#function)
         super.viewDidLoad()
-        
-        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
+        loadSettings()
+    }
+    
+    func loadSettings() {
+        loadSnoozeSettings()
+        loadAutoSnoozeSettings()
+    }
+    
+    func loadAutoSnoozeSettings() {
         let userDefaults = NSUserDefaults.standardUserDefaults()
-        let time = userDefaults.objectForKey("SnoozeTime") as! String
         let anAutoSnoozeTime = userDefaults.objectForKey("AutoSnoozeTime") as! String
         let autoSnoozeOn = userDefaults.boolForKey("AutoSnoozeEnabled")
-        print(autoSnoozeOn)
         
         autoSnoozeSwitch.setOn(autoSnoozeOn, animated: false)
-        snoozeTime = time
+        
         autoSnoozeTime = anAutoSnoozeTime
-        print(anAutoSnoozeTime)
         autoSnoozeLabel.text = "every " + autoSnoozeTime
+        
+    }
+    
+    func loadSnoozeSettings() {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let duration = userDefaults.doubleForKey("SnoozeDuration")
+        let unit = userDefaults.objectForKey("SnoozeUnit") as! String
+        let chosenUnit = SnoozeUnit(rawValue: unit)
+        
+        snoozeUnit = chosenUnit!
+        snoozeDuration = duration
+        
+        let durationString = Int(snoozeDuration)
+        let unitString = getLabel(snoozeDuration, snoozeUnit: snoozeUnit)
+        snoozeTime = "\(durationString) \(unitString)"
         snoozeTimeLabel.text = "for " + snoozeTime
     }
     
@@ -73,6 +94,10 @@ class SettingsViewController: UITableViewController {
         if segue.identifier == "PickSnoozeTime" {
             let controller = segue.destinationViewController as! SnoozePickerViewController
             controller.selectedSnoozeTime = snoozeTime
+            controller.chosenDuration = snoozeDuration
+            controller.chosenUnit = snoozeUnit
+            controller.selectedSnoozeTimeTuple = (snoozeDuration, snoozeUnit)
+            
         } else if segue.identifier == "PickAutoSnoozeTime" {
             let controller = segue.destinationViewController as! AutoSnoozePickerViewController
             controller.selectedAutoSnoozeTime = autoSnoozeTime

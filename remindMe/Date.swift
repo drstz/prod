@@ -193,23 +193,38 @@ func recurringInterval(typeOfInterval: String) -> NSCalendarUnit {
     
 }
 
-func getDeferAmount(deferAmount: String) -> NSTimeInterval {
-    switch deferAmount {
-    case "10 seconds":
-        return 10
-    case "5 minutes":
-        return 60 * 5
-    case "10 minutes":
-        return 60 * 10
-    case "30 minutes":
-        return 60 * 30
-    case "1 hour":
-        return 60 * 60
-    default:
-        return 0
+//func getDeferAmount(deferAmount: String) -> NSTimeInterval {
+//    switch deferAmount {
+//    case "10 seconds":
+//        return 10
+//    case "5 minutes":
+//        return 60 * 5
+//    case "10 minutes":
+//        return 60 * 10
+//    case "30 minutes":
+//        return 60 * 30
+//    case "1 hour":
+//        return 60 * 60
+//    default:
+//        return 0
+//    }
+//}
+
+func snoozeDuration(duration: Double, unit: SnoozeUnit) -> NSTimeInterval {
+    let minute = 60.0
+    let hour = 3600.0
+    let day = 86400.0
+    
+    switch unit {
+    case .Seconds:
+        return duration
+    case .Minutes:
+        return duration * minute
+    case .Hours:
+        return duration * hour
+    case .Days:
+        return duration * day
     }
-    
-    
 }
 
 

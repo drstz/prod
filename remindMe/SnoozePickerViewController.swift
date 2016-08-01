@@ -37,6 +37,7 @@ class SnoozePickerViewController: UITableViewController {
     var selectedIndexPath = NSIndexPath()
     
     override func viewDidLoad() {
+        print(#function)
         super.viewDidLoad()
         var foundSomething = false
         updateCustomSnoozeLabel()
@@ -57,8 +58,14 @@ class SnoozePickerViewController: UITableViewController {
         if !foundSomething {
             selectedIndexPath = NSIndexPath(forRow: 0, inSection: 1)
         }
-        
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        print(#function)
+        super.viewWillAppear(animated)
+    }
+    
+    
     
     // MARK: - Table View
     
@@ -129,7 +136,7 @@ class SnoozePickerViewController: UITableViewController {
                     }
                     
                     if let oldCell = tableView.cellForRowAtIndexPath(selectedIndexPath) {
-                        print("Old cell")
+                        print("Old cell : section \(selectedIndexPath.section) row \(selectedIndexPath.row)")
                         oldCell.accessoryType = .None
                     }
                     selectedIndexPath = indexPath
@@ -146,6 +153,7 @@ class SnoozePickerViewController: UITableViewController {
                 }
                 
                 if let oldCell = tableView.cellForRowAtIndexPath(selectedIndexPath) {
+                    print("Old cell : section \(selectedIndexPath.section) row \(selectedIndexPath.row)")
                     oldCell.accessoryType = .None
                 }
                 selectedIndexPath = indexPath
@@ -157,9 +165,6 @@ class SnoozePickerViewController: UITableViewController {
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)
                 
             }
-            
-            
-            
             
         }
         
@@ -176,7 +181,7 @@ class SnoozePickerViewController: UITableViewController {
                         }
                         
                         if let oldCell = tableView.cellForRowAtIndexPath(selectedIndexPath) {
-                            print("Old cell")
+                            print("Old cell : section \(selectedIndexPath.section) row \(selectedIndexPath.row)")
                             oldCell.accessoryType = .None
                         }
                         selectedIndexPath = indexPath
@@ -193,7 +198,7 @@ class SnoozePickerViewController: UITableViewController {
                     }
                     
                     if let oldCell = tableView.cellForRowAtIndexPath(selectedIndexPath) {
-                        print("Old cell")
+                        print("Old cell : section \(selectedIndexPath.section) row \(selectedIndexPath.row)")
                         oldCell.accessoryType = .None
                     }
                     selectedIndexPath = indexPath
@@ -214,25 +219,30 @@ class SnoozePickerViewController: UITableViewController {
         selectedSnoozeTimeIndex = indexPath.row
         switch selectedSnoozeTimeIndex {
         case 0:
-            //setDefaultSnoozeTime(.TenSeconds)
             setSnoozeTime(10, unit: .Seconds)
+            overwriteOldTimes(10, unit: .Seconds)
         case 1:
-            //setDefaultSnoozeTime(.FiveMinutes)
             setSnoozeTime(5, unit: .Minutes)
+            overwriteOldTimes(5, unit: .Minutes)
         case 2:
-            //setDefaultSnoozeTime(.TenMinutes)
             setSnoozeTime(10, unit: .Minutes)
+            overwriteOldTimes(10, unit: .Minutes)
         case 3:
-            //setDefaultSnoozeTime(.ThirtyMinutes)
             setSnoozeTime(30, unit: .Minutes)
+            overwriteOldTimes(30, unit: .Minutes)
         case 4:
-            //setDefaultSnoozeTime(.Hour)
             setSnoozeTime(1, unit: .Hours)
+            overwriteOldTimes(1, unit: .Hours)
         default:
             break
             
         }
-        
+    }
+    
+    func overwriteOldTimes(duration: Double, unit: SnoozeUnit) {
+        chosenDuration = duration
+        chosenUnit = unit
+        selectedSnoozeTimeTuple = (duration, unit)
     }
     
     // MARK: - Segues

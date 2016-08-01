@@ -254,7 +254,14 @@ class SnoozePickerViewController: UITableViewController {
         if segue.identifier == "setCustomSnoozeTime" {
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! CustomSnoozePickerController
+            let customSnoozeTime = getCustomSnoozeTime()
+            let duration = customSnoozeTime.0
+            let unit = customSnoozeTime.1
             controller.delegate = self
+            controller.delay = duration
+            controller.unit = unit
+            
+            
         }
     }
 }

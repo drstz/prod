@@ -40,6 +40,21 @@ class CustomSnoozePickerController: UITableViewController {
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let unitToSelect = unit, let durationToAdd = delay {
+            selectUnit(unitToSelect)
+            if delay == 0 {
+                textField.placeholder = "Please enter a number"
+            } else {
+                textField.text = String(Int(durationToAdd))
+            }
+            
+        }
+        
+    }
+    
 }
 
 extension CustomSnoozePickerController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -80,6 +95,23 @@ extension CustomSnoozePickerController: UIPickerViewDelegate, UIPickerViewDataSo
             unit = nil
         }
     }
+    
+    func selectUnit(unit: SnoozeUnit) {
+        switch unit {
+        case .Seconds:
+            snoozePicker.selectRow(0, inComponent: 0, animated: false)
+        case .Minutes:
+            snoozePicker.selectRow(1, inComponent: 0, animated: false)
+        case .Hours:
+            snoozePicker.selectRow(2, inComponent: 0, animated: false)
+        case .Days:
+            snoozePicker.selectRow(3, inComponent: 0, animated: false)
+        default:
+            snoozePicker.selectRow(0, inComponent: 0, animated: false)
+        }
+    }
+    
+    
     
 }
 

@@ -45,6 +45,7 @@
 		71EE90CE1D2A292400431D56 /* AllRemindersViewController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE90CD1D2A292400431D56 /* AllRemindersViewController+TableView.swift */; };
 		71F6A5361CF6C0FD0010C135 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F6A5351CF6C0FD0010C135 /* NotificationHandler.swift */; };
 		71F6A5381CF6ECDE0010C135 /* CoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F6A5371CF6ECDE0010C135 /* CoreDataHandler.swift */; };
+		71FB1F7F1D4893E400951A25 /* CustomSnoozeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FB1F7E1D4893E400951A25 /* CustomSnoozeController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +90,7 @@
 		71EE90CD1D2A292400431D56 /* AllRemindersViewController+TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllRemindersViewController+TableView.swift"; sourceTree = "<group>"; };
 		71F6A5351CF6C0FD0010C135 /* NotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
 		71F6A5371CF6ECDE0010C135 /* CoreDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
+		71FB1F7E1D4893E400951A25 /* CustomSnoozeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSnoozeController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 				7135B90C1D056E3D0021105F /* SettingsViewController.swift */,
 				71D86C411D067BEB002A5CAE /* SnoozePickerViewController.swift */,
 				71238DE01CD70AC100F9D706 /* UserDefaults.swift */,
+				71FB1F7E1D4893E400951A25 /* CustomSnoozeController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				71C3EFB01D0ED79A00A87525 /* AutoSnoozePickerViewController.swift in Sources */,
 				71A7884E1CE5B57400D5CE47 /* QuickViewViewController.swift in Sources */,
 				714CB6B51CCBA00E00723399 /* List+CoreDataProperties.swift in Sources */,
+				71FB1F7F1D4893E400951A25 /* CustomSnoozeController.swift in Sources */,
 				71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */,
 				71ABD70A1CC0A87600F0BF90 /* Date.swift in Sources */,
 				7165A57C1CBB6A310088EA76 /* AppDelegate.swift in Sources */,

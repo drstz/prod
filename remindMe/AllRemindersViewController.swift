@@ -288,7 +288,6 @@ class AllRemindersViewController: UIViewController {
         let segueIdentifier = segue.identifier!
         
         switch segueIdentifier {
-            
         case "AddReminder":
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! AddReminderViewController

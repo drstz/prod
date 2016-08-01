@@ -210,13 +210,13 @@
         <scene sceneID="9cK-vH-l7D">
             <objects>
                 <tableViewController id="HjL-xw-Wes" customClass="SnoozePickerViewController" customModule="remindMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="yqS-CY-fdY">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="yqS-CY-fdY">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="mSi-Sn-fDS" style="IBUITableViewCellStyleDefault" id="CBJ-NF-rs3">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="snoozeChoice" textLabel="mSi-Sn-fDS" style="IBUITableViewCellStyleDefault" id="CBJ-NF-rs3">
+                                <rect key="frame" x="0.0" y="114" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CBJ-NF-rs3" id="whv-7u-LsZ">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -231,9 +231,40 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="Nrg-xY-3dX" kind="unwind" identifier="PickedSnoozeTime" unwindAction="snoozePickerDidPickSnoozeTime:" id="y2V-DB-bJy"/>
-                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="customSnoozeButton" textLabel="H4T-e2-xPz" style="IBUITableViewCellStyleDefault" id="Nm3-Dr-cal">
+                                <rect key="frame" x="0.0" y="158" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nm3-Dr-cal" id="8YX-Sq-DG7">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Custom snooze time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="H4T-e2-xPz">
+                                            <rect key="frame" x="15" y="0.0" width="570" height="43"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addCustomSnooze" id="3RV-zg-G9g">
+                                <rect key="frame" x="0.0" y="202" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3RV-zg-G9g" id="keE-62-lmZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YiN-jt-1c8">
+                                            <rect key="frame" x="15" y="7" width="131" height="30"/>
+                                            <state key="normal" title="Set custom snooze"/>
+                                            <connections>
+                                                <segue destination="fdi-kd-bTg" kind="presentation" identifier="setCustomSnoozeTime" id="68R-SR-ETg"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -241,11 +272,99 @@
                             <outlet property="delegate" destination="HjL-xw-Wes" id="dxA-bh-i2v"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="Nrg-xY-3dX" kind="unwind" identifier="PickedSnoozeTime" unwindAction="snoozePickerDidPickSnoozeTime:" id="Jl3-2x-QGM"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="85F-6z-tYL" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Nrg-xY-3dX" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2024" y="1290"/>
+        </scene>
+        <!--Custom Snooze Picker Controller-->
+        <scene sceneID="IPP-xr-giO">
+            <objects>
+                <tableViewController id="x8E-As-AlR" customClass="CustomSnoozePickerController" customModule="remindMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="YI8-ik-7DS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection headerTitle="Enter a number" id="a40-9K-ae1">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="NPn-5X-7RD">
+                                        <rect key="frame" x="0.0" y="114" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NPn-5X-7RD" id="0ME-rF-Cyr">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nfi-bb-a3A">
+                                                    <rect key="frame" x="8" y="7" width="584" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="x8E-As-AlR" id="xNU-l7-77U"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="8HK-aa-P6N">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="217" id="VeU-Rq-emI">
+                                        <rect key="frame" x="0.0" y="194" width="600" height="217"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VeU-Rq-emI" id="m59-D1-Qzp">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="216"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RG8-Tx-spd">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="216"/>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="x8E-As-AlR" id="6lL-7u-u47"/>
+                                                        <outlet property="delegate" destination="x8E-As-AlR" id="paX-x9-Nko"/>
+                                                    </connections>
+                                                </pickerView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="RG8-Tx-spd" secondAttribute="trailing" id="eUI-oC-44z"/>
+                                                <constraint firstItem="RG8-Tx-spd" firstAttribute="top" secondItem="m59-D1-Qzp" secondAttribute="top" id="jDz-gB-Igh"/>
+                                                <constraint firstItem="RG8-Tx-spd" firstAttribute="leading" secondItem="m59-D1-Qzp" secondAttribute="leading" id="llG-uB-Sn8"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="x8E-As-AlR" id="AAT-G5-bV8"/>
+                            <outlet property="delegate" destination="x8E-As-AlR" id="TWJ-F2-Vyz"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="h8d-aj-HR2">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Kc8-og-0zJ">
+                            <connections>
+                                <action selector="cancel" destination="x8E-As-AlR" id="sct-MU-Wfy"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="iiG-UU-gTR">
+                            <connections>
+                                <action selector="done" destination="x8E-As-AlR" id="WhJ-O9-hFU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="doneButton" destination="iiG-UU-gTR" id="GcV-zp-LdL"/>
+                        <outlet property="snoozePicker" destination="RG8-Tx-spd" id="37O-mQ-vhk"/>
+                        <outlet property="textField" destination="nfi-bb-a3A" id="FwM-0s-erq"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uBR-8r-Xe8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3521" y="1290"/>
         </scene>
         <!--Auto Snooze Picker View Controller-->
         <scene sceneID="QQb-D4-JcJ">
@@ -267,7 +386,7 @@
                                             <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -305,6 +424,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OUm-kr-MTL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="506" y="1754"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Fci-j3-FFL">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fdi-kd-bTg" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nPa-XO-nVL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="x8E-As-AlR" kind="relationship" relationship="rootViewController" id="U0e-pi-NkK"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HLp-xC-Obp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2709" y="1290"/>
         </scene>
     </scenes>
 </document>

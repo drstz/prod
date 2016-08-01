@@ -29,8 +29,9 @@ class NotificationHandler {
     
     func setNotificationActions() -> [UIMutableUserNotificationAction]  {
         let userDefaults = NSUserDefaults.standardUserDefaults()
-        let time = userDefaults.objectForKey("SnoozeTime") as! String
-        let deferAmount = getDeferString(time)
+        let time = userDefaults.objectForKey("SnoozeUnit") as! String
+        let snoozeDuration = userDefaults.doubleForKey("SnoozeDuration")
+        let deferAmount = getDeferString(time, duration: snoozeDuration)
         
         let completeAction = UIMutableUserNotificationAction()
         completeAction.identifier = "Complete"
@@ -41,7 +42,8 @@ class NotificationHandler {
         
         let deferAction = UIMutableUserNotificationAction()
         deferAction.identifier = "Defer"
-        deferAction.title = deferAmount
+        // This is snooze until able to update snooze text
+        deferAction.title = "Snooze"
         deferAction.activationMode = UIUserNotificationActivationMode.Background
         deferAction.authenticationRequired = false
         deferAction.destructive = false
@@ -51,21 +53,26 @@ class NotificationHandler {
         return actions
     }
     
-    func getDeferString(deferAmount: String) -> String {
-        switch deferAmount {
-        case "10 seconds":
-            return "+10s"
-        case "5 minutes":
-            return "+5m"
-        case "10 minutes":
-            return "+10m"
-        case "30 minutes":
-            return "+30m"
-        case "1 hour":
-            return "+1h"
-        default:
-            return "!!!"
+    func getDeferString(deferAmount: String, duration: Double) -> String {
+        let unit = SnoozeUnit(rawValue: deferAmount)
+        var unitString = ""
+        switch unit! {
+        case .Seconds:
+            unitString = "s"
+        case .Minutes:
+            unitString = "min"
+        case .Days:
+            if duration > 1 {
+                unitString = "days"
+            } else {
+                unitString = "day"
+            }
+        case .Hours:
+            unitString = "h"
         }
+        
+        return "+\(Int(duration))" + unitString
+        
     }
     
     func setNotificationCategories(actions : [UIMutableUserNotificationAction]) -> Set<UIMutableUserNotificationCategory>  {
@@ -97,7 +104,7 @@ class NotificationHandler {
         if earlierDate == now {
             if isBeingDeferred {
                 print("Snoozing notification for \(reminder.name)")
-                localNotification = deferNotification()
+                localNotification = snoozeNotification()
             } else {
                 print("Setting notification for \(reminder.name)")
                 localNotification = scheduleNotification(forDate: reminder.dueDate)
@@ -113,16 +120,16 @@ class NotificationHandler {
         }
     }
     
-    func deferNotification() -> UILocalNotification {
-        print(#function)
+    func snoozeNotification() -> UILocalNotification {
         let userDefaults = NSUserDefaults.standardUserDefaults()
-        let time = userDefaults.objectForKey("SnoozeTime") as! String
-        let deferAmount = getDeferAmount(time)
+        let chosenDuration = userDefaults.doubleForKey("SnoozeDuration")
+        let snoozeUnit = userDefaults.objectForKey("SnoozeUnit") as! String
+        let unit = SnoozeUnit(rawValue: snoozeUnit)
+        
+        let duration = snoozeDuration(chosenDuration, unit: unit!)
         
         let localNotification = UILocalNotification()
-        localNotification.fireDate = NSDate(timeIntervalSinceNow: deferAmount)
-        
-        setAutoSnooze(localNotification)
+        localNotification.fireDate = NSDate(timeIntervalSinceNow: duration)
         
         return localNotification
     }
@@ -207,6 +214,7 @@ class NotificationHandler {
         }
         return notificationsForReminder
     }
+
     
     func countReminderNotifications(reminder: Reminder) -> Int {
         let notifications = notificationsForReminder(reminder)

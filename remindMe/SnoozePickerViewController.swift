@@ -88,6 +88,14 @@ class SnoozePickerViewController: UITableViewController {
         return rowCount
     }
     
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 1 {
+            return "Custom Snooze Time"
+        } else {
+            return "Defaut Snooze Times"
+        }
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
         print(#function)
@@ -108,7 +116,8 @@ class SnoozePickerViewController: UITableViewController {
             
         } else if indexPath.section == 1 && indexPath.row == 0 {
             cell = tableView.dequeueReusableCellWithIdentifier("customSnoozeButton", forIndexPath: indexPath)
-            cell.detailTextLabel?.text = customSnoozeTime
+            cell.textLabel?.text = customSnoozeTime
+            //cell.detailTextLabel?.text = customSnoozeTime
             if isUsingCustomSnoozeTime() {
                 cell.accessoryType = .Checkmark
             } else {

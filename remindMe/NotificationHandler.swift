@@ -42,7 +42,8 @@ class NotificationHandler {
         
         let deferAction = UIMutableUserNotificationAction()
         deferAction.identifier = "Defer"
-        deferAction.title = deferAmount
+        // This is snooze until able to update snooze text
+        deferAction.title = "Snooze"
         deferAction.activationMode = UIUserNotificationActivationMode.Background
         deferAction.authenticationRequired = false
         deferAction.destructive = false
@@ -118,20 +119,6 @@ class NotificationHandler {
             print("No notification was set")
         }
     }
-    
-//    func deferNotification() -> UILocalNotification {
-//        print(#function)
-//        let userDefaults = NSUserDefaults.standardUserDefaults()
-//        let time = userDefaults.objectForKey("SnoozeTime") as! String
-//        let deferAmount = getDeferAmount(time)
-//        
-//        let localNotification = UILocalNotification()
-//        localNotification.fireDate = NSDate(timeIntervalSinceNow: deferAmount)
-//        
-//        setAutoSnooze(localNotification)
-//        
-//        return localNotification
-//    }
     
     func snoozeNotification() -> UILocalNotification {
         let userDefaults = NSUserDefaults.standardUserDefaults()
@@ -227,6 +214,7 @@ class NotificationHandler {
         }
         return notificationsForReminder
     }
+
     
     func countReminderNotifications(reminder: Reminder) -> Int {
         let notifications = notificationsForReminder(reminder)

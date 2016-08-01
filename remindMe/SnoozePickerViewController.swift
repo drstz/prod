@@ -204,6 +204,7 @@ class SnoozePickerViewController: UITableViewController {
                     selectedIndexPath = indexPath
                 }
             }
+
         }
         
     }
@@ -237,6 +238,7 @@ class SnoozePickerViewController: UITableViewController {
             break
             
         }
+        
     }
     
     func overwriteOldTimes(duration: Double, unit: SnoozeUnit) {

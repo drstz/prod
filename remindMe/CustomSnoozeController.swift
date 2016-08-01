@@ -17,6 +17,8 @@ class CustomSnoozePickerController: UITableViewController {
     @IBOutlet weak var snoozePicker: UIPickerView!
     @IBOutlet weak var textField: UITextField!
     
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    
     
     var delegate: CustomSnoozePickerDelegate?
     
@@ -31,6 +33,7 @@ class CustomSnoozePickerController: UITableViewController {
     
     @IBAction func done() {
         if textField.text != nil {
+            textField.resignFirstResponder()
             delay = Double(textField.text!)
         }
         if let chosenDelay = delay, let chosenUnit = unit {
@@ -43,16 +46,30 @@ class CustomSnoozePickerController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        textField.becomeFirstResponder()
+        textField.keyboardType = .NumberPad
+        
         if let unitToSelect = unit, let durationToAdd = delay {
             selectUnit(unitToSelect)
             if delay == 0 {
                 textField.placeholder = "Please enter a number"
+                textField.text = nil
             } else {
                 textField.text = String(Int(durationToAdd))
             }
             
         }
         
+        checkTextFieldLength()
+        
+    }
+    
+    func disableDoneButton() {
+        doneButton.enabled = false
+    }
+    
+    func enableDoneButton() {
+        doneButton.enabled = true
     }
     
 }
@@ -116,6 +133,33 @@ extension CustomSnoozePickerController: UIPickerViewDelegate, UIPickerViewDataSo
 }
 
 extension CustomSnoozePickerController: UITextFieldDelegate {
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        print(#function)
+        
+        if Int(string) != nil || range.length == 1 {
+            let oldText: NSString = textField.text!
+            let newText: NSString = oldText.stringByReplacingCharactersInRange(range, withString: string)
+            if newText.length > 0 {
+                enableDoneButton()
+            } else {
+                disableDoneButton()
+            }
+            print(oldText)
+            print(newText)
+            print(string)
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func checkTextFieldLength() {
+        if textField.text?.characters.count == 0 {
+            disableDoneButton()
+        } else {
+            enableDoneButton()
+        }
+    }
     
     
 }

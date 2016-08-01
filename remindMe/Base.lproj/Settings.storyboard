@@ -364,6 +364,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="doneButton" destination="iiG-UU-gTR" id="GcV-zp-LdL"/>
                         <outlet property="snoozePicker" destination="RG8-Tx-spd" id="37O-mQ-vhk"/>
                         <outlet property="textField" destination="nfi-bb-a3A" id="FwM-0s-erq"/>
                     </connections>

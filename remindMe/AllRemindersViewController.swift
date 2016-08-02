@@ -69,6 +69,8 @@ class AllRemindersViewController: UIViewController {
     
     var sentMessage = "I came from nowhere"
     
+    var editingList = false 
+    
     // MARK: - IBActions
     
     @IBAction func changeSegment() {
@@ -131,6 +133,8 @@ class AllRemindersViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(setBadgeForTodayTab), name: "setBadgeForTodayTab", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshTableView), name: "refresh", object: nil)
         
         segmentedControl.selectedSegmentIndex = selectedSegment
         setUpCoreData()
@@ -174,6 +178,8 @@ class AllRemindersViewController: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "deferReminder", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "viewReminder", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "setBadgeForTodayTab", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "refresh", object: nil)
     
     }
     
@@ -261,6 +267,22 @@ class AllRemindersViewController: UIViewController {
         } else {
             todayViewController.navigationController?.tabBarItem.badgeValue = "\(numberOfDueReminders())"
         }
+        
+    }
+    
+    func refreshTableView() {
+        let nbOfSelectedRows = tableView.indexPathsForSelectedRows?.count
+        
+        if nbOfSelectedRows == 0 {
+            setUpCoreData()
+            tableView.reloadData()
+        }
+        
+//        if myTabIndex == 0 {
+//            setUpCoreData()
+//            tableView.reloadData()
+//        }
+        
     }
     
     func numberOfDueReminders() -> Int {

@@ -293,8 +293,9 @@ class NotificationHandler {
             print("Notification was tapped")
             NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
         } else {
-            print("Handling notification from app: doing nothing")
-            // NSNotificationCenter.defaultCenter().postNotificationName("showNotificationHasGoneOff", object: nil)
+            print("Handling notification from app")
+            NSNotificationCenter.defaultCenter().postNotificationName("setBadgeForTodayTab", object: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName("refresh", object: nil)
         }
     }
     

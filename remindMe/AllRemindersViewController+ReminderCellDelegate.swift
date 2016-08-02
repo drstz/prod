@@ -18,6 +18,7 @@ extension AllRemindersViewController: ReminderCellDelegate {
         let indexPath = tableView.indexPathForCell(cell)
         
         if longPress.state == .Began {
+            editingList = true
             tableView.allowsMultipleSelection = true
             tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .None)
             

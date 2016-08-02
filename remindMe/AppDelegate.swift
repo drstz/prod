@@ -105,7 +105,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarController.selectedIndex = savedTab
         
         print("")
+        
+        
+        setBadgeForTodayTab()
+        
+        
+        
         return true
+    }
+    
+    func setBadgeForTodayTab() {
+        let now = NSDate()
+        
+        let tabBarController = window!.rootViewController as! UITabBarController
+        let tabs = tabBarController.viewControllers!
+        let todayNavigationControlelr = tabs[0] as! UINavigationController
+        
+        
+        let fetchRequest = NSFetchRequest()
+        fetchRequest.fetchBatchSize = 20
+        
+        let entity = NSEntityDescription.entityForName("Reminder", inManagedObjectContext: managedObjectContext)
+        fetchRequest.entity = entity
+        
+        let sortDescriptor = NSSortDescriptor(key: "dueDate", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", "isComplete", false, "dueDate", now)
+        fetchRequest.predicate = predicate
+        
+        let fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: managedObjectContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalCoreDataError(error)
+        }
+        
+        let count = fetchedResultsController.fetchedObjects?.count
+        todayNavigationControlelr.tabBarItem.badgeValue = "\(count!)"
+        
+        
+        
+        
+        
     }
     
     func setUpFirstTime(allRemindersViewController: AllRemindersViewController) {
@@ -162,6 +210,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationWillEnterForegroundNotification, object: nil)
             notificationWentOff = false
         }
+        
+        let savedTab = getSavedTab()
+        
+        let tabBarController = window!.rootViewController as! UITabBarController
+        let tabs = tabBarController.viewControllers!
+        let navigationController = tabs[savedTab] as! UINavigationController
+        let viewControllers = navigationController.viewControllers
+        let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
+        allRemindersViewController.setUpCoreData()
+        allRemindersViewController.tableView.reloadData()
+       
+        
+        allRemindersViewController.setBadgeForTodayTab()
+        
+        
+        
+        
     }
     
     func applicationDidBecomeActive(application: UIApplication) {

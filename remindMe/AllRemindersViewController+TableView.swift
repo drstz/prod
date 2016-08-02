@@ -95,6 +95,7 @@ extension AllRemindersViewController: UITableViewDelegate {
         print("There are \(selectedIndexPathsCount) selected rows")
         if selectedIndexPathsCount == nil {
             navigationController?.setToolbarHidden(true, animated: true)
+            refreshTableView()
         }
         
     }

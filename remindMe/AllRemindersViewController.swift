@@ -272,8 +272,9 @@ class AllRemindersViewController: UIViewController {
     
     func refreshTableView() {
         let nbOfSelectedRows = tableView.indexPathsForSelectedRows?.count
+        print("Number of selected rows : \(nbOfSelectedRows)")
         
-        if nbOfSelectedRows == 0 {
+        if nbOfSelectedRows == nil {
             setUpCoreData()
             tableView.reloadData()
         }

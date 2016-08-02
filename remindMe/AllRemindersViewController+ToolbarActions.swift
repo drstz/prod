@@ -97,7 +97,7 @@ extension AllRemindersViewController {
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)
             }
         }
-        editingList = false
+        refreshTableView()
     }
     
 }

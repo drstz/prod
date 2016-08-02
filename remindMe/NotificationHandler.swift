@@ -42,8 +42,7 @@ class NotificationHandler {
         
         let deferAction = UIMutableUserNotificationAction()
         deferAction.identifier = "Defer"
-        // This is snooze until able to update snooze text
-        deferAction.title = "Snooze"
+        deferAction.title = deferAmount
         deferAction.activationMode = UIUserNotificationActivationMode.Background
         deferAction.authenticationRequired = false
         deferAction.destructive = false
@@ -89,6 +88,61 @@ class NotificationHandler {
         
         return categoriesForSettings
     }
+    
+    func updateAllSnoozeTimes() {
+        let oldNotifications = allNotifications()
+        let programmedNotifications = allNotifications()
+        for notification in programmedNotifications {
+            UIApplication.sharedApplication().cancelLocalNotification(notification)
+        }
+        var numberOfNotifications = countAllNotifications()
+        print("Total of \(numberOfNotifications) notifications" )
+        
+        setNotifications()
+        
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let autoSnoozeOn = userDefaults.boolForKey("AutoSnoozeEnabled")
+        let anInterval = userDefaults.objectForKey("AutoSnoozeTime") as! String
+        let repeatInterval = getRepeatInterval(anInterval)
+        
+        for notification in oldNotifications {
+            let newNotification = UILocalNotification()
+            
+            // Time
+            if !(notification.fireDate?.isPresent())! {
+                print("Setting notification to now")
+                let now = NSDate()
+                newNotification.fireDate = now.addMinutes(1)
+            } else {
+                newNotification.fireDate = notification.fireDate
+            }
+            newNotification.timeZone = notification.timeZone
+            if autoSnoozeOn {
+                newNotification.repeatInterval = repeatInterval
+            }
+            newNotification.repeatCalendar = notification.repeatCalendar
+            
+            // Alert
+            newNotification.alertBody = notification.alertBody
+            newNotification.alertAction = notification.alertAction
+            newNotification.alertTitle = notification.alertTitle
+            newNotification.hasAction = notification.hasAction
+            newNotification.alertLaunchImage = notification.alertLaunchImage
+            newNotification.category = notification.category
+            newNotification.applicationIconBadgeNumber = notification.applicationIconBadgeNumber
+            newNotification.soundName = notification.soundName
+            newNotification.userInfo = notification.userInfo
+            
+            UIApplication.sharedApplication().scheduleLocalNotification(newNotification)
+            
+        }
+        numberOfNotifications = countAllNotifications()
+        print("Total of \(numberOfNotifications) notifications" )
+        
+        
+    }
+    
+    
     
     // MARK: - Handling Notifications
     

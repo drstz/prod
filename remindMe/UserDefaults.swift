@@ -81,6 +81,9 @@ func setSnoozeTime(duration: Double, unit: SnoozeUnit) {
     userDefaults.setObject(chosenUnit, forKey: "SnoozeUnit")
     userDefaults.setDouble(duration, forKey: "SnoozeDuration")
     userDefaults.synchronize()
+    
+    let notificationHandler = NotificationHandler()
+    notificationHandler.updateAllSnoozeTimes()
 }
 
 func getLabel(snoozeDuration: Double, snoozeUnit: SnoozeUnit) -> String {
@@ -128,6 +131,9 @@ func setDefaultAutoSnoozeTime(autoSnoozeTime: AutoSnoozeDefaults) {
     let userDefaults = NSUserDefaults.standardUserDefaults()
     userDefaults.setObject(autoSnoozeDefault, forKey: "AutoSnoozeTime")
     userDefaults.synchronize()
+    
+    let notificationHandler = NotificationHandler()
+    notificationHandler.updateAllSnoozeTimes()
 }
 
 func saveSelectedTab(selectedTabIndex: Int) {

@@ -109,7 +109,13 @@ class NotificationHandler {
             let newNotification = UILocalNotification()
             
             // Time
-            newNotification.fireDate = notification.fireDate
+            if !(notification.fireDate?.isPresent())! {
+                print("Setting notification to now")
+                let now = NSDate()
+                newNotification.fireDate = now.addMinutes(1)
+            } else {
+                newNotification.fireDate = notification.fireDate
+            }
             newNotification.timeZone = notification.timeZone
             if autoSnoozeOn {
                 newNotification.repeatInterval = repeatInterval

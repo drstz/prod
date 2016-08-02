@@ -142,8 +142,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="edit" destination="Cxg-hC-dD1" eventType="touchUpInside" id="M9b-OV-AOS"/>
-                                                    <segue destination="EXe-5T-xJU" kind="presentation" identifier="EditReminder" id="KGI-Le-5Ff"/>
+                                                    <segue destination="EXe-5T-xJU" kind="presentation" identifier="EditReminder" id="UUP-4q-srN"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -252,7 +251,6 @@
                         <outlet property="closeButton" destination="e6o-eg-uX9" id="LEK-zt-pwz"/>
                         <outlet property="completeButton" destination="HBV-pR-rmt" id="oPE-jc-kNE"/>
                         <outlet property="deleteButton" destination="Tgk-4Q-gGl" id="nE2-ax-M1S"/>
-                        <outlet property="editButton" destination="Axh-RT-VoZ" id="fIX-P1-0FX"/>
                         <outlet property="favoriteButton" destination="QYr-9d-yEg" id="cGg-TQ-w32"/>
                         <outlet property="popup" destination="07M-Fn-hT3" id="GkO-54-jDN"/>
                         <outlet property="reminderDayLabel" destination="nbo-6D-mqr" id="Ndz-3w-oXI"/>
@@ -737,7 +735,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zdd-Et-wDm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2429" y="-363"/>
+            <point key="canvasLocation" x="2619" y="-839"/>
         </scene>
         <!--Settings-->
         <scene sceneID="9f1-eG-3hx">
@@ -797,6 +795,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="e1F-Pi-sXX"/>
-        <segue reference="v7Q-ZB-wc4"/>
+        <segue reference="UUP-4q-srN"/>
     </inferredMetricsTieBreakers>
 </document>

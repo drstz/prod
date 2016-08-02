@@ -34,7 +34,6 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     @IBOutlet weak var completeButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var favoriteButton: UIButton!
-    @IBOutlet weak var editButton: UIButton!
     
     @IBOutlet weak var closeButton: UIButton!
     
@@ -94,7 +93,11 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     func addReminderViewController(controller: AddReminderViewController, didFinishEditingReminder reminder: Reminder) {
         print(#function)
         setLabels(with: reminder)
-        super.viewDidLoad()
+        if reminder.dueDate.isPresent() {
+            snoozeButton.hidden = true
+        } else {
+            snoozeButton.hidden = false
+        }
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -169,13 +172,16 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     // MARK: Segues
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        print(#function)
         if segue.identifier == "EditReminder" {
+            print("Preparing for segue to edit reminder")
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! AddReminderViewController
             
             controller.delegate = self
             controller.managedObjectContext = managedObjectContext
             controller.reminderToEdit = incomingReminder
+            print("Done preparing")
             
         }
     }

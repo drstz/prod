@@ -210,6 +210,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationWillEnterForegroundNotification, object: nil)
             notificationWentOff = false
         }
+        
+        let savedTab = getSavedTab()
+        
+        let tabBarController = window!.rootViewController as! UITabBarController
+        let tabs = tabBarController.viewControllers!
+        let navigationController = tabs[savedTab] as! UINavigationController
+        let viewControllers = navigationController.viewControllers
+        let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
+        allRemindersViewController.setUpCoreData()
+        allRemindersViewController.tableView.reloadData()
+       
+        
+        allRemindersViewController.setBadgeForTodayTab()
+        
+        
+        
+        
     }
     
     func applicationDidBecomeActive(application: UIApplication) {

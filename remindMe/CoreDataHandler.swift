@@ -145,11 +145,16 @@ class CoreDataHandler {
             switch status {
                 
             case .Complete:
-                let predicate = NSPredicate(format: "%K == %@ AND %K <= %@ AND %K >= %@", statusString, true, parameter, today.endOfDay, parameter, today.startOfDay)
+                let predicate = NSPredicate(
+                    format: "%K == %@ AND ((%K <= %@ AND %K >= %@))",
+                    statusString, true,
+                    parameter, today.endOfDay,
+                    parameter, today.startOfDay
+                )
                 fetchRequest.predicate = predicate
             case .Incomplete:
                 let predicate = NSPredicate(
-                    format: "%K == %@ AND %K <= %@ AND %K >= %@ OR %K <= %@",
+                    format: "%K == %@ AND ((%K <= %@ AND %K >= %@) OR %K <= %@)",
                     statusString, false,
                     parameter, today.endOfDay,
                     parameter, today.startOfDay,
@@ -162,11 +167,16 @@ class CoreDataHandler {
             switch status {
                 
             case .Complete:
-                let predicate = NSPredicate(format: "%K == %@ AND %K <= %@ AND %K >= %@", statusString, true, parameter, nextSevenDays(), parameter, today.startOfDay)
+                let predicate = NSPredicate(
+                    format: "%K == %@ AND (%K <= %@ AND %K >= %@)",
+                    statusString, true,
+                    parameter, nextSevenDays(),
+                    parameter, today.startOfDay
+                )
                 fetchRequest.predicate = predicate
             case .Incomplete:
                 let predicate = NSPredicate(
-                    format: "%K == %@ AND %K <= %@ AND %K >= %@ OR %K <= %@",
+                    format: "%K == %@ AND ((%K <= %@ AND %K >= %@) OR %K <= %@)",
                     statusString, false,
                     parameter, nextSevenDays(),
                     parameter, today.startOfDay,

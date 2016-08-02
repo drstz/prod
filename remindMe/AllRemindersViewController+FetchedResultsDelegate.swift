@@ -76,5 +76,7 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
         
         tableView.endUpdates()
         setNoReminderView()
+        setBadgeForTodayTab()
+        //tableView.reloadData()
     }
 }

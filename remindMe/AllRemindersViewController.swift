@@ -83,6 +83,7 @@ class AllRemindersViewController: UIViewController {
         selectedSegment = segmentedControl.selectedSegmentIndex
         
         setNoReminderView()
+        setBadgeForTodayTab()
     }
     
     @IBAction func doneSettings(segue: UIStoryboardSegue) {
@@ -104,6 +105,10 @@ class AllRemindersViewController: UIViewController {
     }
     
     // MARK: View
+    
+    func countDueReminders() {
+        //self.navigationController?.tabBarItem.badgeValue = "2"
+    }
     
     override func viewDidLoad() {
         print(#function)
@@ -134,6 +139,10 @@ class AllRemindersViewController: UIViewController {
         tableView.reloadData()
         
         setNoReminderView()
+        
+        countDueReminders()
+        
+        setBadgeForTodayTab()
 
     }
     
@@ -236,6 +245,54 @@ class AllRemindersViewController: UIViewController {
         coreDataHandler.fetchedResultsController.delegate = self
         coreDataHandler.performFetch()
         
+    }
+    
+    func setBadgeForTodayTab() {
+        print(#function)
+        let viewControllers = navigationController?.tabBarController?.viewControllers
+        print("Number of viewControllers : \(viewControllers?.count)")
+        
+        let someNavigationController = viewControllers![0] as! UINavigationController
+        let todayViewController = someNavigationController.viewControllers[0] as! AllRemindersViewController
+        
+        let nbOfDueReminders = numberOfDueReminders()
+        if nbOfDueReminders == 0 {
+            todayViewController.navigationController?.tabBarItem.badgeValue = nil
+        } else {
+            todayViewController.navigationController?.tabBarItem.badgeValue = "\(numberOfDueReminders())"
+        }
+    }
+    
+    func numberOfDueReminders() -> Int {
+        let now = NSDate()
+        
+        let fetchRequest = NSFetchRequest()
+        fetchRequest.fetchBatchSize = 20
+        
+        let entity = NSEntityDescription.entityForName("Reminder", inManagedObjectContext: managedObjectContext)
+        fetchRequest.entity = entity
+        
+        let sortDescriptor = NSSortDescriptor(key: "dueDate", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", "isComplete", false, "dueDate", now)
+        fetchRequest.predicate = predicate
+        
+        let fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: managedObjectContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalCoreDataError(error)
+        }
+        
+        let count = fetchedResultsController.fetchedObjects?.count
+        return count!
     }
     
     // MARK: Handle no reminders

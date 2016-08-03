@@ -85,8 +85,6 @@ extension AllRemindersViewController: UITableViewDelegate {
             
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
-        let selectedIndexPathsCount = tableView.indexPathsForSelectedRows?.count
-//        print("There are \(selectedIndexPathsCount) selected rows")
     }
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
@@ -101,13 +99,23 @@ extension AllRemindersViewController: UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
         
-        let reminderNotificationHandler = reminder.notificationHandler
-        reminderNotificationHandler.deleteReminderNotifications(reminder)
-        
-        coreDataHandler.delete(reminder)
-        coreDataHandler.save()
+        if editingStyle == .Delete {
+            let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
+            let alert = UIAlertController(title: "Delete \"\(reminder.name)\" ?", message: "You cannot undo this", preferredStyle: .Alert)
+            let deleteAction = UIAlertAction(title: "Delete", style: .Destructive, handler: {
+                action in
+                let reminderNotificationHandler = reminder.notificationHandler
+                reminderNotificationHandler.deleteReminderNotifications(reminder)
+                
+                self.coreDataHandler.delete(reminder)
+                self.coreDataHandler.save()
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+            alert.addAction(deleteAction)
+            alert.addAction(cancelAction)
+            presentViewController(alert, animated: true, completion: nil)
+        }
     }
     
 }

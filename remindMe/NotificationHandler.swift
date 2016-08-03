@@ -238,6 +238,7 @@ class NotificationHandler {
         localNotification.userInfo = ["ReminderID": reminder.idNumber]
         
         return localNotification
+        
     }
 
     func deleteReminderNotifications(reminder: Reminder)  {

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension AllRemindersViewController {
     // MARK: Toolbar Actions
@@ -22,17 +23,32 @@ extension AllRemindersViewController {
     }
     
     func toolbarDelete() {
+        var deleteActionTitle = ""
+
         let reminders = selectedReminders()
-        for reminder in reminders {
-            // Save == false because function saves every time. Avoid saving twice
-            deleteReminder(reminder, save: false)
+        if reminders.count > 1 {
+            deleteActionTitle = "Delete \(reminders.count) reminders?"
+        } else {
+            deleteActionTitle = "Delete this reminder?"
         }
-        coreDataHandler.save()
-        deselectRows()
-        navigationController?.setToolbarHidden(true, animated: true)
+        
+        let alert = UIAlertController(title: deleteActionTitle, message: "You cannot undo this", preferredStyle: .Alert)
+        let deleteAction = UIAlertAction(title: "Delete", style: .Destructive, handler: {
+            action in
+            for reminder in reminders {
+                // Save == false because function saves every time. Avoid saving twice
+                self.deleteReminder(reminder, save: false)
+            }
+            self.coreDataHandler.save()
+            self.deselectRows()
+            self.navigationController?.setToolbarHidden(true, animated: true)
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        presentViewController(alert, animated: true, completion: nil)
+        
     }
-    
-    
     
     func toolbarFavorite() {
         let reminders = selectedReminders()

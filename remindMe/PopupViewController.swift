@@ -58,8 +58,15 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     }
     
     @IBAction func delete() {
-        delegate?.popupViewControllerDidDelete(self, reminder: incomingReminder!)
-
+        let alert = UIAlertController(title: "Delete \"\((incomingReminder?.name)!)\" ?", message: "You cannot undo this", preferredStyle: .Alert)
+        let deleteAction = UIAlertAction(title: "Delete", style: .Destructive, handler: {
+            action in
+                self.delegate?.popupViewControllerDidDelete(self, reminder: self.incomingReminder!)
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        presentViewController(alert, animated: true, completion: nil)
     }
     
     @IBAction func favorite() {

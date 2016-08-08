@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		71238DE11CD70AC100F9D706 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71238DE01CD70AC100F9D706 /* UserDefaults.swift */; };
+		7130E4391D58A85E0013B568 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7130E4381D58A85E0013B568 /* AboutViewController.swift */; };
+		7130E43C1D58AB460013B568 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 7130E43A1D58AB450013B568 /* style.css */; };
+		7130E43D1D58AB460013B568 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 7130E43B1D58AB460013B568 /* index.html */; };
 		7135B90D1D056E3D0021105F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7135B90C1D056E3D0021105F /* SettingsViewController.swift */; };
 		714CB6B51CCBA00E00723399 /* List+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714CB6B31CCBA00E00723399 /* List+CoreDataProperties.swift */; };
 		714CB6B61CCBA00E00723399 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714CB6B41CCBA00E00723399 /* List.swift */; };
@@ -50,6 +53,9 @@
 
 /* Begin PBXFileReference section */
 		71238DE01CD70AC100F9D706 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		7130E4381D58A85E0013B568 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		7130E43A1D58AB450013B568 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
+		7130E43B1D58AB460013B568 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		7135B90C1D056E3D0021105F /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		714CB6B31CCBA00E00723399 /* List+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "List+CoreDataProperties.swift"; path = "../List+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		714CB6B41CCBA00E00723399 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = List.swift; path = ../List.swift; sourceTree = "<group>"; };
@@ -123,6 +129,16 @@
 			name = Reminder;
 			sourceTree = "<group>";
 		};
+		7130E4371D58A8140013B568 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				7130E43A1D58AB450013B568 /* style.css */,
+				7130E43B1D58AB460013B568 /* index.html */,
+				7130E4381D58A85E0013B568 /* AboutViewController.swift */,
+			);
+			name = About;
+			sourceTree = "<group>";
+		};
 		71328A8B1CED9C78005A0D13 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +197,7 @@
 		7165A57A1CBB6A310088EA76 /* remindMe */ = {
 			isa = PBXGroup;
 			children = (
+				7130E4371D58A8140013B568 /* About */,
 				7165A5871CBB6A310088EA76 /* Info.plist */,
 				7165A57B1CBB6A310088EA76 /* AppDelegate.swift */,
 				7165A5821CBB6A310088EA76 /* Assets.xcassets */,
@@ -309,8 +326,10 @@
 			files = (
 				7165A5861CBB6A310088EA76 /* LaunchScreen.storyboard in Resources */,
 				7165A5831CBB6A310088EA76 /* Assets.xcassets in Resources */,
+				7130E43C1D58AB460013B568 /* style.css in Resources */,
 				7165A5811CBB6A310088EA76 /* Main.storyboard in Resources */,
 				71D620781D3629260038FE56 /* TableSectionHeader.xib in Resources */,
+				7130E43D1D58AB460013B568 /* index.html in Resources */,
 				7165A5961CBB910B0088EA76 /* ReminderCell.xib in Resources */,
 				71D86C401D067929002A5CAE /* Settings.storyboard in Resources */,
 			);
@@ -349,6 +368,7 @@
 				71238DE11CD70AC100F9D706 /* UserDefaults.swift in Sources */,
 				7175A3271D2B6BAA00076370 /* AllReminderViewController+ViewReminderDelegate.swift in Sources */,
 				71878B431CC49A9700AD0F27 /* Reminder.swift in Sources */,
+				7130E4391D58A85E0013B568 /* AboutViewController.swift in Sources */,
 				7182F9061D40873D00E6C18E /* DimmingPresentationController.swift in Sources */,
 				71EE90CA1D2A27FA00431D56 /* AllRemindersViewController+ToolbarActions.swift in Sources */,
 				7165A59A1CBCB4330088EA76 /* AddReminder.swift in Sources */,

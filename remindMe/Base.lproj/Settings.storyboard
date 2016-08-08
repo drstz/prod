@@ -179,6 +179,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="s2p-q4-JpL" kind="show" id="EAZ-mz-zAP"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -406,6 +409,45 @@
                 <exit id="Rcp-hp-2HZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2042" y="2139"/>
+        </scene>
+        <!--About View Controller-->
+        <scene sceneID="leP-mL-HCU">
+            <objects>
+                <viewController id="s2p-q4-JpL" customClass="AboutViewController" customModule="remindMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9fc-H5-nD9"/>
+                        <viewControllerLayoutGuide type="bottom" id="vxL-mc-256"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mTB-6y-KLl">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Wyw-tj-Gbe">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <subviews>
+                                    <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tl4-ik-ASm">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                                    </webView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Wyw-tj-Gbe" firstAttribute="bottom" secondItem="vxL-mc-256" secondAttribute="top" id="2Mn-XD-8Wv"/>
+                            <constraint firstItem="Wyw-tj-Gbe" firstAttribute="centerY" secondItem="mTB-6y-KLl" secondAttribute="centerY" id="DCc-eM-dKw"/>
+                            <constraint firstItem="Wyw-tj-Gbe" firstAttribute="leading" secondItem="mTB-6y-KLl" secondAttribute="leading" id="NKJ-Cl-EY2"/>
+                            <constraint firstItem="Wyw-tj-Gbe" firstAttribute="centerX" secondItem="mTB-6y-KLl" secondAttribute="centerX" id="hK9-TG-j9q"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="KwI-Wb-62O"/>
+                    <connections>
+                        <outlet property="webView" destination="tl4-ik-ASm" id="aTZ-cw-Pif"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="esR-1g-Qde" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1536" y="2998"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2zG-PG-pE2">

@@ -30,7 +30,7 @@
         <scene sceneID="BHx-qb-Sh3">
             <objects>
                 <navigationController id="lB2-6B-RLm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="1" title="Next 7 days" image="Week View-30" id="LSN-Dk-Cx6"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="Next 7 days" image="Week" id="LSN-Dk-Cx6"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="RFW-e1-HYN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -47,7 +47,7 @@
         <scene sceneID="oEx-gD-f38">
             <objects>
                 <navigationController id="BTn-SY-CS2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="2" title="All" image="Infinity-30" id="Yd8-Y8-xeq"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="All" image="Infinity" id="Yd8-Y8-xeq"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="T8k-ES-3GV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -315,8 +315,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="n3W-EJ-gSN">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" image="Settings-50" id="jkG-J1-qee">
-                            <inset key="imageInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                        <barButtonItem key="leftBarButtonItem" image="Settings" id="jkG-J1-qee">
                             <connections>
                                 <segue destination="HWa-R0-kJR" kind="presentation" identifier="settings" id="B86-1C-mHr"/>
                             </connections>
@@ -325,8 +324,8 @@
                             <rect key="frame" x="250" y="7" width="100" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
-                                <segment title="" image="Future-30"/>
-                                <segment title="" image="Checkmark-30"/>
+                                <segment title="" image="Future"/>
+                                <segment title="" image="Checkmark"/>
                             </segments>
                             <connections>
                                 <action selector="changeSegment" destination="BYZ-38-t0r" eventType="valueChanged" id="Soa-LP-LWn"/>
@@ -766,7 +765,7 @@
         <scene sceneID="KIt-cR-Yf9">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OLI-8q-xTi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Today" image="Present-30" id="dyR-Me-7GN"/>
+                    <tabBarItem key="tabBarItem" title="Today" image="Present" id="dyR-Me-7GN"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="N3h-HL-t7I">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -783,18 +782,18 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Checkmark-30" width="30" height="30"/>
-        <image name="Future-30" width="30" height="30"/>
-        <image name="Infinity-30" width="30" height="30"/>
-        <image name="Present-30" width="30" height="30"/>
-        <image name="Settings-50" width="50" height="50"/>
+        <image name="Checkmark" width="22" height="22"/>
+        <image name="Future" width="22" height="22"/>
+        <image name="Infinity" width="30" height="30"/>
+        <image name="Present" width="30" height="30"/>
+        <image name="Settings" width="22" height="22"/>
         <image name="Star Filled-44 (1)" width="44" height="44"/>
-        <image name="Week View-30" width="30" height="30"/>
+        <image name="Week" width="30" height="30"/>
         <image name="deleteWhite100" width="100" height="100"/>
         <image name="starWhite100" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="e1F-Pi-sXX"/>
-        <segue reference="UUP-4q-srN"/>
+        <segue reference="fhu-Tq-aJn"/>
+        <segue reference="XiK-Cj-5ub"/>
     </inferredMetricsTieBreakers>
 </document>

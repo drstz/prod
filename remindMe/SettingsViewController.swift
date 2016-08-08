@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 
 class SettingsViewController: UITableViewController {
     @IBOutlet weak var snoozeTimeLabel: UILabel!
@@ -102,6 +103,39 @@ class SettingsViewController: UITableViewController {
             let controller = segue.destinationViewController as! AutoSnoozePickerViewController
             controller.selectedAutoSnoozeTime = autoSnoozeTime
         }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                sendSupportEmail()
+            }
+        }
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+}
+
+extension SettingsViewController: MFMailComposeViewControllerDelegate {
+    func sendSupportEmail() {
+        if MFMailComposeViewController.canSendMail() {
+            let controller = MFMailComposeViewController()
+            controller.setSubject(NSLocalizedString("Support Request", comment: "Email Subject"))
+            controller.setToRecipients(["duane.stoltz@gmail.com"])
+            controller.mailComposeDelegate = self
+            self.presentViewController(controller, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Can't send email", message: "Please configure your device to send email in Settings -> Mail, Contacts, Calendar. You can also send me a mail at duane.stoltz@gmail.com", preferredStyle: .Alert)
+            let cancel = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+            
+            alert.addAction(cancel)
+           
+
+            presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }
 

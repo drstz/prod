@@ -1,7 +1,11 @@
 h1, h2 {
-    color: aquamarine
+    color: aquamarine;
 }
 
 html {
-    width: 100%
+    width: 100%;
+}
+
+p {
+    font-size: 1.5em;
 }

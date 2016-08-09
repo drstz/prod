@@ -10,7 +10,7 @@
 		71238DE11CD70AC100F9D706 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71238DE01CD70AC100F9D706 /* UserDefaults.swift */; };
 		7130E4391D58A85E0013B568 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7130E4381D58A85E0013B568 /* AboutViewController.swift */; };
 		7130E43C1D58AB460013B568 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 7130E43A1D58AB450013B568 /* style.css */; };
-		7130E43D1D58AB460013B568 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 7130E43B1D58AB460013B568 /* index.html */; };
+		7130E43D1D58AB460013B568 /* aboutDeveloper.html in Resources */ = {isa = PBXBuildFile; fileRef = 7130E43B1D58AB460013B568 /* aboutDeveloper.html */; };
 		7135B90D1D056E3D0021105F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7135B90C1D056E3D0021105F /* SettingsViewController.swift */; };
 		714CB6B51CCBA00E00723399 /* List+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714CB6B31CCBA00E00723399 /* List+CoreDataProperties.swift */; };
 		714CB6B61CCBA00E00723399 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714CB6B41CCBA00E00723399 /* List.swift */; };
@@ -37,6 +37,8 @@
 		71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 71ABD7021CBF893300F0BF90 /* DataModel.xcdatamodeld */; };
 		71ABD70A1CC0A87600F0BF90 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ABD7091CC0A87600F0BF90 /* Date.swift */; };
 		71C3EFB01D0ED79A00A87525 /* AutoSnoozePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C3EFAF1D0ED79A00A87525 /* AutoSnoozePickerViewController.swift */; };
+		71C9EF471D5984CE00F1717B /* feedback.html in Resources */ = {isa = PBXBuildFile; fileRef = 71C9EF461D5984CE00F1717B /* feedback.html */; };
+		71C9EF491D598A0F00F1717B /* aboutApp.html in Resources */ = {isa = PBXBuildFile; fileRef = 71C9EF481D598A0F00F1717B /* aboutApp.html */; };
 		71D620761D36286B0038FE56 /* TableSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D620751D36286B0038FE56 /* TableSectionHeader.swift */; };
 		71D620781D3629260038FE56 /* TableSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 71D620771D3629260038FE56 /* TableSectionHeader.xib */; };
 		71D86C401D067929002A5CAE /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71D86C3E1D067929002A5CAE /* Settings.storyboard */; };
@@ -55,7 +57,7 @@
 		71238DE01CD70AC100F9D706 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		7130E4381D58A85E0013B568 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		7130E43A1D58AB450013B568 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
-		7130E43B1D58AB460013B568 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		7130E43B1D58AB460013B568 /* aboutDeveloper.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = aboutDeveloper.html; sourceTree = "<group>"; };
 		7135B90C1D056E3D0021105F /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		714CB6B31CCBA00E00723399 /* List+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "List+CoreDataProperties.swift"; path = "../List+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		714CB6B41CCBA00E00723399 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = List.swift; path = ../List.swift; sourceTree = "<group>"; };
@@ -85,6 +87,8 @@
 		71ABD7031CBF893300F0BF90 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		71ABD7091CC0A87600F0BF90 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Date.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		71C3EFAF1D0ED79A00A87525 /* AutoSnoozePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoSnoozePickerViewController.swift; sourceTree = "<group>"; };
+		71C9EF461D5984CE00F1717B /* feedback.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = feedback.html; sourceTree = "<group>"; };
+		71C9EF481D598A0F00F1717B /* aboutApp.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = aboutApp.html; sourceTree = "<group>"; };
 		71D620751D36286B0038FE56 /* TableSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionHeader.swift; sourceTree = "<group>"; };
 		71D620771D3629260038FE56 /* TableSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableSectionHeader.xib; sourceTree = "<group>"; };
 		71D86C3F1D067929002A5CAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
@@ -132,8 +136,10 @@
 		7130E4371D58A8140013B568 /* About */ = {
 			isa = PBXGroup;
 			children = (
+				71C9EF461D5984CE00F1717B /* feedback.html */,
+				71C9EF481D598A0F00F1717B /* aboutApp.html */,
 				7130E43A1D58AB450013B568 /* style.css */,
-				7130E43B1D58AB460013B568 /* index.html */,
+				7130E43B1D58AB460013B568 /* aboutDeveloper.html */,
 				7130E4381D58A85E0013B568 /* AboutViewController.swift */,
 			);
 			name = About;
@@ -329,7 +335,9 @@
 				7130E43C1D58AB460013B568 /* style.css in Resources */,
 				7165A5811CBB6A310088EA76 /* Main.storyboard in Resources */,
 				71D620781D3629260038FE56 /* TableSectionHeader.xib in Resources */,
-				7130E43D1D58AB460013B568 /* index.html in Resources */,
+				7130E43D1D58AB460013B568 /* aboutDeveloper.html in Resources */,
+				71C9EF491D598A0F00F1717B /* aboutApp.html in Resources */,
+				71C9EF471D5984CE00F1717B /* feedback.html in Resources */,
 				7165A5961CBB910B0088EA76 /* ReminderCell.xib in Resources */,
 				71D86C401D067929002A5CAE /* Settings.storyboard in Resources */,
 			);

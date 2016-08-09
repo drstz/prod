@@ -124,6 +124,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="s2p-q4-JpL" kind="show" identifier="SendFeedback" id="D0j-W7-wix"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Hep-Fi-xsn" style="IBUITableViewCellStyleDefault" id="wka-GN-pLt">
                                         <rect key="frame" x="0.0" y="341" width="600" height="44"/>
@@ -162,6 +165,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="s2p-q4-JpL" kind="show" identifier="AboutApp" id="byN-29-EAA"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="iBZ-Kj-Vqp" style="IBUITableViewCellStyleDefault" id="G0I-7V-mCG">
                                         <rect key="frame" x="0.0" y="480" width="600" height="44"/>
@@ -180,7 +186,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="s2p-q4-JpL" kind="show" id="EAZ-mz-zAP"/>
+                                            <segue destination="s2p-q4-JpL" kind="show" identifier="AboutDeveloper" id="EAZ-mz-zAP"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -376,7 +382,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="8X1-ka-6ID">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="Nkl-Wr-9MJ" style="IBUITableViewCellStyleDefault" id="SnN-Ag-5gx">
                                 <rect key="frame" x="0.0" y="114" width="600" height="44"/>
@@ -408,7 +414,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KAy-ZZ-85y" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Rcp-hp-2HZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2042" y="2139"/>
+            <point key="canvasLocation" x="2756" y="1933"/>
         </scene>
         <!--About View Controller-->
         <scene sceneID="leP-mL-HCU">
@@ -428,6 +434,9 @@
                                     <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tl4-ik-ASm">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="s2p-q4-JpL" id="Z1d-DT-fYN"/>
+                                        </connections>
                                     </webView>
                                 </subviews>
                             </stackView>
@@ -447,7 +456,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="esR-1g-Qde" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1536" y="2998"/>
+            <point key="canvasLocation" x="1318" y="2806"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2zG-PG-pE2">
@@ -486,4 +495,7 @@
             <point key="canvasLocation" x="2709" y="1290"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="byN-29-EAA"/>
+    </inferredMetricsTieBreakers>
 </document>

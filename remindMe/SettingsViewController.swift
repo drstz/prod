@@ -91,24 +91,43 @@ class SettingsViewController: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        print(#function)
-        if segue.identifier == "PickSnoozeTime" {
-            let controller = segue.destinationViewController as! SnoozePickerViewController
-            controller.selectedSnoozeTime = snoozeTime
-            controller.chosenDuration = snoozeDuration
-            controller.chosenUnit = snoozeUnit
-            controller.selectedSnoozeTimeTuple = (snoozeDuration, snoozeUnit)
+        
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "PickSnoozeTime":
+                let controller = segue.destinationViewController as! SnoozePickerViewController
+                controller.selectedSnoozeTime = snoozeTime
+                controller.chosenDuration = snoozeDuration
+                controller.chosenUnit = snoozeUnit
+                controller.selectedSnoozeTimeTuple = (snoozeDuration, snoozeUnit)
+            case "PickAutoSnoozeTime":
+                let controller = segue.destinationViewController as! AutoSnoozePickerViewController
+                controller.selectedAutoSnoozeTime = autoSnoozeTime
+            case "SendFeedback":
+                let controller = segue.destinationViewController as! AboutViewController
+                controller.htmlFile = NSBundle.mainBundle().pathForResource("feedback", ofType: "html")
+                controller.title = "Feedback"
+            case "AboutDeveloper":
+                let controller = segue.destinationViewController as! AboutViewController
+                controller.htmlFile = NSBundle.mainBundle().pathForResource("aboutDeveloper", ofType: "html")
+                controller.title = "About the developer"
+            case "AboutApp":
+                let controller = segue.destinationViewController as! AboutViewController
+                controller.htmlFile = NSBundle.mainBundle().pathForResource("aboutApp", ofType: "html")
+                controller.title = "About the app"
+            default:
+                print("Error: No segue")
+            }
             
-        } else if segue.identifier == "PickAutoSnoozeTime" {
-            let controller = segue.destinationViewController as! AutoSnoozePickerViewController
-            controller.selectedAutoSnoozeTime = autoSnoozeTime
         }
+        
+        
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 {
             if indexPath.row == 0 {
-                sendSupportEmail()
+                //sendSupportEmail()
             }
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)

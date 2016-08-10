@@ -104,7 +104,12 @@ class ReminderCell: UITableViewCell {
         reminderLabel.text = name
         dayLabel.text = convertDateToString(.Day, date: dueDate)
         timeLabel.text = convertDateToString(.Time, date: dueDate)
-        shortDateLabel.text = convertDateToString(.ShortDate, date: dueDate)
+        if dueDate.isPresent() {
+            shortDateLabel.text = convertDateToString(.ShortDate, date: dueDate)
+        } else {
+            shortDateLabel.text = convertDateToString(.Day, date: dueDate) + ", " + convertDateToString(.ShortDate, date: dueDate)
+        }
+        
         
         if nextDate != nil {
             let frequencyAsPlural = "Every " + "\(frequency!) " + "\(interval!)" + "s"

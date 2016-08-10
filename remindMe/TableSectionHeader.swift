@@ -25,5 +25,6 @@ class TableSectionHeader: UITableViewHeaderFooterView {
         titleLabel.textColor = UIColor.whiteColor()
         
         
+        
     }
 }

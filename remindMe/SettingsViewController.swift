@@ -15,6 +15,7 @@ class SettingsViewController: UITableViewController {
     
     @IBOutlet weak var autoSnoozeSwitch: UISwitch!
     
+    
     var snoozeTime = ""
     var snoozeDuration = 0.0
     var snoozeUnit: SnoozeUnit = .Minutes

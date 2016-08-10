@@ -86,9 +86,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         var performShortcutDelegate = true
         
-        
-        
-        
         let savedTab = getSavedTab()
         print("Loaded to tab \(savedTab)")
         
@@ -111,10 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         tabBarController.selectedIndex = savedTab
-        
-        print("")
-        
-        
+    
         setBadgeForTodayTab()
         
         if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
@@ -129,8 +123,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return performShortcutDelegate
     }
-    
-    
     
     func setBadgeForTodayTab() {
         let now = NSDate()
@@ -167,11 +159,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let count = fetchedResultsController.fetchedObjects?.count
         todayNavigationControlelr.tabBarItem.badgeValue = "\(count!)"
-        
-        
-        
-        
-        
     }
     
     func setUpFirstTime(allRemindersViewController: AllRemindersViewController) {
@@ -241,10 +228,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        
         
         allRemindersViewController.setBadgeForTodayTab()
-        
-        
-        
-        
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
@@ -322,6 +305,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return succeeded
     }
-    
-    
 }

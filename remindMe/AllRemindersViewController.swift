@@ -349,21 +349,20 @@ class AllRemindersViewController: UIViewController {
         } else {
             completedText = "completed"
         }
-        if let selectedTabIndex = myTabBarController?.selectedIndex {
-            switch myTabIndex {
-            case 0:
-                text = "No \(completedText) reminders for today"
-            case 1:
-                text = "No \(completedText) reminders for the week"
-            case 2:
-                text = "No \(completedText) reminders"
-            case 3:
-                text = "No \(completedText) favorites"
-            default:
-                text = "Error"
-            }
-            noReminderLabel.text = text
+        
+        switch myTabIndex {
+        case 0:
+            text = "No \(completedText) reminders for today"
+        case 1:
+            text = "No \(completedText) reminders for the week"
+        case 2:
+            text = "No \(completedText) reminders"
+        case 3:
+            text = "No \(completedText) favorites"
+        default:
+            text = "Error"
         }
+        noReminderLabel.text = text
         
     }
     

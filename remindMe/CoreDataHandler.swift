@@ -46,7 +46,6 @@ class CoreDataHandler {
     
     func getReminderWithID(idFromNotification : Int, from entity: String) -> Reminder? {
         
-        
         let fetchRequest = NSFetchRequest(entityName: entity)
         
         let predicate = NSPredicate(format: "%K == %@", "idNumber", "\(idFromNotification)" )
@@ -184,8 +183,6 @@ class CoreDataHandler {
                 )
                 fetchRequest.predicate = predicate
             }
-            
-        
         }
     }
     
@@ -198,7 +195,6 @@ class CoreDataHandler {
         default:
             return ""
         }
-        
     }
     
     func filterStatus(status: ReminderStatus) -> String {

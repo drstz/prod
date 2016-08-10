@@ -61,7 +61,7 @@ extension AllRemindersViewController: UITableViewDataSource {
         
         cell.configureForReminder(reminder)
         cell.delegate = self
-        
+        print(reminder.creationDate)
         return cell
     }
     

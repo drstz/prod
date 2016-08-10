@@ -57,7 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
             // 5
             // The databse is added to the coordinator
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil)
+            let options = [ NSMigratePersistentStoresAutomaticallyOption : true, NSInferMappingModelAutomaticallyOption : true ]
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options)
             // 6
             // The NSManagedObjectContext is created and returned
             let context = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)

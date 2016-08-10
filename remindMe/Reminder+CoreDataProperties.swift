@@ -16,6 +16,7 @@ extension Reminder {
 
     @NSManaged var dueDate: NSDate
     @NSManaged var nextDueDate: NSDate?
+    @NSManaged var creationDate: NSDate?
     
     @NSManaged var name: String
     @NSManaged var typeOfInterval: String?
@@ -23,7 +24,7 @@ extension Reminder {
     @NSManaged var everyAmount: NSNumber?
     
     @NSManaged var idNumber: NSNumber
-    
+    /// Blah blah
     @NSManaged var isComplete: NSNumber 
     @NSManaged var isRecurring: NSNumber
     @NSManaged var isFavorite: NSNumber?

@@ -135,6 +135,7 @@ class AllRemindersViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(setBadgeForTodayTab), name: "setBadgeForTodayTab", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshTableView), name: "refresh", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(newReminder), name: "newReminder", object: nil)
         
         segmentedControl.selectedSegmentIndex = selectedSegment
         setUpCoreData()
@@ -148,6 +149,10 @@ class AllRemindersViewController: UIViewController {
         
         setBadgeForTodayTab()
 
+    }
+    
+    func newReminder() {
+        performSegueWithIdentifier("AddReminder", sender: self)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -180,6 +185,8 @@ class AllRemindersViewController: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "viewReminder", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "setBadgeForTodayTab", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "refresh", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "newReminder", object: nil)
+        
     
     }
     
@@ -342,21 +349,20 @@ class AllRemindersViewController: UIViewController {
         } else {
             completedText = "completed"
         }
-        if let selectedTabIndex = myTabBarController?.selectedIndex {
-            switch myTabIndex {
-            case 0:
-                text = "No \(completedText) reminders for today"
-            case 1:
-                text = "No \(completedText) reminders for the week"
-            case 2:
-                text = "No \(completedText) reminders"
-            case 3:
-                text = "No \(completedText) favorites"
-            default:
-                text = "Error"
-            }
-            noReminderLabel.text = text
+        
+        switch myTabIndex {
+        case 0:
+            text = "No \(completedText) reminders for today"
+        case 1:
+            text = "No \(completedText) reminders for the week"
+        case 2:
+            text = "No \(completedText) reminders"
+        case 3:
+            text = "No \(completedText) favorites"
+        default:
+            text = "Error"
         }
+        noReminderLabel.text = text
         
     }
     

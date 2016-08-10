@@ -28,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
+    var shortcutItem: UIApplicationShortcutItem?
+    
     // MARK: - CoreData
     
     lazy var managedObjectContext:NSManagedObjectContext = {
@@ -82,6 +84,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         registerDefaults()
         coreDataHandler.setObjectContext(managedObjectContext)
         
+        var performShortcutDelegate = true
+        
         let savedTab = getSavedTab()
         print("Loaded to tab \(savedTab)")
         
@@ -90,6 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = tabs[savedTab] as! UINavigationController
         let viewControllers = navigationController.viewControllers
         let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
+        
         
         allRemindersViewController.managedObjectContext = managedObjectContext
         allRemindersViewController.myTabIndex = savedTab
@@ -103,15 +108,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         tabBarController.selectedIndex = savedTab
-        
-        print("")
-        
-        
+    
         setBadgeForTodayTab()
         
+        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+            print("Application launched via shortcut")
+            self.shortcutItem = shortcutItem
+            performShortcutDelegate = false
+            
+            // Create the observer before the new view controller or else shortcut won't work when launching app
+            NSNotificationCenter.defaultCenter().addObserver(allRemindersViewController, selector: #selector(allRemindersViewController.newReminder), name: "newReminder", object: nil)
+            
+        }
         
-        
-        return true
+        return performShortcutDelegate
     }
     
     func setBadgeForTodayTab() {
@@ -149,11 +159,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let count = fetchedResultsController.fetchedObjects?.count
         todayNavigationControlelr.tabBarItem.badgeValue = "\(count!)"
-        
-        
-        
-        
-        
     }
     
     func setUpFirstTime(allRemindersViewController: AllRemindersViewController) {
@@ -223,14 +228,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        
         
         allRemindersViewController.setBadgeForTodayTab()
-        
-        
-        
-        
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
-        print(#function)
+        print("Application did become active")
+        
+        guard let shortcut = shortcutItem else { return }
+        
+        handleShortcut(shortcut)
+        
+        self.shortcutItem = nil 
+        
     }
 
     func application(application: UIApplication,
@@ -279,5 +287,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         sendReminderToController(reminder!)
     }
     
+    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+        print("Tapped shortcut")
+        completionHandler(handleShortcut(shortcutItem))
+    }
     
+    func handleShortcut(shortcutItem: UIApplicationShortcutItem) -> Bool {
+        print("Handling shortcut")
+        var succeeded = false
+        
+        if shortcutItem.type == "createReminder" {
+            
+            NSNotificationCenter.defaultCenter().postNotificationName("newReminder", object: nil)
+            print("Adding a new reminder")
+            succeeded = true
+        }
+        
+        return succeeded
+    }
 }

@@ -19,14 +19,9 @@ extension AllRemindersViewController: UITabBarControllerDelegate  {
         print(#function)
         let selectedIndex = myTabBarController.selectedIndex
         
-        
         let navigationController = viewController as! UINavigationController
         let viewControllers = navigationController.viewControllers
         let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
-        
-        let selectedViewControllerTab = allRemindersViewController.tabBarController?.selectedIndex
-        
-        
         
         let selectedViewControllerTag = allRemindersViewController.tabBarController?.tabBar.selectedItem?.tag
         print("CHANGING TAB \(selectedIndex) ---> \(selectedViewControllerTag!) ")

@@ -485,7 +485,9 @@
                         <outlet property="closeButton" destination="e6o-eg-uX9" id="LEK-zt-pwz"/>
                         <outlet property="completeButton" destination="HBV-pR-rmt" id="oPE-jc-kNE"/>
                         <outlet property="deleteButton" destination="Tgk-4Q-gGl" id="nE2-ax-M1S"/>
+                        <outlet property="editButton" destination="Axh-RT-VoZ" id="OT3-CY-qUL"/>
                         <outlet property="favoriteButton" destination="QYr-9d-yEg" id="cGg-TQ-w32"/>
+                        <outlet property="favoriteButtonBackground" destination="Ouq-RO-3sL" id="YMe-0z-fKx"/>
                         <outlet property="popup" destination="07M-Fn-hT3" id="GkO-54-jDN"/>
                         <outlet property="reminderDayLabel" destination="nbo-6D-mqr" id="Ndz-3w-oXI"/>
                         <outlet property="reminderDueTimeLabel" destination="QVj-hn-ygk" id="ZiG-UZ-n1a"/>

@@ -27,9 +27,7 @@ class SnoozePickerViewController: UITableViewController {
     var customSnoozeDelay = "None"
     
     let snoozeTimes: [(Double, SnoozeUnit)] = [
-        (10, .Seconds),
         (5, .Minutes),
-        (10, .Minutes),
         (30, .Minutes),
         (1, .Hours)
     ]
@@ -247,18 +245,12 @@ class SnoozePickerViewController: UITableViewController {
         selectedSnoozeTimeIndex = indexPath.row
         switch selectedSnoozeTimeIndex {
         case 0:
-            setSnoozeTime(10, unit: .Seconds)
-            overwriteOldTimes(10, unit: .Seconds)
-        case 1:
             setSnoozeTime(5, unit: .Minutes)
             overwriteOldTimes(5, unit: .Minutes)
-        case 2:
-            setSnoozeTime(10, unit: .Minutes)
-            overwriteOldTimes(10, unit: .Minutes)
-        case 3:
+        case 1:
             setSnoozeTime(30, unit: .Minutes)
             overwriteOldTimes(30, unit: .Minutes)
-        case 4:
+        case 2:
             setSnoozeTime(1, unit: .Hours)
             overwriteOldTimes(1, unit: .Hours)
         default:

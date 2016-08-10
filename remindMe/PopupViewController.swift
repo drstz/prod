@@ -34,8 +34,11 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     @IBOutlet weak var completeButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var favoriteButtonBackground: UIView!
+    @IBOutlet weak var editButton: UIButton!
     
     @IBOutlet weak var closeButton: UIButton!
+    
     
     // MARK: - Delegates
     
@@ -47,6 +50,24 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     // MARK: - Properties
     
     var incomingReminder: Reminder?
+    
+    // MARK: Colors
+    
+    // Late
+    
+    var lateColor = UIColor(red: 149/255, green: 40/255, blue: 54/255, alpha: 1)
+    var lightLate = UIColor(red: 169/255, green: 45/255, blue: 61/255, alpha: 1)
+    var lighterLate = UIColor(red: 189/255, green: 51/255, blue: 69/255, alpha: 1)
+    var lightestRed = UIColor(red: 203/255, green: 62/255, blue: 80/255, alpha: 1)
+    var shinyRed = UIColor(red: 208/255, green: 82/255, blue: 98/255, alpha: 1)
+    
+    // Normal
+    
+    var normalColor = UIColor(red: 40/255, green: 83/255, blue: 108/255, alpha: 1)
+    var lightNormal = UIColor(red: 47/255, green: 97/255, blue: 127/255, alpha: 1)
+    var lighterNormal = UIColor(red: 54/255, green: 112/255, blue: 145/255, alpha: 1)
+    var lightestNormal = UIColor(red: 61/255, green: 126/255, blue: 164/255, alpha: 1)
+    var shinyNormal = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
     
     
     @IBAction func complete() {
@@ -139,10 +160,17 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         gestureRecognizer.delegate = self
         view.addGestureRecognizer(gestureRecognizer)
         
+        
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
         if !UIAccessibilityIsReduceTransparencyEnabled() {
             backgroundView.backgroundColor = UIColor.clearColor()
         } else {
-            backgroundView.backgroundColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.8)
+            backgroundView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.8)
         }
         if let reminder = incomingReminder {
             setLabels(with: reminder)
@@ -151,6 +179,25 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
                 snoozeButton.hidden = false
             } else {
                 snoozeButton.hidden = true
+            }
+            
+            if reminder.isDue() {
+                popup.backgroundColor = lateColor
+                completeButton.backgroundColor = lighterLate
+                favoriteButtonBackground.backgroundColor = shinyRed
+                editButton.backgroundColor = lightestRed
+                deleteButton.backgroundColor = lightLate
+                closeButton.backgroundColor = lateColor
+                snoozeButton.backgroundColor = lightestRed
+            } else {
+                popup.backgroundColor = normalColor
+                completeButton.backgroundColor = lighterNormal
+                favoriteButtonBackground.backgroundColor = shinyNormal
+                editButton.backgroundColor = lightestNormal
+                deleteButton.backgroundColor = lightNormal
+                closeButton.backgroundColor = normalColor
+                
+                
             }
         }
         

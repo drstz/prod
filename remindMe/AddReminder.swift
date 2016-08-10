@@ -113,7 +113,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         })
         alert.addAction(cancel)
         alert.addAction(confirm)
-        presentViewController(alert, animated: true, completion: nil)
+        if textFieldHasText {
+            presentViewController(alert, animated: true, completion: nil)
+        } else {
+            delegate?.addReminderViewControllerDidCancel(self)
+        }
+        
         
     }
     

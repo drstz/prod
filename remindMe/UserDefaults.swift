@@ -124,6 +124,9 @@ func setAutoSnooze(enabled: Bool) {
     let userDefaults = NSUserDefaults.standardUserDefaults()
     userDefaults.setBool(enabled, forKey: "AutoSnoozeEnabled")
     userDefaults.synchronize()
+    
+    let notificationHandler = NotificationHandler()
+    notificationHandler.updateAllSnoozeTimes()
 }
 
 func setDefaultAutoSnoozeTime(autoSnoozeTime: AutoSnoozeDefaults) {

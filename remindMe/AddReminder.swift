@@ -105,7 +105,16 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     // MARK: Bar items
     
     @IBAction func cancel() {
-        delegate?.addReminderViewControllerDidCancel(self)
+        let alert = UIAlertController(title: "Are you sure?", message: "You will lose all changes", preferredStyle: .Alert)
+        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let confirm = UIAlertAction(title: "Confirm", style: .Default, handler: {
+            action in
+            self.delegate?.addReminderViewControllerDidCancel(self)
+        })
+        alert.addAction(cancel)
+        alert.addAction(confirm)
+        presentViewController(alert, animated: true, completion: nil)
+        
     }
     
     @IBAction func saveReminder() {

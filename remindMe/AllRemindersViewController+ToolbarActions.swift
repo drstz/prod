@@ -19,7 +19,8 @@ extension AllRemindersViewController {
         }
         coreDataHandler.save()
         deselectRows()
-        navigationController?.setToolbarHidden(true, animated: true)
+        refreshTableView()
+        hideToolbar()
     }
     
     func toolbarDelete() {
@@ -36,12 +37,12 @@ extension AllRemindersViewController {
         let deleteAction = UIAlertAction(title: "Delete", style: .Destructive, handler: {
             action in
             for reminder in reminders {
-                // Save == false because function saves every time. Avoid saving twice
                 self.deleteReminder(reminder, save: false)
             }
             self.coreDataHandler.save()
             self.deselectRows()
-            self.navigationController?.setToolbarHidden(true, animated: true)
+            self.refreshTableView()
+            self.hideToolbar()
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
         alert.addAction(deleteAction)
@@ -68,7 +69,8 @@ extension AllRemindersViewController {
         
         coreDataHandler.save()
         deselectRows()
-        navigationController?.setToolbarHidden(true, animated: true)
+        refreshTableView()
+        hideToolbar()
     }
     
     // MARK: Selection and deselection
@@ -107,13 +109,6 @@ extension AllRemindersViewController {
         return false
     }
     
-    func deselectRows() {
-        if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
-            for indexPath in selectedIndexPaths {
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            }
-        }
-        refreshTableView()
-    }
+    
     
 }

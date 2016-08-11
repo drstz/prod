@@ -31,13 +31,11 @@ extension AllRemindersViewController: ReminderCellDelegate {
             let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             toolbarItems = [complete, favorite, spacer, delete]
             
-            if navigationController?.toolbarHidden == true {
-                navigationController?.setToolbarHidden(false, animated: true)
+            if toolbarIsHidden() {
+                showToolbar()
             } else {
-                navigationController?.setToolbarHidden(true, animated: true)
-                
+                hideToolbar()
             }
-            
         }
     }
     

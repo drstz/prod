@@ -21,16 +21,13 @@ class AllRemindersViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
-    
     @IBOutlet weak var noReminderScreen: UIView!
-    
     @IBOutlet weak var noReminderLabel: UILabel!
     
     // MARK: - Coredata
     
     let coreDataHandler = CoreDataHandler()
     var managedObjectContext: NSManagedObjectContext!
-    var fetchedResultsController: NSFetchedResultsController!
     
     // MARK: - Tabbar
     
@@ -81,7 +78,9 @@ class AllRemindersViewController: UIViewController {
         loadCell()
         tableView.reloadData()
         
-        clearSelectedIndexPaths()
+        deselectRows()
+        hideToolbar()
+        
         selectedSegment = segmentedControl.selectedSegmentIndex
         
         setNoReminderView()
@@ -90,10 +89,7 @@ class AllRemindersViewController: UIViewController {
     
     
     /// This is used to allow the settings viewcontroller to perform the unwind segue
-    @IBAction func doneSettings(segue: UIStoryboardSegue) {
-        print(#function)
-        
-    }
+    @IBAction func doneSettings(segue: UIStoryboardSegue) {}
     
     // MARK: - Methods
     
@@ -107,8 +103,6 @@ class AllRemindersViewController: UIViewController {
     deinit {
         print(#function)
         print(self)
-        fetchedResultsController.delegate = nil
-//        print("All Reminders was deallocated")
     }
     
     // MARK: View
@@ -123,13 +117,11 @@ class AllRemindersViewController: UIViewController {
     
         tableView.separatorColor = UIColor.clearColor()
         tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
-
     }
     
     override func viewWillAppear(animated: Bool) {
         print(#function)
         super.viewWillAppear(animated)
-        
         
         addObservers()
         
@@ -143,40 +135,28 @@ class AllRemindersViewController: UIViewController {
         setBadgeForTodayTab()
     }
     
-    
-    /// This is called when a user uses the 3D touch Quick Action
-    func newReminder() {
-        performSegueWithIdentifier("AddReminder", sender: self)
-    }
-    
     override func viewDidAppear(animated: Bool) {
         print(#function)
         super.viewDidAppear(animated)
         
         let selectedIndex = myTabBarController.selectedIndex
         saveSelectedTab(selectedIndex)
-        
-
-    }
-    
-    override func viewDidLayoutSubviews() {
-        
-    }
-    
-    func numberOfRemindersInSection() {
-        print(#function)
-        let numberOfRows = tableView.numberOfRowsInSection(0)
-        print("There are \(numberOfRows) rows")
     }
     
     override func viewWillDisappear(animated: Bool) {
         print(#function)
         super.viewWillDisappear(animated)
         print("Here comes the recieved message: \(sentMessage)")
-        clearSelectedIndexPaths()
+        deselectRows()
+        hideToolbar()
         removeObservers()
-        
+    }
     
+    // MARK: 3D Touch
+    
+    /// This is called when a user uses the 3D touch Quick Action
+    func newReminder() {
+        performSegueWithIdentifier("AddReminder", sender: self)
     }
     
     // MARK: Observers
@@ -201,13 +181,27 @@ class AllRemindersViewController: UIViewController {
     }
     
     // MARK: Selection
-    func clearSelectedIndexPaths() {
+    
+    func deselectRows() {
         if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
             for indexPath in selectedIndexPaths {
-                tableView.deselectRowAtIndexPath(indexPath, animated: false)
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
             }
         }
+    }
+    
+    // MARK: Toolbar
+    
+    func showToolbar() {
+        navigationController?.setToolbarHidden(false, animated: true)
+    }
+    
+    func hideToolbar() {
         navigationController?.setToolbarHidden(true, animated: true)
+    }
+    
+    func toolbarIsHidden() -> Bool {
+        return (navigationController?.toolbarHidden)!
     }
     
     // MARK: Cell
@@ -216,8 +210,9 @@ class AllRemindersViewController: UIViewController {
         //print(#function)
         let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
-        let nib = UINib(nibName: "TableSectionHeader", bundle: nil)
-        tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: "TableSectionHeader")
+        
+        let sectionHeaderNib = UINib(nibName: "TableSectionHeader", bundle: nil)
+        tableView.registerNib(sectionHeaderNib, forHeaderFooterViewReuseIdentifier: "TableSectionHeader")
         tableView.rowHeight = 100
         
     }
@@ -284,7 +279,6 @@ class AllRemindersViewController: UIViewController {
         } else {
             todayViewController.navigationController?.tabBarItem.badgeValue = "\(numberOfDueReminders())"
         }
-        
     }
     
     func refreshTableView() {
@@ -295,12 +289,6 @@ class AllRemindersViewController: UIViewController {
             setUpCoreData()
             tableView.reloadData()
         }
-        
-//        if myTabIndex == 0 {
-//            setUpCoreData()
-//            tableView.reloadData()
-//        }
-        
     }
     
     func numberOfDueReminders() -> Int {
@@ -373,7 +361,6 @@ class AllRemindersViewController: UIViewController {
             text = "Error"
         }
         noReminderLabel.text = text
-        
     }
     
     // MARK: Segues
@@ -400,45 +387,15 @@ class AllRemindersViewController: UIViewController {
                 let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
                 controller.reminderToEdit = reminder
             }
-            
-        case "QuickView":
-            let navigationController = segue.destinationViewController as! UINavigationController
-            let controller = navigationController.topViewController as! QuickViewViewController
-            controller.delegate = self
-            
-            // Make Quick View a delegate of All Reminders
-            delegate = controller
-            
-            if let reminder = sender as? Reminder {
-                
-                // When coming from notification
-                controller.incomingReminder = reminder
-                controller.managedObjectContext = managedObjectContext
-                controller.notificationHasGoneOff = notificationHasGoneOff
-            } else {
-                // When coming from list
-                if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
-                    let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-                    controller.incomingReminder = reminder
-                    controller.managedObjectContext = managedObjectContext
-                }
-            }
         case "Popup":
-            print("Preparing popup")
-    
             let popupViewController = segue.destinationViewController as! PopupViewController
-            
             popupViewController.delegate = self
-            
-            // Make Quick View a delegate of All Reminders
-            // delegate = controller
             
             if let reminder = sender as? Reminder {
                 // When coming from notification
                 print("Coming from notification")
                 popupViewController.incomingReminder = reminder
                 popupViewController.managedObjectContext = managedObjectContext
-                //controller.notificationHasGoneOff = notificationHasGoneOff
             } else {
                 // When coming from list
                 if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
@@ -447,24 +404,19 @@ class AllRemindersViewController: UIViewController {
                     popupViewController.managedObjectContext = managedObjectContext
                 }
             }
-            print("Done preparing popup")
         default:
             break
-            
         }
     }
             
     // MARK: - REMINDERS
     
-    // MARK: Reminder list
-    
-    func updateList() {
-        print(#function)
-        tableView.reloadData()
-    }
-    
     // MARK: Reminder Actions
     
+    
+    /// Delete a reminder
+    /// - Parameter reminder: The reminder to delete
+    /// - Parameter save: Indicate whether the methode should save or not to repeat saving twice
     func deleteReminder(reminder: Reminder, save: Bool = true) {
         print(#function)
         if coreDataHandler.fetchedResultsController.indexPathForObject(reminder) != nil {

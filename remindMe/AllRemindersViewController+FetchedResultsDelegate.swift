@@ -18,9 +18,9 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
     
     func controller(controller: NSFetchedResultsController,
                     didChangeObject anObject: AnyObject,
-                                    atIndexPath indexPath: NSIndexPath?,
-                                                forChangeType type: NSFetchedResultsChangeType,
-                                                              newIndexPath: NSIndexPath?) {
+                    atIndexPath indexPath: NSIndexPath?,
+                    forChangeType type: NSFetchedResultsChangeType,
+                    newIndexPath: NSIndexPath?) {
         
         switch type {
         case .Insert:
@@ -38,7 +38,6 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
                 let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)
                 cell.configureForReminder(reminder)
             }
-            
         case .Move:
             print("*** NSFetchedResultsChangeMove (object)")
             tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
@@ -48,23 +47,18 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
     
     func controller(controller: NSFetchedResultsController,
                     didChangeSection sectionInfo: NSFetchedResultsSectionInfo,
-                                     atIndex sectionIndex: Int,
-                                             forChangeType type: NSFetchedResultsChangeType) {
+                    atIndex sectionIndex: Int,
+                    forChangeType type: NSFetchedResultsChangeType) {
         print(#function)
         switch type {
         case .Insert:
             print("*** NSFetchedResultsChangeInsert (section)")
             tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-            
-            
         case .Delete:
             print("*** NSFetchedResultsChangeDelete (section)")
             tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-            
-            
         case .Update:
             print("*** NSFetchedResultsChangeUpdate (section)")
-            
         case .Move:
             print("*** NSFetchedResultsChangeMove (section)")
         }

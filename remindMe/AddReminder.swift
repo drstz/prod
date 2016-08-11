@@ -202,6 +202,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         setDueDateLabel(with: selectedDate!)
     }
     
+    // MARK: - Deinit 
+    
+    deinit {
+        print(#function)
+        print(self)
+    }
+    
     // MARK: - VIEW
     
     // MARK: Loading

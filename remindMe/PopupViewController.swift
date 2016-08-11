@@ -109,6 +109,12 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
          dismissViewControllerAnimated(true, completion: nil)
     }
     
+    deinit {
+        print(#function)
+        print(self)
+    }
+    
+    
     // MARK: - Delegate Methods
     
     // MARK: AddReminder

@@ -88,7 +88,10 @@ class AllRemindersViewController: UIViewController {
         setBadgeForTodayTab()
     }
     
+    
+    /// This is used to allow the settings viewcontroller to perform the unwind segue
     @IBAction func doneSettings(segue: UIStoryboardSegue) {
+        print(#function)
         
     }
     
@@ -102,16 +105,14 @@ class AllRemindersViewController: UIViewController {
     }
     
     deinit {
+        print(#function)
+        print(self)
         fetchedResultsController.delegate = nil
 //        print("All Reminders was deallocated")
     }
     
     // MARK: View
-    
-    func countDueReminders() {
-        //self.navigationController?.tabBarItem.badgeValue = "2"
-    }
-    
+
     override func viewDidLoad() {
         print(#function)
         super.viewDidLoad()
@@ -130,12 +131,7 @@ class AllRemindersViewController: UIViewController {
         super.viewWillAppear(animated)
         
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(setBadgeForTodayTab), name: "setBadgeForTodayTab", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshTableView), name: "refresh", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(newReminder), name: "newReminder", object: nil)
+        addObservers()
         
         segmentedControl.selectedSegmentIndex = selectedSegment
         setUpCoreData()
@@ -144,13 +140,11 @@ class AllRemindersViewController: UIViewController {
         tableView.reloadData()
         
         setNoReminderView()
-        
-        countDueReminders()
-        
         setBadgeForTodayTab()
-
     }
     
+    
+    /// This is called when a user uses the 3D touch Quick Action
     func newReminder() {
         performSegueWithIdentifier("AddReminder", sender: self)
     }
@@ -180,14 +174,30 @@ class AllRemindersViewController: UIViewController {
         super.viewWillDisappear(animated)
         print("Here comes the recieved message: \(sentMessage)")
         clearSelectedIndexPaths()
+        removeObservers()
+        
+    
+    }
+    
+    // MARK: Observers
+    
+    func addObservers() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(setBadgeForTodayTab), name: "setBadgeForTodayTab", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshTableView), name: "refresh", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(newReminder), name: "newReminder", object: nil)
+    }
+    
+    /// Removes observers so that messages are only sent to one view controller at a time
+    func removeObservers() {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "completeReminder", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "deferReminder", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "viewReminder", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "setBadgeForTodayTab", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "refresh", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "newReminder", object: nil)
-        
-    
     }
     
     // MARK: Selection

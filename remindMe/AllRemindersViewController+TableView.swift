@@ -15,8 +15,6 @@ extension AllRemindersViewController: UITableViewDataSource {
         return (coreDataHandler.fetchedResultsController.sections?.count)! 
     }
     
-    
-    
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 //        print(#function)
         let sectionInfo = coreDataHandler.fetchedResultsController.sections! as [NSFetchedResultsSectionInfo]
@@ -27,8 +25,6 @@ extension AllRemindersViewController: UITableViewDataSource {
         let header = view as! TableSectionHeader
         
         header.titleLabel.text = text
-        
-        // header.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
         
         return view
     }
@@ -42,8 +38,6 @@ extension AllRemindersViewController: UITableViewDataSource {
         
         header.titleLabel.text = text
         header.titleLabel.backgroundColor = UIColor(red: 40/255, green: 114/255, blue: 192/255, alpha: 1)
-        
-        
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -72,28 +66,29 @@ extension AllRemindersViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(#function)
-        if navigationController?.toolbarHidden == true {
-  
+        print("Number of selected reminders = \(selectedReminders().count)")
+        if toolbarIsHidden() {
             // This is a bug in iOS maybe. For some reason this doesn't happen on the main thread
             // Should find where UI code is not on main thread for some reason or what causes a delay
             // but no crash
-            
             dispatch_async(dispatch_get_main_queue(),{
                self.performSegueWithIdentifier("Popup",sender: tableView.cellForRowAtIndexPath(indexPath))
             })
-            
-            
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        } else {
+            checkSelectionForFavorites()
         }
     }
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         print(#function)
+        print("Number of selected reminders = \(selectedReminders().count)")
         let selectedIndexPathsCount = tableView.indexPathsForSelectedRows?.count
-        print("There are \(selectedIndexPathsCount) selected rows")
         if selectedIndexPathsCount == nil {
-            navigationController?.setToolbarHidden(true, animated: true)
+            hideToolbar()
             refreshTableView()
+        } else {
+            checkSelectionForFavorites()
         }
         
     }

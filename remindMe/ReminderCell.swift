@@ -129,23 +129,16 @@ class ReminderCell: UITableViewCell {
         if isFavorite == true {
             favoriteStar.hidden = false
             if isLate && !isComplete {
-                // backgroundDelegate?.changeBackgroundColor(favoriteColor)
                 backgroundDelegate?.changeBackgroundColor(lateColor)
-                //reminderIsDueView.backgroundColor = UIColor.redColor()
             } else {
-                // backgroundDelegate?.changeBackgroundColor(favoriteColor)
                 backgroundDelegate?.changeBackgroundColor(cellBackgroundColor)
-                //reminderIsDueView.backgroundColor = UIColor.clearColor()
-                
             }
         } else {
             favoriteStar.hidden = true
             if isLate && !isComplete {
                 backgroundDelegate?.changeBackgroundColor(lateColor)
-                //reminderIsDueView.backgroundColor = UIColor.redColor()
             } else {
                 backgroundDelegate?.changeBackgroundColor(cellBackgroundColor)
-                //reminderIsDueView.backgroundColor = UIColor.clearColor()
             }
         }
     }
@@ -153,12 +146,10 @@ class ReminderCell: UITableViewCell {
     func configureLabelColors(isComplete: Bool, isLate: Bool) {
 //        print(#function)
         if isComplete || !isLate {
-//            print("Chaning text to white")
             dayLabel.textColor = UIColor.whiteColor()
             shortDateLabel.textColor = UIColor.whiteColor()
             timeLabel.textColor = UIColor.whiteColor()
         } else {
-//            print("Chaning text to white")
             dayLabel.textColor = UIColor.whiteColor()
             shortDateLabel.textColor = UIColor.whiteColor()
             timeLabel.textColor = UIColor.whiteColor()

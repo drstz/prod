@@ -13,9 +13,6 @@ extension AllRemindersViewController: UITabBarControllerDelegate  {
     // MARK: TabBar
     
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
-        print("")
-        
-        print("___________________")
         print(#function)
         let selectedIndex = myTabBarController.selectedIndex
         
@@ -45,10 +42,6 @@ extension AllRemindersViewController: UITabBarControllerDelegate  {
     }
     
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-        print("")
-        print("")
-        print("")
-        print("___________________")
         print(#function)
         print("Here comes the recieved message: \(sentMessage)")
         let selectedIndex = myTabBarController.selectedIndex

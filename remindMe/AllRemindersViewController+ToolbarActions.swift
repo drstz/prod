@@ -109,6 +109,62 @@ extension AllRemindersViewController {
         return false
     }
     
+    func checkSelectionForFavorites() {
+        selectionIsMixed = false
+        var containsFavorite = false
+        var containsUnFavorite = false
+        var isComplete = false
+        let reminders = selectedReminders()
+        for reminder in reminders {
+            if reminder.isFavorite == true {
+                containsFavorite = true
+                if containsUnFavorite {
+                    selectionIsMixed = true
+                } else {
+                    selectionIsMixed = false
+                }
+            } else {
+                containsUnFavorite = true
+                if containsFavorite == true {
+                    selectionIsMixed = true
+                } else {
+                    selectionIsMixed = false
+                }
+            }
+            
+            if reminder.isComplete == true {
+                isComplete = true
+            } else {
+                isComplete = false
+            }
+        }
+        print("Contains favorite = \(containsFavorite)")
+        print("Is mixed = \(selectionIsMixed)")
+        
+        
+        if selectionIsMixed || containsUnFavorite {
+            if isComplete {
+                let favoriteItem = toolbarItems![0]
+                favoriteItem.title = "Favorite"
+                toolbarItems![0] = favoriteItem
+            } else {
+                let favoriteItem = toolbarItems![1]
+                favoriteItem.title = "Favorite"
+                toolbarItems![1] = favoriteItem
+            }
+        } else if !selectionIsMixed && containsFavorite {
+            if isComplete {
+                let favoriteItem = toolbarItems![0]
+                favoriteItem.title = "Remove favorite"
+                toolbarItems![0] = favoriteItem
+            } else {
+                let favoriteItem = toolbarItems![1]
+                favoriteItem.title = "Remove favorite"
+                toolbarItems![1] = favoriteItem
+            }
+        }
+    }
+    
     
     
 }

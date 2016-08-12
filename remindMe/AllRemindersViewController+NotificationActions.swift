@@ -16,11 +16,10 @@ extension AllRemindersViewController {
         if let reminder = reminderFromNotification {
             reminder.complete()
         }
-        
         coreDataHandler.save()
     }
     
-    func deferReminder() {
+    func snoozeReminder() {
         print(#function)
         if let reminder = reminderFromNotification {
             reminder.snooze()
@@ -30,9 +29,6 @@ extension AllRemindersViewController {
     
     func viewReminder() {
         print(#function)
-        print(myTabIndex)
-        //        let reminderNotificationHandler = reminderFromNotification?.notificationHandler
-        //        reminderNotificationHandler?.deleteReminderNotifications(reminderFromNotification!)
         notificationHasGoneOff = true
         if let reminder = reminderFromNotification {
             if presentedViewController != nil {
@@ -44,10 +40,6 @@ extension AllRemindersViewController {
             }
             
         } else {
-//            let alert = UIAlertController(title: "Error", message: "Could not find reminder", preferredStyle: .Alert)
-//            let action = UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
-//            alert.addAction(action)
-//            presentViewController(alert, animated: true, completion: nil)
             print("Error")
         }
         

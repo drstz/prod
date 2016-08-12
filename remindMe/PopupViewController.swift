@@ -234,15 +234,12 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         print(#function)
         if segue.identifier == "EditReminder" {
-            print("Preparing for segue to edit reminder")
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! AddReminderViewController
             
             controller.delegate = self
             controller.managedObjectContext = managedObjectContext
             controller.reminderToEdit = incomingReminder
-            print("Done preparing")
-            
         }
     }
 

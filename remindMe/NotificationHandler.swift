@@ -289,8 +289,6 @@ class NotificationHandler {
     func recieveLocalNotificationWithState(state: UIApplicationState) {
         print(#function)
         if state == .Inactive {
-            print("---------------------")
-            print("Handling notification from the background")
             print("Notification was tapped")
             NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
         } else {
@@ -305,7 +303,7 @@ class NotificationHandler {
             if actionIdentifier == "Complete" {
                 NSNotificationCenter.defaultCenter().postNotificationName("completeReminder", object: nil)
             } else if actionIdentifier == "Defer" {
-                NSNotificationCenter.defaultCenter().postNotificationName("deferReminder", object: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName("snoozeReminder", object: nil)
             }
         }
         

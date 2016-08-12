@@ -66,7 +66,10 @@ class AllRemindersViewController: UIViewController {
     
     var sentMessage = "I came from nowhere"
     
-    var editingList = false 
+    var editingList = false
+    
+    // Help with changing toolbar
+    var selectionIsMixed = false
     
     // MARK: - IBActions
     
@@ -163,7 +166,7 @@ class AllRemindersViewController: UIViewController {
     
     func addObservers() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(deferReminder), name: "deferReminder", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(snoozeReminder), name: "snoozeReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(setBadgeForTodayTab), name: "setBadgeForTodayTab", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshTableView), name: "refresh", object: nil)
@@ -173,7 +176,7 @@ class AllRemindersViewController: UIViewController {
     /// Removes observers so that messages are only sent to one view controller at a time
     func removeObservers() {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "completeReminder", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "deferReminder", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "snoozeReminder", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "viewReminder", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "setBadgeForTodayTab", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "refresh", object: nil)
@@ -268,7 +271,6 @@ class AllRemindersViewController: UIViewController {
     func setBadgeForTodayTab() {
         print(#function)
         let viewControllers = navigationController?.tabBarController?.viewControllers
-        print("Number of viewControllers : \(viewControllers?.count)")
         
         let someNavigationController = viewControllers![0] as! UINavigationController
         let todayViewController = someNavigationController.viewControllers[0] as! AllRemindersViewController

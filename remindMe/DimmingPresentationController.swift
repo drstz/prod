@@ -17,7 +17,6 @@ class DimmingPresentationController: UIPresentationController {
         blurEffectView.frame = containerView!.bounds
         blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         blurEffectView.tag = 999
-        //blurEffectView.backgroundColor = UIColor(red: 149/255, green: 40/255, blue: 54/255, alpha: 0.5)
         return blurEffectView
     }
     

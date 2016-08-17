@@ -74,6 +74,8 @@ extension AllRemindersViewController: UITableViewDelegate {
             dispatch_async(dispatch_get_main_queue(),{
                self.performSegueWithIdentifier("Popup",sender: tableView.cellForRowAtIndexPath(indexPath))
             })
+            
+            
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         } else {
             checkSelectionForFavorites()

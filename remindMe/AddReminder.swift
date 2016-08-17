@@ -105,6 +105,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     // MARK: Bar items
     
     @IBAction func cancel() {
+        reminderNameField.resignFirstResponder()
+        
         let alert = UIAlertController(title: "Are you sure?", message: "You will lose all changes", preferredStyle: .Alert)
         let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         let confirm = UIAlertAction(title: "Confirm", style: .Default, handler: {
@@ -123,6 +125,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     }
     
     @IBAction func saveReminder() {
+        reminderNameField.resignFirstResponder()
         
         var reminder : Reminder?
         

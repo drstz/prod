@@ -161,13 +161,20 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         closeButton.layer.cornerRadius = 10
         
         
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(close))
+        var gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(close))
         gestureRecognizer.cancelsTouchesInView = false
         gestureRecognizer.delegate = self
         view.addGestureRecognizer(gestureRecognizer)
         
+        gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(favoriteButtonWasPressed))
+        favoriteButtonBackground.addGestureRecognizer(gestureRecognizer)
         
-        
+        // Disabled until I can animate button correctly when simulating a tap
+        favoriteButton.adjustsImageWhenHighlighted = false
+    }
+    
+    func favoriteButtonWasPressed() {
+        favorite()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -187,7 +194,7 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
                 snoozeButton.hidden = true
             }
             
-            if reminder.isDue() {
+            if reminder.isDue() && reminder.isComplete == false {
                 popup.backgroundColor = lateColor
                 completeButton.backgroundColor = lighterLate
                 favoriteButtonBackground.backgroundColor = shinyRed

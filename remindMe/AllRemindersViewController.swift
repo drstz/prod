@@ -243,8 +243,8 @@ class AllRemindersViewController: UIViewController {
         switch selectedIndex {
         case 0:
             print("Filtering for index \(selectedIndex)")
-            filter = .Today
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "TodayReminders", filterBy: filter, status: status)
+            filter = .All
+            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
         case 1:
             print("Filtering for index \(selectedIndex)")
             filter = .Week

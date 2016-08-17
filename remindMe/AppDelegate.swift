@@ -78,7 +78,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var shouldPerformShortcutDelegate = true
         
         let savedTab = getSavedTab()
-        print("Loaded to tab \(savedTab)")
         
         let allRemindersViewController = getAllRemindersViewController()
         

@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-enum ReminderFilter {
+enum ReminderFilter: String {
     case Favorite
     case All
     case Today

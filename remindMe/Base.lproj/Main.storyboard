@@ -577,11 +577,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="allButton" destination="f2X-62-Qog" id="lSf-3T-Mzd"/>
                         <outlet property="filterBar" destination="YvC-aE-NMt" id="0PD-CU-hmV"/>
                         <outlet property="noReminderLabel" destination="yHh-K8-F3j" id="Sva-bn-ejb"/>
                         <outlet property="noReminderScreen" destination="Bsd-RS-vSF" id="sbJ-5v-ckG"/>
                         <outlet property="segmentedControl" destination="eUi-Dz-PKw" id="YUW-3r-ffB"/>
                         <outlet property="tableView" destination="izq-nV-FBg" id="maa-dz-lVZ"/>
+                        <outlet property="todayButton" destination="hrr-dM-Lmf" id="uow-hI-DcV"/>
                         <segue destination="EXe-5T-xJU" kind="presentation" identifier="EditReminder" id="XiK-Cj-5ub"/>
                         <segue destination="Cxg-hC-dD1" kind="presentation" identifier="Popup" id="vKq-PE-wZM"/>
                     </connections>

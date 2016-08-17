@@ -28,6 +28,11 @@ class AllRemindersViewController: UIViewController {
     
     @IBOutlet weak var filterBar: UIView!
     
+    // MARK: Filter bar buttons
+    
+    @IBOutlet weak var todayButton: UIButton!
+    @IBOutlet weak var allButton: UIButton!
+    
     // MARK: - Coredata
     
     let coreDataHandler = CoreDataHandler()
@@ -75,6 +80,10 @@ class AllRemindersViewController: UIViewController {
     // Help with changing toolbar
     var selectionIsMixed = false
     
+    // MARK: Reminder filter
+    
+    
+    
     // MARK: - IBActions
     
     @IBAction func changeSegment() {
@@ -95,11 +104,72 @@ class AllRemindersViewController: UIViewController {
     }
     
     @IBAction func loadRemindersForToday() {
+        coreDataHandler.setObjectContext(managedObjectContext)
+        var status: ReminderStatus = .Complete
         
+        // Handle segment
+        let segment = segmentedControl.selectedSegmentIndex
+        if segment == 0 {
+            status = .Incomplete
+            print("Fetching incomplete reminders")
+        } else {
+            status = .Complete
+            print("Fetching complete reminders")
+        }
+        
+        // Set choice
+        let filter: ReminderFilter = .Today
+        print("Filter was set to \(filter)")
+        saveFilter(filter)
+        
+        // Show selected
+        customizeButton(todayButton, selected: true)
+        
+        // Deselect Other
+        customizeButton(allButton, selected: false)
+        
+        // Fetch choice
+        coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
+        
+        // Reload tableview with choice
+        coreDataHandler.fetchedResultsController.delegate = self
+        coreDataHandler.performFetch()
+        
+        tableView.reloadData()
     }
     
     @IBAction func loadAllReminders() {
+        coreDataHandler.setObjectContext(managedObjectContext)
+        var status: ReminderStatus = .Complete
         
+        // Handle segment
+        let segment = segmentedControl.selectedSegmentIndex
+        if segment == 0 {
+            status = .Incomplete
+            print("Fetching incomplete reminders")
+        } else {
+            status = .Complete
+            print("Fetching complete reminders")
+        }
+        
+        // Set choice
+        let filter: ReminderFilter = .All
+        saveFilter(filter)
+        
+        // Show selected
+        customizeButton(allButton, selected: true)
+        
+        // Deselect Other
+        customizeButton(todayButton, selected: false)
+        
+        // Fetch choice
+        coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
+        
+        // Reload tableview with choice
+        coreDataHandler.fetchedResultsController.delegate = self
+        coreDataHandler.performFetch()
+        
+        tableView.reloadData()
     }
     
     // MARK: Unwind segue
@@ -133,6 +203,42 @@ class AllRemindersViewController: UIViewController {
     
         tableView.separatorColor = UIColor.clearColor()
         tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        
+        // Customize buttons
+        
+        // All Button
+        allButton.layer.cornerRadius = 10
+        allButton.layer.borderWidth = 1
+        allButton.layer.borderColor = UIColor.whiteColor().CGColor
+        
+        // Today Button
+        todayButton.layer.cornerRadius = 10
+        todayButton.layer.borderWidth = 1
+        todayButton.layer.borderColor = UIColor.whiteColor().CGColor
+        
+        let filter = savedFilter()
+        if filter == .All {
+            customizeButton(allButton, selected: true)
+            customizeButton(todayButton, selected: false)
+        } else {
+            customizeButton(todayButton, selected: true)
+            customizeButton(allButton, selected: false)
+        }
+        
+        // Customize filter bar
+        filterBar.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+    }
+    
+    func customizeButton(button: UIButton, selected: Bool) {
+        if selected {
+            button.backgroundColor = UIColor(red: 33/255, green: 69/255, blue: 59/255, alpha: 1)
+            button.tintColor = UIColor.whiteColor()
+            button.layer.borderColor = UIColor.whiteColor().CGColor
+        } else {
+            button.backgroundColor = UIColor.clearColor()
+            button.tintColor = UIColor.whiteColor()
+            button.layer.borderColor = UIColor.whiteColor().CGColor
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -243,7 +349,8 @@ class AllRemindersViewController: UIViewController {
         let selectedIndex = myTabIndex
         let segment = segmentedControl.selectedSegmentIndex
         var status: ReminderStatus = .Complete
-        var filter: ReminderFilter = .All
+        var filter: ReminderFilter = savedFilter()
+        
         
         if segment == 0 {
             status = .Incomplete
@@ -252,29 +359,31 @@ class AllRemindersViewController: UIViewController {
             status = .Complete
             print("Fetching complete reminders")
         }
+        print(savedFilter())
+        coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: savedFilter(), status: status)
        
-        switch selectedIndex {
-        case 0:
-            print("Filtering for index \(selectedIndex)")
-            filter = .All
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
-        case 1:
-            print("Filtering for index \(selectedIndex)")
-            filter = .Week
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "WeekReminders", filterBy: filter, status: status)
-        case 2:
-            print("Filtering for index \(selectedIndex)")
-            filter = .All
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
-        case 3:
-            print("Filtering for index \(selectedIndex)")
-            filter = .Favorite
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "FavoriteReminders", filterBy: filter, status: status)
-        default:
-            print("Filtering for default")
-            filter = .All
-            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
-        }
+//        switch selectedIndex {
+//        case 0:
+//            print("Filtering for index \(selectedIndex)")
+//            filter = .All
+//            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
+//        case 1:
+//            print("Filtering for index \(selectedIndex)")
+//            filter = .Week
+//            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "WeekReminders", filterBy: filter, status: status)
+//        case 2:
+//            print("Filtering for index \(selectedIndex)")
+//            filter = .All
+//            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
+//        case 3:
+//            print("Filtering for index \(selectedIndex)")
+//            filter = .Favorite
+//            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "FavoriteReminders", filterBy: filter, status: status)
+//        default:
+//            print("Filtering for default")
+//            filter = .All
+//            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
+//        }
         
         coreDataHandler.fetchedResultsController.delegate = self
         coreDataHandler.performFetch()

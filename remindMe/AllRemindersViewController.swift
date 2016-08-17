@@ -24,6 +24,10 @@ class AllRemindersViewController: UIViewController {
     @IBOutlet weak var noReminderScreen: UIView!
     @IBOutlet weak var noReminderLabel: UILabel!
     
+    // MARK: Filter bar
+    
+    @IBOutlet weak var filterBar: UIView!
+    
     // MARK: - Coredata
     
     let coreDataHandler = CoreDataHandler()
@@ -90,6 +94,15 @@ class AllRemindersViewController: UIViewController {
         setBadgeForTodayTab()
     }
     
+    @IBAction func loadRemindersForToday() {
+        
+    }
+    
+    @IBAction func loadAllReminders() {
+        
+    }
+    
+    // MARK: Unwind segue
     
     /// This is used to allow the settings viewcontroller to perform the unwind segue
     @IBAction func doneSettings(segue: UIStoryboardSegue) {}

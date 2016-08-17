@@ -100,6 +100,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         setBadgeForTodayTab()
         
+        
+        // Create shortcut for 3D Touch
+        
         if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
             print("Application launched via shortcut")
             self.shortcutItem = shortcutItem

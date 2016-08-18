@@ -42,11 +42,6 @@ class AllRemindersViewController: UIViewController {
     let coreDataHandler = CoreDataHandler()
     var managedObjectContext: NSManagedObjectContext!
     
-    // MARK: - Tabbar
-    
-    var myTabBarController: UITabBarController!
-    var myTabIndex = 0
-    
     // MARK: - Segment
     
     var selectedSegment = 0
@@ -84,10 +79,6 @@ class AllRemindersViewController: UIViewController {
     
     // Help with changing toolbar
     var selectionIsMixed = false
-    
-    // MARK: Reminder filter
-    
-    
     
     // MARK: - IBActions
     
@@ -306,8 +297,8 @@ class AllRemindersViewController: UIViewController {
         print(#function)
         super.viewDidAppear(animated)
         
-        let selectedIndex = myTabBarController.selectedIndex
-        saveSelectedTab(selectedIndex)
+        let selectedIndex = tabBarController?.selectedIndex
+        saveSelectedTab(selectedIndex!)
     }
     
     override func viewWillDisappear(animated: Bool) {

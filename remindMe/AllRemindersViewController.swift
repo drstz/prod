@@ -55,6 +55,9 @@ class AllRemindersViewController: UIViewController {
     
     weak var delegate: AllRemindersViewControllerDelegate?
     
+    // MARK: Selected button
+    var selectedButton: UIButton?
+    
     // MARK: - Properties
     
     var reminders = [Reminder]()
@@ -108,21 +111,70 @@ class AllRemindersViewController: UIViewController {
     }
     
     @IBAction func loadRemindersForToday() {
-        coreDataHandler.setObjectContext(managedObjectContext)
+        // Set choice
+        let filter: ReminderFilter = .Today
+        saveFilter(filter)
         
+        // Selected Button
+        let chosenButton = button(from: filter)
+        
+        // Show selected
+        selectButton(chosenButton)
+        
+        // Filter list
+        filterList(filter)
+    }
+    
+    @IBAction func loadAllReminders() {
+        // Set choice
+        let filter: ReminderFilter = .All
+        saveFilter(filter)
+        
+        // Selected Button
+        let chosenButton = button(from: filter)
+        
+        // Show selected
+        selectButton(chosenButton)
+        
+        // Filter list
+        filterList(filter)
+    }
+    
+    @IBAction func loadRemindersForWeek() {
+        // Set choice
+        let filter: ReminderFilter = .Week
+        saveFilter(filter)
+        
+        // Selected Button
+        let chosenButton = button(from: filter)
+        
+        // Show selected
+        selectButton(chosenButton)
+        
+        // Filter list
+        filterList(filter)
+    }
+    
+    @IBAction func loadFavoriteReminders() {
+        // Set choice
+        let filter: ReminderFilter = .Favorite
+        saveFilter(filter)
+        
+        // Selected Button
+        let chosenButton = button(from: filter)
+        
+        // Show selected
+        selectButton(chosenButton)
+        
+        // Filter list
+        filterList(filter)
+    }
+    
+    func filterList(filter: ReminderFilter) {
         // Handle Segment
         let status = chosenStatus()
         
-        // Set choice
-        let filter: ReminderFilter = .Today
-        print("Filter was set to \(filter)")
-        saveFilter(filter)
-        
-        // Show selected
-        customizeButton(todayButton, selected: true)
-        
-        // Deselect Other
-        customizeButton(allButton, selected: false)
+        coreDataHandler.setObjectContext(managedObjectContext)
         
         // Fetch choice
         coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
@@ -134,30 +186,23 @@ class AllRemindersViewController: UIViewController {
         tableView.reloadData()
     }
     
-    @IBAction func loadAllReminders() {
-        coreDataHandler.setObjectContext(managedObjectContext)
+    /// Highlights the selected button.
+    /// Sets the previous one to normal state.
+    func selectButton(chosenButton: UIButton) {
+        // Save previous button for later
+        let previouslySelectedButton = selectedButton
         
-        // Handle Segment
-        let status = chosenStatus()
+        selectedButton = chosenButton
         
-        // Set choice
-        let filter: ReminderFilter = .All
-        saveFilter(filter)
-        
-        // Show selected
-        customizeButton(allButton, selected: true)
-        
-        // Deselect Other
-        customizeButton(todayButton, selected: false)
-        
-        // Fetch choice
-        coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
-        
-        // Reload tableview with choice
-        coreDataHandler.fetchedResultsController.delegate = self
-        coreDataHandler.performFetch()
-        
-        tableView.reloadData()
+        if let selectedButton = selectedButton {
+            // Show selected
+            customizeButton(selectedButton, selected: true)
+            
+            // Deselected previous button
+            if let previouslySelectedButton = previouslySelectedButton {
+                customizeButton(previouslySelectedButton, selected: false)
+            }
+        }
     }
     
     func chosenStatus() -> ReminderStatus {
@@ -214,27 +259,38 @@ class AllRemindersViewController: UIViewController {
         let filter = savedFilter()
         
         // Selected button
-        let selectedButton = chosenButton(filter)
-        let indexOfChosenButton = buttons.indexOf(selectedButton)
+        selectedButton = button(from: filter)
         
         // Unselected Buttons
-        var unselectedButtons = buttons
-        unselectedButtons.removeAtIndex(indexOfChosenButton!)
-        
-        // Customize buttons
-        
-        
-        customizeButton(selectedButton, selected: true)
-        
-        for button in unselectedButtons {
-            customizeButton(button, selected: false)
+        if let selectedButton = selectedButton {
+            let otherButtons = unselectedButtons(selectedButton, buttons: buttons)
+            
+            // Customize buttons
+            customizeButton(selectedButton, selected: true)
+            
+            for button in otherButtons {
+                customizeButton(button, selected: false)
+            }
         }
         
         // Customize filter bar
         filterBar.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
     }
     
-    func chosenButton(filter: ReminderFilter) -> UIButton {
+    /// Is this really necc? Maybe keep track of previously selected button to change it back
+    func unselectedButtons(selectedButton: UIButton, buttons: [UIButton]) -> [UIButton] {
+        // Index of selected buttons
+        let indexOfChosenButton = buttons.indexOf(selectedButton)
+        var unselectedButtons = buttons
+        
+        // Remove selected button from new array
+        if let index = indexOfChosenButton {
+            unselectedButtons.removeAtIndex(index)
+        }
+        return unselectedButtons
+    }
+    
+    func button(from filter: ReminderFilter) -> UIButton {
         switch filter {
         case .All:
             return allButton

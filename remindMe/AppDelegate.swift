@@ -71,20 +71,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         print(#function)
-        
+        // User Defaults
         registerDefaults()
+        
+        // Core Data
         coreDataHandler.setObjectContext(managedObjectContext)
         
+        // Shortcut
         var shouldPerformShortcutDelegate = true
         
+        // Saved Tab
         let savedTab = getSavedTab()
         
+        // Tab bar controller
+        let tabBarController = window!.rootViewController as! UITabBarController
+        
+        // Transfer data
         let allRemindersViewController = getAllRemindersViewController()
         
         allRemindersViewController.managedObjectContext = managedObjectContext
         allRemindersViewController.myTabIndex = savedTab
         
-        let tabBarController = window!.rootViewController as! UITabBarController
+        
         tabBarController.delegate = allRemindersViewController
         
         allRemindersViewController.myTabBarController = tabBarController

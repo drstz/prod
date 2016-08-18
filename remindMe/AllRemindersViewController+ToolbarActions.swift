@@ -164,7 +164,4 @@ extension AllRemindersViewController {
             }
         }
     }
-    
-    
-    
 }

@@ -76,8 +76,6 @@ class AllRemindersViewController: UIViewController {
     
     var notificationHasGoneOff = false
     
-    var showingCompleteReminders = false
-    
     var upcomingTabNumber: Int?
     
     var sentMessage = "I came from nowhere"
@@ -185,6 +183,7 @@ class AllRemindersViewController: UIViewController {
         
         tableView.reloadData()
         
+        // Check if no reminder view should be showing or not
         setNoReminderView()
     }
     
@@ -282,7 +281,41 @@ class AllRemindersViewController: UIViewController {
         noReminderScreen.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
     }
     
-    /// Is this really necc? Maybe keep track of previously selected button to change it back
+    override func viewWillAppear(animated: Bool) {
+        print(#function)
+        super.viewWillAppear(animated)
+        
+        addObservers()
+        
+        segmentedControl.selectedSegmentIndex = selectedSegment
+        setUpCoreData()
+        loadCell()
+        
+        tableView.reloadData()
+        
+        setNoReminderView()
+        setBadgeForTodayTab()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        print(#function)
+        super.viewDidAppear(animated)
+        
+        let selectedIndex = myTabBarController.selectedIndex
+        saveSelectedTab(selectedIndex)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        print(#function)
+        super.viewWillDisappear(animated)
+        print("Here comes the recieved message: \(sentMessage)")
+        deselectRows()
+        hideToolbar()
+        removeObservers()
+    }
+    
+    // MARK: Buttons
+    
     func unselectedButtons(selectedButton: UIButton, buttons: [UIButton]) -> [UIButton] {
         // Index of selected buttons
         let indexOfChosenButton = buttons.indexOf(selectedButton)
@@ -321,47 +354,15 @@ class AllRemindersViewController: UIViewController {
     
     func customizeButton(button: UIButton, selected: Bool) {
         if selected {
-            button.backgroundColor = UIColor(red: 33/255, green: 69/255, blue: 59/255, alpha: 1)
-            button.tintColor = UIColor.whiteColor()
+            //button.backgroundColor = UIColor(red: 33/255, green: 69/255, blue: 59/255, alpha: 1)
+            button.backgroundColor = UIColor.whiteColor()
+            button.tintColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
             button.layer.borderColor = UIColor.whiteColor().CGColor
         } else {
             button.backgroundColor = UIColor.clearColor()
             button.tintColor = UIColor.whiteColor()
             button.layer.borderColor = UIColor.whiteColor().CGColor
         }
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        print(#function)
-        super.viewWillAppear(animated)
-        
-        addObservers()
-        
-        segmentedControl.selectedSegmentIndex = selectedSegment
-        setUpCoreData()
-        loadCell()
-        
-        tableView.reloadData()
-        
-        setNoReminderView()
-        setBadgeForTodayTab()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        print(#function)
-        super.viewDidAppear(animated)
-        
-        let selectedIndex = myTabBarController.selectedIndex
-        saveSelectedTab(selectedIndex)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        print(#function)
-        super.viewWillDisappear(animated)
-        print("Here comes the recieved message: \(sentMessage)")
-        deselectRows()
-        hideToolbar()
-        removeObservers()
     }
     
     // MARK: 3D Touch
@@ -438,33 +439,8 @@ class AllRemindersViewController: UIViewController {
         let status = chosenStatus()
         
         coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
-       
-//        switch selectedIndex {
-//        case 0:
-//            print("Filtering for index \(selectedIndex)")
-//            filter = .All
-//            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
-//        case 1:
-//            print("Filtering for index \(selectedIndex)")
-//            filter = .Week
-//            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "WeekReminders", filterBy: filter, status: status)
-//        case 2:
-//            print("Filtering for index \(selectedIndex)")
-//            filter = .All
-//            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
-//        case 3:
-//            print("Filtering for index \(selectedIndex)")
-//            filter = .Favorite
-//            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "FavoriteReminders", filterBy: filter, status: status)
-//        default:
-//            print("Filtering for default")
-//            filter = .All
-//            coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
-//        }
-        
         coreDataHandler.fetchedResultsController.delegate = self
         coreDataHandler.performFetch()
-        
     }
     
     func setBadgeForTodayTab() {

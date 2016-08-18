@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Tab bar controller
             let tabBarController = window!.rootViewController as! UITabBarController
             let tabs = tabBarController.viewControllers!
-            let navigationController = tabs[savedTab] as! UINavigationController
+            let navigationController = tabs[1] as! UINavigationController
             let viewControllers = navigationController.viewControllers
             
             // All reminder view controller
@@ -91,21 +91,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set badge
         setBadgeForReminderTab()
         
-//        // Create shortcut for 3D Touch
-//        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
-//            print("Application launched via shortcut")
-//            self.shortcutItem = shortcutItem
-//            shouldPerformShortcutDelegate = false
-//            
-//            // Create the observer before the new view controller or else shortcut won't work when launching app
-//            NSNotificationCenter.defaultCenter().addObserver(
-//                allRemindersViewController,
-//                selector: #selector(allRemindersViewController.newReminder),
-//                name: "newReminder",
-//                object: nil
-//            )
-//            
-//        }
+        // Create shortcut for 3D Touch
+        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+            let allRemindersViewController = getAllRemindersViewController()
+            print("Application launched via shortcut")
+            self.shortcutItem = shortcutItem
+            shouldPerformShortcutDelegate = false
+            
+            // Create the observer before the new view controller or else shortcut won't work when launching app
+            NSNotificationCenter.defaultCenter().addObserver(
+                allRemindersViewController,
+                selector: #selector(allRemindersViewController.newReminder),
+                name: "newReminder",
+                object: nil
+            )
+            
+        }
         
         
         return shouldPerformShortcutDelegate
@@ -183,13 +184,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func getAllRemindersViewController() -> AllRemindersViewController {
         
-        // Saved tab
-        let savedTab = getSavedTab()
-        
         // Tab bar controller
         let tabBarController = window!.rootViewController as! UITabBarController
         let tabs = tabBarController.viewControllers!
-        let navigationController = tabs[savedTab] as! UINavigationController
+        let navigationController = tabs[0] as! UINavigationController
         let viewControllers = navigationController.viewControllers
         
         // All reminder view controller
@@ -197,7 +195,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return allRemindersViewController
     }
     
-    
+    /// Creates the list variable that will be used to create and number reminders
     func setUpFirstTime(allRemindersViewController: AllRemindersViewController) {
         print(#function)
         
@@ -271,6 +269,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var succeeded = false
         
         if shortcutItem.type == "createReminder" {
+            
+            if getSavedTab() == 1 {
+                let tabBarController = window!.rootViewController as! UITabBarController
+                tabBarController.selectedIndex = 0
+                tabBarController.delegate = getAllRemindersViewController()
+            }
+            
             
             NSNotificationCenter.defaultCenter().postNotificationName("newReminder", object: nil)
             print("Adding a new reminder")

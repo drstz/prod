@@ -26,7 +26,38 @@ class CoreDataHandler {
     
     // MARK: - Object Context
     
-    var managedObjectContext: NSManagedObjectContext!
+    lazy var managedObjectContext:NSManagedObjectContext = {
+        // Here you create an NSURL object pointing at this the DataModel.momd folder
+        guard let modelURL = NSBundle.mainBundle().URLForResource("DataModel", withExtension: "momd") else {
+            fatalError("Could not find data model in app bundle")
+        }
+        // You create an NSManagadObjectmodel from the URL. This represents the data during runtime
+        guard let model = NSManagedObjectModel(contentsOfURL: modelURL) else {
+            fatalError("Error initializing model from: \(modelURL)")
+        }
+        // Data is stored in an SQLite database inside the app's documents folder. Here you create an NSURL pointing at the DataStore.sqlite file
+        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        
+        let documentsDirectory = urls[0]
+        
+        let storeURL = documentsDirectory.URLByAppendingPathComponent("DataStore.sqlite")
+        
+        do {
+            // This object is in charge of the SQLITE database
+            let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
+            // The databse is added to the coordinator
+            let options = [ NSMigratePersistentStoresAutomaticallyOption : true, NSInferMappingModelAutomaticallyOption : true ]
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options)
+            // The NSManagedObjectContext is created and returned
+            let context = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+            
+            context.persistentStoreCoordinator = coordinator
+            return context
+        } catch {
+            fatalError("Error adding persistent store at \(storeURL): \(error)")
+        }
+        
+    }()
     
     var fetchedResultsController: NSFetchedResultsController!
     

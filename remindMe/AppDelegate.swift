@@ -30,41 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var shortcutItem: UIApplicationShortcutItem?
     
-    // MARK: - CoreData
-    
-    lazy var managedObjectContext:NSManagedObjectContext = {
-        // Here you create an NSURL object pointing at this the DataModel.momd folder
-        guard let modelURL = NSBundle.mainBundle().URLForResource("DataModel", withExtension: "momd") else {
-            fatalError("Could not find data model in app bundle")
-        }
-        // You create an NSManagadObjectmodel from the URL. This represents the data during runtime
-        guard let model = NSManagedObjectModel(contentsOfURL: modelURL) else {
-            fatalError("Error initializing model from: \(modelURL)")
-        }
-        // Data is stored in an SQLite database inside the app's documents folder. Here you create an NSURL pointing at the DataStore.sqlite file
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        
-        let documentsDirectory = urls[0]
-        
-        let storeURL = documentsDirectory.URLByAppendingPathComponent("DataStore.sqlite")
-        
-        do {
-            // This object is in charge of the SQLITE database
-            let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
-            // The databse is added to the coordinator
-            let options = [ NSMigratePersistentStoresAutomaticallyOption : true, NSInferMappingModelAutomaticallyOption : true ]
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: options)
-            // The NSManagedObjectContext is created and returned
-            let context = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-            
-            context.persistentStoreCoordinator = coordinator
-            return context
-        } catch {
-            fatalError("Error adding persistent store at \(storeURL): \(error)")
-        }
-        
-    }()
-    
     // MARK: - Application
     
     // MARK: Launch
@@ -73,9 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(#function)
         // User Defaults
         registerDefaults()
-        
-        // Core Data
-        coreDataHandler.setObjectContext(managedObjectContext)
         
         // Shortcut
         var shouldPerformShortcutDelegate = true
@@ -87,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let allRemindersViewController = getAllRemindersViewController()
         
         // Transfer data
-        allRemindersViewController.managedObjectContext = managedObjectContext
+        allRemindersViewController.coreDataHandler = coreDataHandler
         
         // Make View Controller a delegate of the tab bar controller
         allRemindersViewController.tabBarController?.delegate = allRemindersViewController
@@ -214,6 +176,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setUpFirstTime(allRemindersViewController: AllRemindersViewController) {
         print(#function)
         
+        // Core Data
+        let managedObjectContext = coreDataHandler.managedObjectContext
+        
         print("*** First time - Creating list")
         let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as! List
         list.numberOfReminders = 0
@@ -229,6 +194,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func loadList(allRemindersViewController: AllRemindersViewController) {
         print(#function)
+        
+        // Core Data
+        let managedObjectContext = coreDataHandler.managedObjectContext
+        
+        
         
         print("*** Fetching list")
         let fetchRequest = NSFetchRequest()
@@ -292,6 +262,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tabBarController = window!.rootViewController as! UITabBarController
         let tabs = tabBarController.viewControllers!
         let todayNavigationControlelr = tabs[0] as! UINavigationController
+        
+        // Core Data
+        let managedObjectContext = coreDataHandler.managedObjectContext
         
         // Fetch Results
         let fetchRequest = NSFetchRequest()

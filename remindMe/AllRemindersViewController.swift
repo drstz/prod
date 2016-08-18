@@ -39,8 +39,8 @@ class AllRemindersViewController: UIViewController {
     
     // MARK: - Coredata
     
-    let coreDataHandler = CoreDataHandler()
-    var managedObjectContext: NSManagedObjectContext!
+    var coreDataHandler: CoreDataHandler!
+    //var managedObjectContext: NSManagedObjectContext!
     
     // MARK: - Segment
     
@@ -163,7 +163,7 @@ class AllRemindersViewController: UIViewController {
         // Handle Segment
         let status = chosenStatus()
         
-        coreDataHandler.setObjectContext(managedObjectContext)
+        //coreDataHandler.setObjectContext(managedObjectContext)
         
         // Fetch choice
         coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
@@ -429,7 +429,7 @@ class AllRemindersViewController: UIViewController {
     // MARK: Coredata
     
     func setUpCoreData() {
-        coreDataHandler.setObjectContext(managedObjectContext)
+        //coreDataHandler.setObjectContext(managedObjectContext)
         
         let filter = savedFilter()
         let status = chosenStatus()
@@ -465,6 +465,9 @@ class AllRemindersViewController: UIViewController {
     }
     
     func numberOfDueReminders() -> Int {
+        // Core Data
+        let managedObjectContext = coreDataHandler.managedObjectContext
+        
         let now = NSDate()
         
         let fetchRequest = NSFetchRequest()
@@ -540,6 +543,9 @@ class AllRemindersViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         print(#function)
+        
+        // Core Data
+        let managedObjectContext = coreDataHandler.managedObjectContext
         
         let segueIdentifier = segue.identifier!
         

@@ -30,8 +30,12 @@ class AllRemindersViewController: UIViewController {
     
     // MARK: Filter bar buttons
     
-    @IBOutlet weak var todayButton: UIButton!
     @IBOutlet weak var allButton: UIButton!
+    @IBOutlet weak var todayButton: UIButton!
+    @IBOutlet weak var weekButton: UIButton!
+    @IBOutlet weak var favoritesButton: UIButton!
+    
+    var buttons = [UIButton]()
     
     // MARK: - Coredata
     
@@ -197,32 +201,62 @@ class AllRemindersViewController: UIViewController {
         tableView.separatorColor = UIColor.clearColor()
         tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
         
+        // Set up buttons
+        appendButtonsToArray()
+        
+        for button in buttons {
+            button.layer.cornerRadius = 10
+            button.layer.borderWidth = 1
+            button.layer.borderColor = UIColor.whiteColor().CGColor
+        }
+        
+        // Chosen filter
+        let filter = savedFilter()
+        
+        // Selected button
+        let selectedButton = chosenButton(filter)
+        let indexOfChosenButton = buttons.indexOf(selectedButton)
+        
+        // Unselected Buttons
+        var unselectedButtons = buttons
+        unselectedButtons.removeAtIndex(indexOfChosenButton!)
+        
         // Customize buttons
         
-        // All Button
-        allButton.layer.cornerRadius = 10
-        allButton.layer.borderWidth = 1
-        allButton.layer.borderColor = UIColor.whiteColor().CGColor
         
-        // Today Button
-        todayButton.layer.cornerRadius = 10
-        todayButton.layer.borderWidth = 1
-        todayButton.layer.borderColor = UIColor.whiteColor().CGColor
+        customizeButton(selectedButton, selected: true)
         
-        let filter = savedFilter()
-        if filter == .All {
-            customizeButton(allButton, selected: true)
-            customizeButton(todayButton, selected: false)
-        } else {
-            customizeButton(todayButton, selected: true)
-            customizeButton(allButton, selected: false)
+        for button in unselectedButtons {
+            customizeButton(button, selected: false)
         }
         
         // Customize filter bar
         filterBar.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
     }
     
+    func chosenButton(filter: ReminderFilter) -> UIButton {
+        switch filter {
+        case .All:
+            return allButton
+        case .Today:
+            return todayButton
+        case .Week:
+            return weekButton
+        case .Favorite:
+            return favoritesButton
+        default:
+            print("Error finding chosen button")
+            return allButton
+        }
+    }
+    
     // MARK: Customize filter buttons
+    func appendButtonsToArray() {
+        buttons.append(allButton)
+        buttons.append(todayButton)
+        buttons.append(weekButton)
+        buttons.append(favoritesButton)
+    }
     
     func customizeButton(button: UIButton, selected: Bool) {
         if selected {

@@ -105,17 +105,9 @@ class AllRemindersViewController: UIViewController {
     
     @IBAction func loadRemindersForToday() {
         coreDataHandler.setObjectContext(managedObjectContext)
-        var status: ReminderStatus = .Complete
         
-        // Handle segment
-        let segment = segmentedControl.selectedSegmentIndex
-        if segment == 0 {
-            status = .Incomplete
-            print("Fetching incomplete reminders")
-        } else {
-            status = .Complete
-            print("Fetching complete reminders")
-        }
+        // Handle Segment
+        let status = chosenStatus()
         
         // Set choice
         let filter: ReminderFilter = .Today
@@ -140,17 +132,9 @@ class AllRemindersViewController: UIViewController {
     
     @IBAction func loadAllReminders() {
         coreDataHandler.setObjectContext(managedObjectContext)
-        var status: ReminderStatus = .Complete
         
-        // Handle segment
-        let segment = segmentedControl.selectedSegmentIndex
-        if segment == 0 {
-            status = .Incomplete
-            print("Fetching incomplete reminders")
-        } else {
-            status = .Complete
-            print("Fetching complete reminders")
-        }
+        // Handle Segment
+        let status = chosenStatus()
         
         // Set choice
         let filter: ReminderFilter = .All
@@ -170,6 +154,15 @@ class AllRemindersViewController: UIViewController {
         coreDataHandler.performFetch()
         
         tableView.reloadData()
+    }
+    
+    func chosenStatus() -> ReminderStatus {
+        let segment = segmentedControl.selectedSegmentIndex
+        if segment == 0 {
+            return .Incomplete
+        } else {
+            return .Complete
+        }
     }
     
     // MARK: Unwind segue
@@ -228,6 +221,8 @@ class AllRemindersViewController: UIViewController {
         // Customize filter bar
         filterBar.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
     }
+    
+    // MARK: Customize filter buttons
     
     func customizeButton(button: UIButton, selected: Bool) {
         if selected {
@@ -342,25 +337,12 @@ class AllRemindersViewController: UIViewController {
     // MARK: Coredata
     
     func setUpCoreData() {
-//        print(#function)
-        
         coreDataHandler.setObjectContext(managedObjectContext)
         
-        let selectedIndex = myTabIndex
-        let segment = segmentedControl.selectedSegmentIndex
-        var status: ReminderStatus = .Complete
-        var filter: ReminderFilter = savedFilter()
+        let filter = savedFilter()
+        let status = chosenStatus()
         
-        
-        if segment == 0 {
-            status = .Incomplete
-            print("Fetching incomplete reminders")
-        } else {
-            status = .Complete
-            print("Fetching complete reminders")
-        }
-        print(savedFilter())
-        coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: savedFilter(), status: status)
+        coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
        
 //        switch selectedIndex {
 //        case 0:

@@ -13,10 +13,20 @@ class StatisticsViewController: UIViewController, UITabBarControllerDelegate {
     // MARK: - Core Data
     
     var coreDataHandler: CoreDataHandler!
+    
+    // MARK: - List
+    // This is used when creating a reminder
+    // var list: List!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         //tabBarController?.delegate = self
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        saveSelectedTab((tabBarController?.selectedIndex)!)
     }
     
     override func viewDidDisappear(animated: Bool) {

@@ -42,46 +42,71 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Shortcut
         var shouldPerformShortcutDelegate = true
         
+        
+        
         // Saved Tab
         let savedTab = getSavedTab()
         
-        // All Reminders View Controller
-        let allRemindersViewController = getAllRemindersViewController()
-        
-        // Transfer data
-        allRemindersViewController.coreDataHandler = coreDataHandler
-        
-        // Make View Controller a delegate of the tab bar controller
-        allRemindersViewController.tabBarController?.delegate = allRemindersViewController
-        
-        // Handle first time
-        if isFirstTime() {
-            setUpFirstTime(allRemindersViewController)
+        if savedTab == 0 {
+            // All Reminders View Controller
+            let allRemindersViewController = getAllRemindersViewController()
+            
+            // Transfer data
+            allRemindersViewController.coreDataHandler = coreDataHandler
+            
+            // Make View Controller a delegate of the tab bar controller
+            allRemindersViewController.tabBarController?.delegate = allRemindersViewController
+            
+            // Handle first time
+            // This is for the creation of the list variable. It is needed to add reminders
+            if isFirstTime() {
+                setUpFirstTime(allRemindersViewController)
+            } else {
+                loadList(allRemindersViewController)
+            }
+            
+            // Select index
+            allRemindersViewController.tabBarController?.selectedIndex = savedTab
+            
         } else {
-            loadList(allRemindersViewController)
+            // Tab bar controller
+            let tabBarController = window!.rootViewController as! UITabBarController
+            let tabs = tabBarController.viewControllers!
+            let navigationController = tabs[savedTab] as! UINavigationController
+            let viewControllers = navigationController.viewControllers
+            
+            // All reminder view controller
+            let statisticsViewController = viewControllers[0] as! StatisticsViewController
+            statisticsViewController.coreDataHandler = coreDataHandler
+            
+            // Make View Controller a delegate of the tab bar controller
+            statisticsViewController.tabBarController?.delegate = statisticsViewController
+            
+            // Select index
+            statisticsViewController.tabBarController?.selectedIndex = savedTab
         }
         
-        // Select index
-        allRemindersViewController.tabBarController?.selectedIndex = savedTab
+        
     
         // Set badge
         setBadgeForReminderTab()
         
-        // Create shortcut for 3D Touch
-        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
-            print("Application launched via shortcut")
-            self.shortcutItem = shortcutItem
-            shouldPerformShortcutDelegate = false
-            
-            // Create the observer before the new view controller or else shortcut won't work when launching app
-            NSNotificationCenter.defaultCenter().addObserver(
-                allRemindersViewController,
-                selector: #selector(allRemindersViewController.newReminder),
-                name: "newReminder",
-                object: nil
-            )
-            
-        }
+//        // Create shortcut for 3D Touch
+//        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+//            print("Application launched via shortcut")
+//            self.shortcutItem = shortcutItem
+//            shouldPerformShortcutDelegate = false
+//            
+//            // Create the observer before the new view controller or else shortcut won't work when launching app
+//            NSNotificationCenter.defaultCenter().addObserver(
+//                allRemindersViewController,
+//                selector: #selector(allRemindersViewController.newReminder),
+//                name: "newReminder",
+//                object: nil
+//            )
+//            
+//        }
+        
         
         return shouldPerformShortcutDelegate
     }
@@ -296,6 +321,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let count = fetchedResultsController.fetchedObjects?.count
         
         // Update reminder tab badge
-        todayNavigationControlelr.tabBarItem.badgeValue = "\(count!)"
+        if count != 0 {
+            todayNavigationControlelr.tabBarItem.badgeValue = "\(count!)"
+        } else {
+            todayNavigationControlelr.tabBarItem.badgeValue = nil
+        }
+        
     }
 }

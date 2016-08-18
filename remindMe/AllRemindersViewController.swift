@@ -240,13 +240,6 @@ class AllRemindersViewController: UIViewController {
         print(#function)
         super.viewDidLoad()
         
-        navigationController?.navigationBar.tintColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
-        
-        navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
-    
-        tableView.separatorColor = UIColor.clearColor()
-        tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
-        
         // Set up buttons
         appendButtonsToArray()
         
@@ -273,6 +266,18 @@ class AllRemindersViewController: UIViewController {
                 customizeButton(button, selected: false)
             }
         }
+        
+        // Customize table view
+        tableView.separatorColor = UIColor.clearColor()
+        tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        
+        // Customize bars
+        
+        // Navigation Bar
+        navigationController?.navigationBar.tintColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        
+        // Tab bar
+        navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
         
         // Customize filter bar
         filterBar.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)

@@ -39,7 +39,8 @@ func registerDefaults() {
         "SnoozeUnit": "min",
         "UsingCustomSnooze" : false,
         "SavedSnoozeDuration" : 0,
-        "SavedSnoozeUnit" : "min"
+        "SavedSnoozeUnit" : "min",
+        "Filter" : "All"
     ]
     NSUserDefaults.standardUserDefaults().registerDefaults(dictionary)
 }
@@ -55,6 +56,23 @@ func isFirstTime() -> Bool {
     return false
 }
 
+func saveFilter(filter: ReminderFilter) {
+    print("Going to save filter: \(filter)")
+    print("The filter's raw value is \(filter.rawValue)")
+    
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    userDefaults.setObject(filter.rawValue, forKey: "Filter")
+    userDefaults.synchronize()
+    
+    print("Filter was saved to \(savedFilter())")
+}
+
+func savedFilter() -> ReminderFilter {
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let filter = userDefaults.objectForKey("Filter") as! String
+    return ReminderFilter(rawValue: filter)!
+}
+
 func isUsingCustomSnoozeTime() -> Bool {
     let userDefaults = NSUserDefaults.standardUserDefaults()
     let customSnooze = userDefaults.boolForKey("UsingCustomSnooze")
@@ -66,13 +84,6 @@ func setUsingCustomSnoozeTime(enabled: Bool) {
     userDefaults.setBool(enabled, forKey: "UsingCustomSnooze")
     
 }
-
-//func setDefaultSnoozeTime(snoozeTime: SnoozeDefaults) {
-//    let snoozeDefault = choiceForSnoozeTime(snoozeTime)
-//    let userDefaults = NSUserDefaults.standardUserDefaults()
-//    userDefaults.setObject(snoozeDefault, forKey: "SnoozeTime")
-//    userDefaults.synchronize()
-//}
 
 func setSnoozeTime(duration: Double, unit: SnoozeUnit) {
     print(#function)
@@ -156,21 +167,6 @@ func getSavedTab() -> Int {
     print("The saved tab is tab #\(savedTab)")
     return savedTab
 }
-
-//func choiceForSnoozeTime(snoozeDefaults: SnoozeDefaults) -> String {
-//    switch snoozeDefaults {
-//    case .TenSeconds:
-//        return "10 seconds"
-//    case .FiveMinutes:
-//        return "5 minutes"
-//    case .TenMinutes:
-//        return "10 minutes"
-//    case .ThirtyMinutes:
-//        return "30 minutes"
-//    case .Hour:
-//        return "1 hour"
-//    }
-//}
 
 func choiceForSnoozeUnit(unit: SnoozeUnit) -> String {
     return unit.rawValue

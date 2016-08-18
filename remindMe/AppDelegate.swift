@@ -78,7 +78,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var shouldPerformShortcutDelegate = true
         
         let savedTab = getSavedTab()
-        print("Loaded to tab \(savedTab)")
         
         let allRemindersViewController = getAllRemindersViewController()
         
@@ -99,6 +98,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarController.selectedIndex = savedTab
     
         setBadgeForTodayTab()
+        
+        
+        // Create shortcut for 3D Touch
         
         if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
             print("Application launched via shortcut")

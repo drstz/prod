@@ -184,6 +184,8 @@ class AllRemindersViewController: UIViewController {
         coreDataHandler.performFetch()
         
         tableView.reloadData()
+        
+        setNoReminderView()
     }
     
     /// Highlights the selected button.
@@ -275,6 +277,9 @@ class AllRemindersViewController: UIViewController {
         
         // Customize filter bar
         filterBar.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        
+        // Customize no reminder screen
+        noReminderScreen.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
     }
     
     /// Is this really necc? Maybe keep track of previously selected button to change it back
@@ -544,14 +549,14 @@ class AllRemindersViewController: UIViewController {
             completedText = "completed"
         }
         
-        switch myTabIndex {
-        case 0:
+        switch selectedButton! {
+        case todayButton:
             text = "No \(completedText) reminders for today"
-        case 1:
+        case weekButton:
             text = "No \(completedText) reminders for the week"
-        case 2:
+        case allButton:
             text = "No \(completedText) reminders"
-        case 3:
+        case favoritesButton:
             text = "No \(completedText) favorites"
         default:
             text = "Error"

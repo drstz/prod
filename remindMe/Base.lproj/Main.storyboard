@@ -544,10 +544,10 @@
                                 </connections>
                             </tableView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bsd-RS-vSF">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
+                                <rect key="frame" x="0.0" y="44" width="600" height="443"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No reminders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHh-K8-F3j">
-                                        <rect key="frame" x="249" y="233" width="103" height="21"/>
+                                        <rect key="frame" x="249" y="189" width="103" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -555,7 +555,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.12941176470588237" green="0.34509803921568627" blue="0.50980392156862742" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="centerY" secondItem="Bsd-RS-vSF" secondAttribute="centerY" id="7lL-mQ-51j"/>
+                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="centerY" secondItem="Bsd-RS-vSF" secondAttribute="centerY" constant="-22" id="7lL-mQ-51j"/>
                                     <constraint firstItem="yHh-K8-F3j" firstAttribute="centerX" secondItem="Bsd-RS-vSF" secondAttribute="centerX" id="Lic-s8-bgy"/>
                                 </constraints>
                             </view>
@@ -570,7 +570,7 @@
                             <constraint firstItem="izq-nV-FBg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="MOg-IR-ZUf"/>
                             <constraint firstAttribute="trailing" secondItem="izq-nV-FBg" secondAttribute="trailing" id="T4G-fY-eJE"/>
                             <constraint firstItem="YvC-aE-NMt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="dQg-Gr-OCo"/>
-                            <constraint firstItem="Bsd-RS-vSF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="iiC-Q1-s6V"/>
+                            <constraint firstItem="Bsd-RS-vSF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="44" id="iiC-Q1-s6V"/>
                             <constraint firstItem="YvC-aE-NMt" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="1" id="rHS-JB-AfR"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="izq-nV-FBg" secondAttribute="bottom" id="uTK-t8-59p"/>
                         </constraints>

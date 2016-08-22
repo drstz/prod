@@ -42,8 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Shortcut
         var shouldPerformShortcutDelegate = true
         
-        
-        
         // Saved Tab
         let savedTab = getSavedTab()
         
@@ -86,8 +84,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             statisticsViewController.tabBarController?.selectedIndex = savedTab
         }
         
-        
-    
         // Set badge
         setBadgeForReminderTab()
         
@@ -105,9 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 name: "newReminder",
                 object: nil
             )
-            
         }
-        
         
         return shouldPerformShortcutDelegate
     }
@@ -156,7 +150,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("")
         print(#function)
         
-        handleIncomingNotification(notification)
+        let reminder = reminderFromNotification(notification)
+        sendReminderToController(reminder)
+        
         notificationHandler.handleActionInCategory(notification, actionIdentifier: identifier!)
         
         completionHandler()
@@ -169,7 +165,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         notificationWentOff = true
         
-        handleIncomingNotification(notification)
+        let reminder = reminderFromNotification(notification)
+        sendReminderToController(reminder)
+        
         notificationHandler.recieveLocalNotificationWithState(application.applicationState)
     }
     
@@ -239,6 +237,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func reminderFromNotification(notification: UILocalNotification) -> Reminder {
+        let reminderID = notificationHandler.reminderID(notification)
+        let reminder = coreDataHandler.getReminderWithID(reminderID, from: "Reminder")
+        return reminder!
+    }
+    
+    /// Sends reminder to the view controller
     func sendReminderToController(reminder: Reminder) {
         print(#function)
         
@@ -254,14 +259,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Send reminder to notification
         allRemindersViewController.reminderFromNotification = reminder
-    }
-    
-    func handleIncomingNotification(notification: UILocalNotification) {
-        print(#function)
-        
-        let reminderID = notificationHandler.reminderID(notification)
-        let reminder = coreDataHandler.getReminderWithID(reminderID, from: "Reminder")
-        sendReminderToController(reminder!)
     }
     
     func handleShortcut(shortcutItem: UIApplicationShortcutItem) -> Bool {

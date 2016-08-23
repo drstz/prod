@@ -286,17 +286,17 @@ class NotificationHandler {
         return idFromNotification
     }
     
-    func recieveLocalNotificationWithState(state: UIApplicationState) {
-        print(#function)
-        if state == .Inactive {
-            print("Notification was tapped")
-            NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
-        } else {
-            print("Handling notification from app")
-            NSNotificationCenter.defaultCenter().postNotificationName("setBadgeForTodayTab", object: nil)
-            NSNotificationCenter.defaultCenter().postNotificationName("refresh", object: nil)
-        }
-    }
+//    func recieveLocalNotificationWithState(state: UIApplicationState) {
+//        print(#function)
+//        if state == .Inactive {
+//            print("Notification was tapped")
+//            NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
+//        } else {
+//            print("Handling notification from app")
+//            NSNotificationCenter.defaultCenter().postNotificationName("setBadgeForTodayTab", object: nil)
+//            NSNotificationCenter.defaultCenter().postNotificationName("refresh", object: nil)
+//        }
+//    }
     
     func handleActionInCategory(notification: UILocalNotification, actionIdentifier: String) {
         NSLog(#function)

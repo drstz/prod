@@ -83,6 +83,9 @@ class AllRemindersViewController: UIViewController {
     // Help with settings observers
     var observersAreSet = false
     
+    // Help with popup after notification
+    var notificationWasTapped = false
+    
     // MARK: - IBActions
     
     @IBAction func changeSegment() {
@@ -301,6 +304,8 @@ class AllRemindersViewController: UIViewController {
         
         setNoReminderView()
         setBadgeForTodayTab()
+        
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -309,6 +314,11 @@ class AllRemindersViewController: UIViewController {
         
         let selectedIndex = tabBarController?.selectedIndex
         saveSelectedTab(selectedIndex!)
+        
+        if notificationWasTapped {
+            NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
+            notificationWasTapped = false
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {

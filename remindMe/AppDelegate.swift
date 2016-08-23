@@ -137,8 +137,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let tabBarController = window!.rootViewController as! UITabBarController
                 tabBarController.selectedIndex = 0
                 tabBarController.delegate = getAllRemindersViewController()
+                let allRemindersViewController = getAllRemindersViewController()
+                
+                // Do this or else all reminders won't have a handler
+                allRemindersViewController.coreDataHandler = coreDataHandler
+                allRemindersViewController.notificationWasTapped = true
+                
+                // NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
+            } else {
+               allRemindersViewController.notificationWasTapped = true
             }
-            notificationHandler.recieveLocalNotificationWithState(application.applicationState)
+            
         }
 
         return shouldPerformShortcutDelegate
@@ -231,18 +240,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NSLog(#function)
         
         notificationWentOff = true
-        
         let reminder = reminderFromNotification(notification)
         sendReminderToController(reminder)
         
-        if getSavedTab() == 1 {
-            NSLog("Changing selected tab index")
-            let tabBarController = window!.rootViewController as! UITabBarController
-            tabBarController.selectedIndex = 0
-            tabBarController.delegate = getAllRemindersViewController()
+        if application.applicationState == .Inactive {
+            print("Notification was tapped")
+            
+            if getSavedTab() == 1 {
+                NSLog("Changing selected tab index")
+                let tabBarController = window!.rootViewController as! UITabBarController
+                tabBarController.selectedIndex = 0
+                tabBarController.delegate = getAllRemindersViewController()
+            }
+            
+            NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
+        } else {
+            // Handling notification from within app
+            NSNotificationCenter.defaultCenter().postNotificationName("setBadgeForTodayTab", object: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName("refresh", object: nil)
         }
-        
-        notificationHandler.recieveLocalNotificationWithState(application.applicationState)
     }
     
     // MARK: 3D Touch

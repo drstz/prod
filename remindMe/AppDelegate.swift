@@ -105,7 +105,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             loadList(allRemindersViewController)
             allRemindersViewController.coreDataHandler = coreDataHandler
             
-            
             print("Application launched via shortcut")
             self.shortcutItem = shortcutItem
             shouldPerformShortcutDelegate = false
@@ -125,10 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 tabBarController.delegate = getAllRemindersViewController()
             }
         }
-        
-        
-        
-        
+
         // This doesn't get called when actions are chosen
         // This only gets called if app is launched after tapping a notification
         if let notification = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
@@ -142,9 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 tabBarController.selectedIndex = 0
                 tabBarController.delegate = getAllRemindersViewController()
             }
-            
             notificationHandler.recieveLocalNotificationWithState(application.applicationState)
-            
         }
 
         return shouldPerformShortcutDelegate
@@ -169,8 +163,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let statisticsViewController = getStatisticsViewController()
         let allRemindersViewController = getAllRemindersViewController()
         
+        
+        
         // Share the same manager?
-        allRemindersViewController.coreDataHandler = statisticsViewController.coreDataHandler
+        allRemindersViewController.coreDataHandler = coreDataHandler
         allRemindersViewController.setUpCoreData()
         // allRemindersViewController.tableView.reloadData()
        
@@ -255,7 +251,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      performActionForShortcutItem shortcutItem: UIApplicationShortcutItem,
                      completionHandler: (Bool) -> Void) {
         NSLog(#function)
-        print("Tapped shortcut")
+        
+        // This allows the shortcut to work, no matter which view is being presented
+        // Nothing has been done yet for statistics potential presented views
+        let allRemindersViewController = getAllRemindersViewController()
+        if allRemindersViewController.presentedViewController != nil {
+            print("Dismissing controller")
+            allRemindersViewController.dismissViewControllerAnimated(false, completion: nil)
+        }
         completionHandler(handleShortcut(shortcutItem))
     }
     

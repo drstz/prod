@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Launch
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        NSLog(#function)
         print(#function)
         // User Defaults
         registerDefaults()
@@ -103,6 +104,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             )
         }
         
+        let allRemindersViewController = getAllRemindersViewController()
+        allRemindersViewController.addObservers()
+        
+        // This doesn't get called when actions are chosen
+        if let _ = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
+            NSLog("Observers have been set for notification actions")
+            let allRemindersViewController = getAllRemindersViewController()
+            NSNotificationCenter.defaultCenter().addObserver(
+                allRemindersViewController,
+                selector: #selector(allRemindersViewController.viewReminder),
+                name: "viewReminder",
+                object: nil
+            )
+        }
+
         return shouldPerformShortcutDelegate
     }
     
@@ -131,7 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
-        print("Application did become active")
+        print(#function)
         
         guard let shortcut = shortcutItem else { return }
         
@@ -149,6 +165,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      completionHandler: () -> Void) {
         print("")
         print(#function)
+        NSLog(#function)
         
         let reminder = reminderFromNotification(notification)
         sendReminderToController(reminder)
@@ -162,18 +179,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Must tap notification for this or app must be running
         print("")
         print(#function)
+        NSLog(#function)
         
         notificationWentOff = true
         
         let reminder = reminderFromNotification(notification)
         sendReminderToController(reminder)
         
+        if getSavedTab() == 1 {
+            let tabBarController = window!.rootViewController as! UITabBarController
+            tabBarController.selectedIndex = 0
+            tabBarController.delegate = getAllRemindersViewController()
+        }
+        
         notificationHandler.recieveLocalNotificationWithState(application.applicationState)
     }
     
     // MARK: 3D Touch
     
-    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+    func application(application: UIApplication,
+                     performActionForShortcutItem shortcutItem: UIApplicationShortcutItem,
+                                                  completionHandler: (Bool) -> Void) {
         print("Tapped shortcut")
         completionHandler(handleShortcut(shortcutItem))
     }
@@ -201,7 +227,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let managedObjectContext = coreDataHandler.managedObjectContext
         
         print("*** First time - Creating list")
-        let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as! List
+        let list = NSEntityDescription.insertNewObjectForEntityForName(
+            "List",
+            inManagedObjectContext: managedObjectContext
+            ) as! List
         list.numberOfReminders = 0
         
         do {
@@ -218,8 +247,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Core Data
         let managedObjectContext = coreDataHandler.managedObjectContext
-        
-        
         
         print("*** Fetching list")
         let fetchRequest = NSFetchRequest()
@@ -248,12 +275,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(#function)
         
         // Saved Tab
-        let savedTab = getSavedTab()
+        // let savedTab = getSavedTab()
         
         // Tab bar controller
         let tabBarController = window!.rootViewController as! UITabBarController
         let tabs = tabBarController.viewControllers!
-        let navigationController = tabs[savedTab] as! UINavigationController
+        let navigationController = tabs[0] as! UINavigationController
         let viewControllers = navigationController.viewControllers
         let allRemindersViewController = viewControllers[0] as! AllRemindersViewController
         

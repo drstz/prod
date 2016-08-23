@@ -52,8 +52,6 @@ class StatisticsViewController: UIViewController, UITabBarControllerDelegate {
             print("Selecting Profile Tab")
             return false
         }
-        
-        
     }
     
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {}

@@ -299,10 +299,13 @@ class NotificationHandler {
     }
     
     func handleActionInCategory(notification: UILocalNotification, actionIdentifier: String) {
+        NSLog(#function)
         if notification.category == "Category" {
             if actionIdentifier == "Complete" {
+                NSLog("Identifer is Complete")
                 NSNotificationCenter.defaultCenter().postNotificationName("completeReminder", object: nil)
             } else if actionIdentifier == "Defer" {
+                NSLog("Identifer is Defer")
                 NSNotificationCenter.defaultCenter().postNotificationName("snoozeReminder", object: nil)
             }
         }

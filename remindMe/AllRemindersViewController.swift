@@ -275,13 +275,16 @@ class AllRemindersViewController: UIViewController {
         
         // Customize no reminder screen
         noReminderScreen.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        
+        // Observers
+        addObservers()
     }
     
     override func viewWillAppear(animated: Bool) {
         print(#function)
         super.viewWillAppear(animated)
         
-        addObservers()
+        // addObservers()
         
         segmentedControl.selectedSegmentIndex = selectedSegment
         setUpCoreData()
@@ -307,7 +310,7 @@ class AllRemindersViewController: UIViewController {
         print("Here comes the recieved message: \(sentMessage)")
         deselectRows()
         hideToolbar()
-        removeObservers()
+        // removeObservers()
     }
     
     // MARK: Buttons
@@ -441,16 +444,12 @@ class AllRemindersViewController: UIViewController {
     
     func setBadgeForTodayTab() {
         print(#function)
-        let viewControllers = navigationController?.tabBarController?.viewControllers
-        
-        let someNavigationController = viewControllers![0] as! UINavigationController
-        let todayViewController = someNavigationController.viewControllers[0] as! AllRemindersViewController
         
         let nbOfDueReminders = numberOfDueReminders()
         if nbOfDueReminders == 0 {
-            todayViewController.navigationController?.tabBarItem.badgeValue = nil
+            self.navigationController?.tabBarItem.badgeValue = nil
         } else {
-            todayViewController.navigationController?.tabBarItem.badgeValue = "\(numberOfDueReminders())"
+            self.navigationController?.tabBarItem.badgeValue = "\(numberOfDueReminders())"
         }
     }
     

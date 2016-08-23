@@ -88,9 +88,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set badge
         setBadgeForReminderTab()
         
+        // When launching app from a reminder action
+        // Set observers to allow viewing action to work
+        let allRemindersViewController = getAllRemindersViewController()
+        if !allRemindersViewController.observersAreSet {
+            allRemindersViewController.addObservers()
+            allRemindersViewController.observersAreSet = true
+        }
+        
         // Create shortcut for 3D Touch
         if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+            NSLog("Launching from shortcut")
             let allRemindersViewController = getAllRemindersViewController()
+            
+            // The other screens need this data
+            loadList(allRemindersViewController)
+            allRemindersViewController.coreDataHandler = coreDataHandler
+            
+            
             print("Application launched via shortcut")
             self.shortcutItem = shortcutItem
             shouldPerformShortcutDelegate = false
@@ -102,26 +117,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 name: "newReminder",
                 object: nil
             )
+            
+            if getSavedTab() == 1 {
+                
+                let tabBarController = window!.rootViewController as! UITabBarController
+                tabBarController.selectedIndex = 0
+                tabBarController.delegate = getAllRemindersViewController()
+            }
         }
         
-        // When launching app from a reminder action
-        // Set observers to allow viewing action to work
-        let allRemindersViewController = getAllRemindersViewController()
-        if !allRemindersViewController.observersAreSet {
-            allRemindersViewController.addObservers()
-            allRemindersViewController.observersAreSet = true
-        }
+        
         
         
         // This doesn't get called when actions are chosen
-//        if let _ = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
-//            NSLog("Observers have been set for notification actions")
-//            let allRemindersViewController = getAllRemindersViewController()
-//            if !allRemindersViewController.observersAreSet {
-//                
-//            }
-//            
-//        }
+        // This only gets called if app is launched after tapping a notification
+        if let notification = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
+            NSLog("App delegate has notification")
+            let reminder = reminderFromNotification(notification)
+            sendReminderToController(reminder)
+            
+            if getSavedTab() == 1 {
+                NSLog("Changing selected tab index")
+                let tabBarController = window!.rootViewController as! UITabBarController
+                tabBarController.selectedIndex = 0
+                tabBarController.delegate = getAllRemindersViewController()
+            }
+            
+            notificationHandler.recieveLocalNotificationWithState(application.applicationState)
+            
+        }
 
         return shouldPerformShortcutDelegate
     }
@@ -137,6 +161,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         print(#function)
+        NSLog(#function)
         if notificationWentOff {
             NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationWillEnterForegroundNotification, object: nil)
             notificationWentOff = false
@@ -155,6 +180,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(application: UIApplication) {
         print(#function)
+        NSLog(#function)
         
         guard let shortcut = shortcutItem else { return }
         
@@ -199,6 +225,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         completionHandler()
     }
     
+    // App must be running for this to go off
+    // Does not go off is app is terminated
+    // Does go off if app is in background
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         // Must tap notification for this or app must be running
         print("")
@@ -211,6 +240,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         sendReminderToController(reminder)
         
         if getSavedTab() == 1 {
+            NSLog("Changing selected tab index")
             let tabBarController = window!.rootViewController as! UITabBarController
             tabBarController.selectedIndex = 0
             tabBarController.delegate = getAllRemindersViewController()
@@ -224,6 +254,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication,
                      performActionForShortcutItem shortcutItem: UIApplicationShortcutItem,
                      completionHandler: (Bool) -> Void) {
+        NSLog(#function)
         print("Tapped shortcut")
         completionHandler(handleShortcut(shortcutItem))
     }
@@ -313,22 +344,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func handleShortcut(shortcutItem: UIApplicationShortcutItem) -> Bool {
+        NSLog(#function)
         print("Handling shortcut")
         var succeeded = false
         
         if shortcutItem.type == "createReminder" {
+            NSLog("Shortcut type is Create Reminder")
             
             if getSavedTab() == 1 {
+                NSLog("Shortcut = Tab is 1 ")
                 let tabBarController = window!.rootViewController as! UITabBarController
+                NSLog("Shortcut: recovered tab bar controller")
                 tabBarController.selectedIndex = 0
                 tabBarController.delegate = getAllRemindersViewController()
             }
             
-            
+            NSLog("Posting notification")
             NSNotificationCenter.defaultCenter().postNotificationName("newReminder", object: nil)
+            NSLog("Posted notification")
             print("Adding a new reminder")
             succeeded = true
         }
+        NSLog("Handle shortcut success: \(succeeded)")
         
         return succeeded
     }

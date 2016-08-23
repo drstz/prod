@@ -100,6 +100,7 @@ class AllRemindersViewController: UIViewController {
         
         setNoReminderView()
         setBadgeForTodayTab()
+        
     }
     
     @IBAction func loadRemindersForToday() {
@@ -374,6 +375,7 @@ class AllRemindersViewController: UIViewController {
     
     /// This is called when a user uses the 3D touch Quick Action
     func newReminder() {
+        NSLog(#function)
         performSegueWithIdentifier("AddReminder", sender: self)
     }
     
@@ -548,19 +550,24 @@ class AllRemindersViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         print(#function)
-        
+        NSLog(#function)
         // Core Data
+        NSLog("Segue: Getting MOC")
         let managedObjectContext = coreDataHandler.managedObjectContext
-        
+        NSLog("Segue: Got MOC")
         let segueIdentifier = segue.identifier!
         
         switch segueIdentifier {
         case "AddReminder":
+            NSLog("Segue: Preparing to add reminder")
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! AddReminderViewController
+            NSLog("Segue: Got add reminder view controller")
             controller.delegate = self
             controller.managedObjectContext = managedObjectContext
+            NSLog("Segue: Set MOC")
             controller.list = list
+            NSLog("Segue: Done")
         case "EditReminder":
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! AddReminderViewController

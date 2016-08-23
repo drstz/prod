@@ -104,20 +104,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             )
         }
         
+        // When launching app from a reminder action
+        // Set observers to allow viewing action to work
         let allRemindersViewController = getAllRemindersViewController()
-        allRemindersViewController.addObservers()
+        if !allRemindersViewController.observersAreSet {
+            allRemindersViewController.addObservers()
+            allRemindersViewController.observersAreSet = true
+        }
+        
         
         // This doesn't get called when actions are chosen
-        if let _ = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
-            NSLog("Observers have been set for notification actions")
-            let allRemindersViewController = getAllRemindersViewController()
-            NSNotificationCenter.defaultCenter().addObserver(
-                allRemindersViewController,
-                selector: #selector(allRemindersViewController.viewReminder),
-                name: "viewReminder",
-                object: nil
-            )
-        }
+//        if let _ = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
+//            NSLog("Observers have been set for notification actions")
+//            let allRemindersViewController = getAllRemindersViewController()
+//            if !allRemindersViewController.observersAreSet {
+//                
+//            }
+//            
+//        }
 
         return shouldPerformShortcutDelegate
     }
@@ -137,10 +141,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationWillEnterForegroundNotification, object: nil)
             notificationWentOff = false
         }
-        
+        let statisticsViewController = getStatisticsViewController()
         let allRemindersViewController = getAllRemindersViewController()
+        
+        // Share the same manager?
+        allRemindersViewController.coreDataHandler = statisticsViewController.coreDataHandler
         allRemindersViewController.setUpCoreData()
-        allRemindersViewController.tableView.reloadData()
+        // allRemindersViewController.tableView.reloadData()
        
         
         allRemindersViewController.setBadgeForTodayTab()
@@ -157,8 +164,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
+    func getStatisticsViewController() -> StatisticsViewController {
+        // Tab bar controller
+        let tabBarController = window!.rootViewController as! UITabBarController
+        let tabs = tabBarController.viewControllers!
+        let navigationController = tabs[1] as! UINavigationController
+        let viewControllers = navigationController.viewControllers
+        
+        // All reminder view controller
+        let statisticsViewController = viewControllers[0] as! StatisticsViewController
+        
+        return statisticsViewController
+    }
+    
     // MARK: Notifications
 
+    // This gets called automatically after launch even if the app is terminated.
     func application(application: UIApplication,
                      handleActionWithIdentifier identifier: String?,
                      forLocalNotification notification: UILocalNotification,
@@ -168,9 +189,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NSLog(#function)
         
         let reminder = reminderFromNotification(notification)
-        sendReminderToController(reminder)
+        // sendReminderToController(reminder)
         
-        notificationHandler.handleActionInCategory(notification, actionIdentifier: identifier!)
+        //notificationHandler.handleActionInCategory(notification, actionIdentifier: identifier!)
+        
+        notificationHandler.handleAction(reminder, category: notification.category!, identifier: identifier!)
+        coreDataHandler.save()
         
         completionHandler()
     }
@@ -199,7 +223,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication,
                      performActionForShortcutItem shortcutItem: UIApplicationShortcutItem,
-                                                  completionHandler: (Bool) -> Void) {
+                     completionHandler: (Bool) -> Void) {
         print("Tapped shortcut")
         completionHandler(handleShortcut(shortcutItem))
     }

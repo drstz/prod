@@ -309,6 +309,15 @@ class NotificationHandler {
                 NSNotificationCenter.defaultCenter().postNotificationName("snoozeReminder", object: nil)
             }
         }
-        
+    }
+    
+    func handleAction(reminder: Reminder, category: String, identifier: String) {
+        if category == "Category" {
+            if identifier == "Complete" {
+                reminder.complete()
+            } else  if identifier == "Defer" {
+                reminder.snooze()
+            }
+        }
     }
 }

@@ -80,6 +80,9 @@ class AllRemindersViewController: UIViewController {
     // Help with changing toolbar
     var selectionIsMixed = false
     
+    // Help with settings observers
+    var observersAreSet = false
+    
     // MARK: - IBActions
     
     @IBAction func changeSegment() {
@@ -277,7 +280,10 @@ class AllRemindersViewController: UIViewController {
         noReminderScreen.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
         
         // Observers
-        addObservers()
+        if !observersAreSet {
+            addObservers()
+            observersAreSet = true
+        }	
     }
     
     override func viewWillAppear(animated: Bool) {

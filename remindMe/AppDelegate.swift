@@ -173,6 +173,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: Go to background
     
+    // Home button
     func applicationDidEnterBackground(application: UIApplication) {
         print(#function)
         NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationWillResignActiveNotification, object: nil)
@@ -180,6 +181,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: Go to foreground
 
+    // This is not called when application is being launched
+    // This is called when opening an application that has already been launched
     func applicationWillEnterForeground(application: UIApplication) {
         print(#function)
         NSLog(#function)
@@ -199,8 +202,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        
         
         allRemindersViewController.setBadgeForTodayTab()
+        
+        // Update popup if it is already being presented
+        let tab = getSavedTab()
+        if tab == 0 {
+            let presentedViewController = allRemindersViewController.presentedViewController
+            if presentedViewController == presentedViewController as? PopupViewController {
+                if let popupViewController = presentedViewController as? PopupViewController {
+                    popupViewController.updatePopup()
+                }
+                print("Presenting popup")
+            } else {
+                print("Not presenting popup")
+                print("Presenting: \(presentedViewController)")
+            }
+        }
     }
     
+    // This is called at launch
+    // This is called when opening an application that has already been launched
     func applicationDidBecomeActive(application: UIApplication) {
         print(#function)
         NSLog(#function)

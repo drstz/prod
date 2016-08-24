@@ -40,7 +40,8 @@ func registerDefaults() {
         "UsingCustomSnooze" : false,
         "SavedSnoozeDuration" : 0,
         "SavedSnoozeUnit" : "min",
-        "Filter" : "All"
+        "Filter" : "All",
+        "TimePickerInterval" : 1
     ]
     NSUserDefaults.standardUserDefaults().registerDefaults(dictionary)
 }
@@ -179,4 +180,16 @@ func choiceForAutoSnoozeTime(autoSnoozeDefaults: AutoSnoozeDefaults) -> String {
     case .Hour:
         return "1 hour"
     }
+}
+
+func timePickerInterval() -> Int {
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let interval = userDefaults.integerForKey("TimePickerInterval")
+    return interval
+}
+
+func saveTimePickerInterval(interval: Int) {
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    userDefaults.setInteger(interval, forKey: "TimePickerInterval")
+    userDefaults.synchronize()
 }

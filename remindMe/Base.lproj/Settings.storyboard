@@ -104,12 +104,45 @@
                                             <segue destination="Hc5-4w-6Lg" kind="show" identifier="PickAutoSnoozeTime" id="lTf-fV-EYf"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="8PZ-Ox-PdF">
+                                        <rect key="frame" x="0.0" y="246" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8PZ-Ox-PdF" id="28F-6V-0wV">
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="every minute" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wRZ-mC-fS5">
+                                                    <rect key="frame" x="401" y="11" width="158" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="158" id="7qJ-Gz-53D"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time Picker Interval" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mlT-LY-dTx">
+                                                    <rect key="frame" x="17" y="0.0" width="253" height="43"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="wRZ-mC-fS5" firstAttribute="top" secondItem="28F-6V-0wV" secondAttribute="topMargin" constant="3" id="TwD-Pz-EB1"/>
+                                                <constraint firstItem="wRZ-mC-fS5" firstAttribute="trailing" secondItem="28F-6V-0wV" secondAttribute="trailingMargin" id="V74-ht-AkD"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="wRZ-mC-fS5" secondAttribute="bottom" constant="3" id="XVk-WO-KsD"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Qg5-kW-HgP" kind="show" identifier="PickTimePickerInterval" id="od8-St-JKO"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Feedback" id="VCP-Nn-Tga">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="JJZ-Ho-5zs" style="IBUITableViewCellStyleDefault" id="EQX-Ws-nK7">
-                                        <rect key="frame" x="0.0" y="297" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="341" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EQX-Ws-nK7" id="LRu-mI-h6H">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
@@ -129,7 +162,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Hep-Fi-xsn" style="IBUITableViewCellStyleDefault" id="wka-GN-pLt">
-                                        <rect key="frame" x="0.0" y="341" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="385" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wka-GN-pLt" id="pEg-g1-uzF">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
@@ -150,7 +183,7 @@
                             <tableViewSection headerTitle="About" id="AzE-1g-o6u">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="kHR-1i-kkB" style="IBUITableViewCellStyleDefault" id="Cui-sy-uCl">
-                                        <rect key="frame" x="0.0" y="436" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="480" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cui-sy-uCl" id="SvP-lc-PFK">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
@@ -170,7 +203,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="iBZ-Kj-Vqp" style="IBUITableViewCellStyleDefault" id="G0I-7V-mCG">
-                                        <rect key="frame" x="0.0" y="480" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="524" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G0I-7V-mCG" id="6pU-tD-FTx">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
@@ -208,12 +241,13 @@
                         <outlet property="autoSnoozeLabel" destination="Jt7-QT-Zgs" id="gYm-n7-ILk"/>
                         <outlet property="autoSnoozeSwitch" destination="mjj-fZ-4Rg" id="g7z-36-AWa"/>
                         <outlet property="snoozeTimeLabel" destination="CCR-ky-hgZ" id="DQb-HX-NPx"/>
+                        <outlet property="timePickerLabel" destination="wRZ-mC-fS5" id="bIh-Dg-gyl"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ygb-sR-4zr" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="egF-X4-DRW" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1318" y="1754"/>
+            <point key="canvasLocation" x="1204" y="938"/>
         </scene>
         <!--Snooze Picker View Controller-->
         <scene sceneID="9cK-vH-l7D">
@@ -288,7 +322,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="85F-6z-tYL" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Nrg-xY-3dX" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2024" y="1290"/>
+            <point key="canvasLocation" x="1990" y="938"/>
         </scene>
         <!--Custom Snooze Picker Controller-->
         <scene sceneID="IPP-xr-giO">
@@ -373,7 +407,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uBR-8r-Xe8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3521" y="1290"/>
+            <point key="canvasLocation" x="3427" y="938"/>
         </scene>
         <!--Auto Snooze Picker View Controller-->
         <scene sceneID="QQb-D4-JcJ">
@@ -414,7 +448,45 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KAy-ZZ-85y" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Rcp-hp-2HZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2756" y="1933"/>
+            <point key="canvasLocation" x="1996" y="1685"/>
+        </scene>
+        <!--Time Picker View Controller-->
+        <scene sceneID="r04-e7-KuE">
+            <objects>
+                <tableViewController id="Qg5-kW-HgP" customClass="TimePickerViewController" customModule="remindMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="Tgc-Ju-zOC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <datePicker key="tableFooterView" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" id="jXh-bi-PPN">
+                            <rect key="frame" x="0.0" y="176" width="600" height="217"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <date key="date" timeIntervalSinceReferenceDate="493720430.42844898">
+                                <!--2016-08-24 08:33:50 +0000-->
+                            </date>
+                        </datePicker>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="interval" id="NOj-ym-VDq">
+                                <rect key="frame" x="0.0" y="114" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NOj-ym-VDq" id="njh-Gw-rO4">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Qg5-kW-HgP" id="yHQ-HL-9b8"/>
+                            <outlet property="delegate" destination="Qg5-kW-HgP" id="kQN-A7-SYK"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="timePicker" destination="jXh-bi-PPN" id="gXB-Rw-ioi"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vw6-bh-TAv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1255" y="1763"/>
         </scene>
         <!--About View Controller-->
         <scene sceneID="leP-mL-HCU">
@@ -456,7 +528,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="esR-1g-Qde" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1318" y="2806"/>
+            <point key="canvasLocation" x="426" y="1711"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2zG-PG-pE2">
@@ -474,7 +546,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OUm-kr-MTL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="506" y="1754"/>
+            <point key="canvasLocation" x="450" y="938"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Fci-j3-FFL">
@@ -492,7 +564,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HLp-xC-Obp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2709" y="1290"/>
+            <point key="canvasLocation" x="2679" y="938"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

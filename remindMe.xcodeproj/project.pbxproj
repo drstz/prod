@@ -28,6 +28,7 @@
 		7175A3291D2B6C4200076370 /* AllRemindersViewController+AddReminderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7175A3281D2B6C4200076370 /* AllRemindersViewController+AddReminderDelegate.swift */; };
 		7175A32B1D2B6CAB00076370 /* AllRemindersViewController+TabBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7175A32A1D2B6CAB00076370 /* AllRemindersViewController+TabBarDelegate.swift */; };
 		7175A32D1D2B6D7200076370 /* AllRemindersViewController+ReminderCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7175A32C1D2B6D7200076370 /* AllRemindersViewController+ReminderCellDelegate.swift */; };
+		71818D481D6D88AF00F8B732 /* TimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71818D471D6D88AF00F8B732 /* TimePickerViewController.swift */; };
 		7182F9041D40836E00E6C18E /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7182F9031D40836E00E6C18E /* PopupViewController.swift */; };
 		7182F9061D40873D00E6C18E /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7182F9051D40873C00E6C18E /* DimmingPresentationController.swift */; };
 		71878B421CC49A9700AD0F27 /* Reminder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71878B401CC49A9700AD0F27 /* Reminder+CoreDataProperties.swift */; };
@@ -79,6 +80,7 @@
 		7175A3281D2B6C4200076370 /* AllRemindersViewController+AddReminderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllRemindersViewController+AddReminderDelegate.swift"; sourceTree = "<group>"; };
 		7175A32A1D2B6CAB00076370 /* AllRemindersViewController+TabBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllRemindersViewController+TabBarDelegate.swift"; sourceTree = "<group>"; };
 		7175A32C1D2B6D7200076370 /* AllRemindersViewController+ReminderCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllRemindersViewController+ReminderCellDelegate.swift"; sourceTree = "<group>"; };
+		71818D471D6D88AF00F8B732 /* TimePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePickerViewController.swift; sourceTree = "<group>"; };
 		7182F9031D40836E00E6C18E /* PopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		7182F9051D40873C00E6C18E /* DimmingPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
 		71878B401CC49A9700AD0F27 /* Reminder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reminder+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				7135B90C1D056E3D0021105F /* SettingsViewController.swift */,
 				71D86C411D067BEB002A5CAE /* SnoozePickerViewController.swift */,
 				71238DE01CD70AC100F9D706 /* UserDefaults.swift */,
+				71818D471D6D88AF00F8B732 /* TimePickerViewController.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				71C3EFB01D0ED79A00A87525 /* AutoSnoozePickerViewController.swift in Sources */,
 				71A7884E1CE5B57400D5CE47 /* QuickViewViewController.swift in Sources */,
 				714CB6B51CCBA00E00723399 /* List+CoreDataProperties.swift in Sources */,
+				71818D481D6D88AF00F8B732 /* TimePickerViewController.swift in Sources */,
 				71FB1F7F1D4893E400951A25 /* CustomSnoozeController.swift in Sources */,
 				71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */,
 				71ABD70A1CC0A87600F0BF90 /* Date.swift in Sources */,

@@ -286,26 +286,38 @@ class NotificationHandler {
         return idFromNotification
     }
     
-    func recieveLocalNotificationWithState(state: UIApplicationState) {
-        print(#function)
-        if state == .Inactive {
-            print("Notification was tapped")
-            NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
-        } else {
-            print("Handling notification from app")
-            NSNotificationCenter.defaultCenter().postNotificationName("setBadgeForTodayTab", object: nil)
-            NSNotificationCenter.defaultCenter().postNotificationName("refresh", object: nil)
-        }
-    }
+//    func recieveLocalNotificationWithState(state: UIApplicationState) {
+//        print(#function)
+//        if state == .Inactive {
+//            print("Notification was tapped")
+//            NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
+//        } else {
+//            print("Handling notification from app")
+//            NSNotificationCenter.defaultCenter().postNotificationName("setBadgeForTodayTab", object: nil)
+//            NSNotificationCenter.defaultCenter().postNotificationName("refresh", object: nil)
+//        }
+//    }
     
     func handleActionInCategory(notification: UILocalNotification, actionIdentifier: String) {
+        NSLog(#function)
         if notification.category == "Category" {
             if actionIdentifier == "Complete" {
+                NSLog("Identifer is Complete")
                 NSNotificationCenter.defaultCenter().postNotificationName("completeReminder", object: nil)
             } else if actionIdentifier == "Defer" {
+                NSLog("Identifer is Defer")
                 NSNotificationCenter.defaultCenter().postNotificationName("snoozeReminder", object: nil)
             }
         }
-        
+    }
+    
+    func handleAction(reminder: Reminder, category: String, identifier: String) {
+        if category == "Category" {
+            if identifier == "Complete" {
+                reminder.complete()
+            } else  if identifier == "Defer" {
+                reminder.snooze()
+            }
+        }
     }
 }

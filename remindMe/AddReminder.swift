@@ -105,6 +105,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     // MARK: Bar items
     
     @IBAction func cancel() {
+        NSLog(#function)
         reminderNameField.resignFirstResponder()
         
         let alert = UIAlertController(title: "Are you sure?", message: "You will lose all changes", preferredStyle: .Alert)
@@ -125,12 +126,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     }
     
     @IBAction func saveReminder() {
+        NSLog(#function)
         reminderNameField.resignFirstResponder()
         
         var reminder : Reminder?
         
         func getReminderDetails(inout reminder: Reminder) {
-            
+            NSLog(#function)
             reminder.setTitle(reminderNameField.text!)
             reminder.setDate(selectedDate!)
             
@@ -150,10 +152,14 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         if reminderToEdit != nil {
             reminder = reminderToEdit
         } else {
+            NSLog("Going to insert new object")
             reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: managedObjectContext) as? Reminder
+            NSLog("Inserted new object")
             reminder?.setCompletionStatus(false)
             reminder?.setFavorite(false)
+             NSLog("About to add to list")
             reminder?.addToList(list)
+            NSLog("Added to list")
             
             let nbOfReminders = list.numberOfReminders.integerValue
             list.numberOfReminders = NSNumber(integer: nbOfReminders + 1)
@@ -166,7 +172,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             if reminder != nil {
                 let reminderNotificationHandler = reminder!.notificationHandler
                 reminderNotificationHandler.scheduleNotifications(reminder!)
+                NSLog("Save reminder: About to go to delegate")
                 delegate?.addReminderViewController(self, didFinishEditingReminder: reminder!)
+                NSLog("Save reminder: Delegate worked")
             } else {
                 print("Failure to schedule notification: no reminder")
             }

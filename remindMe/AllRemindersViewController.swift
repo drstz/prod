@@ -39,13 +39,8 @@ class AllRemindersViewController: UIViewController {
     
     // MARK: - Coredata
     
-    let coreDataHandler = CoreDataHandler()
-    var managedObjectContext: NSManagedObjectContext!
-    
-    // MARK: - Tabbar
-    
-    var myTabBarController: UITabBarController!
-    var myTabIndex = 0
+    var coreDataHandler: CoreDataHandler!
+    //var managedObjectContext: NSManagedObjectContext!
     
     // MARK: - Segment
     
@@ -85,9 +80,11 @@ class AllRemindersViewController: UIViewController {
     // Help with changing toolbar
     var selectionIsMixed = false
     
-    // MARK: Reminder filter
+    // Help with settings observers
+    var observersAreSet = false
     
-    
+    // Help with popup after notification
+    var notificationWasTapped = false
     
     // MARK: - IBActions
     
@@ -106,6 +103,7 @@ class AllRemindersViewController: UIViewController {
         
         setNoReminderView()
         setBadgeForTodayTab()
+        
     }
     
     @IBAction func loadRemindersForToday() {
@@ -172,7 +170,7 @@ class AllRemindersViewController: UIViewController {
         // Handle Segment
         let status = chosenStatus()
         
-        coreDataHandler.setObjectContext(managedObjectContext)
+        //coreDataHandler.setObjectContext(managedObjectContext)
         
         // Fetch choice
         coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
@@ -284,13 +282,19 @@ class AllRemindersViewController: UIViewController {
         
         // Customize no reminder screen
         noReminderScreen.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        
+        // Observers
+        if !observersAreSet {
+            addObservers()
+            observersAreSet = true
+        }	
     }
     
     override func viewWillAppear(animated: Bool) {
         print(#function)
         super.viewWillAppear(animated)
         
-        addObservers()
+        // addObservers()
         
         segmentedControl.selectedSegmentIndex = selectedSegment
         setUpCoreData()
@@ -300,14 +304,21 @@ class AllRemindersViewController: UIViewController {
         
         setNoReminderView()
         setBadgeForTodayTab()
+        
+        
     }
     
     override func viewDidAppear(animated: Bool) {
         print(#function)
         super.viewDidAppear(animated)
         
-        let selectedIndex = myTabBarController.selectedIndex
-        saveSelectedTab(selectedIndex)
+        let selectedIndex = tabBarController?.selectedIndex
+        saveSelectedTab(selectedIndex!)
+        
+        if notificationWasTapped {
+            NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
+            notificationWasTapped = false
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -316,7 +327,7 @@ class AllRemindersViewController: UIViewController {
         print("Here comes the recieved message: \(sentMessage)")
         deselectRows()
         hideToolbar()
-        removeObservers()
+        // removeObservers()
     }
     
     // MARK: Buttons
@@ -374,6 +385,7 @@ class AllRemindersViewController: UIViewController {
     
     /// This is called when a user uses the 3D touch Quick Action
     func newReminder() {
+        NSLog(#function)
         performSegueWithIdentifier("AddReminder", sender: self)
     }
     
@@ -438,7 +450,7 @@ class AllRemindersViewController: UIViewController {
     // MARK: Coredata
     
     func setUpCoreData() {
-        coreDataHandler.setObjectContext(managedObjectContext)
+        //coreDataHandler.setObjectContext(managedObjectContext)
         
         let filter = savedFilter()
         let status = chosenStatus()
@@ -450,16 +462,12 @@ class AllRemindersViewController: UIViewController {
     
     func setBadgeForTodayTab() {
         print(#function)
-        let viewControllers = navigationController?.tabBarController?.viewControllers
-        
-        let someNavigationController = viewControllers![0] as! UINavigationController
-        let todayViewController = someNavigationController.viewControllers[0] as! AllRemindersViewController
         
         let nbOfDueReminders = numberOfDueReminders()
         if nbOfDueReminders == 0 {
-            todayViewController.navigationController?.tabBarItem.badgeValue = nil
+            self.navigationController?.tabBarItem.badgeValue = nil
         } else {
-            todayViewController.navigationController?.tabBarItem.badgeValue = "\(numberOfDueReminders())"
+            self.navigationController?.tabBarItem.badgeValue = "\(numberOfDueReminders())"
         }
     }
     
@@ -474,6 +482,9 @@ class AllRemindersViewController: UIViewController {
     }
     
     func numberOfDueReminders() -> Int {
+        // Core Data
+        let managedObjectContext = coreDataHandler.managedObjectContext
+        
         let now = NSDate()
         
         let fetchRequest = NSFetchRequest()
@@ -549,16 +560,24 @@ class AllRemindersViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         print(#function)
-        
+        NSLog(#function)
+        // Core Data
+        NSLog("Segue: Getting MOC")
+        let managedObjectContext = coreDataHandler.managedObjectContext
+        NSLog("Segue: Got MOC")
         let segueIdentifier = segue.identifier!
         
         switch segueIdentifier {
         case "AddReminder":
+            NSLog("Segue: Preparing to add reminder")
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! AddReminderViewController
+            NSLog("Segue: Got add reminder view controller")
             controller.delegate = self
             controller.managedObjectContext = managedObjectContext
+            NSLog("Segue: Set MOC")
             controller.list = list
+            NSLog("Segue: Done")
         case "EditReminder":
             let navigationController = segue.destinationViewController as! UINavigationController
             let controller = navigationController.topViewController as! AddReminderViewController

@@ -21,6 +21,7 @@ extension AllRemindersViewController: ReminderCellDelegate {
         let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)
         
         if longPress.state == .Began && selectedReminders().count == 0 {
+            print("Going to edit list")
             editingList = true
             tableView.allowsMultipleSelection = true
             tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .None)

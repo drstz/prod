@@ -13,6 +13,7 @@ extension AllRemindersViewController {
     
     func completeReminder() {
         print(#function)
+        NSLog(#function)
         if let reminder = reminderFromNotification {
             reminder.complete()
         }
@@ -20,6 +21,7 @@ extension AllRemindersViewController {
     }
     
     func snoozeReminder() {
+        NSLog(#function)
         print(#function)
         if let reminder = reminderFromNotification {
             reminder.snooze()
@@ -28,19 +30,23 @@ extension AllRemindersViewController {
     }
     
     func viewReminder() {
+        NSLog(#function)
         print(#function)
         notificationHasGoneOff = true
+//        if let reminder = reminderFromNotification {
+//            if presentedViewController != nil {
+//                dismissViewControllerAnimated(false, completion: {
+//                    self.performSegueWithIdentifier("Popup", sender: reminder)
+//                })
+//            } else {
+//                performSegueWithIdentifier("Popup", sender: reminder)
+//            }
+//            
+//        } else {
+//            print("Error")
+//        }
         if let reminder = reminderFromNotification {
-            if presentedViewController != nil {
-                dismissViewControllerAnimated(false, completion: {
-                    self.performSegueWithIdentifier("Popup", sender: reminder)
-                })
-            } else {
-                performSegueWithIdentifier("Popup", sender: reminder)
-            }
-            
-        } else {
-            print("Error")
+            performSegueWithIdentifier("Popup", sender: reminder)
         }
         
     }

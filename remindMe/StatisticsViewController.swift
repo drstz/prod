@@ -8,28 +8,53 @@
 
 import UIKit
 
-class StatisticsViewController: UIViewController {
+class StatisticsViewController: UIViewController, UITabBarControllerDelegate {
+    
+    // MARK: - Core Data
+    
+    var coreDataHandler: CoreDataHandler!
+    
+    // MARK: - List
+    // This is used when creating a reminder
+    var list: List!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        //tabBarController?.delegate = self
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        saveSelectedTab((tabBarController?.selectedIndex)!)
     }
-    */
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        // tabBarController?.delegate = nil
+    }
+
+  // MARK: - Tab Bar Controller Delegate Methods
+    
+    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+        print(#function)
+        if viewController.tabBarItem.tag == 0 {
+            print("Selecting Reminders Tab")
+            let navigationController = viewController as! UINavigationController
+            let allReminderViewController = navigationController.viewControllers[0] as! AllRemindersViewController
+            
+            // Make sure only one view controller is the delegate
+            allReminderViewController.tabBarController?.delegate = allReminderViewController
+            allReminderViewController.coreDataHandler = coreDataHandler
+            allReminderViewController.list = list 
+            
+            return true
+        } else {
+            print("Selecting Profile Tab")
+            return false
+        }
+    }
+    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {}
 
 }

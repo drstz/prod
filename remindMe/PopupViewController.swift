@@ -185,6 +185,10 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         } else {
             backgroundView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.8)
         }
+        updatePopup()
+    }
+    
+    func updatePopup() {
         if let reminder = incomingReminder {
             setLabels(with: reminder)
             setFavoriteStar()
@@ -213,7 +217,6 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
                 
             }
         }
-        
     }
     
     func setLabels(with reminder: Reminder) {

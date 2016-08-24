@@ -23,6 +23,7 @@ extension AllRemindersViewController: UITabBarControllerDelegate  {
             // Make sure only one view controller is the delegate
             statisticViewController.tabBarController?.delegate = statisticViewController
             statisticViewController.coreDataHandler = coreDataHandler
+            statisticViewController.list = list 
             
             return true
         } else {

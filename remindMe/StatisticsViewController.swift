@@ -16,7 +16,7 @@ class StatisticsViewController: UIViewController, UITabBarControllerDelegate {
     
     // MARK: - List
     // This is used when creating a reminder
-    // var list: List!
+    var list: List!
     
 
     override func viewDidLoad() {
@@ -46,6 +46,7 @@ class StatisticsViewController: UIViewController, UITabBarControllerDelegate {
             // Make sure only one view controller is the delegate
             allReminderViewController.tabBarController?.delegate = allReminderViewController
             allReminderViewController.coreDataHandler = coreDataHandler
+            allReminderViewController.list = list 
             
             return true
         } else {

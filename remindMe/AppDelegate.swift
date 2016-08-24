@@ -78,6 +78,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let statisticsViewController = viewControllers[0] as! StatisticsViewController
             statisticsViewController.coreDataHandler = coreDataHandler
             
+            // Load list
+            let managedObjectContext = coreDataHandler.managedObjectContext
+            
+            print("*** Fetching list")
+            let fetchRequest = NSFetchRequest()
+            let entityDescription = NSEntityDescription.entityForName("List", inManagedObjectContext: managedObjectContext)
+            
+            fetchRequest.entity = entityDescription
+            
+            do {
+                let result = try managedObjectContext.executeFetchRequest(fetchRequest)
+                let list = result[0] as! NSManagedObject as! List
+                statisticsViewController.list = list
+            } catch {
+                let fetchError = error as NSError
+                print(fetchError)
+            }
+            
             // Make View Controller a delegate of the tab bar controller
             statisticsViewController.tabBarController?.delegate = statisticsViewController
             
@@ -337,6 +355,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(fetchError)
         }
     }
+    
+    
     
     func reminderFromNotification(notification: UILocalNotification) -> Reminder {
         let reminderID = notificationHandler.reminderID(notification)

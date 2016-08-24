@@ -213,8 +213,16 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
                 editButton.backgroundColor = lightestNormal
                 deleteButton.backgroundColor = lightNormal
                 closeButton.backgroundColor = normalColor
-                
-                
+            }
+            
+            if reminder.isComplete == true {
+                completeButton.enabled = false
+                completeButton.setTitle("Completed", forState: .Disabled)
+                completeButton.setTitleColor(UIColor.lightGrayColor(), forState: .Disabled)
+            } else {
+                completeButton.enabled = true
+                completeButton.setTitle("Complete", forState: .Normal)
+                completeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
         }
     }

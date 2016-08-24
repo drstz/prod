@@ -652,12 +652,35 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="100" id="skR-ZM-08h">
+                                        <rect key="frame" x="0.0" y="143" width="600" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="skR-ZM-08h" id="ZDP-XJ-V0w">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="99"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NcB-oV-PBx">
+                                                    <rect key="frame" x="8" y="0.0" width="584" height="99"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </string>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="NcB-oV-PBx" firstAttribute="top" secondItem="ZDP-XJ-V0w" secondAttribute="top" id="4ZK-RZ-ch8"/>
+                                                <constraint firstAttribute="trailing" secondItem="NcB-oV-PBx" secondAttribute="trailing" constant="8" id="8kQ-5p-lh1"/>
+                                                <constraint firstItem="NcB-oV-PBx" firstAttribute="leading" secondItem="ZDP-XJ-V0w" secondAttribute="leading" constant="8" id="A8v-R4-GMN"/>
+                                                <constraint firstAttribute="bottom" secondItem="NcB-oV-PBx" secondAttribute="bottom" id="wwm-Ue-Obj"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Due Date" id="1hA-h1-Jhb">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="cUE-qd-G5q" detailTextLabel="wOD-0E-6su" style="IBUITableViewCellStyleValue1" id="CUz-Zn-fK9">
-                                        <rect key="frame" x="0.0" y="194" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="294" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CUz-Zn-fK9" id="pIb-F7-zrB">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -679,9 +702,12 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="ec1-N7-kM8" kind="presentation" identifier="OpenDatePicker" id="0Ae-qu-gCV"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="eZ4-gF-vOw">
-                                        <rect key="frame" x="0.0" y="238" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="338" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eZ4-gF-vOw" id="t3e-L0-DTk">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -709,7 +735,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="YSA-Xg-ucr" detailTextLabel="HUm-Gx-jEn" style="IBUITableViewCellStyleValue1" id="HIJ-ij-8PU">
-                                        <rect key="frame" x="0.0" y="282" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="382" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HIJ-ij-8PU" id="Ca1-UK-Squ">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -808,7 +834,66 @@
                     </tableViewCellContentView>
                 </tableViewCell>
             </objects>
-            <point key="canvasLocation" x="3430" y="-783"/>
+            <point key="canvasLocation" x="3307" y="-783"/>
+        </scene>
+        <!--Date Picker View Controller-->
+        <scene sceneID="Box-xH-uy6">
+            <objects>
+                <viewController id="ec1-N7-kM8" customClass="DatePickerViewController" customModule="remindMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bDx-xu-qHJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="oA8-np-K5Z"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="arH-ig-8jt">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HXo-ly-I1u">
+                                <rect key="frame" x="140" y="192" width="320" height="216"/>
+                                <subviews>
+                                    <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="wez-KI-WQW">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                                        <date key="date" timeIntervalSinceReferenceDate="493731692.44081098">
+                                            <!--2016-08-24 11:41:32 +0000-->
+                                        </date>
+                                    </datePicker>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="216" id="PuC-f8-b6p"/>
+                                    <constraint firstAttribute="width" constant="320" id="Qhy-JD-MYl"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aIo-Ug-j5V">
+                                <rect key="frame" x="270" y="416" width="60" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="SYr-NS-mTb"/>
+                                    <constraint firstAttribute="height" constant="35" id="fZS-Z6-CBS"/>
+                                </constraints>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="done" destination="ec1-N7-kM8" eventType="touchUpInside" id="ia9-E8-meZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aIo-Ug-j5V" firstAttribute="top" secondItem="HXo-ly-I1u" secondAttribute="bottom" constant="8" id="JeI-r5-0qN"/>
+                            <constraint firstItem="aIo-Ug-j5V" firstAttribute="centerX" secondItem="HXo-ly-I1u" secondAttribute="centerX" id="iaQ-yI-bDn"/>
+                            <constraint firstItem="HXo-ly-I1u" firstAttribute="centerY" secondItem="arH-ig-8jt" secondAttribute="centerY" id="icT-ja-gIE"/>
+                            <constraint firstItem="HXo-ly-I1u" firstAttribute="centerX" secondItem="arH-ig-8jt" secondAttribute="centerX" id="oN7-TU-zPJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backgroundView" destination="arH-ig-8jt" id="uUO-ba-49c"/>
+                        <outlet property="datePicker" destination="wez-KI-WQW" id="DtP-j4-suB"/>
+                        <outlet property="datePopup" destination="HXo-ly-I1u" id="ogz-jC-lI2"/>
+                        <outlet property="doneButton" destination="aIo-Ug-j5V" id="IxL-RY-78y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ch1-xi-KZW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3998" y="-1283"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JXx-8J-hl1">
@@ -904,6 +989,6 @@
         <image name="star" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="XiK-Cj-5ub"/>
+        <segue reference="UUP-4q-srN"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -25,7 +25,7 @@ protocol AddReminderViewControllerDelegate: class {
     
 }
 
-class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, DatePickerViewControllerDelegate {
     
     // MARK: Properties
     
@@ -56,6 +56,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     
     
     var willSetNewDate = false
+    
+    // New chosen Date
+    var chosenDate: NSDate?
     
     // MARK: Outlets
    
@@ -279,6 +282,21 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         }
     }
     
+    // MARK: - Date Picker View Controller Delegate
+    
+    func datePickerViewControllerDidChooseDate(controller: DatePickerViewController, date: NSDate) {
+        dismissViewControllerAnimated(true, completion: nil)
+        chosenDate = date
+        setDueDateLabel(with: chosenDate!)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "OpenDatePicker" {
+            let datePickerViewController = segue.destinationViewController as? DatePickerViewController
+            datePickerViewController?.delegate = self
+        }
+    }
+    
     // MARK: - Table View Delegate
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -295,6 +313,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             return 217
         } else if indexPath.section == 1 && indexPath.row == 3 && reccuringPickerVisible {
             return 217
+        } else if indexPath.section == 0 && indexPath.row == 1 {
+            return 100
         } else {
             return 50
         }
@@ -337,13 +357,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         reminderNameField.resignFirstResponder()
         
-        if indexPath.section == 1 && indexPath.row == 0 {
-            if !datePickerVisible {
-                showDatePicker()
-            } else {
-                hideDatePicker()
-            }
-        }
+//        if indexPath.section == 1 && indexPath.row == 0 {
+//            if !datePickerVisible {
+//                showDatePicker()
+//            } else {
+//                hideDatePicker()
+//            }
+//        }
         
         if indexPath.section == 1 && indexPath.row == 2 && dueDateIsSet && reminderRepeatsSwitch.on {
             if !reccuringPickerVisible {
@@ -365,6 +385,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
             return indexPath
         } else if !textFieldHasText {
             reminderNameField.becomeFirstResponder()
+        }
+        
+        if indexPath.section == 1 && indexPath.row == 0 {
+            return indexPath
         }
         return nil
     }

@@ -10,6 +10,7 @@ import UIKit
 
 class TimePickerViewController: UITableViewController {
     @IBOutlet weak var intervalLabel: UILabel!
+    @IBOutlet weak var timePicker: UIDatePicker!
     
     var selectedIntervalIndex = 0
     var selectedInterval = 1
@@ -21,8 +22,7 @@ class TimePickerViewController: UITableViewController {
         5,
         10,
         15,
-        30,
-        60
+        30
     ]
     
     override func viewDidLoad() {
@@ -34,6 +34,13 @@ class TimePickerViewController: UITableViewController {
                 break
             }
         }
+        // Change this first or else time interval doesn't update
+        timePicker.datePickerMode = .Time
+        timePicker.minuteInterval = timePickerInterval()
+        
+        timePicker.enabled = false
+        
+        timePicker.userInteractionEnabled = false
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -41,8 +48,12 @@ class TimePickerViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        print(#function)
         let cell = tableView.dequeueReusableCellWithIdentifier("interval", forIndexPath: indexPath)
         let intervalForRow = intervals[indexPath.row]
+        
+        print("Interval is \(intervalForRow) at indexPath row \(indexPath.row)")
+        print("Selected interval is \(selectedInterval)")
         
         var minuteString = ""
         if intervalForRow == 1 {
@@ -53,7 +64,7 @@ class TimePickerViewController: UITableViewController {
         
         cell.textLabel?.text = String(intervalForRow) + " " + minuteString
         
-        if intervalForRow == selectedInterval {
+        if indexPath == selectedIndexPath {
             cell.accessoryType = .Checkmark
         } else {
             cell.accessoryType = .None
@@ -63,22 +74,26 @@ class TimePickerViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let newCell = tableView.cellForRowAtIndexPath(indexPath) {
-            newCell.accessoryType = .Checkmark
+        if indexPath != selectedIndexPath {
+            if let newCell = tableView.cellForRowAtIndexPath(indexPath) {
+                newCell.accessoryType = .Checkmark
+            }
+            
+            if let oldCell = tableView.cellForRowAtIndexPath(selectedIndexPath) {
+                oldCell.accessoryType = .None
+            }
+            
+            selectedIndexPath = indexPath
+            
+            // Get Interval from row
+            let interval = intervalFromRow(selectedIndexPath.row)
+            
+            // Save interval here
+            saveTimePickerInterval(interval)
+            print("Interval was set to \(timePickerInterval())")
+            
+            timePicker.minuteInterval = interval
         }
-        
-        if let oldCell = tableView.cellForRowAtIndexPath(selectedIndexPath) {
-            oldCell.accessoryType = .None
-        }
-        
-        selectedIndexPath = indexPath
-        
-        // Get Interval from row
-        let interval = intervalFromRow(selectedIndexPath.row)
-        
-        // Save interval here
-        saveTimePickerInterval(interval)
-        print("Interval was set to \(timePickerInterval())")
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
@@ -95,8 +110,6 @@ class TimePickerViewController: UITableViewController {
             return 15
         case 4:
             return 30
-        case 5:
-            return 60
         default:
             print("Problem finding interval from row \(row)")
             print("Returning 1")

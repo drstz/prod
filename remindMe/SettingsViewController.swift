@@ -12,6 +12,7 @@ import MessageUI
 class SettingsViewController: UITableViewController {
     @IBOutlet weak var snoozeTimeLabel: UILabel!
     @IBOutlet weak var autoSnoozeLabel: UILabel!
+    @IBOutlet weak var timePickerLabel: UILabel!
     
     @IBOutlet weak var autoSnoozeSwitch: UISwitch!
     
@@ -20,6 +21,8 @@ class SettingsViewController: UITableViewController {
     var snoozeDuration = 0.0
     var snoozeUnit: SnoozeUnit = .Minutes
     var autoSnoozeTime = ""
+    
+    var interval = 1
     
     @IBAction func snoozePickerDidPickSnoozeTime(segue: UIStoryboardSegue) {
         print(#function)
@@ -61,6 +64,17 @@ class SettingsViewController: UITableViewController {
     }
     
     func loadSettings() {
+        interval = timePickerInterval()
+        var minuteString = ""
+        
+        if interval == 1 {
+            minuteString = "minute"
+        } else {
+            minuteString = "minutes"
+        }
+        
+        timePickerLabel.text = String(interval) + " " + minuteString
+        
         loadSnoozeSettings()
         loadAutoSnoozeSettings()
     }
@@ -117,6 +131,9 @@ class SettingsViewController: UITableViewController {
                 let controller = segue.destinationViewController as! AboutViewController
                 controller.htmlFile = NSBundle.mainBundle().pathForResource("aboutApp", ofType: "html")
                 controller.title = "About the app"
+            case "PickTimePickerInterval":
+                let controller = segue.destinationViewController as! TimePickerViewController
+                controller.selectedInterval = interval
             default:
                 print("Error: No segue")
             }

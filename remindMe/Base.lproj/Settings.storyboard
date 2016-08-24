@@ -241,6 +241,7 @@
                         <outlet property="autoSnoozeLabel" destination="Jt7-QT-Zgs" id="gYm-n7-ILk"/>
                         <outlet property="autoSnoozeSwitch" destination="mjj-fZ-4Rg" id="g7z-36-AWa"/>
                         <outlet property="snoozeTimeLabel" destination="CCR-ky-hgZ" id="DQb-HX-NPx"/>
+                        <outlet property="timePickerLabel" destination="wRZ-mC-fS5" id="bIh-Dg-gyl"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ygb-sR-4zr" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -190,7 +190,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationWillEnterForegroundNotification, object: nil)
             notificationWentOff = false
         }
-        let statisticsViewController = getStatisticsViewController()
+        
         let allRemindersViewController = getAllRemindersViewController()
         
         
@@ -283,12 +283,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if application.applicationState == .Inactive {
             print("Notification was tapped")
-            
-            if getSavedTab() == 1 {
+            let tab = getSavedTab()
+            if tab == 1 {
                 NSLog("Changing selected tab index")
                 let tabBarController = window!.rootViewController as! UITabBarController
                 tabBarController.selectedIndex = 0
                 tabBarController.delegate = getAllRemindersViewController()
+            } else {
+                let allRemindersViewController = getAllRemindersViewController()
+                
+                // Keep reminders updated
+                allRemindersViewController.tableView.reloadData()
+                
+                // Dismiss other screens
+                if allRemindersViewController.presentedViewController != nil {
+                    allRemindersViewController.dismissViewControllerAnimated(true, completion: nil)
+                }
             }
             
             NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
@@ -375,8 +385,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(fetchError)
         }
     }
-    
-    
     
     func reminderFromNotification(notification: UILocalNotification) -> Reminder {
         let reminderID = notificationHandler.reminderID(notification)

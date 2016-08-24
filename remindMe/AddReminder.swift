@@ -461,6 +461,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         tableView.scrollToRowAtIndexPath(indexPathDatePicker, atScrollPosition: .Middle, animated: true)
         
         // datePicker.minimumDate = NSDate()
+        //datePicker.minuteInterval = 1
         
         if let date = selectedDate {
             datePicker.setDate(date, animated: false)

@@ -35,7 +35,9 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     // MARK: Actions
     
     @IBAction func done() {
-        delegate?.patternPickerViewControllerDidChoosePattern(self, frequency: 0, interval: "None")
+        if let interval = selectedInterval, let frequency = selectedFrequency {
+            delegate?.patternPickerViewControllerDidChoosePattern(self, frequency: frequency, interval: interval)
+        }
     }
     
     @IBAction func close() {
@@ -109,9 +111,8 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         //nextReminderDate = addRecurringDate(selectedFrequency!, delayType: selectedInterval!, date: selectedDate!)
         
         //print(nextReminderDate!)
-        
-        
     }
+    
     
     // MARK: Lifecycle
     
@@ -136,6 +137,7 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         gestureRecognizer.cancelsTouchesInView = false
         gestureRecognizer.delegate = self
         view.addGestureRecognizer(gestureRecognizer)
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -146,6 +148,36 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         } else {
             backgroundView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.8)
         }
+        
+        setPatternPicker()
+    }
+    
+     // MARK: Picker Helper Methods
+    func setPatternPicker() {
+        let frequency = selectedFrequency
+        let interval = selectedInterval
+        var intervalRow = 0
+        
+        patternPicker.selectRow((frequency)! - 1, inComponent: 0, animated: false)
+        
+        switch interval! {
+        case "minute":
+            intervalRow = 0
+        case "hour":
+            intervalRow = 1
+        case "day":
+            intervalRow = 2
+        case "week":
+            intervalRow = 3
+        case "month":
+            intervalRow = 4
+        case "year":
+            intervalRow = 5
+        default:
+            print("Date picking error")
+            
+        }
+        patternPicker.selectRow(intervalRow, inComponent: 1, animated: false)
     }
     
     

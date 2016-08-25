@@ -132,11 +132,11 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         } else {
             snoozeButton.hidden = false
         }
+        
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func addReminderViewController(controller: AddReminderViewController, didFinishAddingReminder reminder: Reminder) {
-        print(#function)
+    func addReminderViewControllerDidFinishAdding(controller: AddReminderViewController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     

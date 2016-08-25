@@ -15,7 +15,6 @@ import CoreData
 extension Reminder {
 
     @NSManaged var dueDate: NSDate
-    @NSManaged var nextDueDate: NSDate?
     @NSManaged var creationDate: NSDate?
     
     @NSManaged var name: String

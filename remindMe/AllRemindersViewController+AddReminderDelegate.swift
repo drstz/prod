@@ -28,8 +28,11 @@ extension AllRemindersViewController: AddReminderViewControllerDelegate {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func addReminderViewController(controller: AddReminderViewController,
-                                   didFinishEditingReminder reminder: Reminder) {
+    func addReminderViewControllerDidFinishAdding(controller: AddReminderViewController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func addReminderViewController(controller: AddReminderViewController, didFinishEditingReminder reminder: Reminder) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     

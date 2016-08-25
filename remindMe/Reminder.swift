@@ -97,9 +97,9 @@ class Reminder: NSManagedObject {
         dueDate = date
     }
     
-    func setNextDate(date: NSDate?) {
-        nextDueDate = date
-    }
+//    func setNextDate(date: NSDate?) {
+//        nextDueDate = date
+//    }
     
     func setRepeatInterval(interval: String?) {
         typeOfInterval = interval

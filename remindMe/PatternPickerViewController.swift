@@ -154,13 +154,18 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     
      // MARK: Picker Helper Methods
     func setPatternPicker() {
-        let frequency = selectedFrequency
-        let interval = selectedInterval
+        var frequency = 1
+        var interval = "minute"
+        
+        if let selectedFrequency = selectedFrequency , let selectedInterval = selectedInterval {
+            frequency = selectedFrequency
+            interval = selectedInterval
+        }
         var intervalRow = 0
         
-        patternPicker.selectRow((frequency)! - 1, inComponent: 0, animated: false)
+        patternPicker.selectRow((frequency) - 1, inComponent: 0, animated: false)
         
-        switch interval! {
+        switch interval {
         case "minute":
             intervalRow = 0
         case "hour":

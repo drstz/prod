@@ -60,10 +60,12 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
     
     // MARK: Helper methods
     func updatePatternLabel() {
-        if selectedFrequency != 1 {
-            patternLabel.text = "every " + "\(selectedFrequency!) " + "\(selectedInterval!)" + "s"
-        } else if selectedFrequency == 1 {
-            patternLabel.text = "every " + "\(selectedInterval!)"
+        if let frequency = selectedFrequency, let interval = selectedInterval {
+            if selectedFrequency != 1 {
+                patternLabel.text = "every " + "\(frequency) " + "\(interval)" + "s"
+            } else if selectedFrequency == 1 {
+                patternLabel.text = "every " + "\(interval)"
+            }
         } else {
             patternLabel.text = "Doesn't repeat"
         }

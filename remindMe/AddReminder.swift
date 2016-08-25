@@ -165,6 +165,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             reminder!.setRepeatInterval(interval)
             reminder!.setRepeatFrequency(frequency)
             reminder!.setRecurring(true)
+        } else {
+            reminder!.setRecurring(false)
         }
         
         // Set to incomplete
@@ -301,6 +303,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         if segue.identifier == "OpenDatePicker" {
             let datePickerViewController = segue.destinationViewController as? DatePickerViewController
             datePickerViewController?.delegate = self
+            
+            // Send date
+            datePickerViewController?.date = selectedDate
         }
         
         if segue.identifier == "PickRepeatMethod" {

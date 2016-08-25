@@ -28,6 +28,9 @@ class DatePickerViewController: UIViewController {
     
     weak var delegate: DatePickerViewControllerDelegate?
     
+    // MARK: - Date
+    var date: NSDate?
+    
     // MARK: Actions
     
     @IBAction func done() {
@@ -70,6 +73,16 @@ class DatePickerViewController: UIViewController {
             backgroundView.backgroundColor = UIColor.clearColor()
         } else {
             backgroundView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.8)
+        }
+        
+        // Update to sent date if one is present
+        
+        datePicker.minuteInterval = timePickerInterval()
+        
+        if let date = date {
+            datePicker.setDate(date, animated: false)
+        } else {
+            datePicker.setDate(NSDate(), animated: false)
         }
     }
     

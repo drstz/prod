@@ -118,7 +118,7 @@ class Reminder: NSManagedObject {
     }
     
     func setRecurring(choice: Bool) {
-        isRecurring = choice
+        isRecurring = choice as NSNumber
     }
     
     func addToList(list: List) {

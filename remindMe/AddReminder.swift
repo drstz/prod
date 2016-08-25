@@ -286,6 +286,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     // MARK: - Repeat Method View Controller Delegate
     func repeatMethodViewControllerDidChooseCustomPattern(controller: RepeatMethodViewController, frequency: Int, interval: String) {
+        print("Arrived  with \(interval) and \(frequency)")
         selectedInterval = interval
         selectedFrequency = frequency
         // What if I set date after setting how I want the reminder to repeat itself?
@@ -294,6 +295,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     func repeatMethodViewControllerDidChooseWeekDayPattern(controller: RepeatMethodViewController, days: [Int]) {
         
+    }
+    
+    func repeatMethodViewControllerDidDeletePattern() {
+        selectedInterval = nil
+        selectedFrequency = nil
+        updateRecurringLabel()
     }
     
     
@@ -312,13 +319,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             let repeatMethodViewController = segue.destinationViewController as? RepeatMethodViewController
             repeatMethodViewController?.delegate = self
             
-            if let reminder = reminderToEdit {
-                repeatMethodViewController?.selectedInterval = reminder.typeOfInterval
-                repeatMethodViewController?.selectedFrequency = reminder.everyAmount?.integerValue
-            } else {
-                repeatMethodViewController?.selectedInterval = selectedInterval
-                repeatMethodViewController?.selectedFrequency = selectedFrequency
-            }
+            repeatMethodViewController?.selectedInterval = selectedInterval
+            repeatMethodViewController?.selectedFrequency = selectedFrequency
         }
     }
     

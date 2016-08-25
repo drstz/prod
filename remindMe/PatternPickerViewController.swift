@@ -24,6 +24,8 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     @IBOutlet weak var doneButton: UIButton!
     
+    
+    
     // MARK: - Delegates
     
     weak var delegate: PatternPickerViewControllerDelegate?
@@ -36,13 +38,17 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     @IBAction func done() {
         if let interval = selectedInterval, let frequency = selectedFrequency {
+            print("Going back with \(interval) and \(frequency)")
             delegate?.patternPickerViewControllerDidChoosePattern(self, frequency: frequency, interval: interval)
+            
         }
     }
     
     @IBAction func close() {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    
     
     // MARK: Picker View Data Source
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {

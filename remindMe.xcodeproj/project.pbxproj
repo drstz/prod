@@ -41,6 +41,8 @@
 		71C3EFB01D0ED79A00A87525 /* AutoSnoozePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C3EFAF1D0ED79A00A87525 /* AutoSnoozePickerViewController.swift */; };
 		71C9EF471D5984CE00F1717B /* feedback.html in Resources */ = {isa = PBXBuildFile; fileRef = 71C9EF461D5984CE00F1717B /* feedback.html */; };
 		71C9EF491D598A0F00F1717B /* aboutApp.html in Resources */ = {isa = PBXBuildFile; fileRef = 71C9EF481D598A0F00F1717B /* aboutApp.html */; };
+		71D365541D6EA8D1004D4953 /* PatternPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D365531D6EA8D1004D4953 /* PatternPickerViewController.swift */; };
+		71D365561D6EAAD2004D4953 /* RepeatMethodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D365551D6EAAD2004D4953 /* RepeatMethodViewController.swift */; };
 		71D620761D36286B0038FE56 /* TableSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D620751D36286B0038FE56 /* TableSectionHeader.swift */; };
 		71D620781D3629260038FE56 /* TableSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 71D620771D3629260038FE56 /* TableSectionHeader.xib */; };
 		71D86C401D067929002A5CAE /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71D86C3E1D067929002A5CAE /* Settings.storyboard */; };
@@ -94,6 +96,8 @@
 		71C3EFAF1D0ED79A00A87525 /* AutoSnoozePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoSnoozePickerViewController.swift; sourceTree = "<group>"; };
 		71C9EF461D5984CE00F1717B /* feedback.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = feedback.html; sourceTree = "<group>"; };
 		71C9EF481D598A0F00F1717B /* aboutApp.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = aboutApp.html; sourceTree = "<group>"; };
+		71D365531D6EA8D1004D4953 /* PatternPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatternPickerViewController.swift; sourceTree = "<group>"; };
+		71D365551D6EAAD2004D4953 /* RepeatMethodViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatMethodViewController.swift; sourceTree = "<group>"; };
 		71D620751D36286B0038FE56 /* TableSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionHeader.swift; sourceTree = "<group>"; };
 		71D620771D3629260038FE56 /* TableSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableSectionHeader.xib; sourceTree = "<group>"; };
 		71D86C3F1D067929002A5CAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
@@ -137,6 +141,8 @@
 				71878B411CC49A9700AD0F27 /* Reminder.swift */,
 				71878B401CC49A9700AD0F27 /* Reminder+CoreDataProperties.swift */,
 				71818D491D6DBD4D00F8B732 /* DatePickerViewController.swift */,
+				71D365531D6EA8D1004D4953 /* PatternPickerViewController.swift */,
+				71D365551D6EAAD2004D4953 /* RepeatMethodViewController.swift */,
 			);
 			name = Reminder;
 			sourceTree = "<group>";
@@ -385,6 +391,7 @@
 				71FB1F7F1D4893E400951A25 /* CustomSnoozeController.swift in Sources */,
 				71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */,
 				71ABD70A1CC0A87600F0BF90 /* Date.swift in Sources */,
+				71D365561D6EAAD2004D4953 /* RepeatMethodViewController.swift in Sources */,
 				7165A57C1CBB6A310088EA76 /* AppDelegate.swift in Sources */,
 				7135B90D1D056E3D0021105F /* SettingsViewController.swift in Sources */,
 				71F6A5361CF6C0FD0010C135 /* NotificationHandler.swift in Sources */,
@@ -397,6 +404,7 @@
 				71238DE11CD70AC100F9D706 /* UserDefaults.swift in Sources */,
 				7175A3271D2B6BAA00076370 /* AllReminderViewController+ViewReminderDelegate.swift in Sources */,
 				71878B431CC49A9700AD0F27 /* Reminder.swift in Sources */,
+				71D365541D6EA8D1004D4953 /* PatternPickerViewController.swift in Sources */,
 				7130E4391D58A85E0013B568 /* AboutViewController.swift in Sources */,
 				7182F9061D40873D00E6C18E /* DimmingPresentationController.swift in Sources */,
 				71EE90CA1D2A27FA00431D56 /* AllRemindersViewController+ToolbarActions.swift in Sources */,

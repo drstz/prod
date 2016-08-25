@@ -25,7 +25,7 @@ protocol AddReminderViewControllerDelegate: class {
     
 }
 
-class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, DatePickerViewControllerDelegate {
+class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, DatePickerViewControllerDelegate, RepeatMethodViewControllerDelegate {
     
     // MARK: Properties
     
@@ -61,6 +61,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
     var chosenDate: NSDate?
     
     // MARK: Outlets
+    
+    // Unwind segue
+    @IBAction func unwindToRootViewController(segue: UIStoryboardSegue) {
+        print("Unwind to Add Reminder View Controller")
+    }
    
     // Fields
     
@@ -290,10 +295,27 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, UIP
         setDueDateLabel(with: chosenDate!)
     }
     
+    // MARK: - Repeat Method View Controller Delegate
+    func repeatMethodViewControllerDidChooseCustomPattern(controller: RepeatMethodViewController, frequency: Int, interval: String) {
+        
+    }
+    
+    func repeatMethodViewControllerDidChooseWeekDayPattern(controller: RepeatMethodViewController, days: [Int]) {
+        
+    }
+    
+    
+    // MARK: - Navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "OpenDatePicker" {
             let datePickerViewController = segue.destinationViewController as? DatePickerViewController
             datePickerViewController?.delegate = self
+        }
+        
+        if segue.identifier == "PickRepeatMethod" {
+            let repeatMethodViewController = segue.destinationViewController as? RepeatMethodViewController
+            repeatMethodViewController?.delegate = self
         }
     }
     

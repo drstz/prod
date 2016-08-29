@@ -53,6 +53,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
    
     var willSetNewDate = false
     
+    var selectedDays = [Int]()
+    
+    var usingDayPattern = false
+    var usingCustomPattern = false
+    
     // MARK: Outlets
     
     // Unwind segue
@@ -169,6 +174,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             reminder!.setRecurring(false)
         }
         
+        // Set Selected Days
+        reminder?.selectedDays = NSMutableArray(array: selectedDays)
+        
+        // Update Repeat Method
+        reminder?.useDays = usingDayPattern
+        reminder?.usePattern = usingCustomPattern
+        
         // Set to incomplete
         reminder!.setCompletionStatus(false)
         
@@ -207,6 +219,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             reminder.setRepeatFrequency(nil)
             reminder.setRecurring(false)
         }
+        
+        // Set Selected Days
+        reminder.selectedDays = NSMutableArray(array: selectedDays)
+        
+        // Update Repeat Method
+        reminder.useDays = usingDayPattern
+        reminder.usePattern = usingCustomPattern
         
         // Do not set past reminders to incomplete
         // Do not set notifications for reminders that are already in the past
@@ -255,6 +274,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         selectedDate = reminder.dueDate
         dueDateIsSet = true
         
+        // Get selected dates into mememory
+        for day in reminder.selectedDays {
+            selectedDays.append(Int(day as! NSNumber))
+        }
+        
         // Update due date label
         setDueDateLabel(with: selectedDate!)
         
@@ -266,6 +290,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             }
             updateRecurringLabel()
         }
+        
+        // Update Repeat Method
+        usingCustomPattern = reminder.usePattern as Bool
+        usingDayPattern = reminder.useDays as Bool
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -289,18 +317,35 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         print("Arrived  with \(interval) and \(frequency)")
         selectedInterval = interval
         selectedFrequency = frequency
+        
         // What if I set date after setting how I want the reminder to repeat itself?
         // nextReminderDate = addRecurringDate(selectedFrequency!, delayType: selectedInterval!, date: selectedDate!)
     }
     
     func repeatMethodViewControllerDidChooseWeekDayPattern(controller: RepeatMethodViewController, days: [Int]) {
+        selectedDays = days
+    }
+    
+    func repeatMethodViewControllerDidChooseRepeatMethod(controller: RepeatMethodViewController,
+                                                         useNoPattern: Bool,
+                                                         useCustomPattern: Bool,
+                                                         useDayPattern: Bool) {
+        if useNoPattern {
+            usingCustomPattern = false
+            usingDayPattern = false
+        } else {
+            usingDayPattern = useDayPattern
+            usingCustomPattern = useCustomPattern
+        }
         
     }
     
-    func repeatMethodViewControllerDidDeletePattern() {
-        selectedInterval = nil
-        selectedFrequency = nil
-        updateRecurringLabel()
+    func repeatMethodViewControllerIsDone() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func repeatMethodViewControllerDidCancel() {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     
@@ -316,11 +361,25 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         }
         
         if segue.identifier == "PickRepeatMethod" {
-            let repeatMethodViewController = segue.destinationViewController as? RepeatMethodViewController
+            let navigationController = segue.destinationViewController as? UINavigationController
+            let repeatMethodViewController = navigationController?.viewControllers[0] as? RepeatMethodViewController
+            
             repeatMethodViewController?.delegate = self
             
             repeatMethodViewController?.selectedInterval = selectedInterval
             repeatMethodViewController?.selectedFrequency = selectedFrequency
+            
+            repeatMethodViewController?.selectedDays = selectedDays
+            
+            if usingDayPattern {
+                repeatMethodViewController?.usingDayPattern = true
+                repeatMethodViewController?.usingCustomPattern = false
+                repeatMethodViewController?.usingNoPattern = false
+            } else if usingCustomPattern {
+                repeatMethodViewController?.usingDayPattern = false
+                repeatMethodViewController?.usingCustomPattern = true
+                repeatMethodViewController?.usingNoPattern = false
+            }
         }
     }
     
@@ -442,6 +501,41 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             } else if selectedFrequency == 1 {
                 recurringDateLabel.text = "every " + "\(interval)"
             }
+        } else {
+            recurringDateLabel.text = "Doesn't repeat"
+        }
+    }
+    
+    func updateDayLabel() {
+        var stringOfDays = ""
+        if selectedDays.count > 0 {
+            for day in selectedDays {
+                switch day {
+                case 1:
+                    stringOfDays.appendContentsOf("Sun")
+                case 2:
+                    stringOfDays.appendContentsOf("Mon")
+                case 3:
+                    stringOfDays.appendContentsOf("Tue")
+                case 4:
+                    stringOfDays.appendContentsOf("Wed")
+                case 5:
+                    stringOfDays.appendContentsOf("Thu")
+                case 6:
+                    stringOfDays.appendContentsOf("Fri")
+                case 7:
+                    stringOfDays.appendContentsOf("Sat")
+                default:
+                    print("Error appending strings of days")
+                }
+                if selectedDays.count > 1 {
+                    // Do not print comma after last word
+                    if selectedDays.indexOf(day) < selectedDays.count - 1 {
+                        stringOfDays.appendContentsOf(", ")
+                    }
+                }
+            }
+            recurringDateLabel.text = stringOfDays
         } else {
             recurringDateLabel.text = "Doesn't repeat"
         }

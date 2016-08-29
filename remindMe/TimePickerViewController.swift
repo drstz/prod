@@ -12,7 +12,6 @@ class TimePickerViewController: UITableViewController {
     @IBOutlet weak var intervalLabel: UILabel!
     @IBOutlet weak var timePicker: UIDatePicker!
     
-    var selectedIntervalIndex = 0
     var selectedInterval = 1
     
     var selectedIndexPath = NSIndexPath()

@@ -18,9 +18,13 @@ extension Reminder {
     @NSManaged var creationDate: NSDate?
     
     @NSManaged var name: String
-    @NSManaged var typeOfInterval: String?
     
+    @NSManaged var usePattern: NSNumber
+    @NSManaged var typeOfInterval: String?
     @NSManaged var everyAmount: NSNumber?
+    
+    @NSManaged var useDays: NSNumber
+    @NSManaged var selectedDays: NSMutableArray
     
     @NSManaged var idNumber: NSNumber
     /// Blah blah

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		711283F91D6FF2A800148C07 /* DayOfTheWeekPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711283F81D6FF2A800148C07 /* DayOfTheWeekPickerViewController.swift */; };
 		71238DE11CD70AC100F9D706 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71238DE01CD70AC100F9D706 /* UserDefaults.swift */; };
 		7130E4391D58A85E0013B568 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7130E4381D58A85E0013B568 /* AboutViewController.swift */; };
 		7130E43C1D58AB460013B568 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 7130E43A1D58AB450013B568 /* style.css */; };
@@ -59,6 +60,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		711283F81D6FF2A800148C07 /* DayOfTheWeekPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayOfTheWeekPickerViewController.swift; sourceTree = "<group>"; };
 		71238DE01CD70AC100F9D706 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		7130E4381D58A85E0013B568 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		7130E43A1D58AB450013B568 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				71818D491D6DBD4D00F8B732 /* DatePickerViewController.swift */,
 				71D365531D6EA8D1004D4953 /* PatternPickerViewController.swift */,
 				71D365551D6EAAD2004D4953 /* RepeatMethodViewController.swift */,
+				711283F81D6FF2A800148C07 /* DayOfTheWeekPickerViewController.swift */,
 			);
 			name = Reminder;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				71A7884E1CE5B57400D5CE47 /* QuickViewViewController.swift in Sources */,
 				714CB6B51CCBA00E00723399 /* List+CoreDataProperties.swift in Sources */,
 				71818D481D6D88AF00F8B732 /* TimePickerViewController.swift in Sources */,
+				711283F91D6FF2A800148C07 /* DayOfTheWeekPickerViewController.swift in Sources */,
 				71FB1F7F1D4893E400951A25 /* CustomSnoozeController.swift in Sources */,
 				71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */,
 				71ABD70A1CC0A87600F0BF90 /* Date.swift in Sources */,

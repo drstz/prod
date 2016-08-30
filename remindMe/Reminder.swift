@@ -81,7 +81,55 @@ class Reminder: NSManagedObject {
     }
     
     func setNewDueDate() -> NSDate {
-        return createNewDate(dueDate, typeOfInterval: typeOfInterval!, everyAmount: everyAmount! as Int)
+        if usePattern == true {
+            return createNewDate(dueDate, typeOfInterval: typeOfInterval!, everyAmount: everyAmount! as Int)
+        } else {
+            return setNewDay()
+        }
+    }
+    
+    func setNewDay() -> NSDate {
+        var weekdays = [Int]()
+        
+        // Get weekday of due date
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Weekday, .Hour, .Minute], fromDate: dueDate)
+        let dayOfDueDate = components.weekday
+        var chosenWeekday = 0
+        
+        // 1, 2, 3, 4 , 5 , 6, 7
+        for day in selectedDays {
+            weekdays.append(Int(day as! NSNumber))
+        }
+        
+        for i in 0 ..< weekdays.count {
+            if dayOfDueDate < weekdays[i]  {
+                chosenWeekday = weekdays[i]
+                break
+            }
+            
+            if i == weekdays.count - 1 {
+                chosenWeekday = weekdays[0]
+            }
+        }
+        
+        // Change Day
+        var newDateWithWeekday = calendar.dateBySettingUnit(
+            .Weekday,
+            value: chosenWeekday,
+            ofDate: dueDate,
+            options: NSCalendarOptions.init(rawValue: 0))
+        
+        // Change hour back to normal
+        newDateWithWeekday = calendar.dateBySettingHour(
+            components.hour,
+            minute: components.minute,
+            second: 0,
+            ofDate: newDateWithWeekday!,
+            options: NSCalendarOptions.init(rawValue: 0))
+        
+        let newDate = newDateWithWeekday!
+        return newDate
     }
     
     func addIDtoReminder() {

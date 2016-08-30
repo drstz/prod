@@ -519,7 +519,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     }
     
     func updateRepeatLabelWithDayPattern() {
-        var stringOfDays = ""
+        var stringOfDays = "Every "
         if selectedDays.count > 0 {
             for day in selectedDays {
                 switch day {

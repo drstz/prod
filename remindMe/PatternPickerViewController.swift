@@ -40,6 +40,7 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         if let interval = selectedInterval, let frequency = selectedFrequency {
             print("Going back with \(interval) and \(frequency)")
             delegate?.patternPickerViewControllerDidChoosePattern(self, frequency: frequency, interval: interval)
+            dismissViewControllerAnimated(true, completion: nil)
             
         }
     }

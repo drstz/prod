@@ -22,8 +22,7 @@ protocol RepeatMethodViewControllerDelegate: class {
 class RepeatMethodViewController: UITableViewController, PatternPickerViewControllerDelegate, DaysOfTheWeekPickerViewControllerDelegate {
     
     // MARK: Outlets
-    @IBOutlet weak var patternLabel: UILabel!
-    @IBOutlet weak var daysLabel: UILabel!
+    
     
     // MARK: Next Date Example
     
@@ -33,6 +32,17 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
     @IBOutlet weak var selectCustomPatternCell: UITableViewCell!
     @IBOutlet weak var selectDayPatternCell: UITableViewCell!
     @IBOutlet weak var selectNoPatternCell: UITableViewCell!
+    
+    // Labels
+    @IBOutlet weak var customPatternLabel: UILabel!
+    @IBOutlet weak var dayPatternLabel: UILabel!
+    
+    @IBOutlet weak var createCustomPatternLabel: UILabel!
+    @IBOutlet weak var createDaysPatternLabel: UILabel!
+    
+    // Subtitles
+    @IBOutlet weak var customPatternSubtitleLabel: UILabel!
+    @IBOutlet weak var dayPatternSubtitleLabel: UILabel!
     
     // MARK: Repeat pattern
     var selectedInterval: String? = "minute"
@@ -77,11 +87,15 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
         selectedFrequency = frequency
         
         updatePatternLabel()
+        updateRepeatMethodCells()
+        updatePatternCreationLabels()
     }
     
     // MARK: Days of the week view controller delegate
     func daysOfTheWeekPickerViewControllerDidCancel(controller: DayOfTheWeekPickerViewController) {
         updateDayLabel()
+        updateRepeatMethodCells()
+        updatePatternCreationLabels()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -90,6 +104,8 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
         
         selectedDays = days
         updateDayLabel()
+        updateRepeatMethodCells()
+        updatePatternCreationLabels()
         
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -106,6 +122,8 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
         updatePatternLabel()
         updateDayLabel()
         updateSelectedMethod()
+        updateRepeatMethodCells()
+        updatePatternCreationLabels()
     }
     
     // MARK: Table View
@@ -159,12 +177,10 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
     func updatePatternLabel() {
         if let frequency = selectedFrequency, let interval = selectedInterval {
             if selectedFrequency != 1 {
-                patternLabel.text = "every " + "\(frequency) " + "\(interval)" + "s"
+                customPatternSubtitleLabel.text = "every " + "\(frequency) " + "\(interval)" + "s"
             } else if selectedFrequency == 1 {
-                patternLabel.text = "every " + "\(interval)"
+                customPatternSubtitleLabel.text = "every " + "\(interval)"
             }
-        } else {
-            patternLabel.text = "No pattern"
         }
     }
     
@@ -197,9 +213,7 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
                     }
                 }
             }
-            daysLabel.text = stringOfDays
-        } else {
-            daysLabel.text = "No chosen days"
+            dayPatternSubtitleLabel.text = stringOfDays
         }
     }
     
@@ -219,5 +233,35 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
             }
         }
         
+    }
+    
+    func updateRepeatMethodCells() {
+        if selectedDays.count > 0 {
+            dayPatternLabel.text = "Repeat every"
+        } else {
+            dayPatternLabel.text = "Repeat on selected days of the week"
+            dayPatternSubtitleLabel.text = ""
+        }
+        
+        if selectedInterval != nil && selectedInterval != nil {
+            customPatternLabel.text = "Repeat every"
+        } else {
+            customPatternLabel.text = "Repeat using a custom interval"
+            customPatternSubtitleLabel.text = ""
+        }
+    }
+    
+    func updatePatternCreationLabels() {
+        if selectedDays.count > 0 {
+            createDaysPatternLabel.text = "Modify selected days of the week"
+        } else {
+            createDaysPatternLabel.text = "Choose days of the week"
+        }
+        
+        if selectedInterval != nil && selectedInterval != nil {
+            createCustomPatternLabel.text = "Modify custom interval"
+        } else {
+            createCustomPatternLabel.text = "Set custom interval"
+        }
     }
 }

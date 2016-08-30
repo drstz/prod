@@ -861,7 +861,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="No pattern" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="u5r-94-PiR">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Don't repeat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="u5r-94-PiR">
                                                     <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -1005,9 +1005,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="daysLabel" destination="8jt-HF-c5b" id="M8W-L7-kQv"/>
+                        <outlet property="createCustomPatternLabel" destination="SXF-62-rBl" id="zj5-UK-MmH"/>
+                        <outlet property="createDaysPatternLabel" destination="ecT-c7-UdM" id="0z2-Tl-3Dp"/>
+                        <outlet property="customPatternLabel" destination="Opn-VK-Cs8" id="115-K9-anZ"/>
+                        <outlet property="customPatternSubtitleLabel" destination="ZWt-nM-kbm" id="dcR-XR-TUM"/>
+                        <outlet property="dayPatternLabel" destination="pvK-fs-TVJ" id="YFl-7U-CZd"/>
+                        <outlet property="dayPatternSubtitleLabel" destination="8jt-HF-c5b" id="sfV-MD-Uc0"/>
                         <outlet property="nextDateExampleLabel" destination="r7I-hv-H6G" id="I13-Ap-UdK"/>
-                        <outlet property="patternLabel" destination="ZWt-nM-kbm" id="3b8-Is-q5P"/>
                         <outlet property="selectCustomPatternCell" destination="Rjo-ec-Bd7" id="FBa-r1-pZY"/>
                         <outlet property="selectDayPatternCell" destination="2f8-Os-5DX" id="RBh-fF-p3m"/>
                         <outlet property="selectNoPatternCell" destination="bY5-FT-2Y2" id="Ir7-ZA-OtR"/>

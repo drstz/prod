@@ -170,8 +170,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             reminder!.setRepeatInterval(interval)
             reminder!.setRepeatFrequency(frequency)
             reminder!.setRecurring(true)
-        } else {
-            reminder!.setRecurring(false)
         }
         
         // Set Selected Days
@@ -180,6 +178,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         // Update Repeat Method
         reminder?.useDays = usingDayPattern
         reminder?.usePattern = usingCustomPattern
+        
+        // Set if recurring
+        if reminder?.useDays == true || reminder?.usePattern == true {
+            reminder?.setRecurring(true)
+        } else {
+            reminder?.setRecurring(false)
+        }
         
         // Set to incomplete
         reminder!.setCompletionStatus(false)
@@ -213,11 +218,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         if let frequency = selectedFrequency, let interval = selectedInterval {
             reminder.setRepeatInterval(interval)
             reminder.setRepeatFrequency(frequency)
-            reminder.setRecurring(true)
         } else {
             reminder.setRepeatInterval(nil)
             reminder.setRepeatFrequency(nil)
-            reminder.setRecurring(false)
         }
         
         // Set Selected Days
@@ -226,6 +229,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         // Update Repeat Method
         reminder.useDays = usingDayPattern
         reminder.usePattern = usingCustomPattern
+        
+        if reminder.useDays == true || reminder.usePattern == true {
+            reminder.setRecurring(true)
+        } else {
+            reminder.setRecurring(false)
+        }
         
         // Do not set past reminders to incomplete
         // Do not set notifications for reminders that are already in the past
@@ -258,7 +267,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             prepareViewForReminder(reminder)
         } else {
             creatingReminder = true
-            // reminderRepeatsSwitch.enabled = false
         }
         
         enableDoneButton()
@@ -282,23 +290,29 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         // Update due date label
         setDueDateLabel(with: selectedDate!)
         
-        // Update repeat interval
+        
         if reminder.isRecurring == true {
+            
+            // Update Repeat Method
+            usingCustomPattern = reminder.usePattern as Bool
+            usingDayPattern = reminder.useDays as Bool
+            
+            // Update repeat interval
             if let interval = reminderToEdit?.typeOfInterval, let frequency = reminderToEdit?.everyAmount {
                 selectedInterval = interval
                 selectedFrequency = frequency as Int
             }
-            updateRecurringLabel()
+        } else {
+            usingCustomPattern = false
+            usingDayPattern = false
         }
         
-        // Update Repeat Method
-        usingCustomPattern = reminder.usePattern as Bool
-        usingDayPattern = reminder.useDays as Bool
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        updateRecurringLabel()
+        updateRepeatLabel()
     }
     
     // MARK: - Date Picker View Controller Delegate
@@ -494,19 +508,17 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     // MARK: - Reccurring Picker
     
-    func updateRecurringLabel() {
+    func updateRepeatLabelWithCustomPattern() {
         if let frequency = selectedFrequency, let interval = selectedInterval {
             if selectedFrequency != 1 {
                 recurringDateLabel.text = "every " + "\(frequency) " + "\(interval)" + "s"
             } else if selectedFrequency == 1 {
                 recurringDateLabel.text = "every " + "\(interval)"
             }
-        } else {
-            recurringDateLabel.text = "Doesn't repeat"
         }
     }
     
-    func updateDayLabel() {
+    func updateRepeatLabelWithDayPattern() {
         var stringOfDays = ""
         if selectedDays.count > 0 {
             for day in selectedDays {
@@ -536,8 +548,18 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
                 }
             }
             recurringDateLabel.text = stringOfDays
-        } else {
-            recurringDateLabel.text = "Doesn't repeat"
         }
     }
+    
+    func updateRepeatLabel() {
+        if usingDayPattern {
+            updateRepeatLabelWithDayPattern()
+        } else if usingCustomPattern {
+            updateRepeatLabelWithCustomPattern()
+        } else {
+            recurringDateLabel.text = "Never"
+        }
+    }
+    
+    
 }

@@ -45,8 +45,8 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
     @IBOutlet weak var dayPatternSubtitleLabel: UILabel!
     
     // MARK: Repeat pattern
-    var selectedInterval: String? = "minute"
-    var selectedFrequency: Int? = 1
+    var selectedInterval: String?
+    var selectedFrequency: Int?
     
     // MARK: Selected Days
     var selectedDays = [Int]()
@@ -143,12 +143,20 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
                 usingDayPattern = false
                 
                 updateSelectedMethod()
+                
+                if selectedInterval == nil && selectedFrequency == nil {
+                    performSegueWithIdentifier("PickPattern", sender: nil)
+                }
             } else if indexPath.row == 2 {
                 usingNoPattern = false
                 usingCustomPattern = false
                 usingDayPattern = true
                 
                 updateSelectedMethod()
+                
+                if selectedDays.count == 0 {
+                    performSegueWithIdentifier("PickWeekday", sender: nil)
+                }
             }
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)

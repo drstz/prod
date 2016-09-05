@@ -31,6 +31,8 @@ extension Reminder {
     @NSManaged var isComplete: NSNumber 
     @NSManaged var isRecurring: NSNumber
     @NSManaged var isFavorite: NSNumber?
+    
+    @NSManaged var autoSnooze: NSNumber
  
     @NSManaged var list: List
     

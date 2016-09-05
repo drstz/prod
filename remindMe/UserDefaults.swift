@@ -138,7 +138,8 @@ func setAutoSnooze(enabled: Bool) {
     userDefaults.synchronize()
     
     let notificationHandler = NotificationHandler()
-    notificationHandler.updateAllSnoozeTimes()
+    // Do not need to update because this is for new reminders now and not old
+    // notificationHandler.updateAllSnoozeTimes()
 }
 
 func setDefaultAutoSnoozeTime(autoSnoozeTime: AutoSnoozeDefaults) {
@@ -192,4 +193,9 @@ func saveTimePickerInterval(interval: Int) {
     let userDefaults = NSUserDefaults.standardUserDefaults()
     userDefaults.setInteger(interval, forKey: "TimePickerInterval")
     userDefaults.synchronize()
+}
+
+func autoSnoozeSetting() -> Bool {
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    return userDefaults.boolForKey("AutoSnoozeEnabled")
 }

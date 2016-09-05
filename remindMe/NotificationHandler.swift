@@ -161,7 +161,7 @@ class NotificationHandler {
                 localNotification = snoozeNotification()
             } else {
                 print("Setting notification for \(reminder.name)")
-                localNotification = scheduleNotification(forDate: reminder.dueDate)
+                localNotification = scheduleNotification(forDate: reminder.dueDate, reminder: reminder)
             }
             localNotification = setNotificationSettings(localNotification, reminder: reminder)
             
@@ -188,23 +188,23 @@ class NotificationHandler {
         return localNotification
     }
     
-    func scheduleNotification(forDate date: NSDate) -> UILocalNotification {
+    func scheduleNotification(forDate date: NSDate, reminder: Reminder) -> UILocalNotification {
         print(#function)
         let dueDate = date
         
         let localNotification = UILocalNotification()
         localNotification.fireDate = dueDate
         
-        setAutoSnooze(localNotification)
+        setAutoSnooze(localNotification, reminder: reminder)
         
         return localNotification
         
     }
     
-    func setAutoSnooze(notification: UILocalNotification) {
+    func setAutoSnooze(notification: UILocalNotification, reminder: Reminder) {
         print(#function)
         let userDefaults = NSUserDefaults.standardUserDefaults()
-        let autoSnoozeOn = userDefaults.boolForKey("AutoSnoozeEnabled")
+        let autoSnoozeOn = reminder.autoSnooze as Bool
         if autoSnoozeOn {
             let anInterval = userDefaults.objectForKey("AutoSnoozeTime") as! String
             let repeatInterval = getRepeatInterval(anInterval)

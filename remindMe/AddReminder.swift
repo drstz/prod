@@ -69,6 +69,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     @IBOutlet weak var reminderNameField : UITextField!
     
+    // Comment field
+    @IBOutlet weak var reminderCommentField: UITextView!
+    
     // Labels
     
     @IBOutlet weak var dueDateLabel : UILabel!
@@ -79,6 +82,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     @IBOutlet weak var doneBarButton : UIBarButtonItem!
     
     // Switches
+    
+    @IBOutlet weak var autoSnoozeSwitch: UISwitch!
     
     // @IBOutlet weak var reminderRepeatsSwitch: UISwitch!
     
@@ -202,6 +207,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         // Set reminder ID
         reminder?.addIDtoReminder()
         
+        // Autosnooze
+        reminder?.autoSnooze = autoSnoozeSwitch.on
+        
         // Create notification
         let notificationHandler = reminder!.notificationHandler
         notificationHandler.scheduleNotifications(reminder!)
@@ -236,6 +244,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             reminder.setRecurring(false)
         }
         
+        // Autosnooze
+        reminder.autoSnooze = autoSnoozeSwitch.on
+        
         // Do not set past reminders to incomplete
         // Do not set notifications for reminders that are already in the past
         if reminder.dueDate.isPresent() {
@@ -267,6 +278,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             prepareViewForReminder(reminder)
         } else {
             creatingReminder = true
+            autoSnoozeSwitch.on = autoSnoozeSetting()
         }
         
         enableDoneButton()
@@ -307,7 +319,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             usingDayPattern = false
         }
         
-        
+        // Auto snooze switch
+        autoSnoozeSwitch.on = reminder.autoSnooze as Bool
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -404,11 +417,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 0 && indexPath.row == 1 {
-            return 100
-        } else {
-            return 50
-        }
+        return 50
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

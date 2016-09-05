@@ -8,7 +8,18 @@
 
 import UIKit
 
-class StatisticsViewController: UIViewController, UITabBarControllerDelegate {
+class ProductivityViewController: UITableViewController, UITabBarControllerDelegate {
+    
+    // MARK: - Outlets
+    
+    // MARK: Cells
+    
+    @IBOutlet weak var averageTimeBetweenCreationCompletionCell: UITableViewCell!
+    @IBOutlet weak var averageSnoozeBeforeCompletionCell: UITableViewCell!
+    
+    // MARK: Labels
+    @IBOutlet weak var averageTimeBetweenCreationCompletionLabel: UILabel!
+    @IBOutlet weak var averageSnoozeBeforeCompletionLabel: UILabel!
     
     // MARK: - Core Data
     
@@ -24,6 +35,12 @@ class StatisticsViewController: UIViewController, UITabBarControllerDelegate {
         //tabBarController?.delegate = self
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        setUpCoreData()
+        countReminders()
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         saveSelectedTab((tabBarController?.selectedIndex)!)
@@ -32,6 +49,23 @@ class StatisticsViewController: UIViewController, UITabBarControllerDelegate {
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         // tabBarController?.delegate = nil
+    }
+    
+    
+    // MARK: - Data
+    func setUpCoreData() {
+        let filter: ReminderFilter = .All
+        let status: ReminderStatus = .Complete
+        
+        coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
+        coreDataHandler.performFetch()
+    }
+    
+    func countReminders() {
+        
+        let frc = coreDataHandler.fetchedResultsController
+        let amountOfFetchedObjects = frc.fetchedObjects?.count
+        averageSnoozeBeforeCompletionLabel.text = String(amountOfFetchedObjects!)
     }
 
   // MARK: - Tab Bar Controller Delegate Methods

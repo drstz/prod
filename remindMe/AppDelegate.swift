@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let viewControllers = navigationController.viewControllers
             
             // All reminder view controller
-            let statisticsViewController = viewControllers[0] as! StatisticsViewController
+            let statisticsViewController = viewControllers[0] as! ProductivityViewController
             statisticsViewController.coreDataHandler = coreDataHandler
             
             // Load list
@@ -233,7 +233,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
-    func getStatisticsViewController() -> StatisticsViewController {
+    func getStatisticsViewController() -> ProductivityViewController {
         // Tab bar controller
         let tabBarController = window!.rootViewController as! UITabBarController
         let tabs = tabBarController.viewControllers!
@@ -241,7 +241,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let viewControllers = navigationController.viewControllers
         
         // All reminder view controller
-        let statisticsViewController = viewControllers[0] as! StatisticsViewController
+        let statisticsViewController = viewControllers[0] as! ProductivityViewController
         
         return statisticsViewController
     }

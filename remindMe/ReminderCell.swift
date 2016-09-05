@@ -91,12 +91,15 @@ class ReminderCell: UITableViewCell {
         let isFavorite = reminder.isFavorite as! Bool
         let isComplete = reminder.isComplete as Bool
         
-        configureLabels(reminder.name, dueDate: reminder.dueDate, nextDate: reminder.nextDueDate, frequency: reminder.everyAmount as? Int, interval: reminder.typeOfInterval)
+        configureLabels(reminder.name,
+                        dueDate: reminder.dueDate,
+                        frequency: reminder.everyAmount as? Int,
+                        interval: reminder.typeOfInterval)
         configureBackgroundColors(isFavorite, isLate: isDue, isComplete: isComplete)
         configureLabelColors(isComplete, isLate: isDue)
     }
     
-    func configureLabels(name: String, dueDate: NSDate, nextDate: NSDate?, frequency: Int?, interval: String?) {
+    func configureLabels(name: String, dueDate: NSDate, frequency: Int?, interval: String?) {
         //print(#function)
         
         let neverRepeats = "Never"
@@ -105,23 +108,14 @@ class ReminderCell: UITableViewCell {
         dayLabel.text = convertDateToString(.Day, date: dueDate)
         timeLabel.text = convertDateToString(.Time, date: dueDate)
         if dueDate.isPresent() {
-            shortDateLabel.text = convertDateToString(.ShortDate, date: dueDate)
+            // shortDateLabel.text = convertDateToString(.ShortDate, date: dueDate)
+            shortDateLabel.text = convertDateToString(.Day, date: dueDate) + ", " + convertDateToString(.ShortDate, date: dueDate)
         } else {
             shortDateLabel.text = convertDateToString(.Day, date: dueDate) + ", " + convertDateToString(.ShortDate, date: dueDate)
         }
         
         
-        if nextDate != nil {
-            let frequencyAsPlural = "Every " + "\(frequency!) " + "\(interval!)" + "s"
-            let frequencyAsSingular = "Every " + "\(interval!)"
-            if frequency != 1 {
-                nextDueDate.text = frequencyAsPlural
-            } else {
-                nextDueDate.text = frequencyAsSingular
-            }
-        } else {
-            nextDueDate.text = neverRepeats
-        }
+        nextDueDate.text = neverRepeats
     }
     
     func configureBackgroundColors(isFavorite: Bool, isLate: Bool, isComplete: Bool) {

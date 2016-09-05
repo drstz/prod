@@ -146,21 +146,6 @@ class SettingsViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
-    
-//    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-//        let header = view as! UITableViewHeaderFooterView
-//        header.textLabel?.textColor = UIColor.whiteColor()
-//    }
-//    
-//    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        print(#function)
-//        let cell = tableView.cellForRowAtIndexPath(indexPath)
-//        cell?.backgroundColor = UIColor(red: 40/255, green: 83/255, blue: 108/255, alpha: 1)
-//        cell?.textLabel?.textColor = UIColor.whiteColor()
-//        return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
-//    }
-    
-    
 }
 
 extension SettingsViewController: MFMailComposeViewControllerDelegate {

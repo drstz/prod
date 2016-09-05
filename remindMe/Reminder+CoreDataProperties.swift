@@ -15,19 +15,24 @@ import CoreData
 extension Reminder {
 
     @NSManaged var dueDate: NSDate
-    @NSManaged var nextDueDate: NSDate?
     @NSManaged var creationDate: NSDate?
     
     @NSManaged var name: String
-    @NSManaged var typeOfInterval: String?
     
+    @NSManaged var usePattern: NSNumber
+    @NSManaged var typeOfInterval: String?
     @NSManaged var everyAmount: NSNumber?
+    
+    @NSManaged var useDays: NSNumber
+    @NSManaged var selectedDays: NSMutableArray
     
     @NSManaged var idNumber: NSNumber
     /// Blah blah
     @NSManaged var isComplete: NSNumber 
     @NSManaged var isRecurring: NSNumber
     @NSManaged var isFavorite: NSNumber?
+    
+    @NSManaged var autoSnooze: NSNumber
  
     @NSManaged var list: List
     

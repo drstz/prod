@@ -210,6 +210,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         // Autosnooze
         reminder?.autoSnooze = autoSnoozeSwitch.on
         
+        // Set amount of snoozes
+        reminder?.nbOfSnoozes = NSNumber(integer: 0)
+        
+        // Set creation date
+        reminder?.creationDate = NSDate()
+        
         // Create notification
         let notificationHandler = reminder!.notificationHandler
         notificationHandler.scheduleNotifications(reminder!)

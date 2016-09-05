@@ -33,6 +33,8 @@ class Reminder: NSManagedObject {
             isComplete = true
             notificationHandler.deleteReminderNotifications(self)
         }
+        
+        completionDate = NSDate()
     }
     
     func snooze() {
@@ -41,6 +43,9 @@ class Reminder: NSManagedObject {
         setDate(newDate)
         
         notificationHandler.scheduleNotifications(self, snooze: true)
+        var nbOfSnoozesAsInt = nbOfSnoozes.integerValue
+        nbOfSnoozesAsInt += 1
+        nbOfSnoozes = NSNumber(integer: nbOfSnoozesAsInt)
     }
     
     func calculateNewDate() -> NSDate {

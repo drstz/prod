@@ -1225,6 +1225,8 @@
                         <outlet property="averageSnoozeBeforeCompletionLabel" destination="Te3-eN-9Xd" id="fV2-MJ-ejX"/>
                         <outlet property="averageTimeBetweenCreationCompletionCell" destination="ksF-V7-iEo" id="yJx-eu-hnf"/>
                         <outlet property="averageTimeBetweenCreationCompletionLabel" destination="9LA-Ge-tA7" id="tr7-KQ-4xs"/>
+                        <outlet property="nbOfRemindersCompletedBeforeDueDate" destination="o0z-TU-Tlt" id="b9Z-ky-6NU"/>
+                        <outlet property="nbOfRemindersCompletedBeforeDueDateLabel" destination="aRR-RR-Rpo" id="xz9-lN-4oK"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Na0-al-yRa" userLabel="First Responder" sceneMemberID="firstResponder"/>

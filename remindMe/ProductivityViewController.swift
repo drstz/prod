@@ -16,10 +16,12 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     
     @IBOutlet weak var averageTimeBetweenCreationCompletionCell: UITableViewCell!
     @IBOutlet weak var averageSnoozeBeforeCompletionCell: UITableViewCell!
+    @IBOutlet weak var nbOfRemindersCompletedBeforeDueDate: UITableViewCell!
     
     // MARK: Labels
     @IBOutlet weak var averageTimeBetweenCreationCompletionLabel: UILabel!
     @IBOutlet weak var averageSnoozeBeforeCompletionLabel: UILabel!
+    @IBOutlet weak var nbOfRemindersCompletedBeforeDueDateLabel: UILabel!
     
     // MARK: - Core Data
     
@@ -32,13 +34,21 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //tabBarController?.delegate = self
+        
+        nbOfRemindersCompletedBeforeDueDateLabel.textColor = UIColor.lightGrayColor()
+        averageTimeBetweenCreationCompletionLabel.textColor = UIColor.lightGrayColor()
+        averageSnoozeBeforeCompletionLabel.textColor = UIColor.lightGrayColor()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setUpCoreData()
-        countReminders()
+        
+        let reminders = getReminders()
+        
+        calculateAverageTimeBetweenDueDateCompletion(reminders)
+        countTimesSnoozed(reminders)
+        calculateRemindersCompletedBeforeDueDate(reminders)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -61,12 +71,76 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         coreDataHandler.performFetch()
     }
     
-    func countReminders() {
-        
+    func getReminders() -> [Reminder] {
+        var reminders = [Reminder]()
         let frc = coreDataHandler.fetchedResultsController
-        let amountOfFetchedObjects = frc.fetchedObjects?.count
-        averageSnoozeBeforeCompletionLabel.text = String(amountOfFetchedObjects!)
+        let objects = frc.fetchedObjects
+        if let objects = objects {
+            for object in objects {
+                if let reminder = object as? Reminder {
+                    reminders.append(reminder)
+                }
+            }
+        }
+        return reminders
     }
+    
+    func countTimesSnoozed(reminders: [Reminder]) {
+        var totalSnoozeCount = 0
+        for reminder in reminders {
+            let snoozeCount = reminder.nbOfSnoozes
+            totalSnoozeCount += (snoozeCount.integerValue)
+        }
+        
+        if reminders.count != 0 {
+            let averageSnoozeCount = totalSnoozeCount / reminders.count
+            averageSnoozeBeforeCompletionLabel.text = String(averageSnoozeCount)
+        } else {
+            averageSnoozeBeforeCompletionLabel.text = String(0)
+        }
+    }
+    
+    func calculateAverageTimeBetweenDueDateCompletion(reminders: [Reminder]) {
+        /// Overdue reminders only
+        var remindersInCalculation = 0
+        let calendar = NSCalendar.currentCalendar()
+        
+        var totalTimeBetweenDates = 0
+        for reminder in reminders {
+            let dueDate = reminder.dueDate
+            if let completionDate = reminder.completionDate {
+                let earlierDate = dueDate.earlierDate(completionDate)
+                if earlierDate == dueDate {
+                    remindersInCalculation += 1
+                    let minutes = calendar.components(.Minute, fromDate: dueDate, toDate: completionDate, options: [])
+                    totalTimeBetweenDates += minutes.minute
+                }
+                
+                
+            }
+            
+        }
+        var average = totalTimeBetweenDates / remindersInCalculation
+        
+        
+        averageTimeBetweenCreationCompletionLabel.text = String(average) + " " + "minutes"
+    }
+    
+    func calculateRemindersCompletedBeforeDueDate(reminders: [Reminder]) {
+        var remindersCompletedBeforeDueDate = 0
+        for reminder in reminders {
+            let dueDate = reminder.dueDate
+            if let completionDate = reminder.completionDate {
+                let earlierDate = dueDate.earlierDate(completionDate)
+                if earlierDate == completionDate {
+                    remindersCompletedBeforeDueDate += 1
+                }
+            }
+        }
+        nbOfRemindersCompletedBeforeDueDateLabel.text = String(remindersCompletedBeforeDueDate)
+    }
+    
+    
 
   // MARK: - Tab Bar Controller Delegate Methods
     

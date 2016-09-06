@@ -31,9 +31,9 @@ class List: NSManagedObject {
         numberOfRemindersCompletedBeforeDueDate = NSNumber(integer: nbOfRemindersCompletedBeforeDueDate)
     }
     
-    func increaseTotalTimesSnoozed() {
+    func increaseTotalTimesSnoozedBeforeCompletion(nbOfTimes: Int) {
         var nbOfTimesSnoozed = totalTimesSnoozed.integerValue
-        nbOfTimesSnoozed += 1
+        nbOfTimesSnoozed += nbOfTimes
         totalTimesSnoozed = NSNumber(integer: nbOfTimesSnoozed)
     }
     

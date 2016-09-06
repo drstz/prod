@@ -45,6 +45,8 @@ class Reminder: NSManagedObject {
             list.increaseNumberOfRemindersCompletedBeforeDueDate()
         }
         
+        list.increaseTotalTimesSnoozedBeforeCompletion(nbOfSnoozes.integerValue)
+        
     }
     
     func calculateNbOfMinutesDifference(firstDate: NSDate, secondDate: NSDate) -> Int {
@@ -65,7 +67,7 @@ class Reminder: NSManagedObject {
         nbOfSnoozesAsInt += 1
         nbOfSnoozes = NSNumber(integer: nbOfSnoozesAsInt)
         
-        list.increaseTotalTimesSnoozed()
+        
     }
     
     func calculateNewDate() -> NSDate {

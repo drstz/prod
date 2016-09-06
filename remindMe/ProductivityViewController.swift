@@ -19,9 +19,16 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     @IBOutlet weak var nbOfRemindersCompletedBeforeDueDate: UITableViewCell!
     
     // MARK: Labels
+    
+    // Productivity
     @IBOutlet weak var averageTimeBetweenCreationCompletionLabel: UILabel!
     @IBOutlet weak var averageSnoozeBeforeCompletionLabel: UILabel!
     @IBOutlet weak var nbOfRemindersCompletedBeforeDueDateLabel: UILabel!
+    
+    // Stats
+    @IBOutlet weak var numberOfCreatedRemindersLabel: UILabel!
+    @IBOutlet weak var numberOfActiveRemindersLabel: UILabel!
+    @IBOutlet weak var numberOfCompletedRemindersLabel: UILabel!
     
     // MARK: - Core Data
     
@@ -38,6 +45,10 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         nbOfRemindersCompletedBeforeDueDateLabel.textColor = UIColor.lightGrayColor()
         averageTimeBetweenCreationCompletionLabel.textColor = UIColor.lightGrayColor()
         averageSnoozeBeforeCompletionLabel.textColor = UIColor.lightGrayColor()
+        
+        numberOfCreatedRemindersLabel.textColor = UIColor.lightGrayColor()
+//        numberOfActiveRemindersLabel.textColor = UIColor.lightGrayColor()
+        numberOfCompletedRemindersLabel.textColor = UIColor.lightGrayColor()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -49,6 +60,8 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         calculateAverageTimeBetweenDueDateCompletion(reminders)
         countTimesSnoozed(reminders)
         calculateRemindersCompletedBeforeDueDate(reminders)
+        updateNumberOfCreatedRemindersLabel()
+        updateNumberOfCompletedRemindersLabel()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -86,58 +99,65 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     }
     
     func countTimesSnoozed(reminders: [Reminder]) {
-        var totalSnoozeCount = 0
-        for reminder in reminders {
-            let snoozeCount = reminder.nbOfSnoozes
-            totalSnoozeCount += (snoozeCount.integerValue)
-        }
+        let numberOfTimesSnoozedBeforeCompletion = list.totalTimesSnoozed.integerValue
+        let nbOfCompletedReminders = list.numberOfCompletedReminders.integerValue
         
-        if reminders.count != 0 {
-            let averageSnoozeCount = totalSnoozeCount / reminders.count
-            averageSnoozeBeforeCompletionLabel.text = String(averageSnoozeCount)
+        print("Number of times snoozed \(numberOfTimesSnoozedBeforeCompletion)")
+        print("Number of completed reminders \(nbOfCompletedReminders)")
+        
+        if nbOfCompletedReminders != 0 {
+            let averageTimesSnoozedBeforeCompletion = numberOfTimesSnoozedBeforeCompletion / nbOfCompletedReminders
+            averageSnoozeBeforeCompletionLabel.text = String(averageTimesSnoozedBeforeCompletion)
         } else {
-            averageSnoozeBeforeCompletionLabel.text = String(0)
+            averageSnoozeBeforeCompletionLabel.text = "No data"
         }
     }
     
     func calculateAverageTimeBetweenDueDateCompletion(reminders: [Reminder]) {
-        /// Overdue reminders only
-        var remindersInCalculation = 0
-        let calendar = NSCalendar.currentCalendar()
+        var unit = "minutes"
+        var position = "after"
         
-        var totalTimeBetweenDates = 0
-        for reminder in reminders {
-            let dueDate = reminder.dueDate
-            if let completionDate = reminder.completionDate {
-                let earlierDate = dueDate.earlierDate(completionDate)
-                if earlierDate == dueDate {
-                    remindersInCalculation += 1
-                    let minutes = calendar.components(.Minute, fromDate: dueDate, toDate: completionDate, options: [])
-                    totalTimeBetweenDates += minutes.minute
+        let totalTimeBetweenCreationAndCompletionDates = list.differenceBetweenDueCompletionDate.integerValue
+        let nbOfCompletedReminders = list.numberOfCompletedReminders.integerValue
+        if nbOfCompletedReminders != 0 {
+            var averageTimeBetweenDates = totalTimeBetweenCreationAndCompletionDates / nbOfCompletedReminders
+            print("Average time is : \(averageTimeBetweenDates)")
+            if (averageTimeBetweenDates * -1) > 60 {
+                
+                averageTimeBetweenDates = averageTimeBetweenDates / 60
+                unit = "hours"
+                
+                if (averageTimeBetweenDates * -1) > 24{
+                    averageTimeBetweenDates = averageTimeBetweenDates / 24
+                    unit = "days"
                 }
                 
-                
             }
-            
+            if averageTimeBetweenDates < 0 {
+                averageTimeBetweenDates = averageTimeBetweenDates * -1
+                position = "before"
+            }
+            averageTimeBetweenCreationCompletionLabel.text = String(averageTimeBetweenDates) + " " + unit + " " + position
+        } else {
+            averageTimeBetweenCreationCompletionLabel.text = "No data"
         }
-        var average = totalTimeBetweenDates / remindersInCalculation
         
         
-        averageTimeBetweenCreationCompletionLabel.text = String(average) + " " + "minutes"
     }
     
     func calculateRemindersCompletedBeforeDueDate(reminders: [Reminder]) {
-        var remindersCompletedBeforeDueDate = 0
-        for reminder in reminders {
-            let dueDate = reminder.dueDate
-            if let completionDate = reminder.completionDate {
-                let earlierDate = dueDate.earlierDate(completionDate)
-                if earlierDate == completionDate {
-                    remindersCompletedBeforeDueDate += 1
-                }
-            }
-        }
-        nbOfRemindersCompletedBeforeDueDateLabel.text = String(remindersCompletedBeforeDueDate)
+        let nbOfRemindersCompletedBeforeDueDate = list.numberOfRemindersCompletedBeforeDueDate.integerValue
+        nbOfRemindersCompletedBeforeDueDateLabel.text = String(nbOfRemindersCompletedBeforeDueDate)
+    }
+    
+    func updateNumberOfCreatedRemindersLabel() {
+        let nbOfCreatedReminders = list.numberOfReminders.integerValue
+        numberOfCreatedRemindersLabel.text = String(nbOfCreatedReminders)
+    }
+    
+    func updateNumberOfCompletedRemindersLabel() {
+        let nbOfCompletedReminders = list.numberOfCompletedReminders.integerValue
+        numberOfCompletedRemindersLabel.text = String(nbOfCompletedReminders)
     }
     
     

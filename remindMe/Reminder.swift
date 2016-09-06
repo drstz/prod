@@ -35,6 +35,24 @@ class Reminder: NSManagedObject {
         }
         
         completionDate = NSDate()
+        list.increaseNbOfCompletedReminders()
+        
+        let nbOfMinutesDifferenceBetweenDates = calculateNbOfMinutesDifference(dueDate, secondDate: completionDate!)
+        list.addDifferenceBetweenDates(nbOfMinutesDifferenceBetweenDates)
+        
+        let earlierDate = completionDate?.earlierDate(dueDate)
+        if earlierDate == completionDate {
+            list.increaseNumberOfRemindersCompletedBeforeDueDate()
+        }
+        
+    }
+    
+    func calculateNbOfMinutesDifference(firstDate: NSDate, secondDate: NSDate) -> Int {
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components(.Minute, fromDate: firstDate, toDate: secondDate, options: [])
+        let nbOfMinutes = components.minute
+        
+        return nbOfMinutes
     }
     
     func snooze() {
@@ -46,6 +64,8 @@ class Reminder: NSManagedObject {
         var nbOfSnoozesAsInt = nbOfSnoozes.integerValue
         nbOfSnoozesAsInt += 1
         nbOfSnoozes = NSNumber(integer: nbOfSnoozesAsInt)
+        
+        list.increaseTotalTimesSnoozed()
     }
     
     func calculateNewDate() -> NSDate {

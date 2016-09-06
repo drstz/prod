@@ -353,7 +353,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             "List",
             inManagedObjectContext: managedObjectContext
             ) as! List
+        
+        // Initialize
         list.numberOfReminders = 0
+        list.numberOfCompletedReminders = 0
+        
+        list.numberOfRemindersCompletedBeforeDueDate = 0
+        
+        list.differenceBetweenDueCompletionDate = 0
+        list.totalTimesSnoozed = 0
         
         do {
             try managedObjectContext.save()

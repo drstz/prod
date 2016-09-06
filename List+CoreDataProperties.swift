@@ -13,8 +13,16 @@ import Foundation
 import CoreData
 
 extension List {
-
+    /// Number of created reminders. This shouldn't change
     @NSManaged var numberOfReminders: NSNumber
+    @NSManaged var numberOfCompletedReminders: NSNumber
+    
+    @NSManaged var numberOfRemindersCompletedBeforeDueDate: NSNumber
+    
+    @NSManaged var differenceBetweenDueCompletionDate: NSNumber
+    
+    @NSManaged var totalTimesSnoozed: NSNumber
+    
     @NSManaged weak var reminders: NSSet?
 
 }

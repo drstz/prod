@@ -26,6 +26,7 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     @IBOutlet weak var reminderDayLabel: UILabel!
     @IBOutlet weak var reminderDueTimeLabel: UILabel!
     @IBOutlet weak var reminderShortDateLabel: UILabel!
+    @IBOutlet weak var repeatLabel: UILabel!
     
     // MARK: Buttons
     
@@ -39,6 +40,9 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     
     @IBOutlet weak var closeButton: UIButton!
     
+    // MARK: Image
+    
+    @IBOutlet weak var repeatIcon: UIImageView!
     
     // MARK: - Delegates
     
@@ -224,6 +228,14 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
                 completeButton.setTitle("Complete", forState: .Normal)
                 completeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
+            
+            if reminder.isRecurring == true {
+                repeatIcon.hidden = false
+                repeatLabel.hidden = false
+            } else {
+                repeatIcon.hidden = true
+                repeatLabel.hidden = true
+            }
         }
     }
     
@@ -232,7 +244,67 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         reminderDayLabel.text = convertDateToString(.Day, date: reminder.dueDate)
         reminderDueTimeLabel.text = convertDateToString(.Time, date: reminder.dueDate)
         reminderShortDateLabel.text = convertDateToString(.ShortDate, date: reminder.dueDate)
+        updateRepeatLabel(with: reminder)
     }
+    
+    func updateRepeatLabel(with reminder: Reminder) {
+        if reminder.useDays == true {
+            updateRepeatLabelWithDayPattern(reminder)
+        } else if reminder.usePattern == true {
+            updateRepeatLabelWithCustomPattern(reminder)
+        } else {
+            repeatLabel.hidden = true
+        }
+        
+    }
+    
+    func updateRepeatLabelWithCustomPattern(reminder: Reminder) {
+        if let frequency = reminder.everyAmount?.integerValue, let interval = reminder.typeOfInterval {
+            if frequency != 1 {
+                repeatLabel.text = "every " + "\(frequency) " + "\(interval)" + "s"
+            } else if frequency == 1 {
+                repeatLabel.text = "every " + "\(interval)"
+            }
+        }
+    }
+    
+    func updateRepeatLabelWithDayPattern(reminder: Reminder) {
+        var stringOfDays = "every "
+        var selectedDays = [Int]()
+        for day in reminder.selectedDays {
+            selectedDays.append(Int(day as! NSNumber))
+        }
+        if selectedDays.count > 0 {
+            for day in selectedDays {
+                switch day {
+                case 1:
+                    stringOfDays.appendContentsOf("Sun")
+                case 2:
+                    stringOfDays.appendContentsOf("Mon")
+                case 3:
+                    stringOfDays.appendContentsOf("Tue")
+                case 4:
+                    stringOfDays.appendContentsOf("Wed")
+                case 5:
+                    stringOfDays.appendContentsOf("Thu")
+                case 6:
+                    stringOfDays.appendContentsOf("Fri")
+                case 7:
+                    stringOfDays.appendContentsOf("Sat")
+                default:
+                    print("Error appending strings of days")
+                }
+                if selectedDays.count > 1 {
+                    // Do not print comma after last word
+                    if selectedDays.indexOf(day) < selectedDays.count - 1 {
+                        stringOfDays.appendContentsOf(", ")
+                    }
+                }
+            }
+            repeatLabel.text = stringOfDays
+        }
+    }
+    
     
     
     func setFavoriteStar() {

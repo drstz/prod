@@ -55,12 +55,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NDate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcl-hb-zg4">
-                                <rect key="frame" x="86" y="69" width="33" height="14"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Repeat" translatesAutoresizingMaskIntoConstraints="NO" id="a7J-ye-yF1">
                                 <rect key="frame" x="34" y="66" width="20" height="20"/>
                                 <constraints>
@@ -68,13 +62,19 @@
                                     <constraint firstAttribute="width" constant="20" id="fee-bq-FSK"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NDate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcl-hb-zg4">
+                                <rect key="frame" x="62" y="68" width="33" height="14"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="Bcl-hb-zg4" secondAttribute="bottom" constant="8" id="3bh-SP-DWH"/>
+                            <constraint firstAttribute="bottom" secondItem="Bcl-hb-zg4" secondAttribute="bottom" constant="9" id="3bh-SP-DWH"/>
                             <constraint firstAttribute="trailing" secondItem="jiE-5L-44b" secondAttribute="trailing" constant="8" id="7cM-gY-Xam"/>
                             <constraint firstItem="a7J-ye-yF1" firstAttribute="leading" secondItem="q7C-O2-8PD" secondAttribute="leading" constant="34" id="EAO-zx-Ocg"/>
-                            <constraint firstItem="Bcl-hb-zg4" firstAttribute="leading" secondItem="a7J-ye-yF1" secondAttribute="trailing" constant="32" id="Fa0-3Q-wKZ"/>
+                            <constraint firstItem="Bcl-hb-zg4" firstAttribute="leading" secondItem="a7J-ye-yF1" secondAttribute="trailing" constant="8" id="Fa0-3Q-wKZ"/>
                             <constraint firstAttribute="bottom" secondItem="a7J-ye-yF1" secondAttribute="bottom" constant="5" id="FdD-xf-h9X"/>
                             <constraint firstItem="scb-NO-84Z" firstAttribute="leading" secondItem="q7C-O2-8PD" secondAttribute="leading" constant="8" id="Fdn-RR-nPl"/>
                             <constraint firstAttribute="trailing" secondItem="Pcd-jg-yJM" secondAttribute="trailing" constant="8" id="GPn-mh-TVz"/>

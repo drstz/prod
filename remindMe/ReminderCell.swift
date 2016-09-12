@@ -115,7 +115,66 @@ class ReminderCell: UITableViewCell {
                         interval: reminder.typeOfInterval)
         configureBackgroundColors(isFavorite, isLate: isDue, isComplete: isComplete)
         configureLabelColors(isComplete, isLate: isDue)
+        updateRepeatLabel(with: reminder)
+        
     }
+    
+    func updateRepeatLabel(with reminder: Reminder) {
+        if reminder.useDays == true {
+            updateRepeatLabelWithDayPattern(reminder)
+        } else if reminder.usePattern == true {
+            updateRepeatLabelWithCustomPattern(reminder)
+        }
+    }
+    
+    func updateRepeatLabelWithCustomPattern(reminder: Reminder) {
+        if let frequency = reminder.everyAmount?.integerValue, let interval = reminder.typeOfInterval {
+            if frequency != 1 {
+                nextDueDate.text = "every " + "\(frequency) " + "\(interval)" + "s"
+            } else if frequency == 1 {
+                nextDueDate.text = "every " + "\(interval)"
+            }
+        }
+    }
+    
+    func updateRepeatLabelWithDayPattern(reminder: Reminder) {
+        var stringOfDays = "every "
+        var selectedDays = [Int]()
+        for day in reminder.selectedDays {
+            selectedDays.append(Int(day as! NSNumber))
+        }
+        if selectedDays.count > 0 {
+            for day in selectedDays {
+                switch day {
+                case 1:
+                    stringOfDays.appendContentsOf("Sun")
+                case 2:
+                    stringOfDays.appendContentsOf("Mon")
+                case 3:
+                    stringOfDays.appendContentsOf("Tue")
+                case 4:
+                    stringOfDays.appendContentsOf("Wed")
+                case 5:
+                    stringOfDays.appendContentsOf("Thu")
+                case 6:
+                    stringOfDays.appendContentsOf("Fri")
+                case 7:
+                    stringOfDays.appendContentsOf("Sat")
+                default:
+                    print("Error appending strings of days")
+                }
+                if selectedDays.count > 1 {
+                    // Do not print comma after last word
+                    if selectedDays.indexOf(day) < selectedDays.count - 1 {
+                        stringOfDays.appendContentsOf(", ")
+                    }
+                }
+            }
+            nextDueDate.text = stringOfDays
+        }
+    }
+    
+    
     
     func configureLabels(name: String, dueDate: NSDate, frequency: Int?, interval: String?) {
         //print(#function)
@@ -133,7 +192,7 @@ class ReminderCell: UITableViewCell {
         }
         
         
-        nextDueDate.text = ""
+        
         
         
     }

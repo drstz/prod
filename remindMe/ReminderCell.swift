@@ -18,6 +18,7 @@ protocol ReminderCellBackGroundDelegate: class {
 
 class ReminderCell: UITableViewCell {
     
+    // MARK: Labels
     @IBOutlet weak var reminderLabel: UILabel!
     
     @IBOutlet weak var dayLabel: UILabel!
@@ -25,11 +26,15 @@ class ReminderCell: UITableViewCell {
     @IBOutlet weak var shortDateLabel: UILabel!
     @IBOutlet weak var nextDueDate: UILabel!
     
+    
+    // MARK: Views
     @IBOutlet weak var reminderBackgroundView: ReminderCellBackground!
     @IBOutlet weak var reminderSelectionView: UIView!
     @IBOutlet weak var reminderIsDueView: UIView!
     
     @IBOutlet weak var favoriteStar: UIImageView!
+    
+    @IBOutlet weak var repeatIcon: UIImageView!
     
     weak var delegate : ReminderCellDelegate?
     weak var backgroundDelegate: ReminderCellBackGroundDelegate?
@@ -39,13 +44,18 @@ class ReminderCell: UITableViewCell {
     
     // MARK: Colors
     
+    // Favorites
     let favoriteColor = UIColor(red: 1, green: 223/255, blue: 0, alpha: 1)
     let favoriteColorDimmed = UIColor(red: 1, green: 223/255, blue: 0, alpha: 0.3)
     
+    // NormalColor
     let cellBackgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
     let cellBackgroundColorDimmed = UIColor.whiteColor()
     
+    // Late color
     let lateColor = UIColor(red: 149/255, green: 40/255, blue: 54/255, alpha: 1)
+    
+    // Text color
     let normalTextColor = UIColor.whiteColor()
     
     let selectionColor = UIColor(red: 148/255, green: 191/255, blue: 215/255, alpha: 1)
@@ -91,6 +101,14 @@ class ReminderCell: UITableViewCell {
         let isFavorite = reminder.isFavorite as! Bool
         let isComplete = reminder.isComplete as Bool
         
+        if reminder.isRecurring == true {
+            nextDueDate.hidden = false
+            repeatIcon.hidden = false
+        } else {
+            nextDueDate.hidden = true
+            repeatIcon.hidden = true
+        }
+        
         configureLabels(reminder.name,
                         dueDate: reminder.dueDate,
                         frequency: reminder.everyAmount as? Int,
@@ -102,7 +120,7 @@ class ReminderCell: UITableViewCell {
     func configureLabels(name: String, dueDate: NSDate, frequency: Int?, interval: String?) {
         //print(#function)
         
-        let neverRepeats = "Never"
+        
         
         reminderLabel.text = name
         dayLabel.text = convertDateToString(.Day, date: dueDate)
@@ -115,7 +133,9 @@ class ReminderCell: UITableViewCell {
         }
         
         
-        nextDueDate.text = neverRepeats
+        nextDueDate.text = ""
+        
+        
     }
     
     func configureBackgroundColors(isFavorite: Bool, isLate: Bool, isComplete: Bool) {

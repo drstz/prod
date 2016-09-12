@@ -10,6 +10,7 @@
     </entity>
     <entity name="Reminder" representedClassName=".Reminder" syncable="YES">
         <attribute name="autoSnooze" attributeType="Boolean" syncable="YES"/>
+        <attribute name="comment" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="completionDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="creationDate" attributeType="Date" syncable="YES"/>
         <attribute name="dueDate" attributeType="Date" syncable="YES"/>
@@ -29,6 +30,6 @@
     </entity>
     <elements>
         <element name="List" positionX="-792" positionY="-57" width="128" height="133"/>
-        <element name="Reminder" positionX="-405" positionY="-69" width="128" height="300"/>
+        <element name="Reminder" positionX="-405" positionY="-69" width="128" height="315"/>
     </elements>
 </model>

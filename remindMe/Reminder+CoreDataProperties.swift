@@ -21,6 +21,7 @@ extension Reminder {
     @NSManaged var nbOfSnoozes: NSNumber
     
     @NSManaged var name: String
+    @NSManaged var comment: String?
     
     @NSManaged var usePattern: NSNumber
     @NSManaged var typeOfInterval: String?

@@ -30,11 +30,12 @@ class ReminderCell: UITableViewCell {
     // MARK: Views
     @IBOutlet weak var reminderBackgroundView: ReminderCellBackground!
     @IBOutlet weak var reminderSelectionView: UIView!
-    @IBOutlet weak var reminderIsDueView: UIView!
+
     
     @IBOutlet weak var favoriteStar: UIImageView!
     
     @IBOutlet weak var repeatIcon: UIImageView!
+    @IBOutlet weak var commentIcon: UIImageView!
     
     weak var delegate : ReminderCellDelegate?
     weak var backgroundDelegate: ReminderCellBackGroundDelegate?
@@ -77,7 +78,6 @@ class ReminderCell: UITableViewCell {
         backgroundColor = UIColor.clearColor()
         reminderBackgroundView.layer.cornerRadius = cornerRadius
         reminderSelectionView.layer.cornerRadius = cornerRadius
-        reminderIsDueView.layer.cornerRadius = 10
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(recognizeLongPress))
         self.addGestureRecognizer(longPress)
         selectionStyle = .None
@@ -116,7 +116,16 @@ class ReminderCell: UITableViewCell {
         configureBackgroundColors(isFavorite, isLate: isDue, isComplete: isComplete)
         configureLabelColors(isComplete, isLate: isDue)
         updateRepeatLabel(with: reminder)
+        updateCommentLabel(with: reminder)
         
+    }
+    
+    func updateCommentLabel(with reminder: Reminder) {
+        if reminder.comment != nil {
+            commentIcon.hidden = false
+        } else {
+            commentIcon.hidden = true
+        }
     }
     
     func updateRepeatLabel(with reminder: Reminder) {

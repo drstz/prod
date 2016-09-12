@@ -28,6 +28,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     // MARK: Properties
     
+    
+    
     // CoreData
     var managedObjectContext: NSManagedObjectContext!
     
@@ -73,7 +75,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
   
     
     // Comment field
-    @IBOutlet weak var reminderCommentField: UITextView!
+    @IBOutlet weak var reminderCommentField: UILabel!
     @IBOutlet weak var reminderCommentFieldCell: UITableViewCell!
     
     // Labels
@@ -171,6 +173,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         // Title
         reminder!.setTitle(reminderNameField.text!)
         
+        // Comment
+        if let comment = comment {
+            reminder?.comment = comment
+        }
+        
         // Set Dates
         reminder!.setDate(selectedDate!)
         
@@ -230,6 +237,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     func updateReminder(reminder: Reminder) {
         // Title
         reminder.setTitle(reminderNameField.text!)
+        
+        // Comment
+        if let comment = comment {
+            reminder.comment = comment
+        } else {
+            reminder.comment = nil
+        }
         
         // Set Dates
         reminder.setDate(selectedDate!)
@@ -294,6 +308,18 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         }
         
         enableDoneButton()
+        
+        if comment == nil {
+            reminderCommentField.text = "Enter extra details here"
+        }
+        
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openCommentView))
+        reminderCommentField.addGestureRecognizer(gestureRecognizer)
+        
+    }
+    
+    func openCommentView() {
+        performSegueWithIdentifier("AddComment", sender: nil)
     }
     
     func prepareViewForReminder(reminder: Reminder) {
@@ -301,6 +327,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         
         // Set textfield
         reminderNameField.text = reminder.name
+        
+        // Set comment
+        if let comment = reminder.comment {
+            reminderCommentField.text = comment
+            self.comment = comment
+        }
         
         // Get Date into memomry
         selectedDate = reminder.dueDate
@@ -479,13 +511,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         reminderNameField.resignFirstResponder()
         
-        let commentCellIndexPath = tableView.indexPathForCell(reminderCommentFieldCell)
-        if indexPath.row == 1 && indexPath.section == 0 {
-            print("Getting main queue")
-            dispatch_async(dispatch_get_main_queue(),{
-                self.performSegueWithIdentifier("AddComment", sender: nil)
-            })
-        }
+        
         
     }
     

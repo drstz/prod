@@ -34,10 +34,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w38-s8-8YQ">
-                                <rect key="frame" x="34" y="36" width="20" height="20"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="day" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pcd-jg-yJM">
                                 <rect key="frame" x="277" y="63" width="27" height="20"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -68,11 +64,19 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Comment" translatesAutoresizingMaskIntoConstraints="NO" id="HLL-pm-OUO">
+                                <rect key="frame" x="34" y="36" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="Myt-M4-8XB"/>
+                                    <constraint firstAttribute="width" constant="20" id="dlW-lP-tbv"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Bcl-hb-zg4" secondAttribute="bottom" constant="9" id="3bh-SP-DWH"/>
                             <constraint firstAttribute="trailing" secondItem="jiE-5L-44b" secondAttribute="trailing" constant="8" id="7cM-gY-Xam"/>
+                            <constraint firstItem="HLL-pm-OUO" firstAttribute="leading" secondItem="q7C-O2-8PD" secondAttribute="leading" constant="34" id="9Zj-r8-1lJ"/>
                             <constraint firstItem="a7J-ye-yF1" firstAttribute="leading" secondItem="q7C-O2-8PD" secondAttribute="leading" constant="34" id="EAO-zx-Ocg"/>
                             <constraint firstItem="Bcl-hb-zg4" firstAttribute="leading" secondItem="a7J-ye-yF1" secondAttribute="trailing" constant="8" id="Fa0-3Q-wKZ"/>
                             <constraint firstAttribute="bottom" secondItem="a7J-ye-yF1" secondAttribute="bottom" constant="5" id="FdD-xf-h9X"/>
@@ -86,6 +90,7 @@
                             <constraint firstAttribute="bottom" secondItem="cNe-HO-hOr" secondAttribute="bottom" constant="63" id="b81-rJ-8Td"/>
                             <constraint firstItem="cNe-HO-hOr" firstAttribute="leading" secondItem="scb-NO-84Z" secondAttribute="trailing" constant="3" id="cZ9-Zb-90l"/>
                             <constraint firstItem="Pcd-jg-yJM" firstAttribute="leading" secondItem="cNe-HO-hOr" secondAttribute="trailing" constant="120" id="ciT-tc-kBO"/>
+                            <constraint firstItem="HLL-pm-OUO" firstAttribute="top" secondItem="cNe-HO-hOr" secondAttribute="bottom" constant="5" id="eF3-GG-4HM"/>
                             <constraint firstItem="scb-NO-84Z" firstAttribute="top" secondItem="q7C-O2-8PD" secondAttribute="top" constant="8" id="ntJ-Hw-93P"/>
                             <constraint firstAttribute="bottom" secondItem="Pcd-jg-yJM" secondAttribute="bottom" constant="8" id="zns-Ex-hgK"/>
                         </constraints>
@@ -110,11 +115,11 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="commentIcon" destination="HLL-pm-OUO" id="Z37-Xv-9IS"/>
                 <outlet property="dayLabel" destination="Pcd-jg-yJM" id="iTp-aU-9th"/>
                 <outlet property="favoriteStar" destination="scb-NO-84Z" id="j1I-tF-zty"/>
                 <outlet property="nextDueDate" destination="Bcl-hb-zg4" id="Ory-QI-8CW"/>
                 <outlet property="reminderBackgroundView" destination="k9z-bB-732" id="cer-wp-IPh"/>
-                <outlet property="reminderIsDueView" destination="w38-s8-8YQ" id="Ib9-ex-fIJ"/>
                 <outlet property="reminderLabel" destination="cNe-HO-hOr" id="fcN-PF-5Ps"/>
                 <outlet property="reminderSelectionView" destination="q7C-O2-8PD" id="SgY-nK-mQc"/>
                 <outlet property="repeatIcon" destination="a7J-ye-yF1" id="7Sp-ZQ-9l0"/>
@@ -125,6 +130,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="Comment" width="22" height="22"/>
         <image name="Repeat" width="22" height="22"/>
         <image name="Star Filled-44 (1)" width="44" height="44"/>
     </resources>

@@ -35,7 +35,11 @@ class ReminderCommentViewController: UIViewController {
     }
     
     @IBAction func cancel() {
-        delegate?.reminderCommentViewControllerDidCancel(self)
+        commentField.resignFirstResponder()
+        
+        if commentField.isFirstResponder() == false {
+            delegate?.reminderCommentViewControllerDidCancel(self)
+        }
     }
     
     override func viewDidLoad() {

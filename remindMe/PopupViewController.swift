@@ -44,6 +44,8 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     
     @IBOutlet weak var repeatIcon: UIImageView!
     
+    @IBOutlet weak var commentLabel: UILabel!
+    
     // MARK: - Delegates
     
     weak var delegate: PopupViewControllerDelegate?
@@ -201,6 +203,14 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
             } else {
                 snoozeButton.hidden = true
             }
+            
+            if let comment = reminder.comment {
+                commentLabel.hidden = false
+                commentLabel.text = comment
+            } else {
+                commentLabel.hidden = true
+            }
+            
             
             if reminder.isDue() && reminder.isComplete == false {
                 popup.backgroundColor = lateColor

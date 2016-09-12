@@ -33,6 +33,7 @@
 		71818D4A1D6DBD4D00F8B732 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71818D491D6DBD4D00F8B732 /* DatePickerViewController.swift */; };
 		7182F9041D40836E00E6C18E /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7182F9031D40836E00E6C18E /* PopupViewController.swift */; };
 		7182F9061D40873D00E6C18E /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7182F9051D40873C00E6C18E /* DimmingPresentationController.swift */; };
+		7183D25E1D8699A700E196A3 /* ReminderCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7183D25D1D8699A700E196A3 /* ReminderCommentViewController.swift */; };
 		71878B421CC49A9700AD0F27 /* Reminder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71878B401CC49A9700AD0F27 /* Reminder+CoreDataProperties.swift */; };
 		71878B431CC49A9700AD0F27 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71878B411CC49A9700AD0F27 /* Reminder.swift */; };
 		71A7884E1CE5B57400D5CE47 /* QuickViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A7884D1CE5B57400D5CE47 /* QuickViewViewController.swift */; };
@@ -89,6 +90,7 @@
 		71818D491D6DBD4D00F8B732 /* DatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
 		7182F9031D40836E00E6C18E /* PopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		7182F9051D40873C00E6C18E /* DimmingPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
+		7183D25D1D8699A700E196A3 /* ReminderCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderCommentViewController.swift; sourceTree = "<group>"; };
 		71878B401CC49A9700AD0F27 /* Reminder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reminder+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		71878B411CC49A9700AD0F27 /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		71A7884D1CE5B57400D5CE47 /* QuickViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickViewViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				71D365531D6EA8D1004D4953 /* PatternPickerViewController.swift */,
 				71D365551D6EAAD2004D4953 /* RepeatMethodViewController.swift */,
 				711283F81D6FF2A800148C07 /* DayOfTheWeekPickerViewController.swift */,
+				7183D25D1D8699A700E196A3 /* ReminderCommentViewController.swift */,
 			);
 			name = Reminder;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 				71878B431CC49A9700AD0F27 /* Reminder.swift in Sources */,
 				71D365541D6EA8D1004D4953 /* PatternPickerViewController.swift in Sources */,
 				7130E4391D58A85E0013B568 /* AboutViewController.swift in Sources */,
+				7183D25E1D8699A700E196A3 /* ReminderCommentViewController.swift in Sources */,
 				7182F9061D40873D00E6C18E /* DimmingPresentationController.swift in Sources */,
 				71EE90CA1D2A27FA00431D56 /* AllRemindersViewController+ToolbarActions.swift in Sources */,
 				7165A59A1CBCB4330088EA76 /* AddReminder.swift in Sources */,

@@ -24,7 +24,7 @@ protocol AddReminderViewControllerDelegate: class {
     
 }
 
-class AddReminderViewController: UITableViewController, UITextFieldDelegate, DatePickerViewControllerDelegate, RepeatMethodViewControllerDelegate {
+class AddReminderViewController: UITableViewController, UITextFieldDelegate, DatePickerViewControllerDelegate, RepeatMethodViewControllerDelegate, ReminderCommentViewControllerDelegate {
     
     // MARK: Properties
     
@@ -39,6 +39,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     var textFieldHasText = false
     var creatingReminder = false
+    
+    var comment: String?
 
     
     // The Date
@@ -68,9 +70,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     // Fields
     
     @IBOutlet weak var reminderNameField : UITextField!
+  
     
     // Comment field
     @IBOutlet weak var reminderCommentField: UITextView!
+    @IBOutlet weak var reminderCommentFieldCell: UITableViewCell!
     
     // Labels
     
@@ -334,6 +338,14 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         updateRepeatLabel()
+        
+//        if reminderCommentField.text.characters.count == 0 {
+//            reminderCommentField.hidden = true
+//            reminderCommentFieldCell.hidden = true
+//        } else {
+//            reminderCommentField.hidden = false
+//            reminderCommentFieldCell.hidden = false
+//        }
     }
     
     // MARK: - Date Picker View Controller Delegate
@@ -383,6 +395,18 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // MARK: - Comment View Controller Delegate
+    func reminderCommentViewControllerDidCancel(controller: ReminderCommentViewController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func reminderCommentViewControllerDidSave(controller: ReminderCommentViewController, comment: String) {
+        
+        self.comment = comment
+        reminderCommentField.text = self.comment
+        
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     
     // MARK: - Navigation
     
@@ -416,6 +440,19 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
                 repeatMethodViewController?.usingNoPattern = false
             }
         }
+        
+        if segue.identifier == "AddComment" {
+            let navigationController = segue.destinationViewController as? UINavigationController
+            let reminderCommentViewController = navigationController?.viewControllers[0] as? ReminderCommentViewController
+            
+            reminderCommentViewController!.delegate = self
+            
+            if let comment = comment {
+                reminderCommentViewController?.previousComment = comment
+            }
+            
+            
+        }
     }
     
     // MARK: - Table View Delegate
@@ -441,14 +478,28 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         reminderNameField.resignFirstResponder()
+        
+        let commentCellIndexPath = tableView.indexPathForCell(reminderCommentFieldCell)
+        if indexPath.row == 1 && indexPath.section == 0 {
+            print("Getting main queue")
+            dispatch_async(dispatch_get_main_queue(),{
+                self.performSegueWithIdentifier("AddComment", sender: nil)
+            })
+        }
+        
     }
     
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        
+        
         if indexPath.section == 1 && indexPath.row == 2 {
             return nil
         } else {
             return indexPath
         }
+        
+        
+    
     }
     
     override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {

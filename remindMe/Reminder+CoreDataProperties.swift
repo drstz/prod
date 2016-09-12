@@ -15,7 +15,10 @@ import CoreData
 extension Reminder {
 
     @NSManaged var dueDate: NSDate
-    @NSManaged var creationDate: NSDate?
+    @NSManaged var creationDate: NSDate
+    @NSManaged var completionDate: NSDate?
+    
+    @NSManaged var nbOfSnoozes: NSNumber
     
     @NSManaged var name: String
     

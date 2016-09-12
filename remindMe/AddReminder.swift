@@ -201,14 +201,22 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         reminder!.addToList(list)
         
         // Update amount of reminders
-        let nbOfReminders = list.numberOfReminders.integerValue
-        list.numberOfReminders = NSNumber(integer: nbOfReminders + 1)
+        reminder?.list.increaseNbOfReminders()
+        print("There are now \((reminder?.list.numberOfReminders)!) reminders")
+//        let nbOfReminders = list.numberOfReminders.integerValue
+//        list.numberOfReminders = NSNumber(integer: nbOfReminders + 1)
         
         // Set reminder ID
         reminder?.addIDtoReminder()
         
         // Autosnooze
         reminder?.autoSnooze = autoSnoozeSwitch.on
+        
+        // Set amount of snoozes
+        reminder?.nbOfSnoozes = NSNumber(integer: 0)
+        
+        // Set creation date
+        reminder?.creationDate = NSDate()
         
         // Create notification
         let notificationHandler = reminder!.notificationHandler

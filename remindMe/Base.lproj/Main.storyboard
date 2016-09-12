@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="EFl-GD-4wn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="EFl-GD-4wn">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -1113,24 +1113,190 @@
             </objects>
             <point key="canvasLocation" x="1553.5" y="-751"/>
         </scene>
-        <!--Statistics View Controller-->
-        <scene sceneID="9RP-5T-ziI">
+        <!--Productivity View Controller-->
+        <scene sceneID="ZEE-xu-5Yl">
             <objects>
-                <viewController id="sqL-KJ-SyX" customClass="StatisticsViewController" customModule="remindMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="dPE-Sd-0kQ"/>
-                        <viewControllerLayoutGuide type="bottom" id="E1p-uG-ZDk"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="fwA-9g-H77">
+                <tableViewController id="9nG-n6-ZvT" customClass="ProductivityViewController" customModule="remindMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="uKr-HO-OTc">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="WIW-5f-jXc"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pJC-Of-JlE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection headerTitle="Productivity" id="5bO-hT-L10">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="60" id="ksF-V7-iEo">
+                                        <rect key="frame" x="0.0" y="114" width="600" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ksF-V7-iEo" id="aDO-jf-knE">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9LA-Ge-tA7">
+                                                    <rect key="frame" x="556" y="11" width="36" height="20"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time between due date and completion" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mni-0R-Uo5">
+                                                    <rect key="frame" x="8" y="11" width="275" height="41"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="275" id="5fS-0g-nHe"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="9LA-Ge-tA7" secondAttribute="trailing" id="Adb-AA-ixv"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="mni-0R-Uo5" secondAttribute="leading" id="Ymt-QY-L8M"/>
+                                                <constraint firstItem="9LA-Ge-tA7" firstAttribute="top" secondItem="aDO-jf-knE" secondAttribute="topMargin" constant="3" id="p8v-NS-dci"/>
+                                                <constraint firstItem="mni-0R-Uo5" firstAttribute="top" secondItem="aDO-jf-knE" secondAttribute="topMargin" constant="3" id="wHt-0S-rGH"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="92g-7w-7Cs">
+                                        <rect key="frame" x="0.0" y="174" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="92g-7w-7Cs" id="Op1-Qn-akL">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Average Snoozes before completion" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V2c-fo-dRe">
+                                                    <rect key="frame" x="8" y="11" width="276" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Snoozes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Te3-eN-9Xd">
+                                                    <rect key="frame" x="526" y="11" width="66" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Te3-eN-9Xd" firstAttribute="top" secondItem="Op1-Qn-akL" secondAttribute="topMargin" constant="3" id="k5h-K6-uLd"/>
+                                                <constraint firstItem="V2c-fo-dRe" firstAttribute="top" secondItem="Op1-Qn-akL" secondAttribute="topMargin" constant="3" id="moe-KU-0yv"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="V2c-fo-dRe" secondAttribute="leading" id="sqO-3S-RXd"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Te3-eN-9Xd" secondAttribute="trailing" id="xQ4-eY-lej"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="o0z-TU-Tlt">
+                                        <rect key="frame" x="0.0" y="218" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="o0z-TU-Tlt" id="4bh-QT-QeW">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reminders completed before due date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pel-s0-e0U">
+                                                    <rect key="frame" x="8" y="11" width="278" height="20"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reminders" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aRR-RR-Rpo">
+                                                    <rect key="frame" x="514" y="11" width="78" height="20"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="aRR-RR-Rpo" secondAttribute="trailing" id="N8f-NG-eKl"/>
+                                                <constraint firstItem="aRR-RR-Rpo" firstAttribute="top" secondItem="4bh-QT-QeW" secondAttribute="topMargin" constant="3" id="XJG-gC-AVV"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="Pel-s0-e0U" secondAttribute="leading" id="Yyj-Ks-1se"/>
+                                                <constraint firstItem="Pel-s0-e0U" firstAttribute="top" secondItem="4bh-QT-QeW" secondAttribute="topMargin" constant="3" id="k0R-KM-LWV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Some numbers since you've started" id="Eql-wX-PVu">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="60" id="whH-G2-TRn">
+                                        <rect key="frame" x="0.0" y="313" width="600" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="whH-G2-TRn" id="81T-Wr-Grp">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHz-7M-Nk1">
+                                                    <rect key="frame" x="534" y="11" width="58" height="20"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of created reminders" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FT9-L8-5AK">
+                                                    <rect key="frame" x="8" y="11" width="275" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="275" id="6J1-7V-kcP"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="leadingMargin" secondItem="FT9-L8-5AK" secondAttribute="leading" id="1gM-sA-J4B"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="eHz-7M-Nk1" secondAttribute="trailing" id="AEP-kG-xPF"/>
+                                                <constraint firstItem="eHz-7M-Nk1" firstAttribute="top" secondItem="81T-Wr-Grp" secondAttribute="topMargin" constant="3" id="f07-Lg-qKs"/>
+                                                <constraint firstItem="FT9-L8-5AK" firstAttribute="top" secondItem="81T-Wr-Grp" secondAttribute="topMargin" constant="3" id="uxq-V1-q9H"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ujX-Mf-GsR">
+                                        <rect key="frame" x="0.0" y="373" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ujX-Mf-GsR" id="Zu4-B5-plF">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Completed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0a-sU-vxs">
+                                                    <rect key="frame" x="512" y="11" width="80" height="20"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of completed reminders" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iBx-UU-prY">
+                                                    <rect key="frame" x="8" y="11" width="236" height="20"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="X0a-sU-vxs" firstAttribute="top" secondItem="Zu4-B5-plF" secondAttribute="topMargin" constant="3" id="hTT-1z-FZF"/>
+                                                <constraint firstItem="iBx-UU-prY" firstAttribute="top" secondItem="Zu4-B5-plF" secondAttribute="topMargin" constant="3" id="lnD-GX-NCf"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="X0a-sU-vxs" secondAttribute="trailing" id="psv-A3-bbS"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="iBx-UU-prY" secondAttribute="leading" id="upP-eg-zQJ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="9nG-n6-ZvT" id="hdU-ot-ArN"/>
+                            <outlet property="delegate" destination="9nG-n6-ZvT" id="3sT-of-aVY"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="6zI-U9-OSF"/>
+                    <connections>
+                        <outlet property="averageSnoozeBeforeCompletionCell" destination="92g-7w-7Cs" id="XKa-KC-NcP"/>
+                        <outlet property="averageSnoozeBeforeCompletionLabel" destination="Te3-eN-9Xd" id="fV2-MJ-ejX"/>
+                        <outlet property="averageTimeBetweenCreationCompletionCell" destination="ksF-V7-iEo" id="yJx-eu-hnf"/>
+                        <outlet property="averageTimeBetweenCreationCompletionLabel" destination="9LA-Ge-tA7" id="tr7-KQ-4xs"/>
+                        <outlet property="nbOfRemindersCompletedBeforeDueDate" destination="o0z-TU-Tlt" id="b9Z-ky-6NU"/>
+                        <outlet property="nbOfRemindersCompletedBeforeDueDateLabel" destination="aRR-RR-Rpo" id="xz9-lN-4oK"/>
+                        <outlet property="numberOfCompletedRemindersLabel" destination="X0a-sU-vxs" id="Kzb-9j-V3r"/>
+                        <outlet property="numberOfCreatedRemindersLabel" destination="eHz-7M-Nk1" id="Ugu-0c-ycl"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Na0-al-yRa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="953" y="-343"/>
+            <point key="canvasLocation" x="930" y="-355"/>
         </scene>
         <!--Reminders-->
         <scene sceneID="KIt-cR-Yf9">
@@ -1163,7 +1329,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="sqL-KJ-SyX" kind="relationship" relationship="rootViewController" id="MWj-di-AyO"/>
+                        <segue destination="9nG-n6-ZvT" kind="relationship" relationship="rootViewController" id="IR6-dq-ZYQ"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fYB-rE-Ydn" userLabel="First Responder" sceneMemberID="firstResponder"/>

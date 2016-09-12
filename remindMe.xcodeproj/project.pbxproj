@@ -53,7 +53,7 @@
 		71EE90CA1D2A27FA00431D56 /* AllRemindersViewController+ToolbarActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE90C91D2A27FA00431D56 /* AllRemindersViewController+ToolbarActions.swift */; };
 		71EE90CC1D2A28C400431D56 /* AllRemindersViewController+FetchedResultsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE90CB1D2A28C400431D56 /* AllRemindersViewController+FetchedResultsDelegate.swift */; };
 		71EE90CE1D2A292400431D56 /* AllRemindersViewController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71EE90CD1D2A292400431D56 /* AllRemindersViewController+TableView.swift */; };
-		71F07E7E1D658FDC0070F932 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F07E7D1D658FDC0070F932 /* StatisticsViewController.swift */; };
+		71F07E7E1D658FDC0070F932 /* ProductivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F07E7D1D658FDC0070F932 /* ProductivityViewController.swift */; };
 		71F6A5361CF6C0FD0010C135 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F6A5351CF6C0FD0010C135 /* NotificationHandler.swift */; };
 		71F6A5381CF6ECDE0010C135 /* CoreDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F6A5371CF6ECDE0010C135 /* CoreDataHandler.swift */; };
 		71FB1F7F1D4893E400951A25 /* CustomSnoozeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FB1F7E1D4893E400951A25 /* CustomSnoozeController.swift */; };
@@ -110,7 +110,7 @@
 		71EE90CB1D2A28C400431D56 /* AllRemindersViewController+FetchedResultsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllRemindersViewController+FetchedResultsDelegate.swift"; sourceTree = "<group>"; };
 		71EE90CD1D2A292400431D56 /* AllRemindersViewController+TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllRemindersViewController+TableView.swift"; sourceTree = "<group>"; };
 		71EF41881D5B153800A7B84B /* DataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel 2.xcdatamodel"; sourceTree = "<group>"; };
-		71F07E7D1D658FDC0070F932 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
+		71F07E7D1D658FDC0070F932 /* ProductivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductivityViewController.swift; sourceTree = "<group>"; };
 		71F6A5351CF6C0FD0010C135 /* NotificationHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
 		71F6A5371CF6ECDE0010C135 /* CoreDataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHandler.swift; sourceTree = "<group>"; };
 		71FB1F7E1D4893E400951A25 /* CustomSnoozeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSnoozeController.swift; sourceTree = "<group>"; };
@@ -273,7 +273,7 @@
 		71F07E7C1D658FA50070F932 /* Stats */ = {
 			isa = PBXGroup;
 			children = (
-				71F07E7D1D658FDC0070F932 /* StatisticsViewController.swift */,
+				71F07E7D1D658FDC0070F932 /* ProductivityViewController.swift */,
 			);
 			name = Stats;
 			sourceTree = "<group>";
@@ -383,7 +383,7 @@
 				7175A32B1D2B6CAB00076370 /* AllRemindersViewController+TabBarDelegate.swift in Sources */,
 				716DCD3B1D410F1700A13BB5 /* AllRemindersViewController+PopupDelegate.swift in Sources */,
 				71D86C421D067BEB002A5CAE /* SnoozePickerViewController.swift in Sources */,
-				71F07E7E1D658FDC0070F932 /* StatisticsViewController.swift in Sources */,
+				71F07E7E1D658FDC0070F932 /* ProductivityViewController.swift in Sources */,
 				7182F9041D40836E00E6C18E /* PopupViewController.swift in Sources */,
 				71DDE3B51D12908B0046F8DD /* ReminderCellBackground.swift in Sources */,
 				71F6A5381CF6ECDE0010C135 /* CoreDataHandler.swift in Sources */,

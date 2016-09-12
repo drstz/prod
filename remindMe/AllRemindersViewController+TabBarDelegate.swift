@@ -18,7 +18,7 @@ extension AllRemindersViewController: UITabBarControllerDelegate  {
         if viewController.tabBarItem.tag == 1 {
             print("Selecting Profile Tab")
             let navigationController = viewController as! UINavigationController
-            let statisticViewController = navigationController.viewControllers[0] as! StatisticsViewController
+            let statisticViewController = navigationController.viewControllers[0] as! ProductivityViewController
             
             // Make sure only one view controller is the delegate
             statisticViewController.tabBarController?.delegate = statisticViewController

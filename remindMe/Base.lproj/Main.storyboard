@@ -653,7 +653,7 @@
             </objects>
             <point key="canvasLocation" x="953" y="-1113"/>
         </scene>
-        <!--Reminder Comment View Controller-->
+        <!--Comment-->
         <scene sceneID="VQc-1v-771">
             <objects>
                 <viewController id="6z8-W8-EYl" customClass="ReminderCommentViewController" customModule="remindMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -666,8 +666,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="14s-TX-ycf">
-                                <rect key="frame" x="20" y="72" width="560" height="456"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="282"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -675,13 +674,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="leadingMargin" secondItem="14s-TX-ycf" secondAttribute="leading" id="8aJ-ae-LZe"/>
-                            <constraint firstItem="14s-TX-ycf" firstAttribute="centerX" secondItem="I70-gi-2nS" secondAttribute="centerX" id="DvH-Ck-dHO"/>
-                            <constraint firstItem="14s-TX-ycf" firstAttribute="top" secondItem="4ll-lE-Iii" secondAttribute="bottom" constant="8" id="deA-jt-hH1"/>
-                            <constraint firstItem="14s-TX-ycf" firstAttribute="centerY" secondItem="I70-gi-2nS" secondAttribute="centerY" id="kPJ-LT-pQV"/>
+                            <constraint firstItem="14s-TX-ycf" firstAttribute="top" secondItem="I70-gi-2nS" secondAttribute="top" id="6QW-m6-H5u"/>
+                            <constraint firstItem="FEc-0C-LHM" firstAttribute="top" secondItem="14s-TX-ycf" secondAttribute="bottom" constant="318" id="TxF-bt-fH6"/>
+                            <constraint firstItem="14s-TX-ycf" firstAttribute="leading" secondItem="I70-gi-2nS" secondAttribute="leading" id="gg4-d2-WsK"/>
+                            <constraint firstAttribute="trailing" secondItem="14s-TX-ycf" secondAttribute="trailing" id="xGk-ug-7Oq"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="M4N-cJ-eHL">
+                    <navigationItem key="navigationItem" title="Comment" id="M4N-cJ-eHL">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="xEI-fR-XhA">
                             <connections>
                                 <action selector="cancel" destination="6z8-W8-EYl" id="SlM-nM-B21"/>
@@ -743,21 +742,28 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="GfO-9T-ArC" style="IBUITableViewCellStyleDefault" id="7oh-oI-TDq">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="7oh-oI-TDq">
                                         <rect key="frame" x="0.0" y="143" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7oh-oI-TDq" id="4K2-KJ-BFW">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GfO-9T-ArC">
-                                                    <rect key="frame" x="15" y="0.0" width="570" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H53-d9-nl2">
+                                                    <rect key="frame" x="8" y="8" width="584" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="7hb-8y-bI7"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="leadingMargin" secondItem="H53-d9-nl2" secondAttribute="leading" id="7IV-Qb-4bh"/>
+                                                <constraint firstAttribute="topMargin" secondItem="H53-d9-nl2" secondAttribute="top" id="8d9-iv-Kop"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="H53-d9-nl2" secondAttribute="trailing" id="AQo-gi-9el"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -880,7 +886,7 @@
                         <outlet property="recurringDateLabel" destination="LRS-Z0-BQE" id="y31-A7-5fn"/>
                         <outlet property="recurringPicker" destination="RsU-xJ-Jjh" id="CW8-fo-LW7"/>
                         <outlet property="recurringPickerCell" destination="30K-sv-yeC" id="0kz-l8-r4z"/>
-                        <outlet property="reminderCommentField" destination="GfO-9T-ArC" id="DTE-CR-2m4"/>
+                        <outlet property="reminderCommentField" destination="H53-d9-nl2" id="gGb-yw-UUC"/>
                         <outlet property="reminderCommentFieldCell" destination="7oh-oI-TDq" id="cea-zG-87Q"/>
                         <outlet property="reminderNameField" destination="dvW-lG-G6W" id="xbw-oL-hrw"/>
                         <segue destination="y8z-b7-yRZ" kind="presentation" identifier="AddComment" id="nxO-Ts-y65"/>

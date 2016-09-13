@@ -323,7 +323,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         }
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openCommentView))
-        reminderCommentField.addGestureRecognizer(gestureRecognizer)
+        reminderCommentFieldCell.addGestureRecognizer(gestureRecognizer)
+        
+        reminderCommentField.textColor = UIColor.lightGrayColor()
         
     }
     
@@ -503,7 +505,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50
+        if indexPath.section == 0 && indexPath.row == 1 {
+            return 110
+        } else {
+            return 50
+        }
+        
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

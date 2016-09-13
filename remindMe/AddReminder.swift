@@ -175,7 +175,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         
         // Comment
         if let comment = comment {
-            reminder?.comment = comment
+            if comment.characters.count != 0 {
+                reminder?.comment = comment
+            } else {
+                reminder?.comment = nil
+            }
+            
         }
         
         // Set Dates
@@ -240,7 +245,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         
         // Comment
         if let comment = comment {
-            reminder.comment = comment
+            if comment.characters.count != 0 {
+                reminder.comment = comment
+            } else {
+                reminder.comment = nil
+            }
         } else {
             reminder.comment = nil
         }

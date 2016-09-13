@@ -42,6 +42,10 @@ class ReminderCommentViewController: UIViewController {
         }
     }
     
+    @IBAction func delete() {
+        commentField.text = ""
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         commentField.becomeFirstResponder()

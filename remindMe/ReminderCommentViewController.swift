@@ -51,7 +51,7 @@ class ReminderCommentViewController: UIViewController {
         commentField.becomeFirstResponder()
         
         if previousComment?.characters.count == 0 {
-            commentField.text = "Enter extra details here"
+            commentField.text = "Enter a short comment here"
             commentField.selectedRange = NSMakeRange(0, commentField.text.characters.count)
         } else {
             commentField.text = previousComment
@@ -69,8 +69,15 @@ extension ReminderCommentViewController: UITextViewDelegate {
             return false
         }
         let newLength = currentCharacterCount + text.characters.count - range.length
-        title = String(maximumLength - newLength) + " " + "Cs" + " " + "left"
+        let remainingCharacters = maximumLength - newLength
+        if remainingCharacters == -1 {
+            title = String(maximumLength - newLength + 1) + " " + "characters" + " " + "left"
+        } else {
+            title = String(maximumLength - newLength) + " " + "characters" + " " + "left"
+        }
+        
         return newLength <= maximumLength
     }
+    
     
 }

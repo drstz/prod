@@ -319,7 +319,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         enableDoneButton()
         
         if comment == nil {
-            reminderCommentField.text = "Enter extra details here"
+            reminderCommentField.text = "Tap to enter extra details here"
         }
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openCommentView))
@@ -382,13 +382,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         super.viewWillAppear(animated)
         updateRepeatLabel()
         
-//        if reminderCommentField.text.characters.count == 0 {
-//            reminderCommentField.hidden = true
-//            reminderCommentFieldCell.hidden = true
-//        } else {
-//            reminderCommentField.hidden = false
-//            reminderCommentFieldCell.hidden = false
-//        }
+        if reminderToEdit != nil {
+            doneBarButton.enabled = true
+        }
     }
     
     // MARK: - Date Picker View Controller Delegate
@@ -448,7 +444,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         if self.comment!.characters.count != 0 {
             reminderCommentField.text = self.comment
         } else {
-            reminderCommentField.text = "Enter extra details here"
+            reminderCommentField.text = "Tap to enter extra details here"
         }
         
         dismissViewControllerAnimated(true, completion: nil)
@@ -566,6 +562,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         } else {
             doneBarButton.enabled = false
         }
+        
+        if reminderToEdit != nil && reminderNameField.text?.characters.count != 0 {
+            doneBarButton.enabled = true
+        }
     }
 
     // MARK: - Text Field
@@ -641,15 +641,15 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
                 case 1:
                     stringOfDays.appendContentsOf("Sun")
                 case 2:
-                    stringOfDays.appendContentsOf("Mon")
+                    stringOfDays.appendContentsOf("M")
                 case 3:
-                    stringOfDays.appendContentsOf("Tue")
+                    stringOfDays.appendContentsOf("T")
                 case 4:
-                    stringOfDays.appendContentsOf("Wed")
+                    stringOfDays.appendContentsOf("W")
                 case 5:
-                    stringOfDays.appendContentsOf("Thu")
+                    stringOfDays.appendContentsOf("Th")
                 case 6:
-                    stringOfDays.appendContentsOf("Fri")
+                    stringOfDays.appendContentsOf("F")
                 case 7:
                     stringOfDays.appendContentsOf("Sat")
                 default:

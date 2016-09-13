@@ -56,5 +56,18 @@ class ReminderCommentViewController: UIViewController {
             commentField.text = previousComment
         }
     }
+}
+
+extension ReminderCommentViewController: UITextViewDelegate {
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        let maximumLength = 150
+        let currentCharacterCount = textView.text?.characters.count ?? 0
+        if (range.length + range.location > currentCharacterCount){
+            return false
+        }
+        let newLength = currentCharacterCount + text.characters.count - range.length
+        title = String(maximumLength - newLength) + " " + "Cs" + " " + "left"
+        return newLength <= maximumLength
+    }
     
 }

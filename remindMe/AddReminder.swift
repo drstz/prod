@@ -444,9 +444,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     }
     
     func reminderCommentViewControllerDidSave(controller: ReminderCommentViewController, comment: String) {
-        
         self.comment = comment
-        reminderCommentField.text = self.comment
+        if self.comment!.characters.count != 0 {
+            reminderCommentField.text = self.comment
+        } else {
+            reminderCommentField.text = "Enter extra details here"
+        }
         
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -492,6 +495,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             
             if let comment = comment {
                 reminderCommentViewController?.previousComment = comment
+            } else {
+                reminderCommentViewController?.previousComment = ""
             }
             
             

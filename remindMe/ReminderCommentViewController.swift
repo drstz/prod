@@ -50,11 +50,14 @@ class ReminderCommentViewController: UIViewController {
         super.viewDidLoad()
         commentField.becomeFirstResponder()
         
-        if previousComment == nil {
+        if previousComment?.characters.count == 0 {
             commentField.text = "Enter extra details here"
+            commentField.selectedRange = NSMakeRange(0, commentField.text.characters.count)
         } else {
             commentField.text = previousComment
         }
+        
+        
     }
 }
 

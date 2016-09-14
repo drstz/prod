@@ -45,6 +45,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Productivity"
         
         averageTimeBetweenCreationCompletionCell.detailTextLabel?.textColor = UIColor.whiteColor()
         
@@ -84,7 +85,6 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        // tabBarController?.delegate = nil
     }
     
     // MARK: - Tableview
@@ -100,7 +100,6 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.textColor = UIColor.whiteColor()
-        // header.titleLabel.textColor = UIColor.whiteColor()
     }
     
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {

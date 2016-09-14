@@ -288,19 +288,47 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
             for day in selectedDays {
                 switch day {
                 case 1:
-                    stringOfDays.appendContentsOf("Sun")
+                    var day = "Sunday"
+                    if selectedDays.count != 1 {
+                        day = "Sun"
+                    }
+                    stringOfDays.appendContentsOf(day)
                 case 2:
-                    stringOfDays.appendContentsOf("Mon")
+                    var day = "Monday"
+                    if selectedDays.count != 1 {
+                        day = "M"
+                    }
+                    stringOfDays.appendContentsOf(day)
                 case 3:
-                    stringOfDays.appendContentsOf("Tue")
+                    var day = "Tuesday"
+                    if selectedDays.count != 1 {
+                        day = "T"
+                    }
+                    stringOfDays.appendContentsOf(day)
                 case 4:
-                    stringOfDays.appendContentsOf("Wed")
+                    var day = "Wednesday"
+                    if selectedDays.count != 1 {
+                        day = "W"
+                    }
+                    stringOfDays.appendContentsOf(day)
                 case 5:
-                    stringOfDays.appendContentsOf("Thu")
+                    var day = "Thursday"
+                    if selectedDays.count != 1 {
+                        day = "Th"
+                    }
+                    stringOfDays.appendContentsOf(day)
                 case 6:
-                    stringOfDays.appendContentsOf("Fri")
+                    var day = "Friday"
+                    if selectedDays.count != 1 {
+                        day = "F"
+                    }
+                    stringOfDays.appendContentsOf(day)
                 case 7:
-                    stringOfDays.appendContentsOf("Sat")
+                    var day = "Saturday"
+                    if selectedDays.count != 1 {
+                        day = "Sat"
+                    }
+                    stringOfDays.appendContentsOf(day)
                 default:
                     print("Error appending strings of days")
                 }

@@ -198,11 +198,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         reminder?.selectedDays = NSMutableArray(array: selectedDays)
         
         // Update Repeat Method
-        reminder?.useDays = usingDayPattern
-        reminder?.usePattern = usingCustomPattern
+        reminder?.usesDayPattern = usingDayPattern
+        reminder?.usesCustomPattern = usingCustomPattern
         
         // Set if recurring
-        if reminder?.useDays == true || reminder?.usePattern == true {
+        if reminder?.usesDayPattern == true || reminder?.usesCustomPattern == true {
             reminder?.setRecurring(true)
         } else {
             reminder?.setRecurring(false)
@@ -227,10 +227,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         reminder?.addIDtoReminder()
         
         // Autosnooze
-        reminder?.autoSnooze = autoSnoozeSwitch.on
+        reminder?.willAutoSnooze = autoSnoozeSwitch.on
         
         // Set amount of snoozes
-        reminder?.nbOfSnoozes = NSNumber(integer: 0)
+        reminder?.timesSnoozed = NSNumber(integer: 0)
         
         // Set creation date
         reminder?.creationDate = NSDate()
@@ -271,17 +271,17 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         reminder.selectedDays = NSMutableArray(array: selectedDays)
         
         // Update Repeat Method
-        reminder.useDays = usingDayPattern
-        reminder.usePattern = usingCustomPattern
+        reminder.usesDayPattern = usingDayPattern
+        reminder.usesCustomPattern = usingCustomPattern
         
-        if reminder.useDays == true || reminder.usePattern == true {
+        if reminder.usesDayPattern == true || reminder.usesCustomPattern == true {
             reminder.setRecurring(true)
         } else {
             reminder.setRecurring(false)
         }
         
         // Autosnooze
-        reminder.autoSnooze = autoSnoozeSwitch.on
+        reminder.willAutoSnooze = autoSnoozeSwitch.on
         
         // Do not set past reminders to incomplete
         // Do not set notifications for reminders that are already in the past
@@ -379,14 +379,14 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         setDueDateLabel(with: selectedDate!)
         
         
-        if reminder.isRecurring == true {
+        if reminder.repeats == true {
             
             // Update Repeat Method
-            usingCustomPattern = reminder.usePattern as Bool
-            usingDayPattern = reminder.useDays as Bool
+            usingCustomPattern = reminder.usesCustomPattern as Bool
+            usingDayPattern = reminder.usesDayPattern as Bool
             
             // Update repeat interval
-            if let interval = reminderToEdit?.typeOfInterval, let frequency = reminderToEdit?.everyAmount {
+            if let interval = reminderToEdit?.interval, let frequency = reminderToEdit?.frequency {
                 selectedInterval = interval
                 selectedFrequency = frequency as Int
             }
@@ -396,7 +396,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         }
         
         // Auto snooze switch
-        autoSnoozeSwitch.on = reminder.autoSnooze as Bool
+        autoSnoozeSwitch.on = reminder.willAutoSnooze as Bool
     }
     
     override func viewWillAppear(animated: Bool) {

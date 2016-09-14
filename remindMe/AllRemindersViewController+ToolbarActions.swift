@@ -132,7 +132,7 @@ extension AllRemindersViewController {
                 }
             }
             
-            if reminder.isComplete == true {
+            if reminder.wasCompleted == true {
                 isComplete = true
             } else {
                 isComplete = false

@@ -204,7 +204,7 @@ class NotificationHandler {
     func setAutoSnooze(notification: UILocalNotification, reminder: Reminder) {
         print(#function)
         let userDefaults = NSUserDefaults.standardUserDefaults()
-        let autoSnoozeOn = reminder.autoSnooze as Bool
+        let autoSnoozeOn = reminder.willAutoSnooze as Bool
         if autoSnoozeOn {
             let anInterval = userDefaults.objectForKey("AutoSnoozeTime") as! String
             let repeatInterval = getRepeatInterval(anInterval)

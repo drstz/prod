@@ -13,38 +13,44 @@ import Foundation
 import CoreData
 
 extension Reminder {
-
-    @NSManaged var dueDate: NSDate
-    @NSManaged var creationDate: NSDate
-    @NSManaged var completionDate: NSDate?
     
-    @NSManaged var nbOfSnoozes: NSNumber
+    // Name
     
     @NSManaged var name: String
     @NSManaged var comment: String?
     
-    @NSManaged var usePattern: NSNumber
-    @NSManaged var typeOfInterval: String?
-    @NSManaged var everyAmount: NSNumber?
+    // Details
+    @NSManaged var creationDate: NSDate
+    @NSManaged var idNumber: NSNumber
+    @NSManaged var list: List
     
-    @NSManaged var useDays: NSNumber
+    @NSManaged var willAutoSnooze: NSNumber
+    
+    // Dates
+    @NSManaged var dueDate: NSDate
+    
+    @NSManaged var repeats: NSNumber
+
+    @NSManaged var usesCustomPattern: NSNumber
+    @NSManaged var interval: String?
+    @NSManaged var frequency: NSNumber?
+    
+    @NSManaged var usesDayPattern: NSNumber
     @NSManaged var selectedDays: NSMutableArray
     
-    @NSManaged var idNumber: NSNumber
-    /// Blah blah
-    @NSManaged var isComplete: NSNumber 
-    @NSManaged var isRecurring: NSNumber
     @NSManaged var isFavorite: NSNumber?
     
-    @NSManaged var autoSnooze: NSNumber
- 
-    @NSManaged var list: List
+    @NSManaged var timesSnoozed: NSNumber
+    
+    // Completion
+    @NSManaged var wasCompleted: NSNumber
+    @NSManaged var completionDate: NSDate?
     
     // Seperate reminders into different sections
     var section: String? {
         print("Creating section")
         
-        if isDue() && isComplete == false {
+        if isDue() && wasCompleted == false {
             return "Due"
         }
         

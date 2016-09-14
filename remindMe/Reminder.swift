@@ -30,7 +30,7 @@ class Reminder: NSManagedObject {
             notificationHandler.scheduleNotifications(self)
             print("Completed Reminder - New One Scheduled")
         } else {
-            isComplete = true
+            wasCompleted = true
             notificationHandler.deleteReminderNotifications(self)
         }
         
@@ -45,7 +45,7 @@ class Reminder: NSManagedObject {
             list.increaseNumberOfRemindersCompletedBeforeDueDate()
         }
         
-        list.increaseTotalTimesSnoozedBeforeCompletion(nbOfSnoozes.integerValue)
+        list.increaseTotalTimesSnoozedBeforeCompletion(timesSnoozed.integerValue)
         
     }
     
@@ -63,9 +63,9 @@ class Reminder: NSManagedObject {
         setDate(newDate)
         
         notificationHandler.scheduleNotifications(self, snooze: true)
-        var nbOfSnoozesAsInt = nbOfSnoozes.integerValue
+        var nbOfSnoozesAsInt = timesSnoozed.integerValue
         nbOfSnoozesAsInt += 1
-        nbOfSnoozes = NSNumber(integer: nbOfSnoozesAsInt)
+        timesSnoozed = NSNumber(integer: nbOfSnoozesAsInt)
         
         
     }
@@ -84,7 +84,7 @@ class Reminder: NSManagedObject {
     }
     
     func reminderIsRecurring() -> Bool {
-        if isRecurring == 0 {
+        if repeats == 0 {
             return false
         } else {
             return true
@@ -100,7 +100,7 @@ class Reminder: NSManagedObject {
     }
     
     func reminderIsComplete() -> Bool {
-        if isComplete == 0 {
+        if wasCompleted == 0 {
             return false
         } else {
             return true
@@ -108,8 +108,8 @@ class Reminder: NSManagedObject {
     }
     
     func setNewDueDate() -> NSDate {
-        if usePattern == true {
-            return createNewDate(dueDate, typeOfInterval: typeOfInterval!, everyAmount: everyAmount! as Int)
+        if usesCustomPattern == true {
+            return createNewDate(dueDate, typeOfInterval: interval!, everyAmount: frequency! as Int)
         } else {
             return setNewDay()
         }
@@ -177,15 +177,15 @@ class Reminder: NSManagedObject {
 //    }
     
     func setRepeatInterval(interval: String?) {
-        typeOfInterval = interval
+        self.interval = interval
     }
     
     func setRepeatFrequency(frequency: Int?) {
-        everyAmount = frequency
+        self.frequency = frequency
     }
     
     func setCompletionStatus(status: Bool) {
-        isComplete = status
+        wasCompleted = status
     }
     
     func setFavorite(choice: Bool) {
@@ -193,7 +193,7 @@ class Reminder: NSManagedObject {
     }
     
     func setRecurring(choice: Bool) {
-        isRecurring = choice as NSNumber
+        repeats = choice as NSNumber
     }
     
     func addToList(list: List) {

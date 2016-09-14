@@ -9,23 +9,23 @@
         <relationship name="reminders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Reminder" inverseName="list" inverseEntity="Reminder" syncable="YES"/>
     </entity>
     <entity name="Reminder" representedClassName=".Reminder" syncable="YES">
-        <attribute name="autoSnooze" attributeType="Boolean" syncable="YES"/>
         <attribute name="comment" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="completionDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="creationDate" attributeType="Date" syncable="YES"/>
         <attribute name="dueDate" attributeType="Date" syncable="YES"/>
-        <attribute name="everyAmount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="frequency" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="idNumber" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="isComplete" attributeType="Boolean" syncable="YES"/>
+        <attribute name="interval" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isFavorite" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="isRecurring" attributeType="Boolean" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
-        <attribute name="nbOfSnoozes" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="repeats" attributeType="Boolean" syncable="YES"/>
         <attribute name="section" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
         <attribute name="selectedDays" attributeType="Transformable" syncable="YES"/>
-        <attribute name="typeOfInterval" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="useDays" attributeType="Boolean" syncable="YES"/>
-        <attribute name="usePattern" attributeType="Boolean" syncable="YES"/>
+        <attribute name="timesSnoozed" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="usesCustomPattern" attributeType="Boolean" syncable="YES"/>
+        <attribute name="usesDayPattern" attributeType="Boolean" syncable="YES"/>
+        <attribute name="wasCompleted" attributeType="Boolean" syncable="YES"/>
+        <attribute name="willAutoSnooze" attributeType="Boolean" syncable="YES"/>
         <relationship name="list" maxCount="1" deletionRule="Nullify" destinationEntity="List" inverseName="reminders" inverseEntity="List" syncable="YES"/>
     </entity>
     <elements>

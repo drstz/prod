@@ -27,6 +27,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     @IBOutlet weak var averageTimeBetweenCreationCompletionLabel: UILabel!
     @IBOutlet weak var averageSnoozeBeforeCompletionLabel: UILabel!
     @IBOutlet weak var nbOfRemindersCompletedBeforeDueDateLabel: UILabel!
+    @IBOutlet weak var percentageRemindersSnoozedBeforeCompletion: UILabel!
     
     // Stats
     @IBOutlet weak var numberOfCreatedRemindersLabel: UILabel!
@@ -50,6 +51,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         nbOfRemindersCompletedBeforeDueDateLabel.textColor = UIColor.lightGrayColor()
         averageTimeBetweenCreationCompletionLabel.textColor = UIColor.lightGrayColor()
         averageSnoozeBeforeCompletionLabel.textColor = UIColor.lightGrayColor()
+        percentageRemindersSnoozedBeforeCompletion.textColor = UIColor.whiteColor()
         
         numberOfCreatedRemindersLabel.textColor = UIColor.lightGrayColor()
 
@@ -71,6 +73,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         calculateRemindersCompletedBeforeDueDate(reminders)
         updateNumberOfCreatedRemindersLabel()
         updateNumberOfCompletedRemindersLabel()
+        calcutePercentageOfRemindersSnoozed()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -149,19 +152,19 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     
     func calculateAverageTimeBetweenDueDateCompletion(reminders: [Reminder]) {
         var unit = "minutes"
-        var position = "after"
         
-        let totalTimeBetweenCreationAndCompletionDates = list.differenceBetweenDueCompletionDate.integerValue
-        let nbOfCompletedReminders = list.numberOfCompletedReminders.integerValue
+        
+        let totalTimeBetweenCreationAndCompletionDates = list.differenceBetweenDueCompletionDate.floatValue
+        let nbOfCompletedReminders = list.numberOfCompletedReminders.floatValue
         if nbOfCompletedReminders != 0 {
             var averageTimeBetweenDates = totalTimeBetweenCreationAndCompletionDates / nbOfCompletedReminders
             print("Average time is : \(averageTimeBetweenDates)")
-            if (averageTimeBetweenDates * -1) > 60 {
+            if averageTimeBetweenDates > 60 {
                 
                 averageTimeBetweenDates = averageTimeBetweenDates / 60
                 unit = "hours"
                 
-                if (averageTimeBetweenDates * -1) > 24{
+                if averageTimeBetweenDates > 24{
                     averageTimeBetweenDates = averageTimeBetweenDates / 24
                     unit = "days"
                 }
@@ -169,9 +172,15 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
             }
             if averageTimeBetweenDates < 0 {
                 averageTimeBetweenDates = averageTimeBetweenDates * -1
-                position = "before"
+                
             }
-            averageTimeBetweenCreationCompletionLabel.text = String(averageTimeBetweenDates) + " " + unit + " " + position
+            
+            if averageTimeBetweenDates <= 1 {
+                 averageTimeBetweenCreationCompletionLabel.text = "<1 \(unit)"
+            } else {
+                averageTimeBetweenCreationCompletionLabel.text = String(averageTimeBetweenDates) + " " + unit
+            }
+            
         } else {
             averageTimeBetweenCreationCompletionLabel.text = "No data"
         }
@@ -180,8 +189,15 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     }
     
     func calculateRemindersCompletedBeforeDueDate(reminders: [Reminder]) {
-        let nbOfRemindersCompletedBeforeDueDate = list.numberOfRemindersCompletedBeforeDueDate.integerValue
-        nbOfRemindersCompletedBeforeDueDateLabel.text = String(nbOfRemindersCompletedBeforeDueDate)
+        let nbOfRemindersCompletedBeforeDueDate = list.numberOfRemindersCompletedBeforeDueDate.floatValue
+        let nbOfCompletedReminders = list.numberOfCompletedReminders.floatValue
+        if nbOfRemindersCompletedBeforeDueDate != 0 {
+            print("\(nbOfRemindersCompletedBeforeDueDate) / \(nbOfCompletedReminders) * 100")
+            let percentageOfRemindersCompletedBeforeDueDate = Int((nbOfRemindersCompletedBeforeDueDate / nbOfCompletedReminders) * 100.0)
+            nbOfRemindersCompletedBeforeDueDateLabel.text = String(percentageOfRemindersCompletedBeforeDueDate) + "%"
+        } else {
+            nbOfRemindersCompletedBeforeDueDateLabel.text = "None"
+        }
     }
     
     func updateNumberOfCreatedRemindersLabel() {
@@ -192,6 +208,21 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     func updateNumberOfCompletedRemindersLabel() {
         let nbOfCompletedReminders = list.numberOfCompletedReminders.integerValue
         numberOfCompletedRemindersLabel.text = String(nbOfCompletedReminders)
+    }
+    
+    func calcutePercentageOfRemindersSnoozed() {
+        let nbOfCompletedReminders = list.numberOfCompletedReminders.floatValue
+        let nbOfRemindersSnoozed = list.numberOfSnoozedReminders.floatValue
+        
+        if nbOfCompletedReminders != 0 {
+            print("\(nbOfRemindersSnoozed) / \(nbOfCompletedReminders) * 100")
+            let percentageOfSnoozedReminders = Int((nbOfRemindersSnoozed / nbOfCompletedReminders) * 100.0)
+            percentageRemindersSnoozedBeforeCompletion.text = String(percentageOfSnoozedReminders) + "%"
+        } else {
+            percentageRemindersSnoozedBeforeCompletion.text = "No data"
+        }
+        
+    
     }
     
     

@@ -497,7 +497,7 @@ class AllRemindersViewController: UIViewController {
         let sortDescriptor = NSSortDescriptor(key: "dueDate", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", "isComplete", false, "dueDate", now)
+        let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", "wasCompleted", false, "dueDate", now)
         fetchRequest.predicate = predicate
         
         let fetchedResultsController = NSFetchedResultsController(

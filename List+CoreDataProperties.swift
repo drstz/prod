@@ -16,6 +16,7 @@ extension List {
     /// Number of created reminders. This shouldn't change
     @NSManaged var numberOfReminders: NSNumber
     @NSManaged var numberOfCompletedReminders: NSNumber
+    @NSManaged var numberOfSnoozedReminders: NSNumber
     
     @NSManaged var numberOfRemindersCompletedBeforeDueDate: NSNumber
     

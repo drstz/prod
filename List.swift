@@ -42,4 +42,10 @@ class List: NSManagedObject {
         differenceToModify += difference
         differenceBetweenDueCompletionDate = NSNumber(integer: differenceToModify)
     }
+    
+    func increaseNbOfSnoozedReminders() {
+        var nbOfRemindersSnoozed = numberOfSnoozedReminders.integerValue
+        nbOfRemindersSnoozed += 1
+        numberOfSnoozedReminders = NSNumber(integer: nbOfRemindersSnoozed)
+    }
 }

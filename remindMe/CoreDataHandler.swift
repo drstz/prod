@@ -231,7 +231,7 @@ class CoreDataHandler {
     func filterStatus(status: ReminderStatus) -> String {
         switch status {
         case .Complete, .Incomplete:
-            return "isComplete"
+            return "wasCompleted"
         }
     }
 

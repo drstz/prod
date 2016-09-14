@@ -5,6 +5,7 @@
         <attribute name="numberOfCompletedReminders" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="numberOfReminders" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="numberOfRemindersCompletedBeforeDueDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="numberOfSnoozedReminders" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="totalTimesSnoozed" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="reminders" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Reminder" inverseName="list" inverseEntity="Reminder" syncable="YES"/>
     </entity>
@@ -29,7 +30,7 @@
         <relationship name="list" maxCount="1" deletionRule="Nullify" destinationEntity="List" inverseName="reminders" inverseEntity="List" syncable="YES"/>
     </entity>
     <elements>
-        <element name="List" positionX="-792" positionY="-57" width="128" height="133"/>
+        <element name="List" positionX="-792" positionY="-57" width="128" height="150"/>
         <element name="Reminder" positionX="-405" positionY="-69" width="128" height="315"/>
     </elements>
 </model>

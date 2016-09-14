@@ -31,12 +31,13 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     weak var delegate: PatternPickerViewControllerDelegate?
     
     // MARK: Pattern
-    var selectedFrequency: Int? = 1
-    var selectedInterval: String? = "minute"
+    var selectedFrequency: Int?
+    var selectedInterval: String?
     
     // MARK: Actions
     
     @IBAction func done() {
+        print(#function)
         if let interval = selectedInterval, let frequency = selectedFrequency {
             print("Going back with \(interval) and \(frequency)")
             delegate?.patternPickerViewControllerDidChoosePattern(self, frequency: frequency, interval: interval)
@@ -47,6 +48,12 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     @IBAction func close() {
         dismissViewControllerAnimated(true, completion: nil)
+        if let interval = selectedInterval, let frequency = selectedFrequency {
+            print("Going back with \(interval) and \(frequency)")
+            delegate?.patternPickerViewControllerDidChoosePattern(self, frequency: frequency, interval: interval)
+            dismissViewControllerAnimated(true, completion: nil)
+            
+        }
     }
     
     
@@ -154,6 +161,12 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
             backgroundView.backgroundColor = UIColor.clearColor()
         } else {
             backgroundView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.8)
+        }
+        
+        // Select date automatically
+        if selectedInterval == nil && selectedFrequency == nil {
+            selectedInterval = "minute"
+            selectedFrequency = 1
         }
         
         setPatternPicker()

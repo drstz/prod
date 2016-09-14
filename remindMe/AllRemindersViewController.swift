@@ -280,6 +280,7 @@ class AllRemindersViewController: UIViewController {
         // Customize filter bar
         filterBar.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
         
+        
         // Customize no reminder screen
         noReminderScreen.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
         

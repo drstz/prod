@@ -96,6 +96,10 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
         updateDayLabel()
         updateRepeatMethodCells()
         updatePatternCreationLabels()
+        
+        if selectedDays.count == 0 {
+            selectMethodWithDate()
+        }
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -107,7 +111,36 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
         updateRepeatMethodCells()
         updatePatternCreationLabels()
         
+        if selectedDays.count == 0 {
+            selectMethodWithDate()
+        }
+        
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func selectMethodWithDate() {
+        if selectedDays.count == 0 {
+            if selectedInterval != nil {
+                let indexPath = NSIndexPath(forRow: 1, inSection: 0)
+                tableView.selectRowAtIndexPath(indexPath, animated: true , scrollPosition: .None)
+                tableView(tableView, didSelectRowAtIndexPath: indexPath)
+            } else {
+                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+                tableView.selectRowAtIndexPath(indexPath, animated: true , scrollPosition: .None)
+                tableView(tableView, didSelectRowAtIndexPath: indexPath)
+            }
+        } else if selectedInterval == nil {
+            if selectedDays.count != 0 {
+                let indexPath = NSIndexPath(forRow: 2, inSection: 0)
+                tableView.selectRowAtIndexPath(indexPath, animated: true , scrollPosition: .None)
+                tableView(tableView, didSelectRowAtIndexPath: indexPath)
+            } else {
+                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+                tableView.selectRowAtIndexPath(indexPath, animated: true , scrollPosition: .None)
+                tableView(tableView, didSelectRowAtIndexPath: indexPath)
+            }
+            
+        }
     }
     
     // MARK: Lifecycle

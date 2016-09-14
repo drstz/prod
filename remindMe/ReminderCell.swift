@@ -99,9 +99,9 @@ class ReminderCell: UITableViewCell {
         //print(#function)
         let isDue = reminder.isDue()
         let isFavorite = reminder.isFavorite as! Bool
-        let isComplete = reminder.isComplete as Bool
+        let isComplete = reminder.wasCompleted as Bool
         
-        if reminder.isRecurring == true {
+        if reminder.repeats == true {
             nextDueDate.hidden = false
             repeatIcon.hidden = false
         } else {
@@ -111,8 +111,8 @@ class ReminderCell: UITableViewCell {
         
         configureLabels(reminder.name,
                         dueDate: reminder.dueDate,
-                        frequency: reminder.everyAmount as? Int,
-                        interval: reminder.typeOfInterval)
+                        frequency: reminder.frequency as? Int,
+                        interval: reminder.interval)
         configureBackgroundColors(isFavorite, isLate: isDue, isComplete: isComplete)
         configureLabelColors(isComplete, isLate: isDue)
         updateRepeatLabel(with: reminder)
@@ -129,15 +129,15 @@ class ReminderCell: UITableViewCell {
     }
     
     func updateRepeatLabel(with reminder: Reminder) {
-        if reminder.useDays == true {
+        if reminder.usesDayPattern == true {
             updateRepeatLabelWithDayPattern(reminder)
-        } else if reminder.usePattern == true {
+        } else if reminder.usesCustomPattern == true {
             updateRepeatLabelWithCustomPattern(reminder)
         }
     }
     
     func updateRepeatLabelWithCustomPattern(reminder: Reminder) {
-        if let frequency = reminder.everyAmount?.integerValue, let interval = reminder.typeOfInterval {
+        if let frequency = reminder.frequency?.integerValue, let interval = reminder.interval {
             if frequency != 1 {
                 nextDueDate.text = "every " + "\(frequency) " + "\(interval)" + "s"
             } else if frequency == 1 {

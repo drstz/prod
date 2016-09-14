@@ -42,7 +42,7 @@ extension AllRemindersViewController: ReminderCellDelegate {
             let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             toolbarItems = [favorite, spacer, delete]
             
-            if reminder.isComplete == false {
+            if reminder.wasCompleted == false {
                 let complete = UIBarButtonItem.init(title: completeText, style: .Plain, target: self, action: #selector(toolbarComplete))
                 toolbarItems?.insert(complete, atIndex: 0)
     

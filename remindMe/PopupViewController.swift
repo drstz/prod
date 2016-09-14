@@ -198,7 +198,7 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         if let reminder = incomingReminder {
             setLabels(with: reminder)
             setFavoriteStar()
-            if reminder.isDue() && reminder.isComplete == false {
+            if reminder.isDue() && reminder.wasCompleted == false {
                 snoozeButton.hidden = false
             } else {
                 snoozeButton.hidden = true
@@ -212,7 +212,7 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
             }
             
             
-            if reminder.isDue() && reminder.isComplete == false {
+            if reminder.isDue() && reminder.wasCompleted == false {
                 popup.backgroundColor = lateColor
                 completeButton.backgroundColor = lighterLate
                 favoriteButtonBackground.backgroundColor = shinyRed
@@ -229,7 +229,7 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
                 closeButton.backgroundColor = normalColor
             }
             
-            if reminder.isComplete == true {
+            if reminder.wasCompleted == true {
                 completeButton.enabled = false
                 completeButton.setTitle("Completed", forState: .Disabled)
                 completeButton.setTitleColor(UIColor.lightGrayColor(), forState: .Disabled)
@@ -239,7 +239,7 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
                 completeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
             
-            if reminder.isRecurring == true {
+            if reminder.repeats == true {
                 repeatIcon.hidden = false
                 repeatLabel.hidden = false
             } else {
@@ -258,9 +258,9 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     }
     
     func updateRepeatLabel(with reminder: Reminder) {
-        if reminder.useDays == true {
+        if reminder.usesDayPattern == true {
             updateRepeatLabelWithDayPattern(reminder)
-        } else if reminder.usePattern == true {
+        } else if reminder.usesCustomPattern == true {
             updateRepeatLabelWithCustomPattern(reminder)
         } else {
             repeatLabel.hidden = true
@@ -269,7 +269,7 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     }
     
     func updateRepeatLabelWithCustomPattern(reminder: Reminder) {
-        if let frequency = reminder.everyAmount?.integerValue, let interval = reminder.typeOfInterval {
+        if let frequency = reminder.frequency?.integerValue, let interval = reminder.interval {
             if frequency != 1 {
                 repeatLabel.text = "every " + "\(frequency) " + "\(interval)" + "s"
             } else if frequency == 1 {

@@ -82,6 +82,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     @IBOutlet weak var dueDateLabel : UILabel!
     @IBOutlet weak var recurringDateLabel : UILabel!
+    @IBOutlet weak var autoSnoozeLabel: UILabel!
     
     // Buttons
     
@@ -325,8 +326,28 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openCommentView))
         reminderCommentFieldCell.addGestureRecognizer(gestureRecognizer)
         
-        reminderCommentField.textColor = UIColor.lightGrayColor()
+        reminderCommentField.textColor = UIColor.whiteColor()
+        // reminderCommentField.backgroundColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
+        reminderNameField.textColor = UIColor.whiteColor()
+        reminderNameField.backgroundColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
+        reminderNameField.attributedPlaceholder = NSAttributedString(string: "Reminder title",
+                                                                     attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        setColorTheme()
         
+        autoSnoozeLabel.textColor = UIColor.whiteColor()
+        
+        // Switch
+        autoSnoozeSwitch.onTintColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
+        autoSnoozeSwitch.tintColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
+        
+    }
+    
+    func setColorTheme() {
+        // Table view background
+        tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        
+        // Table view separator
+        tableView.separatorColor = UIColor.whiteColor()
     }
     
     func openCommentView() {
@@ -511,6 +532,20 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         } else {
             return 50
         }
+        
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.whiteColor()
+        // header.titleLabel.textColor = UIColor.whiteColor()
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
+        cell.textLabel?.textColor = UIColor.whiteColor()
+        cell.detailTextLabel?.textColor = UIColor.whiteColor()
+        cell.tintColor = UIColor.whiteColor()
         
     }
     

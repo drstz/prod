@@ -40,10 +40,41 @@ class TimePickerViewController: UITableViewController {
         timePicker.enabled = false
         
         timePicker.userInteractionEnabled = false
+        
+        timePicker.backgroundColor = UIColor.clearColor()
+        timePicker.setValue(UIColor.whiteColor(), forKey: "textColor")
+        
+        setColorTheme()
+    }
+    
+    func setColorTheme() {
+        // Table view background
+        tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        
+        // Table view separator
+        tableView.separatorColor = UIColor.whiteColor()
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return intervals.count
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.whiteColor()
+        // header.titleLabel.textColor = UIColor.whiteColor()
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Pick an interval"
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
+        cell.textLabel?.textColor = UIColor.whiteColor()
+        cell.detailTextLabel?.textColor = UIColor.whiteColor()
+        cell.tintColor = UIColor.whiteColor()
+        
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

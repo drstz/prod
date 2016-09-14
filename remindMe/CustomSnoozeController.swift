@@ -43,6 +43,24 @@ class CustomSnoozePickerController: UITableViewController {
         }
     }
     
+    func setColorTheme() {
+        // Table view background
+        tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        
+        // Table view separator
+        tableView.separatorColor = UIColor.whiteColor()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setColorTheme()
+        snoozePicker.backgroundColor = UIColor.clearColor()
+        textField.backgroundColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
+        textField.textColor = UIColor.whiteColor()
+        textField.attributedPlaceholder = NSAttributedString(string: "Please enter a number",
+                                                             attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -72,6 +90,20 @@ class CustomSnoozePickerController: UITableViewController {
         doneButton.enabled = true
     }
     
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.whiteColor()
+        // header.titleLabel.textColor = UIColor.whiteColor()
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
+        cell.textLabel?.textColor = UIColor.whiteColor()
+        cell.detailTextLabel?.textColor = UIColor.whiteColor()
+        cell.tintColor = UIColor.whiteColor()
+        
+    }
+    
 }
 
 extension CustomSnoozePickerController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -83,19 +115,38 @@ extension CustomSnoozePickerController: UIPickerViewDelegate, UIPickerViewDataSo
         return 4
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        switch row {
+//        case 0:
+//            return "seconds"
+//        case 1:
+//            return "minutes"
+//        case 2:
+//            return "hours"
+//        case 3:
+//            return "days"
+//        default:
+//            return "Error"
+//        }
+//    }
+    
+    // Use this to be able to set color
+    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        var title = ""
         switch row {
         case 0:
-            return "seconds"
+            title = "seconds"
         case 1:
-            return "minutes"
+            title = "minutes"
         case 2:
-            return "hours"
+            title = "hours"
         case 3:
-            return "days"
+            title = "days"
         default:
-            return "Error"
+            title = "Error"
         }
+        
+        return NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

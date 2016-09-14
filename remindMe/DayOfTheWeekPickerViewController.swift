@@ -64,12 +64,36 @@ class DayOfTheWeekPickerViewController: UITableViewController {
                 selectedIndexPaths.append(NSIndexPath(forRow: i, inSection: 0))
             }
         }
+        
+        setColorTheme()
+    }
+    
+    func setColorTheme() {
+        // Table view background
+        tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        
+        // Table view separator
+        tableView.separatorColor = UIColor.whiteColor()
     }
     
     // MARK: Tableview
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       return weekdayUnits.count
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.whiteColor()
+        // header.titleLabel.textColor = UIColor.whiteColor()
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
+        cell.textLabel?.textColor = UIColor.whiteColor()
+        cell.detailTextLabel?.textColor = UIColor.whiteColor()
+        cell.tintColor = UIColor.whiteColor()
+        
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -85,6 +109,10 @@ class DayOfTheWeekPickerViewController: UITableViewController {
         }
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Pick one or more days"
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

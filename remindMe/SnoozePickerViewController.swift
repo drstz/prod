@@ -56,11 +56,21 @@ class SnoozePickerViewController: UITableViewController {
         if !foundSomething {
             selectedIndexPath = NSIndexPath(forRow: 0, inSection: 1)
         }
+        
+        setColorTheme()
     }
     
     override func viewWillAppear(animated: Bool) {
         print(#function)
         super.viewWillAppear(animated)
+    }
+    
+    func setColorTheme() {
+        // Table view background
+        tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        
+        // Table view separator
+        tableView.separatorColor = UIColor.whiteColor()
     }
     
     
@@ -92,6 +102,20 @@ class SnoozePickerViewController: UITableViewController {
         } else {
             return "Defaut Snooze Times"
         }
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.whiteColor()
+        // header.titleLabel.textColor = UIColor.whiteColor()
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
+        cell.textLabel?.textColor = UIColor.whiteColor()
+        cell.detailTextLabel?.textColor = UIColor.whiteColor()
+        cell.tintColor = UIColor.whiteColor()
+        
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

@@ -16,6 +16,8 @@ class SettingsViewController: UITableViewController {
     
     @IBOutlet weak var autoSnoozeSwitch: UISwitch!
     
+    @IBOutlet weak var autoSnoozeEnableLabel: UILabel!
+    
     
     var snoozeTime = ""
     var snoozeDuration = 0.0
@@ -55,6 +57,15 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         // tableView.backgroundColor = UIColor(red: 47/255, green: 97/255, blue: 127/255, alpha: 1)
         print(#function)
+        
+        tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        tableView.separatorColor = UIColor.whiteColor()
+        
+        // Can't change custom cells
+        autoSnoozeEnableLabel.textColor = UIColor.whiteColor()
+        autoSnoozeSwitch.onTintColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
+        autoSnoozeSwitch.tintColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
+        
         super.viewDidLoad()
     }
     
@@ -62,6 +73,23 @@ class SettingsViewController: UITableViewController {
         super.viewWillAppear(true)
         loadSettings()
     }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
+        cell.textLabel?.textColor = UIColor.whiteColor()
+        cell.detailTextLabel?.textColor = UIColor.whiteColor()
+        
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.whiteColor()
+        // header.titleLabel.textColor = UIColor.whiteColor()
+    }
+    
+   
+    
+    
     
     func loadSettings() {
         interval = timePickerInterval()

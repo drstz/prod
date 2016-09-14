@@ -18,6 +18,9 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     @IBOutlet weak var averageSnoozeBeforeCompletionCell: UITableViewCell!
     @IBOutlet weak var nbOfRemindersCompletedBeforeDueDate: UITableViewCell!
     
+    @IBOutlet weak var nbOfCreatedRemindersCell: UITableViewCell!
+    @IBOutlet weak var nbOfCompletedRemindersCell: UITableViewCell!
+    
     // MARK: Labels
     
     // Productivity
@@ -42,13 +45,19 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        averageTimeBetweenCreationCompletionCell.detailTextLabel?.textColor = UIColor.whiteColor()
+        
         nbOfRemindersCompletedBeforeDueDateLabel.textColor = UIColor.lightGrayColor()
         averageTimeBetweenCreationCompletionLabel.textColor = UIColor.lightGrayColor()
         averageSnoozeBeforeCompletionLabel.textColor = UIColor.lightGrayColor()
         
         numberOfCreatedRemindersLabel.textColor = UIColor.lightGrayColor()
-//        numberOfActiveRemindersLabel.textColor = UIColor.lightGrayColor()
+
         numberOfCompletedRemindersLabel.textColor = UIColor.lightGrayColor()
+        
+        tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        tableView.separatorColor = UIColor.whiteColor()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -67,11 +76,36 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         saveSelectedTab((tabBarController?.selectedIndex)!)
+        averageTimeBetweenCreationCompletionCell.detailTextLabel?.textColor = UIColor.whiteColor()
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         // tabBarController?.delegate = nil
+    }
+    
+    // MARK: - Tableview
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.userInteractionEnabled = true
+        cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
+        cell.textLabel?.textColor = UIColor.whiteColor()
+        cell.detailTextLabel?.textColor = UIColor.whiteColor()
+        
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.whiteColor()
+        // header.titleLabel.textColor = UIColor.whiteColor()
+    }
+    
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        return nil
+    }
+    
+    override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return false
     }
     
     

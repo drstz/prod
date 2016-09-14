@@ -56,7 +56,10 @@ class ReminderCommentViewController: UIViewController {
         } else {
             commentField.text = previousComment
         }
+        commentField.backgroundColor = UIColor.clearColor()
+        commentField.textColor = UIColor.whiteColor()
         
+        view.backgroundColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
         
     }
 }

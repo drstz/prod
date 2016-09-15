@@ -340,10 +340,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         reminderCommentField.textColor = UIColor.white
         // reminderCommentField.backgroundColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
         reminderNameField.textColor = UIColor.white
-        reminderNameField.backgroundColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
-        reminderNameField.attributedPlaceholder = NSAttributedString(string: "Reminder title",
-                                                                     attributes: [NSForegroundColorAttributeName:UIColor.white])
+        reminderNameField.backgroundColor = UIColor.clear
+        reminderNameField.attributedPlaceholder = NSAttributedString(string: "What would you like to remember?",
+                                                                     attributes: [NSForegroundColorAttributeName:UIColor.lightGray])
         setColorTheme()
+        
+        reminderNameField.borderStyle = .none
         
         autoSnoozeLabel.textColor = UIColor.white
         
@@ -538,7 +540,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (indexPath as NSIndexPath).section == 0 && (indexPath as NSIndexPath).row == 1 {
+        if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 0 {
             return 110
         } else {
             return 50
@@ -627,9 +629,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
 
         textFieldHasText = newText.length > 0
         
-        if textFieldHasText {
-            textField.backgroundColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.1)
-        }
 
         enableDoneButton()
         return true
@@ -646,13 +645,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textFieldHasText {
-            textField.resignFirstResponder()
-        } else {
-            textField.placeholder = "You have to give your reminder a name"
-            textField.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.1)
-        }
-        return false
+        return true
     }
     
     // MARK: - Date Picker

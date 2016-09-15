@@ -638,15 +638,16 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         let someText: NSString = textField.text! as NSString
         textFieldHasText = someText.length > 0
         enableDoneButton()
-        //hideDatePicker()
         if textFieldHasText {
-            textField.returnKeyType = .next
+            textField.returnKeyType = .done
         }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        reminderNameField.resignFirstResponder()
         return true
     }
+    
     
     // MARK: - Date Picker
     

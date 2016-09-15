@@ -9,8 +9,8 @@
 import UIKit
 
 protocol CustomSnoozePickerDelegate: class {
-    func customSnoozePickerDidCancel(controller: CustomSnoozePickerController)
-    func customSnoozePicker(controller: CustomSnoozePickerController, didChooseTime delay: Double, unit: SnoozeUnit)
+    func customSnoozePickerDidCancel(_ controller: CustomSnoozePickerController)
+    func customSnoozePicker(_ controller: CustomSnoozePickerController, didChooseTime delay: Double, unit: SnoozeUnit)
 }
 
 class CustomSnoozePickerController: UITableViewController {
@@ -48,24 +48,24 @@ class CustomSnoozePickerController: UITableViewController {
         tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
         
         // Table view separator
-        tableView.separatorColor = UIColor.whiteColor()
+        tableView.separatorColor = UIColor.white
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setColorTheme()
-        snoozePicker.backgroundColor = UIColor.clearColor()
+        snoozePicker.backgroundColor = UIColor.clear
         textField.backgroundColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
-        textField.textColor = UIColor.whiteColor()
+        textField.textColor = UIColor.white
         textField.attributedPlaceholder = NSAttributedString(string: "Please enter a number",
-                                                             attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+                                                             attributes: [NSForegroundColorAttributeName:UIColor.white])
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         textField.becomeFirstResponder()
-        textField.keyboardType = .NumberPad
+        textField.keyboardType = .numberPad
         
         if let unitToSelect = unit, let durationToAdd = delay {
             selectUnit(unitToSelect)
@@ -83,35 +83,35 @@ class CustomSnoozePickerController: UITableViewController {
     }
     
     func disableDoneButton() {
-        doneButton.enabled = false
+        doneButton.isEnabled = false
     }
     
     func enableDoneButton() {
-        doneButton.enabled = true
+        doneButton.isEnabled = true
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = UIColor.whiteColor()
+        header.textLabel?.textColor = UIColor.white
         // header.titleLabel.textColor = UIColor.whiteColor()
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        cell.detailTextLabel?.textColor = UIColor.whiteColor()
-        cell.tintColor = UIColor.whiteColor()
+        cell.textLabel?.textColor = UIColor.white
+        cell.detailTextLabel?.textColor = UIColor.white
+        cell.tintColor = UIColor.white
         
     }
     
 }
 
 extension CustomSnoozePickerController: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return 4
     }
     
@@ -131,7 +131,7 @@ extension CustomSnoozePickerController: UIPickerViewDelegate, UIPickerViewDataSo
 //    }
     
     // Use this to be able to set color
-    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         var title = ""
         switch row {
         case 0:
@@ -146,10 +146,10 @@ extension CustomSnoozePickerController: UIPickerViewDelegate, UIPickerViewDataSo
             title = "Error"
         }
         
-        return NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        return NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName:UIColor.white])
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch row {
         case 0:
             unit = .Seconds
@@ -164,7 +164,7 @@ extension CustomSnoozePickerController: UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
-    func selectUnit(unit: SnoozeUnit) {
+    func selectUnit(_ unit: SnoozeUnit) {
         switch unit {
         case .Seconds:
             snoozePicker.selectRow(0, inComponent: 0, animated: false)
@@ -182,12 +182,12 @@ extension CustomSnoozePickerController: UIPickerViewDelegate, UIPickerViewDataSo
 }
 
 extension CustomSnoozePickerController: UITextFieldDelegate {
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         print(#function)
         
         if Int(string) != nil || range.length == 1 {
-            let oldText: NSString = textField.text!
-            let newText: NSString = oldText.stringByReplacingCharactersInRange(range, withString: string)
+            let oldText: NSString = textField.text! as NSString
+            let newText: NSString = oldText.replacingCharacters(in: range, with: string) as NSString
             if newText.length > 0 {
                 enableDoneButton()
             } else {

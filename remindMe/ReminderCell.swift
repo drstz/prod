@@ -7,13 +7,24 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 protocol ReminderCellDelegate: class {
-    func cellWasLongPressed(cell: ReminderCell, longPress: UILongPressGestureRecognizer)
+    func cellWasLongPressed(_ cell: ReminderCell, longPress: UILongPressGestureRecognizer)
 }
 
 protocol ReminderCellBackGroundDelegate: class {
-    func changeBackgroundColor(color: UIColor)
+    func changeBackgroundColor(_ color: UIColor)
 }
 
 class ReminderCell: UITableViewCell {
@@ -51,13 +62,13 @@ class ReminderCell: UITableViewCell {
     
     // NormalColor
     let cellBackgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
-    let cellBackgroundColorDimmed = UIColor.whiteColor()
+    let cellBackgroundColorDimmed = UIColor.white
     
     // Late color
     let lateColor = UIColor(red: 149/255, green: 40/255, blue: 54/255, alpha: 1)
     
     // Text color
-    let normalTextColor = UIColor.whiteColor()
+    let normalTextColor = UIColor.white
     
     let selectionColor = UIColor(red: 148/255, green: 191/255, blue: 215/255, alpha: 1)
     
@@ -75,42 +86,42 @@ class ReminderCell: UITableViewCell {
 //        print(#function)
         
         super.awakeFromNib()
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear
         reminderBackgroundView.layer.cornerRadius = cornerRadius
         reminderSelectionView.layer.cornerRadius = cornerRadius
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(recognizeLongPress))
         self.addGestureRecognizer(longPress)
-        selectionStyle = .None
+        selectionStyle = .none
         backgroundDelegate = reminderBackgroundView
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         //print(#function)
-        if self.selected {
+        if self.isSelected {
             reminderSelectionView?.backgroundColor = selectionColor
         } else {
-            reminderSelectionView?.backgroundColor = UIColor.clearColor()
+            reminderSelectionView?.backgroundColor = UIColor.clear
         }
     }
     
-    func configureForReminder(reminder: Reminder) {
+    func configureForReminder(_ reminder: Reminder) {
         //print(#function)
         let isDue = reminder.isDue()
         let isFavorite = reminder.isFavorite as! Bool
         let isComplete = reminder.wasCompleted as Bool
         
         if reminder.repeats == true {
-            nextDueDate.hidden = false
-            repeatIcon.hidden = false
+            nextDueDate.isHidden = false
+            repeatIcon.isHidden = false
         } else {
-            nextDueDate.hidden = true
-            repeatIcon.hidden = true
+            nextDueDate.isHidden = true
+            repeatIcon.isHidden = true
         }
         
         configureLabels(reminder.name,
-                        dueDate: reminder.dueDate,
+                        dueDate: reminder.dueDate as Date,
                         frequency: reminder.frequency as? Int,
                         interval: reminder.interval)
         configureBackgroundColors(isFavorite, isLate: isDue, isComplete: isComplete)
@@ -122,9 +133,9 @@ class ReminderCell: UITableViewCell {
     
     func updateCommentLabel(with reminder: Reminder) {
         if reminder.comment != nil {
-            commentIcon.hidden = false
+            commentIcon.isHidden = false
         } else {
-            commentIcon.hidden = true
+            commentIcon.isHidden = true
         }
     }
     
@@ -136,8 +147,8 @@ class ReminderCell: UITableViewCell {
         }
     }
     
-    func updateRepeatLabelWithCustomPattern(reminder: Reminder) {
-        if let frequency = reminder.frequency?.integerValue, let interval = reminder.interval {
+    func updateRepeatLabelWithCustomPattern(_ reminder: Reminder) {
+        if let frequency = reminder.frequency?.intValue, let interval = reminder.interval {
             if frequency != 1 {
                 nextDueDate.text = "every " + "\(frequency) " + "\(interval)" + "s"
             } else if frequency == 1 {
@@ -146,7 +157,7 @@ class ReminderCell: UITableViewCell {
         }
     }
     
-    func updateRepeatLabelWithDayPattern(reminder: Reminder) {
+    func updateRepeatLabelWithDayPattern(_ reminder: Reminder) {
         var stringOfDays = "every "
         var selectedDays = [Int]()
         for day in reminder.selectedDays {
@@ -160,50 +171,50 @@ class ReminderCell: UITableViewCell {
                     if selectedDays.count != 1 {
                         day = "Sun"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 2:
                     var day = "Monday"
                     if selectedDays.count != 1 {
                         day = "M"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 3:
                     var day = "Tuesday"
                     if selectedDays.count != 1 {
                         day = "T"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 4:
                     var day = "Wednesday"
                     if selectedDays.count != 1 {
                         day = "W"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 5:
                     var day = "Thursday"
                     if selectedDays.count != 1 {
                         day = "Th"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 6:
                     var day = "Friday"
                     if selectedDays.count != 1 {
                         day = "F"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 7:
                     var day = "Saturday"
                     if selectedDays.count != 1 {
                         day = "Sat"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 default:
                     print("Error appending strings of days")
                 }
                 if selectedDays.count > 1 {
                     // Do not print comma after last word
-                    if selectedDays.indexOf(day) < selectedDays.count - 1 {
-                        stringOfDays.appendContentsOf(", ")
+                    if selectedDays.index(of: day) < selectedDays.count - 1 {
+                        stringOfDays.append(", ")
                     }
                 }
             }
@@ -213,7 +224,7 @@ class ReminderCell: UITableViewCell {
     
     
     
-    func configureLabels(name: String, dueDate: NSDate, frequency: Int?, interval: String?) {
+    func configureLabels(_ name: String, dueDate: Date, frequency: Int?, interval: String?) {
         //print(#function)
         
         
@@ -234,17 +245,17 @@ class ReminderCell: UITableViewCell {
         
     }
     
-    func configureBackgroundColors(isFavorite: Bool, isLate: Bool, isComplete: Bool) {
+    func configureBackgroundColors(_ isFavorite: Bool, isLate: Bool, isComplete: Bool) {
         //print(#function)
         if isFavorite == true {
-            favoriteStar.hidden = false
+            favoriteStar.isHidden = false
             if isLate && !isComplete {
                 backgroundDelegate?.changeBackgroundColor(lateColor)
             } else {
                 backgroundDelegate?.changeBackgroundColor(cellBackgroundColor)
             }
         } else {
-            favoriteStar.hidden = true
+            favoriteStar.isHidden = true
             if isLate && !isComplete {
                 backgroundDelegate?.changeBackgroundColor(lateColor)
             } else {
@@ -253,27 +264,27 @@ class ReminderCell: UITableViewCell {
         }
     }
     
-    func configureLabelColors(isComplete: Bool, isLate: Bool) {
+    func configureLabelColors(_ isComplete: Bool, isLate: Bool) {
 //        print(#function)
         if isComplete || !isLate {
-            dayLabel.textColor = UIColor.whiteColor()
-            shortDateLabel.textColor = UIColor.whiteColor()
-            timeLabel.textColor = UIColor.whiteColor()
+            dayLabel.textColor = UIColor.white
+            shortDateLabel.textColor = UIColor.white
+            timeLabel.textColor = UIColor.white
         } else {
-            dayLabel.textColor = UIColor.whiteColor()
-            shortDateLabel.textColor = UIColor.whiteColor()
-            timeLabel.textColor = UIColor.whiteColor()
+            dayLabel.textColor = UIColor.white
+            shortDateLabel.textColor = UIColor.white
+            timeLabel.textColor = UIColor.white
         }
     }
     
-    func recognizeLongPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+    func recognizeLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         //print(#function)
         longPress = longPressGestureRecognizer
         delegate?.cellWasLongPressed(self, longPress: longPress)
         
     }
     
-    func longPressF(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+    func longPressF(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         
     }
 }

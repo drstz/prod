@@ -9,14 +9,14 @@
 import UIKit
 
 class ReminderCellBackground: UIView, ReminderCellBackGroundDelegate {
-    var backColor = UIColor.grayColor() {
+    var backColor = UIColor.gray {
         didSet {
             backgroundColor = backColor
-            layer.backgroundColor  = backColor.CGColor
+            layer.backgroundColor  = backColor.cgColor
         }
     }
     
-    func changeBackgroundColor(color: UIColor) {
+    func changeBackgroundColor(_ color: UIColor) {
         backColor = color
         //print("Changed background color")
         

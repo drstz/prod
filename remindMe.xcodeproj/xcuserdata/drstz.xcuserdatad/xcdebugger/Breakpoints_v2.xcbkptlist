@@ -20,13 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "remindMe/AllRemindersViewController.swift"
-            timestampString = "495527866.117732"
+            timestampString = "495609967.860398"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1009"
-            endingLineNumber = "1009"
-            landmarkName = "AllRemindersViewController"
-            landmarkType = "3">
+            startingLineNumber = "1010"
+            endingLineNumber = "1010">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -36,29 +34,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "remindMe/AllRemindersViewController.swift"
-            timestampString = "495527866.117732"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1013"
-            endingLineNumber = "1013"
-            landmarkName = "AllRemindersViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "remindMe/AllRemindersViewController.swift"
-            timestampString = "495527866.117732"
+            timestampString = "495609967.860398"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1014"
-            endingLineNumber = "1014"
-            landmarkName = "AllRemindersViewController"
-            landmarkType = "3">
+            endingLineNumber = "1014">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -68,29 +48,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "remindMe/AllRemindersViewController.swift"
-            timestampString = "495527866.117732"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1016"
-            endingLineNumber = "1016"
-            landmarkName = "AllRemindersViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "remindMe/AllRemindersViewController.swift"
-            timestampString = "495527866.117732"
+            timestampString = "495609967.860398"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1015"
-            endingLineNumber = "1015"
-            landmarkName = "AllRemindersViewController"
-            landmarkType = "3">
+            endingLineNumber = "1015">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -100,13 +62,39 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "remindMe/AllRemindersViewController.swift"
-            timestampString = "495527866.117732"
+            timestampString = "495609967.860398"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "976"
-            endingLineNumber = "976"
-            landmarkName = "AllRemindersViewController"
-            landmarkType = "3">
+            startingLineNumber = "1017"
+            endingLineNumber = "1017">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "remindMe/AllRemindersViewController.swift"
+            timestampString = "495609967.860398"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1016"
+            endingLineNumber = "1016">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "remindMe/AllRemindersViewController.swift"
+            timestampString = "495609967.860398"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "977"
+            endingLineNumber = "977">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

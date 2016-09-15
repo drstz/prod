@@ -33,8 +33,8 @@ extension AllRemindersViewController {
             deleteActionTitle = "Delete this reminder?"
         }
         
-        let alert = UIAlertController(title: deleteActionTitle, message: "You cannot undo this", preferredStyle: .Alert)
-        let deleteAction = UIAlertAction(title: "Delete", style: .Destructive, handler: {
+        let alert = UIAlertController(title: deleteActionTitle, message: "You cannot undo this", preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
             action in
             for reminder in reminders {
                 self.deleteReminder(reminder, save: false)
@@ -44,10 +44,10 @@ extension AllRemindersViewController {
             self.refreshTableView()
             self.hideToolbar()
         })
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         alert.addAction(deleteAction)
         alert.addAction(cancelAction)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
         
     }
     
@@ -86,7 +86,7 @@ extension AllRemindersViewController {
         return reminders
     }
     
-    func selectionHasFavorite(selectedReminders: [Reminder]) -> Bool {
+    func selectionHasFavorite(_ selectedReminders: [Reminder]) -> Bool {
         for reminder in selectedReminders {
             if reminder.isFavorite == true {
                 return true
@@ -95,13 +95,13 @@ extension AllRemindersViewController {
         return false
     }
     
-    func selectionIsMixed(selectedReminders: [Reminder]) -> Bool {
+    func selectionIsMixed(_ selectedReminders: [Reminder]) -> Bool {
         var isFavorite: Bool?
         for reminder in selectedReminders {
             if isFavorite == nil {
                 isFavorite = reminder.isFavorite as? Bool
             } else {
-                if reminder.isFavorite != isFavorite {
+                if reminder.isFavorite as! Bool != isFavorite {
                     return true
                 }
             }

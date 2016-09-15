@@ -17,11 +17,11 @@ enum DateFormats: String {
     case ShortDate = "dd MMMM"
 }
 
-let languages = NSLocale.preferredLanguages()
+let languages = Locale.preferredLanguages
 let preferredLanguage = languages[0]
 
-func addRecurringDate(delayAmount: Int, delayType : String, date: NSDate) -> NSDate {
-    let newDateComponents = NSDateComponents()
+func addRecurringDate(_ delayAmount: Int, delayType : String, date: Date) -> Date {
+    var newDateComponents = DateComponents()
     
     switch delayType {
     case "minute":
@@ -39,52 +39,52 @@ func addRecurringDate(delayAmount: Int, delayType : String, date: NSDate) -> NSD
     default:
         print("Cant add date")
     }
-    let calculateDate = NSCalendar.currentCalendar().dateByAddingComponents(newDateComponents, toDate: date, options: NSCalendarOptions.init(rawValue: 0))
+    let calculateDate = (Calendar.current as NSCalendar).date(byAdding: newDateComponents, to: date, options: NSCalendar.Options.init(rawValue: 0))
     return calculateDate!
 }
 
-func setTime(hour: Int, minute: Int, second: Int, addedDay: Int ) -> NSDate {
-    let now = NSDate()
-    let calendar = NSCalendar.currentCalendar()
-    var newDate = calendar.dateBySettingHour(
-        hour, minute: minute, second: second,
-        ofDate: now,
-        options: NSCalendarOptions.init(rawValue: 0)
+func setTime(_ hour: Int, minute: Int, second: Int, addedDay: Int ) -> Date {
+    let now = Date()
+    let calendar = Calendar.current
+    var newDate = (calendar as NSCalendar).date(
+        bySettingHour: hour, minute: minute, second: second,
+        of: now,
+        options: NSCalendar.Options.init(rawValue: 0)
     )
-    newDate = calendar.dateByAddingUnit(
-        .Day,
+    newDate = (calendar as NSCalendar).date(
+        byAdding: .day,
         value: addedDay,
-        toDate: newDate!,
-        options: NSCalendarOptions.init(rawValue: 0)
+        to: newDate!,
+        options: NSCalendar.Options.init(rawValue: 0)
     )
     return newDate!
 }
 
-func tomorrowMidnight() -> NSDate {
-    let today = NSDate()
+func tomorrowMidnight() -> Date {
+    let today = Date()
     return today.endOfDay.addDays(1)
 }
 
-func nextSevenDays() -> NSDate {
-    let today = NSDate()
+func nextSevenDays() -> Date {
+    let today = Date()
     return today.endOfDay.addDays(6)
 }
 
 
-func convertDateToString(dateToConvert date: NSDate) -> String {
-    let formatter = NSDateFormatter()
-    formatter.locale = NSLocale(localeIdentifier: preferredLanguage)
-    formatter.dateStyle = .MediumStyle
-    formatter.timeStyle = .ShortStyle
-    return formatter.stringFromDate(date)
+func convertDateToString(dateToConvert date: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.locale = Locale(identifier: preferredLanguage)
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .short
+    return formatter.string(from: date)
 }
 
-func convertDateToString(format: DateFormats, date: NSDate) -> String {
+func convertDateToString(_ format: DateFormats, date: Date) -> String {
     
     
-    let formatter = NSDateFormatter()
+    let formatter = DateFormatter()
     var dateFormat = ""
-    formatter.locale = NSLocale(localeIdentifier: preferredLanguage)
+    formatter.locale = Locale(identifier: preferredLanguage)
     
     switch format {
     case .WholeDate:
@@ -122,15 +122,15 @@ func convertDateToString(format: DateFormats, date: NSDate) -> String {
         } else if date.isYesterday() {
             return "Yesterday"
         } else {
-            return formatter.stringFromDate(date)
+            return formatter.string(from: date)
         }
     }
     
-    return formatter.stringFromDate(date)
+    return formatter.string(from: date)
 }
 
-func createNewDate(oldDate : NSDate, typeOfInterval: String, everyAmount: Int) -> NSDate {
-    let newDateComponents = NSDateComponents()
+func createNewDate(_ oldDate : Date, typeOfInterval: String, everyAmount: Int) -> Date {
+    var newDateComponents = DateComponents()
     
     switch typeOfInterval {
     case "minute":
@@ -149,40 +149,40 @@ func createNewDate(oldDate : NSDate, typeOfInterval: String, everyAmount: Int) -
         print("Cant add date")
     }
     
-    let calculateDate = NSCalendar.currentCalendar().dateByAddingComponents(newDateComponents, toDate: oldDate, options: NSCalendarOptions.init(rawValue: 0))
+    let calculateDate = (Calendar.current as NSCalendar).date(byAdding: newDateComponents, to: oldDate, options: NSCalendar.Options.init(rawValue: 0))
     return calculateDate!
     
 }
 
-func calculateDateDifference(date: NSDate) -> NSDateComponents {
-    let now = NSDate()
+func calculateDateDifference(_ date: Date) -> DateComponents {
+    let now = Date()
     
-    let difference = NSCalendar.currentCalendar().components(
-        [.Year, .Month, .Day, .Hour, .Minute, .Second],
-        fromDate: date,
-        toDate: now,
-        options: NSCalendarOptions.init(rawValue: 0)
+    let difference = (Calendar.current as NSCalendar).components(
+        [.year, .month, .day, .hour, .minute, .second],
+        from: date,
+        to: now,
+        options: NSCalendar.Options.init(rawValue: 0)
     )
     
     return difference
 
 }
 
-func recurringInterval(typeOfInterval: String) -> NSCalendarUnit {
+func recurringInterval(_ typeOfInterval: String) -> NSCalendar.Unit {
     
-    var calendarUnit = NSCalendarUnit()
+    var calendarUnit = NSCalendar.Unit()
     
     switch typeOfInterval {
     case "minute":
-        calendarUnit = .Minute
+        calendarUnit = .minute
     case "hour":
-        calendarUnit = .Hour
+        calendarUnit = .hour
     case "day":
-        calendarUnit = .Day
+        calendarUnit = .day
     case "month":
-        calendarUnit = .Month
+        calendarUnit = .month
     case "year":
-        calendarUnit = .Year
+        calendarUnit = .year
     default:
         print("Error")
     }
@@ -207,7 +207,7 @@ func recurringInterval(typeOfInterval: String) -> NSCalendarUnit {
 //    }
 //}
 
-func snoozeDuration(duration: Double, unit: SnoozeUnit) -> NSTimeInterval {
+func snoozeDuration(_ duration: Double, unit: SnoozeUnit) -> TimeInterval {
     let minute = 60.0
     let hour = 3600.0
     let day = 86400.0

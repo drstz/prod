@@ -12,28 +12,28 @@ extension AllRemindersViewController: AddReminderViewControllerDelegate {
     
     // MARK: Add/Edit Reminders
     
-    func addReminderViewControllerDidCancel(controller: AddReminderViewController) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func addReminderViewControllerDidCancel(_ controller: AddReminderViewController) {
+        dismiss(animated: true, completion: nil)
     }
     
     
-    func addReminderViewController(controller:AddReminderViewController,
+    func addReminderViewController(_ controller:AddReminderViewController,
                                    didFinishAddingReminder reminder: Reminder) {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func addReminderViewController(controller:AddReminderViewController,
+    func addReminderViewController(_ controller:AddReminderViewController,
                                    didChooseToDeleteReminder reminder: Reminder) {
         deleteReminder(reminder)
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func addReminderViewControllerDidFinishAdding(controller: AddReminderViewController) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func addReminderViewControllerDidFinishAdding(_ controller: AddReminderViewController) {
+        dismiss(animated: true, completion: nil)
     }
     
-    func addReminderViewController(controller: AddReminderViewController, didFinishEditingReminder reminder: Reminder) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func addReminderViewController(_ controller: AddReminderViewController, didFinishEditingReminder reminder: Reminder) {
+        dismiss(animated: true, completion: nil)
     }
     
 }

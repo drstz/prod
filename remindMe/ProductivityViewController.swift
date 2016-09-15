@@ -46,23 +46,23 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        averageTimeBetweenCreationCompletionCell.detailTextLabel?.textColor = UIColor.whiteColor()
+        averageTimeBetweenCreationCompletionCell.detailTextLabel?.textColor = UIColor.white
         
-        nbOfRemindersCompletedBeforeDueDateLabel.textColor = UIColor.lightGrayColor()
-        averageTimeBetweenCreationCompletionLabel.textColor = UIColor.lightGrayColor()
-        averageSnoozeBeforeCompletionLabel.textColor = UIColor.lightGrayColor()
-        percentageRemindersSnoozedBeforeCompletion.textColor = UIColor.whiteColor()
+        nbOfRemindersCompletedBeforeDueDateLabel.textColor = UIColor.lightGray
+        averageTimeBetweenCreationCompletionLabel.textColor = UIColor.lightGray
+        averageSnoozeBeforeCompletionLabel.textColor = UIColor.lightGray
+        percentageRemindersSnoozedBeforeCompletion.textColor = UIColor.white
         
-        numberOfCreatedRemindersLabel.textColor = UIColor.lightGrayColor()
+        numberOfCreatedRemindersLabel.textColor = UIColor.lightGray
 
-        numberOfCompletedRemindersLabel.textColor = UIColor.lightGrayColor()
+        numberOfCompletedRemindersLabel.textColor = UIColor.lightGray
         
         tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
-        tableView.separatorColor = UIColor.whiteColor()
+        tableView.separatorColor = UIColor.white
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setUpCoreData()
         
@@ -76,36 +76,36 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         calcutePercentageOfRemindersSnoozed()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         saveSelectedTab((tabBarController?.selectedIndex)!)
-        averageTimeBetweenCreationCompletionCell.detailTextLabel?.textColor = UIColor.whiteColor()
+        averageTimeBetweenCreationCompletionCell.detailTextLabel?.textColor = UIColor.white
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
     }
     
     // MARK: - Tableview
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.userInteractionEnabled = true
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.isUserInteractionEnabled = true
         cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        cell.detailTextLabel?.textColor = UIColor.whiteColor()
+        cell.textLabel?.textColor = UIColor.white
+        cell.detailTextLabel?.textColor = UIColor.white
         
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = UIColor.whiteColor()
+        header.textLabel?.textColor = UIColor.white
     }
     
-    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return nil
     }
     
-    override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return false
     }
     
@@ -113,7 +113,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     // MARK: - Data
     func setUpCoreData() {
         let filter: ReminderFilter = .All
-        let status: ReminderStatus = .Complete
+        let status: ReminderStatus = .complete
         
         coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
         coreDataHandler.performFetch()
@@ -122,7 +122,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     func getReminders() -> [Reminder] {
         var reminders = [Reminder]()
         let frc = coreDataHandler.fetchedResultsController
-        let objects = frc.fetchedObjects
+        let objects = frc?.fetchedObjects
         if let objects = objects {
             for object in objects {
                 if let reminder = object as? Reminder {
@@ -133,9 +133,9 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         return reminders
     }
     
-    func countTimesSnoozed(reminders: [Reminder]) {
-        let numberOfTimesSnoozedBeforeCompletion = list.totalTimesSnoozed.integerValue
-        let nbOfCompletedReminders = list.numberOfCompletedReminders.integerValue
+    func countTimesSnoozed(_ reminders: [Reminder]) {
+        let numberOfTimesSnoozedBeforeCompletion = list.totalTimesSnoozed.intValue
+        let nbOfCompletedReminders = list.numberOfCompletedReminders.intValue
         
         print("Number of times snoozed \(numberOfTimesSnoozedBeforeCompletion)")
         print("Number of completed reminders \(nbOfCompletedReminders)")
@@ -148,7 +148,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         }
     }
     
-    func calculateAverageTimeBetweenDueDateCompletion(reminders: [Reminder]) {
+    func calculateAverageTimeBetweenDueDateCompletion(_ reminders: [Reminder]) {
         var unit = ""
         
         
@@ -198,7 +198,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         
     }
     
-    func calculateRemindersCompletedBeforeDueDate(reminders: [Reminder]) {
+    func calculateRemindersCompletedBeforeDueDate(_ reminders: [Reminder]) {
         let nbOfRemindersCompletedBeforeDueDate = list.numberOfRemindersCompletedBeforeDueDate.floatValue
         let nbOfCompletedReminders = list.numberOfCompletedReminders.floatValue
         if nbOfRemindersCompletedBeforeDueDate != 0 {
@@ -211,12 +211,12 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     }
     
     func updateNumberOfCreatedRemindersLabel() {
-        let nbOfCreatedReminders = list.numberOfReminders.integerValue
+        let nbOfCreatedReminders = list.numberOfReminders.intValue
         numberOfCreatedRemindersLabel.text = String(nbOfCreatedReminders)
     }
     
     func updateNumberOfCompletedRemindersLabel() {
-        let nbOfCompletedReminders = list.numberOfCompletedReminders.integerValue
+        let nbOfCompletedReminders = list.numberOfCompletedReminders.intValue
         numberOfCompletedRemindersLabel.text = String(nbOfCompletedReminders)
     }
     
@@ -239,7 +239,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
 
   // MARK: - Tab Bar Controller Delegate Methods
     
-    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         print(#function)
         if viewController.tabBarItem.tag == 0 {
             print("Selecting Reminders Tab")
@@ -258,6 +258,6 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         }
     }
     
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {}
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {}
 
 }

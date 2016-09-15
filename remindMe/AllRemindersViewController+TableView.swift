@@ -11,17 +11,17 @@ import UIKit
 import CoreData
 
 extension AllRemindersViewController: UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return (coreDataHandler.fetchedResultsController.sections?.count)! 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return (coreDataHandler.fetchedResultsController!.sections?.count)! 
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 //        print(#function)
-        let sectionInfo = coreDataHandler.fetchedResultsController.sections! as [NSFetchedResultsSectionInfo]
+        let sectionInfo = (coreDataHandler.fetchedResultsController?.sections!)! as [NSFetchedResultsSectionInfo]
         let text = sectionInfo[section].name
         
         // Dequeue with the reuse identifier
-        let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("TableSectionHeader")
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TableSectionHeader")
         let header = view as! TableSectionHeader
         
         header.titleLabel.text = text
@@ -29,28 +29,28 @@ extension AllRemindersViewController: UITableViewDataSource {
         return view
     }
     
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
 //        print(#function)
-        let sectionInfo = coreDataHandler.fetchedResultsController.sections! as [NSFetchedResultsSectionInfo]
+        let sectionInfo = (coreDataHandler.fetchedResultsController?.sections!)! as [NSFetchedResultsSectionInfo]
         let text = sectionInfo[section].name
-        let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("TableSectionHeader")
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TableSectionHeader")
         let header = view as! TableSectionHeader
         
         header.titleLabel.text = text
         header.titleLabel.backgroundColor = UIColor(red: 40/255, green: 114/255, blue: 192/255, alpha: 1)
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = coreDataHandler.fetchedResultsController.sections![section]
-        return sectionInfo.numberOfObjects
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let sectionInfo = coreDataHandler.fetchedResultsController?.sections![section]
+        return sectionInfo!.numberOfObjects
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as! ReminderCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ReminderCell", for: indexPath) as! ReminderCell
         let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
         
         cell.configureForReminder(reminder)
@@ -64,24 +64,24 @@ extension AllRemindersViewController: UITableViewDataSource {
 extension AllRemindersViewController: UITableViewDelegate {
     // MARK: - Selection
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(#function)
         print("Number of selected reminders = \(selectedReminders().count)")
         if toolbarIsHidden() {
             // This is a bug in iOS maybe. For some reason this doesn't happen on the main thread
             // Should find where UI code is not on main thread for some reason or what causes a delay
             // but no crash
-            dispatch_async(dispatch_get_main_queue(),{
-               self.performSegueWithIdentifier("Popup",sender: tableView.cellForRowAtIndexPath(indexPath))
+            DispatchQueue.main.async(execute: {
+               self.performSegue(withIdentifier: "Popup",sender: tableView.cellForRow(at: indexPath))
             })
             
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
         } else {
             checkSelectionForFavorites()
         }
     }
     
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         print(#function)
         print("Number of selected reminders = \(selectedReminders().count)")
         let selectedIndexPathsCount = tableView.indexPathsForSelectedRows?.count
@@ -94,12 +94,12 @@ extension AllRemindersViewController: UITableViewDelegate {
         
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    @objc(tableView:commitEditingStyle:forRowAtIndexPath:) func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
-        if editingStyle == .Delete {
+        if editingStyle == .delete {
             let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
-            let alert = UIAlertController(title: "Delete \"\(reminder.name)\" ?", message: "You cannot undo this", preferredStyle: .Alert)
-            let deleteAction = UIAlertAction(title: "Delete", style: .Destructive, handler: {
+            let alert = UIAlertController(title: "Delete \"\(reminder.name)\" ?", message: "You cannot undo this", preferredStyle: .alert)
+            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
                 action in
                 let reminderNotificationHandler = reminder.notificationHandler
                 reminderNotificationHandler.deleteReminderNotifications(reminder)
@@ -107,10 +107,10 @@ extension AllRemindersViewController: UITableViewDelegate {
                 self.coreDataHandler.delete(reminder)
                 self.coreDataHandler.save()
             })
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
             alert.addAction(deleteAction)
             alert.addAction(cancelAction)
-            presentViewController(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         }
     }
     

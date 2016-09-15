@@ -26,30 +26,30 @@ class SettingsViewController: UITableViewController {
     
     var interval = 1
     
-    @IBAction func snoozePickerDidPickSnoozeTime(segue: UIStoryboardSegue) {
+    @IBAction func snoozePickerDidPickSnoozeTime(_ segue: UIStoryboardSegue) {
         print(#function)
-        let controller = segue.sourceViewController as! SnoozePickerViewController
+        let controller = segue.source as! SnoozePickerViewController
         snoozeTime = controller.selectedSnoozeTime
         
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let time = userDefaults.objectForKey("SnoozeTime") as! String
+        let userDefaults = UserDefaults.standard
+        let time = userDefaults.object(forKey: "SnoozeTime") as! String
         
         snoozeTimeLabel.text = time
     }
     
-    @IBAction func autoSnoozePickerDidPickAutoSnoozeTime(segue: UIStoryboardSegue) {
+    @IBAction func autoSnoozePickerDidPickAutoSnoozeTime(_ segue: UIStoryboardSegue) {
         print(#function)
-        let controller = segue.sourceViewController as! AutoSnoozePickerViewController
+        let controller = segue.source as! AutoSnoozePickerViewController
         autoSnoozeTime = controller.selectedAutoSnoozeTime
         
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let time = userDefaults.objectForKey("AutoSnoozeTime") as! String
+        let userDefaults = UserDefaults.standard
+        let time = userDefaults.object(forKey: "AutoSnoozeTime") as! String
         
         autoSnoozeLabel.text = time
     }
     
     @IBAction func setAutoSnoozeFromSwitch() {
-        let enabled = autoSnoozeSwitch.on
+        let enabled = autoSnoozeSwitch.isOn
         setAutoSnooze(enabled)
     }
     
@@ -59,31 +59,31 @@ class SettingsViewController: UITableViewController {
         print(#function)
         
         tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
-        tableView.separatorColor = UIColor.whiteColor()
+        tableView.separatorColor = UIColor.white
         
         // Can't change custom cells
-        autoSnoozeEnableLabel.textColor = UIColor.whiteColor()
+        autoSnoozeEnableLabel.textColor = UIColor.white
         autoSnoozeSwitch.onTintColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
         autoSnoozeSwitch.tintColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
         
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         loadSettings()
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        cell.detailTextLabel?.textColor = UIColor.whiteColor()
+        cell.textLabel?.textColor = UIColor.white
+        cell.detailTextLabel?.textColor = UIColor.white
         
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = UIColor.whiteColor()
+        header.textLabel?.textColor = UIColor.white
         // header.titleLabel.textColor = UIColor.whiteColor()
     }
     
@@ -108,9 +108,9 @@ class SettingsViewController: UITableViewController {
     }
     
     func loadAutoSnoozeSettings() {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let anAutoSnoozeTime = userDefaults.objectForKey("AutoSnoozeTime") as! String
-        let autoSnoozeOn = userDefaults.boolForKey("AutoSnoozeEnabled")
+        let userDefaults = UserDefaults.standard
+        let anAutoSnoozeTime = userDefaults.object(forKey: "AutoSnoozeTime") as! String
+        let autoSnoozeOn = userDefaults.bool(forKey: "AutoSnoozeEnabled")
         
         autoSnoozeSwitch.setOn(autoSnoozeOn, animated: false)
         
@@ -120,9 +120,9 @@ class SettingsViewController: UITableViewController {
     }
     
     func loadSnoozeSettings() {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let duration = userDefaults.doubleForKey("SnoozeDuration")
-        let unit = userDefaults.objectForKey("SnoozeUnit") as! String
+        let userDefaults = UserDefaults.standard
+        let duration = userDefaults.double(forKey: "SnoozeDuration")
+        let unit = userDefaults.object(forKey: "SnoozeUnit") as! String
         let chosenUnit = SnoozeUnit(rawValue: unit)
         
         snoozeUnit = chosenUnit!
@@ -134,33 +134,33 @@ class SettingsViewController: UITableViewController {
         snoozeTimeLabel.text = "for " + snoozeTime
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let identifier = segue.identifier {
             switch identifier {
             case "PickSnoozeTime":
-                let controller = segue.destinationViewController as! SnoozePickerViewController
+                let controller = segue.destination as! SnoozePickerViewController
                 controller.selectedSnoozeTime = snoozeTime
                 controller.chosenDuration = snoozeDuration
                 controller.chosenUnit = snoozeUnit
                 controller.selectedSnoozeTimeTuple = (snoozeDuration, snoozeUnit)
             case "PickAutoSnoozeTime":
-                let controller = segue.destinationViewController as! AutoSnoozePickerViewController
+                let controller = segue.destination as! AutoSnoozePickerViewController
                 controller.selectedAutoSnoozeTime = autoSnoozeTime
             case "SendFeedback":
-                let controller = segue.destinationViewController as! AboutViewController
-                controller.htmlFile = NSBundle.mainBundle().pathForResource("feedback", ofType: "html")
+                let controller = segue.destination as! AboutViewController
+                controller.htmlFile = Bundle.main.path(forResource: "feedback", ofType: "html")
                 controller.title = "Feedback"
             case "AboutDeveloper":
-                let controller = segue.destinationViewController as! AboutViewController
-                controller.htmlFile = NSBundle.mainBundle().pathForResource("aboutDeveloper", ofType: "html")
+                let controller = segue.destination as! AboutViewController
+                controller.htmlFile = Bundle.main.path(forResource: "aboutDeveloper", ofType: "html")
                 controller.title = "About the developer"
             case "AboutApp":
-                let controller = segue.destinationViewController as! AboutViewController
-                controller.htmlFile = NSBundle.mainBundle().pathForResource("aboutApp", ofType: "html")
+                let controller = segue.destination as! AboutViewController
+                controller.htmlFile = Bundle.main.path(forResource: "aboutApp", ofType: "html")
                 controller.title = "About the app"
             case "PickTimePickerInterval":
-                let controller = segue.destinationViewController as! TimePickerViewController
+                let controller = segue.destination as! TimePickerViewController
                 controller.selectedInterval = interval
             default:
                 print("Error: No segue")
@@ -171,8 +171,8 @@ class SettingsViewController: UITableViewController {
         
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -183,20 +183,20 @@ extension SettingsViewController: MFMailComposeViewControllerDelegate {
             controller.setSubject(NSLocalizedString("Support Request", comment: "Email Subject"))
             controller.setToRecipients(["duane.stoltz@gmail.com"])
             controller.mailComposeDelegate = self
-            self.presentViewController(controller, animated: true, completion: nil)
+            self.present(controller, animated: true, completion: nil)
         } else {
-            let alert = UIAlertController(title: "Can't send email", message: "Please configure your device to send email in Settings -> Mail, Contacts, Calendar. You can also send me a mail at duane.stoltz@gmail.com", preferredStyle: .Alert)
-            let cancel = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+            let alert = UIAlertController(title: "Can't send email", message: "Please configure your device to send email in Settings -> Mail, Contacts, Calendar. You can also send me a mail at duane.stoltz@gmail.com", preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
             
             alert.addAction(cancel)
            
 
-            presentViewController(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         }
     }
     
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        dismiss(animated: true, completion: nil)
     }
 }
 

@@ -525,13 +525,14 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YvC-aE-NMt" userLabel="filterBar">
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="aUq-yY-4Gd">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="aUq-yY-4Gd">
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrr-dM-Lmf" userLabel="All Button">
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="3cB-Eg-CeR"/>
-                                                    <constraint firstAttribute="width" constant="46" id="VC1-tu-q11"/>
+                                                    <constraint firstAttribute="height" constant="44" id="3cB-Eg-CeR"/>
+                                                    <constraint firstAttribute="width" constant="67" id="VC1-tu-q11"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <state key="normal" title="All"/>
                                                 <connections>
                                                     <action selector="loadAllReminders" destination="BYZ-38-t0r" eventType="touchUpInside" id="6l4-tj-eIO"/>
@@ -539,9 +540,10 @@
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f2X-62-Qog" userLabel="Today Button">
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="46" id="5QI-Pi-OaW"/>
-                                                    <constraint firstAttribute="height" constant="30" id="ub3-i2-mHV"/>
+                                                    <constraint firstAttribute="width" constant="67" id="5QI-Pi-OaW"/>
+                                                    <constraint firstAttribute="height" constant="44" id="ub3-i2-mHV"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <state key="normal" title="Today"/>
                                                 <connections>
                                                     <action selector="loadRemindersForToday" destination="BYZ-38-t0r" eventType="touchUpInside" id="3bV-rp-J02"/>
@@ -549,8 +551,9 @@
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1gd-5b-s5i">
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="43" id="Oj7-rK-FUy"/>
+                                                    <constraint firstAttribute="width" constant="67" id="Oj7-rK-FUy"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <state key="normal" title="Week"/>
                                                 <connections>
                                                     <action selector="loadRemindersForWeek" destination="BYZ-38-t0r" eventType="touchUpInside" id="6pE-Ap-Bi7"/>
@@ -560,6 +563,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="67" id="nuT-G9-4vj"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <state key="normal" title="Favorites"/>
                                                 <connections>
                                                     <action selector="loadFavoriteReminders" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Ao-su-7qn"/>
@@ -571,8 +575,8 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="aUq-yY-4Gd" firstAttribute="centerX" secondItem="YvC-aE-NMt" secondAttribute="centerX" id="63k-0J-gf9"/>
-                                    <constraint firstAttribute="height" constant="44" id="Jxz-kg-LZH"/>
-                                    <constraint firstItem="aUq-yY-4Gd" firstAttribute="centerY" secondItem="YvC-aE-NMt" secondAttribute="centerY" id="auY-au-U0S"/>
+                                    <constraint firstAttribute="height" constant="53" id="Jxz-kg-LZH"/>
+                                    <constraint firstItem="aUq-yY-4Gd" firstAttribute="centerY" secondItem="YvC-aE-NMt" secondAttribute="centerY" constant="2.5" id="auY-au-U0S"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="izq-nV-FBg">
@@ -592,7 +596,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.12941176470588237" green="0.34509803921568627" blue="0.50980392156862742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="centerY" secondItem="Bsd-RS-vSF" secondAttribute="centerY" constant="-22" id="7lL-mQ-51j"/>
+                                    <constraint firstItem="yHh-K8-F3j" firstAttribute="centerY" secondItem="Bsd-RS-vSF" secondAttribute="centerY" constant="-17.25" id="7lL-mQ-51j"/>
                                     <constraint firstItem="yHh-K8-F3j" firstAttribute="centerX" secondItem="Bsd-RS-vSF" secondAttribute="centerX" id="Lic-s8-bgy"/>
                                 </constraints>
                             </view>
@@ -601,13 +605,13 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Bsd-RS-vSF" secondAttribute="trailing" id="2ts-hQ-1zH"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Bsd-RS-vSF" secondAttribute="bottom" id="Cax-Al-VLV"/>
-                            <constraint firstItem="izq-nV-FBg" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="44" id="EvJ-po-Cng"/>
+                            <constraint firstItem="izq-nV-FBg" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="53" id="EvJ-po-Cng"/>
                             <constraint firstItem="Bsd-RS-vSF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="HQc-Hp-5il"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YvC-aE-NMt" secondAttribute="trailing" constant="-20" id="IqN-Xl-h7E"/>
                             <constraint firstItem="izq-nV-FBg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="MOg-IR-ZUf"/>
                             <constraint firstAttribute="trailing" secondItem="izq-nV-FBg" secondAttribute="trailing" id="T4G-fY-eJE"/>
                             <constraint firstItem="YvC-aE-NMt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="dQg-Gr-OCo"/>
-                            <constraint firstItem="Bsd-RS-vSF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="44" id="iiC-Q1-s6V"/>
+                            <constraint firstItem="Bsd-RS-vSF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="53" id="iiC-Q1-s6V"/>
                             <constraint firstItem="YvC-aE-NMt" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="1" id="rHS-JB-AfR"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="izq-nV-FBg" secondAttribute="bottom" id="uTK-t8-59p"/>
                         </constraints>
@@ -621,7 +625,7 @@
                             </connections>
                         </barButtonItem>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="eUi-Dz-PKw">
-                            <rect key="frame" x="137.5" y="7" width="100" height="30"/>
+                            <rect key="frame" x="138" y="7" width="100" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="" image="Future"/>
@@ -653,7 +657,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="953" y="-1113"/>
+            <point key="canvasLocation" x="952.79999999999995" y="-1113.1934032983509"/>
         </scene>
         <!--Comments-->
         <scene sceneID="VQc-1v-771">

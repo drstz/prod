@@ -14,38 +14,38 @@ class List: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
     func increaseNbOfReminders() {
-        var nbOfReminders = numberOfReminders.integerValue
+        var nbOfReminders = numberOfReminders.intValue
         nbOfReminders += 1
-        numberOfReminders = NSNumber(integer: nbOfReminders)
+        numberOfReminders = NSNumber(value: nbOfReminders as Int)
     }
     
     func increaseNbOfCompletedReminders() {
-        var nbOfCompletedReminders = numberOfCompletedReminders.integerValue
+        var nbOfCompletedReminders = numberOfCompletedReminders.intValue
         nbOfCompletedReminders += 1
-        numberOfCompletedReminders = NSNumber(integer: nbOfCompletedReminders)
+        numberOfCompletedReminders = NSNumber(value: nbOfCompletedReminders as Int)
     }
     
     func increaseNumberOfRemindersCompletedBeforeDueDate() {
-        var nbOfRemindersCompletedBeforeDueDate = numberOfRemindersCompletedBeforeDueDate.integerValue
+        var nbOfRemindersCompletedBeforeDueDate = numberOfRemindersCompletedBeforeDueDate.intValue
         nbOfRemindersCompletedBeforeDueDate += 1
-        numberOfRemindersCompletedBeforeDueDate = NSNumber(integer: nbOfRemindersCompletedBeforeDueDate)
+        numberOfRemindersCompletedBeforeDueDate = NSNumber(value: nbOfRemindersCompletedBeforeDueDate as Int)
     }
     
-    func increaseTotalTimesSnoozedBeforeCompletion(nbOfTimes: Int) {
-        var nbOfTimesSnoozed = totalTimesSnoozed.integerValue
+    func increaseTotalTimesSnoozedBeforeCompletion(_ nbOfTimes: Int) {
+        var nbOfTimesSnoozed = totalTimesSnoozed.intValue
         nbOfTimesSnoozed += nbOfTimes
-        totalTimesSnoozed = NSNumber(integer: nbOfTimesSnoozed)
+        totalTimesSnoozed = NSNumber(value: nbOfTimesSnoozed as Int)
     }
     
-    func addDifferenceBetweenDates(difference: Int) {
-        var differenceToModify = differenceBetweenDueCompletionDate.integerValue
+    func addDifferenceBetweenDates(_ difference: Int) {
+        var differenceToModify = differenceBetweenDueCompletionDate.intValue
         differenceToModify += difference
-        differenceBetweenDueCompletionDate = NSNumber(integer: differenceToModify)
+        differenceBetweenDueCompletionDate = NSNumber(value: differenceToModify as Int)
     }
     
     func increaseNbOfSnoozedReminders() {
-        var nbOfRemindersSnoozed = numberOfSnoozedReminders.integerValue
+        var nbOfRemindersSnoozed = numberOfSnoozedReminders.intValue
         nbOfRemindersSnoozed += 1
-        numberOfSnoozedReminders = NSNumber(integer: nbOfRemindersSnoozed)
+        numberOfSnoozedReminders = NSNumber(value: nbOfRemindersSnoozed as Int)
     }
 }

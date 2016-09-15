@@ -20,14 +20,14 @@ extension Reminder {
     @NSManaged var comment: String?
     
     // Details
-    @NSManaged var creationDate: NSDate
+    @NSManaged var creationDate: Date
     @NSManaged var idNumber: NSNumber
     @NSManaged var list: List
     
     @NSManaged var willAutoSnooze: NSNumber
     
     // Dates
-    @NSManaged var dueDate: NSDate
+    @NSManaged var dueDate: Date
     
     @NSManaged var repeats: NSNumber
 
@@ -44,7 +44,7 @@ extension Reminder {
     
     // Completion
     @NSManaged var wasCompleted: NSNumber
-    @NSManaged var completionDate: NSDate?
+    @NSManaged var completionDate: Date?
     
     // Seperate reminders into different sections
     var section: String? {

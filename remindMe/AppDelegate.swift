@@ -11,9 +11,9 @@ import CoreData
 
 let MyManagedObjectContextSaveDidFailNotification = "MyManagedObjectContextSaveDidFailNotification"
 
-func fatalCoreDataError(error: ErrorType) {
+func fatalCoreDataError(_ error: Error) {
     print("*** Fatal Error: \(error)")
-    NSNotificationCenter.defaultCenter().postNotificationName(MyManagedObjectContextSaveDidFailNotification, object: nil)
+    NotificationCenter.default.post(name: Notification.Name(rawValue: MyManagedObjectContextSaveDidFailNotification), object: nil)
 }
 
 @UIApplicationMain
@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: Launch
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         NSLog(#function)
         print(#function)
         // User Defaults
@@ -82,14 +82,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let managedObjectContext = coreDataHandler.managedObjectContext
             
             print("*** Fetching list")
-            let fetchRequest = NSFetchRequest()
-            let entityDescription = NSEntityDescription.entityForName("List", inManagedObjectContext: managedObjectContext)
+            let fetchRequest = NSFetchRequest<List>(entityName: "List")
+            let entityDescription = NSEntityDescription.entity(forEntityName: "List", in: managedObjectContext)
             
             fetchRequest.entity = entityDescription
             
             do {
-                let result = try managedObjectContext.executeFetchRequest(fetchRequest)
-                let list = result[0] as! NSManagedObject as! List
+                let result = try managedObjectContext.fetch(fetchRequest)
+                let list = result[0] as NSManagedObject as! List
                 statisticsViewController.list = list
             } catch {
                 let fetchError = error as NSError
@@ -115,7 +115,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // Create shortcut for 3D Touch
-        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
             NSLog("Launching from shortcut")
             let allRemindersViewController = getAllRemindersViewController()
             
@@ -128,10 +128,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             shouldPerformShortcutDelegate = false
             
             // Create the observer before the new view controller or else shortcut won't work when launching app
-            NSNotificationCenter.defaultCenter().addObserver(
+            NotificationCenter.default.addObserver(
                 allRemindersViewController,
                 selector: #selector(allRemindersViewController.newReminder),
-                name: "newReminder",
+                name: NSNotification.Name(rawValue: "newReminder"),
                 object: nil
             )
             
@@ -145,7 +145,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // This doesn't get called when actions are chosen
         // This only gets called if app is launched after tapping a notification
-        if let notification = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
+        if let notification = launchOptions?[UIApplicationLaunchOptionsKey.localNotification] as? UILocalNotification {
             NSLog("App delegate has notification")
             let reminder = reminderFromNotification(notification)
             sendReminderToController(reminder)
@@ -174,20 +174,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Go to background
     
     // Home button
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         print(#function)
-        NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationWillResignActiveNotification, object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
     }
     
     // MARK: Go to foreground
 
     // This is not called when application is being launched
     // This is called when opening an application that has already been launched
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         print(#function)
         NSLog(#function)
         if notificationWentOff {
-            NSNotificationCenter.defaultCenter().postNotificationName(UIApplicationWillEnterForegroundNotification, object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
             notificationWentOff = false
         }
         
@@ -221,7 +221,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // This is called at launch
     // This is called when opening an application that has already been launched
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         print(#function)
         NSLog(#function)
         
@@ -249,10 +249,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Notifications
 
     // This gets called automatically after launch even if the app is terminated.
-    func application(application: UIApplication,
+    func application(_ application: UIApplication,
                      handleActionWithIdentifier identifier: String?,
-                     forLocalNotification notification: UILocalNotification,
-                     completionHandler: () -> Void) {
+                     for notification: UILocalNotification,
+                     completionHandler: @escaping () -> Void) {
         print("")
         print(#function)
         NSLog(#function)
@@ -271,7 +271,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // App must be running for this to go off
     // Does not go off is app is terminated
     // Does go off if app is in background
-    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         // Must tap notification for this or app must be running
         print("")
         print(#function)
@@ -281,7 +281,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let reminder = reminderFromNotification(notification)
         sendReminderToController(reminder)
         
-        if application.applicationState == .Inactive {
+        if application.applicationState == .inactive {
             print("Notification was tapped")
             let tab = getSavedTab()
             if tab == 1 {
@@ -297,23 +297,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 // Dismiss other screens
                 if allRemindersViewController.presentedViewController != nil {
-                    allRemindersViewController.dismissViewControllerAnimated(true, completion: nil)
+                    allRemindersViewController.dismiss(animated: true, completion: nil)
                 }
             }
             
-            NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "viewReminder"), object: nil)
         } else {
             // Handling notification from within app
-            NSNotificationCenter.defaultCenter().postNotificationName("setBadgeForTodayTab", object: nil)
-            NSNotificationCenter.defaultCenter().postNotificationName("refresh", object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "setBadgeForTodayTab"), object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "refresh"), object: nil)
         }
     }
     
     // MARK: 3D Touch
     
-    func application(application: UIApplication,
-                     performActionForShortcutItem shortcutItem: UIApplicationShortcutItem,
-                     completionHandler: (Bool) -> Void) {
+    func application(_ application: UIApplication,
+                     performActionFor shortcutItem: UIApplicationShortcutItem,
+                     completionHandler: @escaping (Bool) -> Void) {
         NSLog(#function)
         
         // This allows the shortcut to work, no matter which view is being presented
@@ -321,7 +321,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let allRemindersViewController = getAllRemindersViewController()
         if allRemindersViewController.presentedViewController != nil {
             print("Dismissing controller")
-            allRemindersViewController.dismissViewControllerAnimated(false, completion: nil)
+            allRemindersViewController.dismiss(animated: false, completion: nil)
         }
         completionHandler(handleShortcut(shortcutItem))
     }
@@ -342,16 +342,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     /// Creates the list variable that will be used to create and number reminders
-    func setUpFirstTime(allRemindersViewController: AllRemindersViewController) {
+    func setUpFirstTime(_ allRemindersViewController: AllRemindersViewController) {
         print(#function)
         
         // Core Data
         let managedObjectContext = coreDataHandler.managedObjectContext
         
         print("*** First time - Creating list")
-        let list = NSEntityDescription.insertNewObjectForEntityForName(
-            "List",
-            inManagedObjectContext: managedObjectContext
+        let list = NSEntityDescription.insertNewObject(
+            forEntityName: "List",
+            into: managedObjectContext
             ) as! List
         
         // Initialize
@@ -372,21 +372,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         allRemindersViewController.list = list
     }
     
-    func loadList(allRemindersViewController: AllRemindersViewController) {
+    func loadList(_ allRemindersViewController: AllRemindersViewController) {
         print(#function)
         
         // Core Data
         let managedObjectContext = coreDataHandler.managedObjectContext
         
         print("*** Fetching list")
-        let fetchRequest = NSFetchRequest()
-        let entityDescription = NSEntityDescription.entityForName("List", inManagedObjectContext: managedObjectContext)
+        let fetchRequest = NSFetchRequest<List>(entityName: "List")
+        let entityDescription = NSEntityDescription.entity(forEntityName: "List", in: managedObjectContext)
         
         fetchRequest.entity = entityDescription
         
         do {
-            let result = try managedObjectContext.executeFetchRequest(fetchRequest)
-            let list = result[0] as! NSManagedObject as! List
+            let result = try managedObjectContext.fetch(fetchRequest)
+            let list = result[0] as NSManagedObject as! List
             allRemindersViewController.list = list
         } catch {
             let fetchError = error as NSError
@@ -394,14 +394,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func reminderFromNotification(notification: UILocalNotification) -> Reminder {
+    func reminderFromNotification(_ notification: UILocalNotification) -> Reminder {
         let reminderID = notificationHandler.reminderID(notification)
         let reminder = coreDataHandler.getReminderWithID(reminderID, from: "Reminder")
         return reminder!
     }
     
     /// Sends reminder to the view controller
-    func sendReminderToController(reminder: Reminder) {
+    func sendReminderToController(_ reminder: Reminder) {
         print(#function)
         
         // Saved Tab
@@ -418,7 +418,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         allRemindersViewController.reminderFromNotification = reminder
     }
     
-    func handleShortcut(shortcutItem: UIApplicationShortcutItem) -> Bool {
+    func handleShortcut(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
         NSLog(#function)
         print("Handling shortcut")
         var succeeded = false
@@ -435,7 +435,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
             NSLog("Posting notification")
-            NSNotificationCenter.defaultCenter().postNotificationName("newReminder", object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "newReminder"), object: nil)
             NSLog("Posted notification")
             print("Adding a new reminder")
             succeeded = true
@@ -446,7 +446,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func setBadgeForReminderTab() {
-        let now = NSDate()
+        let now = Date()
         
         // Tab bar controller
         let tabBarController = window!.rootViewController as! UITabBarController
@@ -457,16 +457,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let managedObjectContext = coreDataHandler.managedObjectContext
         
         // Fetch Results
-        let fetchRequest = NSFetchRequest()
+        let fetchRequest = NSFetchRequest<Reminder>(entityName: "Reminder")
         fetchRequest.fetchBatchSize = 20
         
-        let entity = NSEntityDescription.entityForName("Reminder", inManagedObjectContext: managedObjectContext)
+        let entity = NSEntityDescription.entity(forEntityName: "Reminder", in: managedObjectContext)
         fetchRequest.entity = entity
         
         let sortDescriptor = NSSortDescriptor(key: "dueDate", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", "wasCompleted", false, "dueDate", now)
+        let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", "wasCompleted", false as CVarArg, "dueDate", now as CVarArg)
         fetchRequest.predicate = predicate
         
         let fetchedResultsController = NSFetchedResultsController(

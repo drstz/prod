@@ -8,18 +8,29 @@
 
 import UIKit
 import CoreData
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 // MARK: - Protocols
 
 protocol AddReminderViewControllerDelegate: class {
-    func addReminderViewControllerDidCancel(controller: AddReminderViewController)
+    func addReminderViewControllerDidCancel(_ controller: AddReminderViewController)
     
-    func addReminderViewController(controller: AddReminderViewController,
+    func addReminderViewController(_ controller: AddReminderViewController,
                                    didFinishEditingReminder reminder: Reminder)
     
-    func addReminderViewControllerDidFinishAdding(controller: AddReminderViewController)
+    func addReminderViewControllerDidFinishAdding(_ controller: AddReminderViewController)
     
-    func addReminderViewController(controller: AddReminderViewController,
+    func addReminderViewController(_ controller: AddReminderViewController,
                                    didChooseToDeleteReminder reminder: Reminder)
     
 }
@@ -46,14 +57,14 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
 
     
     // The Date
-    var selectedDate: NSDate?
+    var selectedDate: Date?
     
     var selectedInterval: String?
     var selectedFrequency: Int?
     
     var dueDateIsSet = false
     
-    var nextReminderDate: NSDate?
+    var nextReminderDate: Date?
    
     var willSetNewDate = false
     
@@ -65,7 +76,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     // MARK: Outlets
     
     // Unwind segue
-    @IBAction func unwindToRootViewController(segue: UIStoryboardSegue) {
+    @IBAction func unwindToRootViewController(_ segue: UIStoryboardSegue) {
         print("Unwind to Add Reminder View Controller")
     }
    
@@ -125,16 +136,16 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         NSLog(#function)
         reminderNameField.resignFirstResponder()
         
-        let alert = UIAlertController(title: "Are you sure?", message: "You will lose all changes", preferredStyle: .Alert)
-        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-        let confirm = UIAlertAction(title: "Confirm", style: .Default, handler: {
+        let alert = UIAlertController(title: "Are you sure?", message: "You will lose all changes", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let confirm = UIAlertAction(title: "Confirm", style: .default, handler: {
             action in
             self.delegate?.addReminderViewControllerDidCancel(self)
         })
         alert.addAction(cancel)
         alert.addAction(confirm)
         if textFieldHasText {
-            presentViewController(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         } else {
             delegate?.addReminderViewControllerDidCancel(self)
         }
@@ -168,8 +179,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     }
     
     func createReminder() {
-        let reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder",
-                                                                           inManagedObjectContext: managedObjectContext) as? Reminder
+        let reminder = NSEntityDescription.insertNewObject(forEntityName: "Reminder",
+                                                                           into: managedObjectContext) as? Reminder
         
         // Title
         reminder!.setTitle(reminderNameField.text!)
@@ -198,8 +209,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         reminder?.selectedDays = NSMutableArray(array: selectedDays)
         
         // Update Repeat Method
-        reminder?.usesDayPattern = usingDayPattern
-        reminder?.usesCustomPattern = usingCustomPattern
+        reminder?.usesDayPattern = usingDayPattern as NSNumber
+        reminder?.usesCustomPattern = usingCustomPattern as NSNumber
         
         // Set if recurring
         if reminder?.usesDayPattern == true || reminder?.usesCustomPattern == true {
@@ -227,20 +238,20 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         reminder?.addIDtoReminder()
         
         // Autosnooze
-        reminder?.willAutoSnooze = autoSnoozeSwitch.on
+        reminder?.willAutoSnooze = autoSnoozeSwitch.isOn as NSNumber
         
         // Set amount of snoozes
-        reminder?.timesSnoozed = NSNumber(integer: 0)
+        reminder?.timesSnoozed = NSNumber(value: 0 as Int)
         
         // Set creation date
-        reminder?.creationDate = NSDate()
+        reminder?.creationDate = Date()
         
         // Create notification
         let notificationHandler = reminder!.notificationHandler
         notificationHandler.scheduleNotifications(reminder!)
     }
     
-    func updateReminder(reminder: Reminder) {
+    func updateReminder(_ reminder: Reminder) {
         // Title
         reminder.setTitle(reminderNameField.text!)
         
@@ -271,8 +282,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         reminder.selectedDays = NSMutableArray(array: selectedDays)
         
         // Update Repeat Method
-        reminder.usesDayPattern = usingDayPattern
-        reminder.usesCustomPattern = usingCustomPattern
+        reminder.usesDayPattern = usingDayPattern as NSNumber
+        reminder.usesCustomPattern = usingCustomPattern as NSNumber
         
         if reminder.usesDayPattern == true || reminder.usesCustomPattern == true {
             reminder.setRecurring(true)
@@ -281,7 +292,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         }
         
         // Autosnooze
-        reminder.willAutoSnooze = autoSnoozeSwitch.on
+        reminder.willAutoSnooze = autoSnoozeSwitch.isOn as NSNumber
         
         // Do not set past reminders to incomplete
         // Do not set notifications for reminders that are already in the past
@@ -314,7 +325,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             prepareViewForReminder(reminder)
         } else {
             creatingReminder = true
-            autoSnoozeSwitch.on = autoSnoozeSetting()
+            autoSnoozeSwitch.isOn = autoSnoozeSetting()
         }
         
         enableDoneButton()
@@ -326,15 +337,15 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openCommentView))
         reminderCommentFieldCell.addGestureRecognizer(gestureRecognizer)
         
-        reminderCommentField.textColor = UIColor.whiteColor()
+        reminderCommentField.textColor = UIColor.white
         // reminderCommentField.backgroundColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
-        reminderNameField.textColor = UIColor.whiteColor()
+        reminderNameField.textColor = UIColor.white
         reminderNameField.backgroundColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
         reminderNameField.attributedPlaceholder = NSAttributedString(string: "Reminder title",
-                                                                     attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+                                                                     attributes: [NSForegroundColorAttributeName:UIColor.white])
         setColorTheme()
         
-        autoSnoozeLabel.textColor = UIColor.whiteColor()
+        autoSnoozeLabel.textColor = UIColor.white
         
         // Switch
         autoSnoozeSwitch.onTintColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
@@ -347,14 +358,14 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
         
         // Table view separator
-        tableView.separatorColor = UIColor.whiteColor()
+        tableView.separatorColor = UIColor.white
     }
     
     func openCommentView() {
-        performSegueWithIdentifier("AddComment", sender: nil)
+        performSegue(withIdentifier: "AddComment", sender: nil)
     }
     
-    func prepareViewForReminder(reminder: Reminder) {
+    func prepareViewForReminder(_ reminder: Reminder) {
         title = reminder.name
         
         // Set textfield
@@ -367,7 +378,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         }
         
         // Get Date into memomry
-        selectedDate = reminder.dueDate
+        selectedDate = reminder.dueDate as Date
         dueDateIsSet = true
         
         // Get selected dates into mememory
@@ -396,22 +407,22 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         }
         
         // Auto snooze switch
-        autoSnoozeSwitch.on = reminder.willAutoSnooze as Bool
+        autoSnoozeSwitch.isOn = reminder.willAutoSnooze as Bool
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateRepeatLabel()
         
         if reminderToEdit != nil {
-            doneBarButton.enabled = true
+            doneBarButton.isEnabled = true
         }
     }
     
     // MARK: - Date Picker View Controller Delegate
     
-    func datePickerViewControllerDidChooseDate(controller: DatePickerViewController, date: NSDate) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func datePickerViewControllerDidChooseDate(_ controller: DatePickerViewController, date: Date) {
+        dismiss(animated: true, completion: nil)
         selectedDate = date
         setDueDateLabel(with: selectedDate!)
         
@@ -420,7 +431,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     }
     
     // MARK: - Repeat Method View Controller Delegate
-    func repeatMethodViewControllerDidChooseCustomPattern(controller: RepeatMethodViewController, frequency: Int, interval: String) {
+    func repeatMethodViewControllerDidChooseCustomPattern(_ controller: RepeatMethodViewController, frequency: Int, interval: String) {
         print("Arrived  with \(interval) and \(frequency)")
         selectedInterval = interval
         selectedFrequency = frequency
@@ -429,11 +440,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         // nextReminderDate = addRecurringDate(selectedFrequency!, delayType: selectedInterval!, date: selectedDate!)
     }
     
-    func repeatMethodViewControllerDidChooseWeekDayPattern(controller: RepeatMethodViewController, days: [Int]) {
+    func repeatMethodViewControllerDidChooseWeekDayPattern(_ controller: RepeatMethodViewController, days: [Int]) {
         selectedDays = days
     }
     
-    func repeatMethodViewControllerDidChooseRepeatMethod(controller: RepeatMethodViewController,
+    func repeatMethodViewControllerDidChooseRepeatMethod(_ controller: RepeatMethodViewController,
                                                          useNoPattern: Bool,
                                                          useCustomPattern: Bool,
                                                          useDayPattern: Bool) {
@@ -448,19 +459,19 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     }
     
     func repeatMethodViewControllerIsDone() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     func repeatMethodViewControllerDidCancel() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Comment View Controller Delegate
-    func reminderCommentViewControllerDidCancel(controller: ReminderCommentViewController) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func reminderCommentViewControllerDidCancel(_ controller: ReminderCommentViewController) {
+        dismiss(animated: true, completion: nil)
     }
     
-    func reminderCommentViewControllerDidSave(controller: ReminderCommentViewController, comment: String) {
+    func reminderCommentViewControllerDidSave(_ controller: ReminderCommentViewController, comment: String) {
         self.comment = comment
         if self.comment!.characters.count != 0 {
             reminderCommentField.text = self.comment
@@ -468,14 +479,14 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             reminderCommentField.text = "Tap to enter extra details here"
         }
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Navigation
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "OpenDatePicker" {
-            let datePickerViewController = segue.destinationViewController as? DatePickerViewController
+            let datePickerViewController = segue.destination as? DatePickerViewController
             datePickerViewController?.delegate = self
             
             // Send date
@@ -483,7 +494,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         }
         
         if segue.identifier == "PickRepeatMethod" {
-            let navigationController = segue.destinationViewController as? UINavigationController
+            let navigationController = segue.destination as? UINavigationController
             let repeatMethodViewController = navigationController?.viewControllers[0] as? RepeatMethodViewController
             
             repeatMethodViewController?.delegate = self
@@ -505,7 +516,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         }
         
         if segue.identifier == "AddComment" {
-            let navigationController = segue.destinationViewController as? UINavigationController
+            let navigationController = segue.destination as? UINavigationController
             let reminderCommentViewController = navigationController?.viewControllers[0] as? ReminderCommentViewController
             
             reminderCommentViewController!.delegate = self
@@ -522,12 +533,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     // MARK: - Table View Delegate
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return super.tableView(tableView, numberOfRowsInSection: section)
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 0 && indexPath.row == 1 {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (indexPath as NSIndexPath).section == 0 && (indexPath as NSIndexPath).row == 1 {
             return 110
         } else {
             return 50
@@ -535,42 +546,42 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = UIColor.whiteColor()
+        header.textLabel?.textColor = UIColor.white
         // header.titleLabel.textColor = UIColor.whiteColor()
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        cell.detailTextLabel?.textColor = UIColor.whiteColor()
-        cell.tintColor = UIColor.whiteColor()
+        cell.textLabel?.textColor = UIColor.white
+        cell.detailTextLabel?.textColor = UIColor.white
+        cell.tintColor = UIColor.white
         
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let notificationHandler = NotificationHandler()
         notificationHandler.setNotifications()
-        return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
+        return super.tableView(tableView, cellForRowAt: indexPath)
     }
     
-    override func tableView(tableView: UITableView, indentationLevelForRowAtIndexPath indexPath: NSIndexPath) -> Int {
-        return super.tableView(tableView, indentationLevelForRowAtIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
+        return super.tableView(tableView, indentationLevelForRowAt: indexPath)
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         reminderNameField.resignFirstResponder()
         
         
         
     }
     
-    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         
         
-        if indexPath.section == 1 && indexPath.row == 2 {
+        if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 2 {
             return nil
         } else {
             return indexPath
@@ -580,9 +591,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     }
     
-    override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         // Do not highlight auto snooze line
-        if indexPath.section == 1 && indexPath.row == 2 {
+        if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 2 {
             return false
         } else {
             return true
@@ -593,13 +604,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     func enableDoneButton() {
         if dueDateIsSet && textFieldHasText {
-            doneBarButton.enabled = true
+            doneBarButton.isEnabled = true
         } else {
-            doneBarButton.enabled = false
+            doneBarButton.isEnabled = false
         }
         
         if reminderToEdit != nil && reminderNameField.text?.characters.count != 0 {
-            doneBarButton.enabled = true
+            doneBarButton.isEnabled = true
         }
     }
 
@@ -607,12 +618,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     // Listen to textfield
     
-    func textField(textField: UITextField,
-                   shouldChangeCharactersInRange range: NSRange,
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
         
-        let oldText: NSString = textField.text!
-        let newText: NSString = oldText.stringByReplacingCharactersInRange(range, withString: string)
+        let oldText: NSString = textField.text! as NSString
+        let newText: NSString = oldText.replacingCharacters(in: range, with: string) as NSString
 
         textFieldHasText = newText.length > 0
         
@@ -624,17 +635,17 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         return true
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        let someText: NSString = textField.text!
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let someText: NSString = textField.text! as NSString
         textFieldHasText = someText.length > 0
         enableDoneButton()
         //hideDatePicker()
         if textFieldHasText {
-            textField.returnKeyType = .Next
+            textField.returnKeyType = .next
         }
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textFieldHasText {
             textField.resignFirstResponder()
         } else {
@@ -646,12 +657,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     // MARK: - Date Picker
     
-    func setDueDateLabel(with date: NSDate) {
-        let formatter = NSDateFormatter()
-        formatter.dateStyle = .MediumStyle
-        formatter.timeStyle = .ShortStyle
+    func setDueDateLabel(with date: Date) {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
         
-        dueDateLabel.text = formatter.stringFromDate(date)
+        dueDateLabel.text = formatter.string(from: date)
         enableDoneButton()
         
     }
@@ -679,50 +690,50 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
                     if selectedDays.count != 1 {
                         day = "Sun"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 2:
                     var day = "Monday"
                     if selectedDays.count != 1 {
                         day = "M"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 3:
                     var day = "Tuesday"
                     if selectedDays.count != 1 {
                         day = "T"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 4:
                     var day = "Wednesday"
                     if selectedDays.count != 1 {
                         day = "W"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 5:
                     var day = "Thursday"
                     if selectedDays.count != 1 {
                         day = "Th"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 6:
                     var day = "Friday"
                     if selectedDays.count != 1 {
                         day = "F"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 7:
                     var day = "Saturday"
                     if selectedDays.count != 1 {
                         day = "Sat"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 default:
                     print("Error appending strings of days")
                 }
                 if selectedDays.count > 1 {
                     // Do not print comma after last word
-                    if selectedDays.indexOf(day) < selectedDays.count - 1 {
-                        stringOfDays.appendContentsOf(", ")
+                    if selectedDays.index(of: day) < selectedDays.count - 1 {
+                        stringOfDays.append(", ")
                     }
                 }
             }

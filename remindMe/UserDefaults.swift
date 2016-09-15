@@ -9,11 +9,11 @@
 import Foundation
 
 enum SnoozeDefaults {
-    case TenSeconds
-    case FiveMinutes
-    case TenMinutes
-    case ThirtyMinutes
-    case Hour
+    case tenSeconds
+    case fiveMinutes
+    case tenMinutes
+    case thirtyMinutes
+    case hour
 }
 
 enum SnoozeUnit: String {
@@ -24,8 +24,8 @@ enum SnoozeUnit: String {
 }
 
 enum AutoSnoozeDefaults {
-    case Minute
-    case Hour
+    case minute
+    case hour
 }
     
 func registerDefaults() {
@@ -42,63 +42,63 @@ func registerDefaults() {
         "SavedSnoozeUnit" : "min",
         "Filter" : "All",
         "TimePickerInterval" : 1
-    ]
-    NSUserDefaults.standardUserDefaults().registerDefaults(dictionary)
+    ] as [String : Any]
+    UserDefaults.standard.register(defaults: dictionary)
 }
 
 func isFirstTime() -> Bool {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    let firstTime = userDefaults.boolForKey("FirstTime")
+    let userDefaults = UserDefaults.standard
+    let firstTime = userDefaults.bool(forKey: "FirstTime")
     if firstTime {
-        userDefaults.setBool(false, forKey: "FirstTime")
+        userDefaults.set(false, forKey: "FirstTime")
         userDefaults.synchronize()
         return true
     }
     return false
 }
 
-func saveFilter(filter: ReminderFilter) {
+func saveFilter(_ filter: ReminderFilter) {
     print("Going to save filter: \(filter)")
     print("The filter's raw value is \(filter.rawValue)")
     
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    userDefaults.setObject(filter.rawValue, forKey: "Filter")
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(filter.rawValue, forKey: "Filter")
     userDefaults.synchronize()
     
     print("Filter was saved to \(savedFilter())")
 }
 
 func savedFilter() -> ReminderFilter {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    let filter = userDefaults.objectForKey("Filter") as! String
+    let userDefaults = UserDefaults.standard
+    let filter = userDefaults.object(forKey: "Filter") as! String
     return ReminderFilter(rawValue: filter)!
 }
 
 func isUsingCustomSnoozeTime() -> Bool {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    let customSnooze = userDefaults.boolForKey("UsingCustomSnooze")
+    let userDefaults = UserDefaults.standard
+    let customSnooze = userDefaults.bool(forKey: "UsingCustomSnooze")
     return customSnooze
 }
 
-func setUsingCustomSnoozeTime(enabled: Bool) {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    userDefaults.setBool(enabled, forKey: "UsingCustomSnooze")
+func setUsingCustomSnoozeTime(_ enabled: Bool) {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(enabled, forKey: "UsingCustomSnooze")
     
 }
 
-func setSnoozeTime(duration: Double, unit: SnoozeUnit) {
+func setSnoozeTime(_ duration: Double, unit: SnoozeUnit) {
     print(#function)
     let chosenUnit = choiceForSnoozeUnit(unit)
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    userDefaults.setObject(chosenUnit, forKey: "SnoozeUnit")
-    userDefaults.setDouble(duration, forKey: "SnoozeDuration")
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(chosenUnit, forKey: "SnoozeUnit")
+    userDefaults.set(duration, forKey: "SnoozeDuration")
     userDefaults.synchronize()
     
     let notificationHandler = NotificationHandler()
     notificationHandler.updateAllSnoozeTimes()
 }
 
-func getLabel(snoozeDuration: Double, snoozeUnit: SnoozeUnit) -> String {
+func getLabel(_ snoozeDuration: Double, snoozeUnit: SnoozeUnit) -> String {
     var duration = ""
     switch snoozeUnit {
     case .Seconds:
@@ -116,82 +116,82 @@ func getLabel(snoozeDuration: Double, snoozeUnit: SnoozeUnit) -> String {
     return duration
 }
 
-func saveCustomSnoozeTime(duration: Double, unit: SnoozeUnit) {
+func saveCustomSnoozeTime(_ duration: Double, unit: SnoozeUnit) {
     let chosenUnit = choiceForSnoozeUnit(unit)
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    userDefaults.setObject(chosenUnit, forKey: "SavedSnoozeUnit")
-    userDefaults.setDouble(duration, forKey: "SavedSnoozeDuration")
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(chosenUnit, forKey: "SavedSnoozeUnit")
+    userDefaults.set(duration, forKey: "SavedSnoozeDuration")
     userDefaults.synchronize()
 }
 
 func getCustomSnoozeTime() -> (Double, SnoozeUnit) {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    let duration = userDefaults.doubleForKey("SavedSnoozeDuration")
-    let unit = SnoozeUnit(rawValue: userDefaults.objectForKey("SavedSnoozeUnit") as! String)
+    let userDefaults = UserDefaults.standard
+    let duration = userDefaults.double(forKey: "SavedSnoozeDuration")
+    let unit = SnoozeUnit(rawValue: userDefaults.object(forKey: "SavedSnoozeUnit") as! String)
     let customSnoozeTime = (duration, unit!)
     return customSnoozeTime
 }
 
-func setAutoSnooze(enabled: Bool) {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    userDefaults.setBool(enabled, forKey: "AutoSnoozeEnabled")
+func setAutoSnooze(_ enabled: Bool) {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(enabled, forKey: "AutoSnoozeEnabled")
     userDefaults.synchronize()
 }
 
-func setDefaultAutoSnoozeTime(autoSnoozeTime: AutoSnoozeDefaults) {
+func setDefaultAutoSnoozeTime(_ autoSnoozeTime: AutoSnoozeDefaults) {
     let autoSnoozeDefault = choiceForAutoSnoozeTime(autoSnoozeTime)
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    userDefaults.setObject(autoSnoozeDefault, forKey: "AutoSnoozeTime")
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(autoSnoozeDefault, forKey: "AutoSnoozeTime")
     userDefaults.synchronize()
     
     let notificationHandler = NotificationHandler()
     notificationHandler.updateAllSnoozeTimes()
 }
 
-func saveSelectedTab(selectedTabIndex: Int) {
+func saveSelectedTab(_ selectedTabIndex: Int) {
     print("")
     print(#function)
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     print("Going to save tab as tab #\(selectedTabIndex)")
-    userDefaults.setInteger(selectedTabIndex, forKey: "SelectedTab")
+    userDefaults.set(selectedTabIndex, forKey: "SelectedTab")
     
-    let savedTab = userDefaults.integerForKey("SelectedTab")
+    let savedTab = userDefaults.integer(forKey: "SelectedTab")
     print("Tab was saved as tab #\(savedTab)")
 }
 
 func getSavedTab() -> Int {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    let savedTab = userDefaults.integerForKey("SelectedTab")
+    let userDefaults = UserDefaults.standard
+    let savedTab = userDefaults.integer(forKey: "SelectedTab")
     print("The saved tab is tab #\(savedTab)")
     return savedTab
 }
 
-func choiceForSnoozeUnit(unit: SnoozeUnit) -> String {
+func choiceForSnoozeUnit(_ unit: SnoozeUnit) -> String {
     return unit.rawValue
 }
 
-func choiceForAutoSnoozeTime(autoSnoozeDefaults: AutoSnoozeDefaults) -> String {
+func choiceForAutoSnoozeTime(_ autoSnoozeDefaults: AutoSnoozeDefaults) -> String {
     switch autoSnoozeDefaults {
-    case .Minute:
+    case .minute:
         return "1 minute"
-    case .Hour:
+    case .hour:
         return "1 hour"
     }
 }
 
 func timePickerInterval() -> Int {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    let interval = userDefaults.integerForKey("TimePickerInterval")
+    let userDefaults = UserDefaults.standard
+    let interval = userDefaults.integer(forKey: "TimePickerInterval")
     return interval
 }
 
-func saveTimePickerInterval(interval: Int) {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    userDefaults.setInteger(interval, forKey: "TimePickerInterval")
+func saveTimePickerInterval(_ interval: Int) {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(interval, forKey: "TimePickerInterval")
     userDefaults.synchronize()
 }
 
 func autoSnoozeSetting() -> Bool {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    return userDefaults.boolForKey("AutoSnoozeEnabled")
+    let userDefaults = UserDefaults.standard
+    return userDefaults.bool(forKey: "AutoSnoozeEnabled")
 }

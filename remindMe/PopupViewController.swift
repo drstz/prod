@@ -8,11 +8,22 @@
 
 import UIKit
 import CoreData
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 protocol PopupViewControllerDelegate: class {
-    func popupViewControllerDidComplete(controller: PopupViewController, reminder: Reminder)
-    func popupViewControllerDidSnooze(controller: PopupViewController, reminder: Reminder)
-    func popupViewControllerDidDelete(controller: PopupViewController, reminder: Reminder)
+    func popupViewControllerDidComplete(_ controller: PopupViewController, reminder: Reminder)
+    func popupViewControllerDidSnooze(_ controller: PopupViewController, reminder: Reminder)
+    func popupViewControllerDidDelete(_ controller: PopupViewController, reminder: Reminder)
 }
 
 
@@ -85,15 +96,15 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     }
     
     @IBAction func delete() {
-        let alert = UIAlertController(title: "Delete \"\((incomingReminder?.name)!)\" ?", message: "You cannot undo this", preferredStyle: .Alert)
-        let deleteAction = UIAlertAction(title: "Delete", style: .Destructive, handler: {
+        let alert = UIAlertController(title: "Delete \"\((incomingReminder?.name)!)\" ?", message: "You cannot undo this", preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
             action in
                 self.delegate?.popupViewControllerDidDelete(self, reminder: self.incomingReminder!)
         })
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         alert.addAction(deleteAction)
         alert.addAction(cancelAction)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func favorite() {
@@ -112,7 +123,7 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     }
     
     @IBAction func close() {
-         dismissViewControllerAnimated(true, completion: nil)
+         dismiss(animated: true, completion: nil)
     }
     
     deinit {
@@ -125,36 +136,36 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     
     // MARK: AddReminder
     
-    func addReminderViewControllerDidCancel(controller: AddReminderViewController) {
+    func addReminderViewControllerDidCancel(_ controller: AddReminderViewController) {
         print(#function)
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func addReminderViewController(controller: AddReminderViewController, didFinishEditingReminder reminder: Reminder) {
+    func addReminderViewController(_ controller: AddReminderViewController, didFinishEditingReminder reminder: Reminder) {
         print(#function)
         setLabels(with: reminder)
         if reminder.dueDate.isPresent() {
-            snoozeButton.hidden = true
+            snoozeButton.isHidden = true
         } else {
-            snoozeButton.hidden = false
+            snoozeButton.isHidden = false
         }
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func addReminderViewControllerDidFinishAdding(controller: AddReminderViewController) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func addReminderViewControllerDidFinishAdding(_ controller: AddReminderViewController) {
+        dismiss(animated: true, completion: nil)
     }
     
-    func addReminderViewController(controller: AddReminderViewController, didChooseToDeleteReminder reminder: Reminder) {
+    func addReminderViewController(_ controller: AddReminderViewController, didChooseToDeleteReminder reminder: Reminder) {
         print(#function)
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        modalPresentationStyle = .Custom
+        modalPresentationStyle = .custom
         transitioningDelegate = self
     }
     
@@ -183,11 +194,11 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         favorite()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if !UIAccessibilityIsReduceTransparencyEnabled() {
-            backgroundView.backgroundColor = UIColor.clearColor()
+            backgroundView.backgroundColor = UIColor.clear
         } else {
             backgroundView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.8)
         }
@@ -199,16 +210,16 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
             setLabels(with: reminder)
             setFavoriteStar()
             if reminder.isDue() && reminder.wasCompleted == false {
-                snoozeButton.hidden = false
+                snoozeButton.isHidden = false
             } else {
-                snoozeButton.hidden = true
+                snoozeButton.isHidden = true
             }
             
             if let comment = reminder.comment {
-                commentLabel.hidden = false
+                commentLabel.isHidden = false
                 commentLabel.text = comment
             } else {
-                commentLabel.hidden = true
+                commentLabel.isHidden = true
             }
             
             
@@ -230,21 +241,21 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
             }
             
             if reminder.wasCompleted == true {
-                completeButton.enabled = false
-                completeButton.setTitle("Completed", forState: .Disabled)
-                completeButton.setTitleColor(UIColor.lightGrayColor(), forState: .Disabled)
+                completeButton.isEnabled = false
+                completeButton.setTitle("Completed", for: .disabled)
+                completeButton.setTitleColor(UIColor.lightGray, for: .disabled)
             } else {
-                completeButton.enabled = true
-                completeButton.setTitle("Complete", forState: .Normal)
-                completeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                completeButton.isEnabled = true
+                completeButton.setTitle("Complete", for: UIControlState())
+                completeButton.setTitleColor(UIColor.white, for: UIControlState())
             }
             
             if reminder.repeats == true {
-                repeatIcon.hidden = false
-                repeatLabel.hidden = false
+                repeatIcon.isHidden = false
+                repeatLabel.isHidden = false
             } else {
-                repeatIcon.hidden = true
-                repeatLabel.hidden = true
+                repeatIcon.isHidden = true
+                repeatLabel.isHidden = true
             }
         }
     }
@@ -263,13 +274,13 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         } else if reminder.usesCustomPattern == true {
             updateRepeatLabelWithCustomPattern(reminder)
         } else {
-            repeatLabel.hidden = true
+            repeatLabel.isHidden = true
         }
         
     }
     
-    func updateRepeatLabelWithCustomPattern(reminder: Reminder) {
-        if let frequency = reminder.frequency?.integerValue, let interval = reminder.interval {
+    func updateRepeatLabelWithCustomPattern(_ reminder: Reminder) {
+        if let frequency = reminder.frequency?.intValue, let interval = reminder.interval {
             if frequency != 1 {
                 repeatLabel.text = "every " + "\(frequency) " + "\(interval)" + "s"
             } else if frequency == 1 {
@@ -278,7 +289,7 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         }
     }
     
-    func updateRepeatLabelWithDayPattern(reminder: Reminder) {
+    func updateRepeatLabelWithDayPattern(_ reminder: Reminder) {
         var stringOfDays = "every "
         var selectedDays = [Int]()
         for day in reminder.selectedDays {
@@ -292,50 +303,50 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
                     if selectedDays.count != 1 {
                         day = "Sun"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 2:
                     var day = "Monday"
                     if selectedDays.count != 1 {
                         day = "M"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 3:
                     var day = "Tuesday"
                     if selectedDays.count != 1 {
                         day = "T"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 4:
                     var day = "Wednesday"
                     if selectedDays.count != 1 {
                         day = "W"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 5:
                     var day = "Thursday"
                     if selectedDays.count != 1 {
                         day = "Th"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 6:
                     var day = "Friday"
                     if selectedDays.count != 1 {
                         day = "F"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 case 7:
                     var day = "Saturday"
                     if selectedDays.count != 1 {
                         day = "Sat"
                     }
-                    stringOfDays.appendContentsOf(day)
+                    stringOfDays.append(day)
                 default:
                     print("Error appending strings of days")
                 }
                 if selectedDays.count > 1 {
                     // Do not print comma after last word
-                    if selectedDays.indexOf(day) < selectedDays.count - 1 {
-                        stringOfDays.appendContentsOf(", ")
+                    if selectedDays.index(of: day) < selectedDays.count - 1 {
+                        stringOfDays.append(", ")
                     }
                 }
             }
@@ -349,20 +360,20 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         if let reminder = incomingReminder {
             if reminder.isFavorite == true {
                 let yellowStar = UIImage.init(named: "starYellow100")
-                favoriteButton.setImage(yellowStar, forState: .Normal)
+                favoriteButton.setImage(yellowStar, for: UIControlState())
             } else {
                 let whiteStar = UIImage.init(named: "starWhite100")
-                favoriteButton.setImage(whiteStar, forState: .Normal)
+                favoriteButton.setImage(whiteStar, for: UIControlState())
             }
         }
     }
     
     // MARK: Segues
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print(#function)
         if segue.identifier == "EditReminder" {
-            let navigationController = segue.destinationViewController as! UINavigationController
+            let navigationController = segue.destination as! UINavigationController
             let controller = navigationController.topViewController as! AddReminderViewController
             
             controller.delegate = self
@@ -374,16 +385,16 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
 }
 
 extension PopupViewController: UIViewControllerTransitioningDelegate {
-    func presentationControllerForPresentedViewController(presented: UIViewController,
-                                                          presentingViewController presenting: UIViewController,
-                                                          sourceViewController source: UIViewController) -> UIPresentationController? {
+    func presentationController(forPresented presented: UIViewController,
+                                                          presenting: UIViewController?,
+                                                          source: UIViewController) -> UIPresentationController? {
         
-        return DimmingPresentationController(presentedViewController: presented, presentingViewController: presenting)
+        return DimmingPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
 
 extension PopupViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return (touch.view === self.view)
     }
 }

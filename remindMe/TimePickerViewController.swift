@@ -14,7 +14,7 @@ class TimePickerViewController: UITableViewController {
     
     var selectedInterval = 1
     
-    var selectedIndexPath = NSIndexPath()
+    var selectedIndexPath = IndexPath()
     
     let intervals = [
         1,
@@ -29,20 +29,20 @@ class TimePickerViewController: UITableViewController {
         
         for i in 0 ..< intervals.count {
             if intervals[i] == selectedInterval {
-                selectedIndexPath = NSIndexPath(forRow: i, inSection: 0)
+                selectedIndexPath = IndexPath(row: i, section: 0)
                 break
             }
         }
         // Change this first or else time interval doesn't update
-        timePicker.datePickerMode = .Time
+        timePicker.datePickerMode = .time
         timePicker.minuteInterval = timePickerInterval()
         
-        timePicker.enabled = false
+        timePicker.isEnabled = false
         
-        timePicker.userInteractionEnabled = false
+        timePicker.isUserInteractionEnabled = false
         
-        timePicker.backgroundColor = UIColor.clearColor()
-        timePicker.setValue(UIColor.whiteColor(), forKey: "textColor")
+        timePicker.backgroundColor = UIColor.clear
+        timePicker.setValue(UIColor.white, forKey: "textColor")
         
         setColorTheme()
     }
@@ -52,37 +52,37 @@ class TimePickerViewController: UITableViewController {
         tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
         
         // Table view separator
-        tableView.separatorColor = UIColor.whiteColor()
+        tableView.separatorColor = UIColor.white
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return intervals.count
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = UIColor.whiteColor()
+        header.textLabel?.textColor = UIColor.white
         // header.titleLabel.textColor = UIColor.whiteColor()
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Pick an interval"
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        cell.detailTextLabel?.textColor = UIColor.whiteColor()
-        cell.tintColor = UIColor.whiteColor()
+        cell.textLabel?.textColor = UIColor.white
+        cell.detailTextLabel?.textColor = UIColor.white
+        cell.tintColor = UIColor.white
         
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print(#function)
-        let cell = tableView.dequeueReusableCellWithIdentifier("interval", forIndexPath: indexPath)
-        let intervalForRow = intervals[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "interval", for: indexPath)
+        let intervalForRow = intervals[(indexPath as NSIndexPath).row]
         
-        print("Interval is \(intervalForRow) at indexPath row \(indexPath.row)")
+        print("Interval is \(intervalForRow) at indexPath row \((indexPath as NSIndexPath).row)")
         print("Selected interval is \(selectedInterval)")
         
         var minuteString = ""
@@ -95,28 +95,28 @@ class TimePickerViewController: UITableViewController {
         cell.textLabel?.text = String(intervalForRow) + " " + minuteString
         
         if indexPath == selectedIndexPath {
-            cell.accessoryType = .Checkmark
+            cell.accessoryType = .checkmark
         } else {
-            cell.accessoryType = .None
+            cell.accessoryType = .none
         }
         
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath != selectedIndexPath {
-            if let newCell = tableView.cellForRowAtIndexPath(indexPath) {
-                newCell.accessoryType = .Checkmark
+            if let newCell = tableView.cellForRow(at: indexPath) {
+                newCell.accessoryType = .checkmark
             }
             
-            if let oldCell = tableView.cellForRowAtIndexPath(selectedIndexPath) {
-                oldCell.accessoryType = .None
+            if let oldCell = tableView.cellForRow(at: selectedIndexPath) {
+                oldCell.accessoryType = .none
             }
             
             selectedIndexPath = indexPath
             
             // Get Interval from row
-            let interval = intervalFromRow(selectedIndexPath.row)
+            let interval = intervalFromRow((selectedIndexPath as NSIndexPath).row)
             
             // Save interval here
             saveTimePickerInterval(interval)
@@ -125,10 +125,10 @@ class TimePickerViewController: UITableViewController {
             timePicker.minuteInterval = interval
         }
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func intervalFromRow(row: Int) -> Int {
+    func intervalFromRow(_ row: Int) -> Int {
         switch row {
         case 0:
             return 1

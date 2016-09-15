@@ -12,7 +12,7 @@ import UIKit
 extension AllRemindersViewController: UITabBarControllerDelegate  {
     // MARK: TabBar
     
-    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         print(#function)
         
         if viewController.tabBarItem.tag == 1 {
@@ -32,7 +32,7 @@ extension AllRemindersViewController: UITabBarControllerDelegate  {
         }
     }
     
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         print(#function)
     }
     

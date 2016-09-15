@@ -17,14 +17,14 @@ class AutoSnoozePickerViewController: UITableViewController {
         "1 hour"
     ]
     
-    var selectedIndexPath = NSIndexPath()
+    var selectedIndexPath = IndexPath()
     
     override func viewDidLoad() {
         print(#function)
         super.viewDidLoad()
         for i in 0..<autoSnoozeTime.count {
             if autoSnoozeTime[i] == selectedAutoSnoozeTime {
-                selectedIndexPath = NSIndexPath(forRow: i, inSection: 0)
+                selectedIndexPath = IndexPath(row: i, section: 0)
                 break
             }
         }
@@ -37,69 +37,69 @@ class AutoSnoozePickerViewController: UITableViewController {
         tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
         
         // Table view separator
-        tableView.separatorColor = UIColor.whiteColor()
+        tableView.separatorColor = UIColor.white
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print(#function)
         return autoSnoozeTime.count
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = UIColor.whiteColor()
+        header.textLabel?.textColor = UIColor.white
         // header.titleLabel.textColor = UIColor.whiteColor()
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        cell.detailTextLabel?.textColor = UIColor.whiteColor()
-        cell.tintColor = UIColor.whiteColor()
+        cell.textLabel?.textColor = UIColor.white
+        cell.detailTextLabel?.textColor = UIColor.white
+        cell.tintColor = UIColor.white
         
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print(#function)
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        let autoSnoozeTime = self.autoSnoozeTime[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let autoSnoozeTime = self.autoSnoozeTime[(indexPath as NSIndexPath).row]
         cell.textLabel!.text = autoSnoozeTime
         
         if autoSnoozeTime == selectedAutoSnoozeTime {
-            cell.accessoryType = .Checkmark
+            cell.accessoryType = .checkmark
         } else {
-            cell.accessoryType = .None
+            cell.accessoryType = .none
         }
         
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(#function)
-        if indexPath.row != selectedIndexPath.row {
-            if let newCell = tableView.cellForRowAtIndexPath(indexPath) {
-                newCell.accessoryType = .Checkmark
+        if (indexPath as NSIndexPath).row != (selectedIndexPath as NSIndexPath).row {
+            if let newCell = tableView.cellForRow(at: indexPath) {
+                newCell.accessoryType = .checkmark
             }
             
-            if let oldCell = tableView.cellForRowAtIndexPath(selectedIndexPath) {
-                oldCell.accessoryType = .None
+            if let oldCell = tableView.cellForRow(at: selectedIndexPath) {
+                oldCell.accessoryType = .none
             }
             selectedIndexPath = indexPath
             
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print(#function)
         if segue.identifier == "PickedAutoSnoozeTime" {
             let cell = sender as! UITableViewCell
-            if let indexPath = tableView.indexPathForCell(cell) {
-                selectedAutoSnoozeTimeIndex = indexPath.row
+            if let indexPath = tableView.indexPath(for: cell) {
+                selectedAutoSnoozeTimeIndex = (indexPath as NSIndexPath).row
                 switch selectedAutoSnoozeTimeIndex {
                 case 0:
-                    setDefaultAutoSnoozeTime(.Minute)
+                    setDefaultAutoSnoozeTime(.minute)
                 case 1:
-                    setDefaultAutoSnoozeTime(.Hour)
+                    setDefaultAutoSnoozeTime(.hour)
                 default:
                     break
                     

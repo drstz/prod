@@ -9,7 +9,7 @@
 import UIKit
 
 protocol PatternPickerViewControllerDelegate: class {
-    func patternPickerViewControllerDidChoosePattern(controller: PatternPickerViewController, frequency: Int, interval: String)
+    func patternPickerViewControllerDidChoosePattern(_ controller: PatternPickerViewController, frequency: Int, interval: String)
 }
 
 class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -41,17 +41,17 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         if let interval = selectedInterval, let frequency = selectedFrequency {
             print("Going back with \(interval) and \(frequency)")
             delegate?.patternPickerViewControllerDidChoosePattern(self, frequency: frequency, interval: interval)
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
             
         }
     }
     
     @IBAction func close() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
         if let interval = selectedInterval, let frequency = selectedFrequency {
             print("Going back with \(interval) and \(frequency)")
             delegate?.patternPickerViewControllerDidChoosePattern(self, frequency: frequency, interval: interval)
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
             
         }
     }
@@ -59,11 +59,11 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     
     // MARK: Picker View Data Source
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 2
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if component == 0 {
             return 59
         } else {
@@ -72,7 +72,7 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     }
     
     // MARK: Picker View Delegate
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         let number = row
         if component == 0 {
             return "\(number + 1)"
@@ -96,7 +96,7 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         }
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == 0 {
             selectedFrequency = row + 1
             
@@ -132,7 +132,7 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        modalPresentationStyle = .Custom
+        modalPresentationStyle = .custom
         transitioningDelegate = self
     }
     
@@ -144,8 +144,8 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         
         doneButton.layer.cornerRadius = 5
         doneButton.layer.borderWidth = 1
-        doneButton.layer.borderColor = doneButton.tintColor.CGColor
-        doneButton.backgroundColor = UIColor.whiteColor()
+        doneButton.layer.borderColor = doneButton.tintColor.cgColor
+        doneButton.backgroundColor = UIColor.white
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(close))
         gestureRecognizer.cancelsTouchesInView = false
@@ -154,11 +154,11 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if !UIAccessibilityIsReduceTransparencyEnabled() {
-            backgroundView.backgroundColor = UIColor.clearColor()
+            backgroundView.backgroundColor = UIColor.clear
         } else {
             backgroundView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.8)
         }
@@ -209,16 +209,16 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
 }
 
 extension PatternPickerViewController: UIViewControllerTransitioningDelegate {
-    func presentationControllerForPresentedViewController(presented: UIViewController,
-                                                          presentingViewController presenting: UIViewController,
-                                                                                   sourceViewController source: UIViewController) -> UIPresentationController? {
+    func presentationController(forPresented presented: UIViewController,
+                                                          presenting: UIViewController?,
+                                                                                   source: UIViewController) -> UIPresentationController? {
         
-        return DimmingPresentationController(presentedViewController: presented, presentingViewController: presenting)
+        return DimmingPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
 
 extension PatternPickerViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return (touch.view === self.view)
     }
 }

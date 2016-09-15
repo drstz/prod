@@ -9,7 +9,7 @@
 import UIKit
 
 protocol DatePickerViewControllerDelegate: class {
-    func datePickerViewControllerDidChooseDate(controller: DatePickerViewController, date: NSDate)
+    func datePickerViewControllerDidChooseDate(_ controller: DatePickerViewController, date: Date)
 }
 
 class DatePickerViewController: UIViewController {
@@ -29,7 +29,7 @@ class DatePickerViewController: UIViewController {
     weak var delegate: DatePickerViewControllerDelegate?
     
     // MARK: - Date
-    var date: NSDate?
+    var date: Date?
     
     // MARK: Actions
     
@@ -38,14 +38,14 @@ class DatePickerViewController: UIViewController {
     }
     
     @IBAction func close() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: Lifecycle
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        modalPresentationStyle = .Custom
+        modalPresentationStyle = .custom
         transitioningDelegate = self
     }
     
@@ -57,8 +57,8 @@ class DatePickerViewController: UIViewController {
         
         doneButton.layer.cornerRadius = 5
         doneButton.layer.borderWidth = 1
-        doneButton.layer.borderColor = doneButton.tintColor.CGColor
-        doneButton.backgroundColor = UIColor.whiteColor()
+        doneButton.layer.borderColor = doneButton.tintColor.cgColor
+        doneButton.backgroundColor = UIColor.white
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(close))
         gestureRecognizer.cancelsTouchesInView = false
@@ -66,11 +66,11 @@ class DatePickerViewController: UIViewController {
         view.addGestureRecognizer(gestureRecognizer)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if !UIAccessibilityIsReduceTransparencyEnabled() {
-            backgroundView.backgroundColor = UIColor.clearColor()
+            backgroundView.backgroundColor = UIColor.clear
         } else {
             backgroundView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.8)
         }
@@ -82,23 +82,23 @@ class DatePickerViewController: UIViewController {
         if let date = date {
             datePicker.setDate(date, animated: false)
         } else {
-            datePicker.setDate(NSDate(), animated: false)
+            datePicker.setDate(Date(), animated: false)
         }
     }
     
 }
 
 extension DatePickerViewController: UIViewControllerTransitioningDelegate {
-    func presentationControllerForPresentedViewController(presented: UIViewController,
-                                                          presentingViewController presenting: UIViewController,
-                                                                                   sourceViewController source: UIViewController) -> UIPresentationController? {
+    func presentationController(forPresented presented: UIViewController,
+                                                          presenting: UIViewController?,
+                                                                                   source: UIViewController) -> UIPresentationController? {
         
-        return DimmingPresentationController(presentedViewController: presented, presentingViewController: presenting)
+        return DimmingPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
 
 extension DatePickerViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return (touch.view === self.view)
     }
 }

@@ -11,60 +11,60 @@ import CoreData
 
 extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         print(#function)
         tableView.beginUpdates()
     }
     
-    func controller(controller: NSFetchedResultsController,
-                    didChangeObject anObject: AnyObject,
-                    atIndexPath indexPath: NSIndexPath?,
-                    forChangeType type: NSFetchedResultsChangeType,
-                    newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
         
         switch type {
-        case .Insert:
+        case .insert:
             print("*** NSFetchedResultsChangeInsert (object)")
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
             
             
-        case .Delete:
+        case .delete:
             print("*** NSFethedResultsChangeDelete (object)")
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            tableView.deleteRows(at: [indexPath!], with: .fade)
             
-        case .Update:
+        case .update:
             print("*** NSFetchedResultsChangeUpdate (object")
-            if let cell = tableView.cellForRowAtIndexPath(indexPath!) as? ReminderCell {
+            if let cell = tableView.cellForRow(at: indexPath!) as? ReminderCell {
                 let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)
                 cell.configureForReminder(reminder)
             }
-        case .Move:
+        case .move:
             print("*** NSFetchedResultsChangeMove (object)")
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
         }
     }
     
-    func controller(controller: NSFetchedResultsController,
-                    didChangeSection sectionInfo: NSFetchedResultsSectionInfo,
-                    atIndex sectionIndex: Int,
-                    forChangeType type: NSFetchedResultsChangeType) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange sectionInfo: NSFetchedResultsSectionInfo,
+                    atSectionIndex sectionIndex: Int,
+                    for type: NSFetchedResultsChangeType) {
         print(#function)
         switch type {
-        case .Insert:
+        case .insert:
             print("*** NSFetchedResultsChangeInsert (section)")
-            tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-        case .Delete:
+            tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+        case .delete:
             print("*** NSFetchedResultsChangeDelete (section)")
-            tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-        case .Update:
+            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+        case .update:
             print("*** NSFetchedResultsChangeUpdate (section)")
-        case .Move:
+        case .move:
             print("*** NSFetchedResultsChangeMove (section)")
         }
     }
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         print(#function)
         print("*** controllerDidChangeContent")
         

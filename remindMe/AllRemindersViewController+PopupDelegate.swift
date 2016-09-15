@@ -9,20 +9,20 @@
 import Foundation
 
 extension AllRemindersViewController: PopupViewControllerDelegate {
-    func popupViewControllerDidComplete(controller: PopupViewController, reminder: Reminder) {
+    func popupViewControllerDidComplete(_ controller: PopupViewController, reminder: Reminder) {
         reminder.complete()
         coreDataHandler.save()
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func popupViewControllerDidSnooze(controller: PopupViewController, reminder: Reminder) {
+    func popupViewControllerDidSnooze(_ controller: PopupViewController, reminder: Reminder) {
         reminder.snooze()
         coreDataHandler.save()
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func popupViewControllerDidDelete(controller: PopupViewController, reminder: Reminder) {
+    func popupViewControllerDidDelete(_ controller: PopupViewController, reminder: Reminder) {
         deleteReminder(reminder)
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }

@@ -22,37 +22,37 @@ class NotificationHandler {
     func setNotifications() {
         let actions = setNotificationActions()
         let categories = setNotificationCategories(actions)
-        let settings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories:  categories)
+        let settings = UIUserNotificationSettings(types: [.alert, .sound], categories:  categories)
         
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        UIApplication.shared.registerUserNotificationSettings(settings)
     }
     
     func setNotificationActions() -> [UIMutableUserNotificationAction]  {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let time = userDefaults.objectForKey("SnoozeUnit") as! String
-        let snoozeDuration = userDefaults.doubleForKey("SnoozeDuration")
+        let userDefaults = UserDefaults.standard
+        let time = userDefaults.object(forKey: "SnoozeUnit") as! String
+        let snoozeDuration = userDefaults.double(forKey: "SnoozeDuration")
         let deferAmount = getDeferString(time, duration: snoozeDuration)
         
         let completeAction = UIMutableUserNotificationAction()
         completeAction.identifier = "Complete"
         completeAction.title = "Complete"
-        completeAction.activationMode = UIUserNotificationActivationMode.Background
-        completeAction.authenticationRequired = false
-        completeAction.destructive = false
+        completeAction.activationMode = UIUserNotificationActivationMode.background
+        completeAction.isAuthenticationRequired = false
+        completeAction.isDestructive = false
         
         let deferAction = UIMutableUserNotificationAction()
         deferAction.identifier = "Defer"
         deferAction.title = deferAmount
-        deferAction.activationMode = UIUserNotificationActivationMode.Background
-        deferAction.authenticationRequired = false
-        deferAction.destructive = false
+        deferAction.activationMode = UIUserNotificationActivationMode.background
+        deferAction.isAuthenticationRequired = false
+        deferAction.isDestructive = false
         
         let actions = [completeAction, deferAction]
         
         return actions
     }
     
-    func getDeferString(deferAmount: String, duration: Double) -> String {
+    func getDeferString(_ deferAmount: String, duration: Double) -> String {
         let unit = SnoozeUnit(rawValue: deferAmount)
         var unitString = ""
         switch unit! {
@@ -74,14 +74,14 @@ class NotificationHandler {
         
     }
     
-    func setNotificationCategories(actions : [UIMutableUserNotificationAction]) -> Set<UIMutableUserNotificationCategory>  {
+    func setNotificationCategories(_ actions : [UIMutableUserNotificationAction]) -> Set<UIMutableUserNotificationCategory>  {
         print(#function)
         
         let category = UIMutableUserNotificationCategory()
         
         category.identifier = "Category"
-        category.setActions(actions, forContext: UIUserNotificationActionContext.Default)
-        category.setActions(actions, forContext: UIUserNotificationActionContext.Minimal)
+        category.setActions(actions, for: UIUserNotificationActionContext.default)
+        category.setActions(actions, for: UIUserNotificationActionContext.minimal)
         
         var categoriesForSettings = Set<UIMutableUserNotificationCategory>()
         categoriesForSettings.insert(category)
@@ -93,16 +93,16 @@ class NotificationHandler {
         let oldNotifications = allNotifications()
         let programmedNotifications = allNotifications()
         for notification in programmedNotifications {
-            UIApplication.sharedApplication().cancelLocalNotification(notification)
+            UIApplication.shared.cancelLocalNotification(notification)
         }
         var numberOfNotifications = countAllNotifications()
         print("Total of \(numberOfNotifications) notifications" )
         
         setNotifications()
         
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let autoSnoozeOn = userDefaults.boolForKey("AutoSnoozeEnabled")
-        let anInterval = userDefaults.objectForKey("AutoSnoozeTime") as! String
+        let userDefaults = UserDefaults.standard
+        let autoSnoozeOn = userDefaults.bool(forKey: "AutoSnoozeEnabled")
+        let anInterval = userDefaults.object(forKey: "AutoSnoozeTime") as! String
         let repeatInterval = getRepeatInterval(anInterval)
         
         for notification in oldNotifications {
@@ -111,7 +111,7 @@ class NotificationHandler {
             // Time
             if !(notification.fireDate?.isPresent())! {
                 print("Setting notification to now")
-                let now = NSDate()
+                let now = Date()
                 newNotification.fireDate = now.addMinutes(1)
             } else {
                 newNotification.fireDate = notification.fireDate
@@ -133,7 +133,7 @@ class NotificationHandler {
             newNotification.soundName = notification.soundName
             newNotification.userInfo = notification.userInfo
             
-            UIApplication.sharedApplication().scheduleLocalNotification(newNotification)
+            UIApplication.shared.scheduleLocalNotification(newNotification)
             
         }
         numberOfNotifications = countAllNotifications()
@@ -146,14 +146,14 @@ class NotificationHandler {
     
     // MARK: - Handling Notifications
     
-    func scheduleNotifications(reminder: Reminder, snooze isBeingDeferred: Bool = false) {
+    func scheduleNotifications(_ reminder: Reminder, snooze isBeingDeferred: Bool = false) {
         print(#function)
         var localNotification = UILocalNotification()
         
         deleteReminderNotifications(reminder)
         
-        let now = NSDate()
-        let earlierDate = reminder.dueDate.earlierDate(now)
+        let now = Date()
+        let earlierDate = (reminder.dueDate as NSDate).earlierDate(now)
         
         if earlierDate == now {
             if isBeingDeferred {
@@ -161,11 +161,11 @@ class NotificationHandler {
                 localNotification = snoozeNotification()
             } else {
                 print("Setting notification for \(reminder.name)")
-                localNotification = scheduleNotification(forDate: reminder.dueDate, reminder: reminder)
+                localNotification = scheduleNotification(forDate: reminder.dueDate as Date, reminder: reminder)
             }
             localNotification = setNotificationSettings(localNotification, reminder: reminder)
             
-            UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+            UIApplication.shared.scheduleLocalNotification(localNotification)
             
             let numberOfNotifications = countAllNotifications()
             print("Total of \(numberOfNotifications) notifications" )
@@ -175,20 +175,20 @@ class NotificationHandler {
     }
     
     func snoozeNotification() -> UILocalNotification {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let chosenDuration = userDefaults.doubleForKey("SnoozeDuration")
-        let snoozeUnit = userDefaults.objectForKey("SnoozeUnit") as! String
+        let userDefaults = UserDefaults.standard
+        let chosenDuration = userDefaults.double(forKey: "SnoozeDuration")
+        let snoozeUnit = userDefaults.object(forKey: "SnoozeUnit") as! String
         let unit = SnoozeUnit(rawValue: snoozeUnit)
         
         let duration = snoozeDuration(chosenDuration, unit: unit!)
         
         let localNotification = UILocalNotification()
-        localNotification.fireDate = NSDate(timeIntervalSinceNow: duration)
+        localNotification.fireDate = Date(timeIntervalSinceNow: duration)
         
         return localNotification
     }
     
-    func scheduleNotification(forDate date: NSDate, reminder: Reminder) -> UILocalNotification {
+    func scheduleNotification(forDate date: Date, reminder: Reminder) -> UILocalNotification {
         print(#function)
         let dueDate = date
         
@@ -201,33 +201,33 @@ class NotificationHandler {
         
     }
     
-    func setAutoSnooze(notification: UILocalNotification, reminder: Reminder) {
+    func setAutoSnooze(_ notification: UILocalNotification, reminder: Reminder) {
         print(#function)
-        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let userDefaults = UserDefaults.standard
         let autoSnoozeOn = reminder.willAutoSnooze as Bool
         if autoSnoozeOn {
-            let anInterval = userDefaults.objectForKey("AutoSnoozeTime") as! String
+            let anInterval = userDefaults.object(forKey: "AutoSnoozeTime") as! String
             let repeatInterval = getRepeatInterval(anInterval)
             notification.repeatInterval = repeatInterval
         }
         
     }
     
-    func getRepeatInterval(repeatInterval: String) -> NSCalendarUnit {
+    func getRepeatInterval(_ repeatInterval: String) -> NSCalendar.Unit {
         switch repeatInterval {
         case "1 minute":
-            return .Minute
+            return .minute
         case "1 hour":
-            return .Hour
+            return .hour
         default:
-            return .Month
+            return .month
         }
     }
     
-    func setNotificationSettings(notification: UILocalNotification, reminder: Reminder) -> UILocalNotification {
+    func setNotificationSettings(_ notification: UILocalNotification, reminder: Reminder) -> UILocalNotification {
         let localNotification = notification
         
-        localNotification.timeZone = NSTimeZone.defaultTimeZone()
+        localNotification.timeZone = TimeZone.current
         
         localNotification.alertBody = reminder.name
         localNotification.alertTitle = reminder.name
@@ -241,11 +241,11 @@ class NotificationHandler {
         
     }
 
-    func deleteReminderNotifications(reminder: Reminder)  {
+    func deleteReminderNotifications(_ reminder: Reminder)  {
         let notifications = notificationsForReminder(reminder)
         
         for notification in notifications {
-            UIApplication.sharedApplication().cancelLocalNotification(notification)
+            UIApplication.shared.cancelLocalNotification(notification)
             print("Deleted notification for \(reminder.name)")
         }
         
@@ -254,16 +254,16 @@ class NotificationHandler {
     }
     
     func allNotifications() -> [UILocalNotification] {
-        let allNotifications = UIApplication.sharedApplication().scheduledLocalNotifications!
+        let allNotifications = UIApplication.shared.scheduledLocalNotifications!
         return allNotifications
     }
     
-    func notificationsForReminder(reminder: Reminder) -> [UILocalNotification] {
+    func notificationsForReminder(_ reminder: Reminder) -> [UILocalNotification] {
         let notifications = allNotifications()
         var notificationsForReminder = [UILocalNotification]()
         
         for notification in notifications {
-            if let reminderID = notification.userInfo?["ReminderID"] as? Int where reminderID == reminder.idNumber {
+            if let reminderID = notification.userInfo?["ReminderID"] as? Int , reminderID == reminder.idNumber as Int {
                 notificationsForReminder.append(notification)
             }
         }
@@ -271,7 +271,7 @@ class NotificationHandler {
     }
 
     
-    func countReminderNotifications(reminder: Reminder) -> Int {
+    func countReminderNotifications(_ reminder: Reminder) -> Int {
         let notifications = notificationsForReminder(reminder)
         return notifications.count
     }
@@ -281,7 +281,7 @@ class NotificationHandler {
         return notifications.count
     }
     
-    func reminderID(localNotification: UILocalNotification) -> Int {
+    func reminderID(_ localNotification: UILocalNotification) -> Int {
         let idFromNotification = localNotification.userInfo!["ReminderID"] as! Int
         return idFromNotification
     }
@@ -298,20 +298,20 @@ class NotificationHandler {
 //        }
 //    }
     
-    func handleActionInCategory(notification: UILocalNotification, actionIdentifier: String) {
+    func handleActionInCategory(_ notification: UILocalNotification, actionIdentifier: String) {
         NSLog(#function)
         if notification.category == "Category" {
             if actionIdentifier == "Complete" {
                 NSLog("Identifer is Complete")
-                NSNotificationCenter.defaultCenter().postNotificationName("completeReminder", object: nil)
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "completeReminder"), object: nil)
             } else if actionIdentifier == "Defer" {
                 NSLog("Identifer is Defer")
-                NSNotificationCenter.defaultCenter().postNotificationName("snoozeReminder", object: nil)
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "snoozeReminder"), object: nil)
             }
         }
     }
     
-    func handleAction(reminder: Reminder, category: String, identifier: String) {
+    func handleAction(_ reminder: Reminder, category: String, identifier: String) {
         if category == "Category" {
             if identifier == "Complete" {
                 reminder.complete()

@@ -9,8 +9,8 @@
 import UIKit
 
 protocol ReminderCommentViewControllerDelegate: class {
-    func reminderCommentViewControllerDidCancel(controller: ReminderCommentViewController)
-    func reminderCommentViewControllerDidSave(controller: ReminderCommentViewController, comment: String)
+    func reminderCommentViewControllerDidCancel(_ controller: ReminderCommentViewController)
+    func reminderCommentViewControllerDidSave(_ controller: ReminderCommentViewController, comment: String)
 }
 
 class ReminderCommentViewController: UIViewController {
@@ -28,7 +28,7 @@ class ReminderCommentViewController: UIViewController {
     @IBAction func done() {
         commentField.resignFirstResponder()
         
-        if commentField.isFirstResponder() == false {
+        if commentField.isFirstResponder == false {
             delegate?.reminderCommentViewControllerDidSave(self, comment: commentField.text)
         }
         
@@ -37,7 +37,7 @@ class ReminderCommentViewController: UIViewController {
     @IBAction func cancel() {
         commentField.resignFirstResponder()
         
-        if commentField.isFirstResponder() == false {
+        if commentField.isFirstResponder == false {
             delegate?.reminderCommentViewControllerDidCancel(self)
         }
     }
@@ -56,8 +56,8 @@ class ReminderCommentViewController: UIViewController {
         } else {
             commentField.text = previousComment
         }
-        commentField.backgroundColor = UIColor.clearColor()
-        commentField.textColor = UIColor.whiteColor()
+        commentField.backgroundColor = UIColor.clear
+        commentField.textColor = UIColor.white
         
         view.backgroundColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
         
@@ -65,7 +65,7 @@ class ReminderCommentViewController: UIViewController {
 }
 
 extension ReminderCommentViewController: UITextViewDelegate {
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let maximumLength = 150
         let currentCharacterCount = textView.text?.characters.count ?? 0
         if (range.length + range.location > currentCharacterCount){

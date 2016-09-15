@@ -15,16 +15,16 @@ extension AllRemindersViewController: ReminderCellDelegate {
     
     // MARK: Cell
     
-    func cellWasLongPressed(cell: ReminderCell, longPress: UILongPressGestureRecognizer) {
+    func cellWasLongPressed(_ cell: ReminderCell, longPress: UILongPressGestureRecognizer) {
         print(#function)
-        let indexPath = tableView.indexPathForCell(cell)
+        let indexPath = tableView.indexPath(for: cell)
         let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)
         
-        if longPress.state == .Began && selectedReminders().count == 0 {
+        if longPress.state == .began && selectedReminders().count == 0 {
             print("Going to edit list")
             editingList = true
             tableView.allowsMultipleSelection = true
-            tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .None)
+            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
             
             
             var favoriteText = ""
@@ -37,14 +37,14 @@ extension AllRemindersViewController: ReminderCellDelegate {
             
             
             //let complete = UIBarButtonItem.init(title: completeText, style: .Plain, target: self, action: #selector(toolbarComplete))
-            let favorite = UIBarButtonItem.init(title: favoriteText, style: .Plain, target: self, action: #selector(toolbarFavorite))
-            let delete = UIBarButtonItem.init(barButtonSystemItem: .Trash, target: self, action: #selector(toolbarDelete))
-            let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+            let favorite = UIBarButtonItem.init(title: favoriteText, style: .plain, target: self, action: #selector(toolbarFavorite))
+            let delete = UIBarButtonItem.init(barButtonSystemItem: .trash, target: self, action: #selector(toolbarDelete))
+            let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
             toolbarItems = [favorite, spacer, delete]
             
             if reminder.wasCompleted == false {
-                let complete = UIBarButtonItem.init(title: completeText, style: .Plain, target: self, action: #selector(toolbarComplete))
-                toolbarItems?.insert(complete, atIndex: 0)
+                let complete = UIBarButtonItem.init(title: completeText, style: .plain, target: self, action: #selector(toolbarComplete))
+                toolbarItems?.insert(complete, at: 0)
     
             }
             

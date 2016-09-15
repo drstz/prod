@@ -20,22 +20,22 @@ class AboutViewController: UIViewController, UIWebViewDelegate {
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let somehtmlFile = htmlFile {
-            if let htmlData = NSData(contentsOfFile: somehtmlFile) {
-                let baseURL = NSURL(fileURLWithPath: NSBundle.mainBundle().bundlePath)
-                webView.loadData(htmlData, MIMEType: "text/html", textEncodingName: "UTF-8", baseURL: baseURL)
+            if let htmlData = try? Data(contentsOf: URL(fileURLWithPath: somehtmlFile)) {
+                let baseURL = URL(fileURLWithPath: Bundle.main.bundlePath)
+                webView.load(htmlData, mimeType: "text/html", textEncodingName: "UTF-8", baseURL: baseURL)
             }
         }
         
     }
     
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         // Allows app to open links from a webview
         // Must be made a delegate first
-        if let url = request.URL where navigationType == .LinkClicked {
-            UIApplication.sharedApplication().openURL(url)
+        if let url = request.url , navigationType == .linkClicked {
+            UIApplication.shared.openURL(url)
             return false
         }
         return true

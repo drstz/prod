@@ -34,29 +34,29 @@ class Reminder: NSManagedObject {
             notificationHandler.deleteReminderNotifications(self)
         }
         
-        completionDate = NSDate()
+        completionDate = Date()
         list.increaseNbOfCompletedReminders()
         if isDue() {
-            let nbOfMinutesDifferenceBetweenDates = calculateNbOfMinutesDifference(dueDate, secondDate: completionDate!)
+            let nbOfMinutesDifferenceBetweenDates = calculateNbOfMinutesDifference(dueDate as Date, secondDate: completionDate! as Date)
             list.addDifferenceBetweenDates(nbOfMinutesDifferenceBetweenDates)
         }
         
         
-        let earlierDate = completionDate?.earlierDate(dueDate)
+        let earlierDate = (completionDate as NSDate?)?.earlierDate(dueDate as Date)
         if earlierDate == completionDate {
             list.increaseNumberOfRemindersCompletedBeforeDueDate()
         }
         
-        list.increaseTotalTimesSnoozedBeforeCompletion(timesSnoozed.integerValue)
+        list.increaseTotalTimesSnoozedBeforeCompletion(timesSnoozed.intValue)
         
     }
     
-    func calculateNbOfMinutesDifference(firstDate: NSDate, secondDate: NSDate) -> Int {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(.Minute, fromDate: firstDate, toDate: secondDate, options: [])
+    func calculateNbOfMinutesDifference(_ firstDate: Date, secondDate: Date) -> Int {
+        let calendar = Calendar.current
+        let components = (calendar as NSCalendar).components(.minute, from: firstDate, to: secondDate, options: [])
         let nbOfMinutes = components.minute
         
-        return nbOfMinutes
+        return nbOfMinutes!
     }
     
     func snooze() {
@@ -69,25 +69,25 @@ class Reminder: NSManagedObject {
         setDate(newDate)
         
         notificationHandler.scheduleNotifications(self, snooze: true)
-        var nbOfSnoozesAsInt = timesSnoozed.integerValue
+        var nbOfSnoozesAsInt = timesSnoozed.intValue
         nbOfSnoozesAsInt += 1
-        timesSnoozed = NSNumber(integer: nbOfSnoozesAsInt)
+        timesSnoozed = NSNumber(value: nbOfSnoozesAsInt as Int)
         
         
         
     }
     
-    func calculateNewDate() -> NSDate {
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let chosenUnit = userDefaults.objectForKey("SnoozeUnit") as! String
+    func calculateNewDate() -> Date {
+        let userDefaults = UserDefaults.standard
+        let chosenUnit = userDefaults.object(forKey: "SnoozeUnit") as! String
         
         
-        let duration = userDefaults.doubleForKey("SnoozeDuration")
+        let duration = userDefaults.double(forKey: "SnoozeDuration")
         let unit = SnoozeUnit(rawValue: chosenUnit)
         
         let deferInterval = snoozeDuration(duration, unit: unit!)
         
-        return NSDate(timeIntervalSinceNow: deferInterval)
+        return Date(timeIntervalSinceNow: deferInterval)
     }
     
     func reminderIsRecurring() -> Bool {
@@ -100,10 +100,10 @@ class Reminder: NSManagedObject {
     
     func isDue() -> Bool {
         //print(#function)
-        let now = NSDate()
-        let earlierDate = dueDate.earlierDate(now)
+        let now = Date()
+        let earlierDate = (dueDate as NSDate).earlierDate(now)
         
-        return earlierDate == dueDate
+        return earlierDate == dueDate as Date
     }
     
     func reminderIsComplete() -> Bool {
@@ -114,7 +114,7 @@ class Reminder: NSManagedObject {
         }
     }
     
-    func setNewDueDate() -> NSDate {
+    func setNewDueDate() -> Date {
         if usesCustomPattern == true {
             return createNewDate(dueDate, typeOfInterval: interval!, everyAmount: frequency! as Int)
         } else {
@@ -122,12 +122,12 @@ class Reminder: NSManagedObject {
         }
     }
     
-    func setNewDay() -> NSDate {
+    func setNewDay() -> Date {
         var weekdays = [Int]()
         
         // Get weekday of due date
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Weekday, .Hour, .Minute], fromDate: dueDate)
+        let calendar = Calendar.current
+        let components = (calendar as NSCalendar).components([.weekday, .hour, .minute], from: dueDate as Date)
         let dayOfDueDate = components.weekday
         var chosenWeekday = 0
         
@@ -137,7 +137,7 @@ class Reminder: NSManagedObject {
         }
         
         for i in 0 ..< weekdays.count {
-            if dayOfDueDate < weekdays[i]  {
+            if dayOfDueDate! < weekdays[i]  {
                 chosenWeekday = weekdays[i]
                 break
             }
@@ -148,34 +148,34 @@ class Reminder: NSManagedObject {
         }
         
         // Change Day
-        var newDateWithWeekday = calendar.dateBySettingUnit(
-            .Weekday,
+        var newDateWithWeekday = (calendar as NSCalendar).date(
+            bySettingUnit: .weekday,
             value: chosenWeekday,
-            ofDate: dueDate,
-            options: NSCalendarOptions.init(rawValue: 0))
+            of: dueDate as Date,
+            options: NSCalendar.Options.init(rawValue: 0))
         
         // Change hour back to normal
-        newDateWithWeekday = calendar.dateBySettingHour(
-            components.hour,
-            minute: components.minute,
+        newDateWithWeekday = (calendar as NSCalendar).date(
+            bySettingHour: components.hour!,
+            minute: components.minute!,
             second: 0,
-            ofDate: newDateWithWeekday!,
-            options: NSCalendarOptions.init(rawValue: 0))
+            of: newDateWithWeekday!,
+            options: NSCalendar.Options.init(rawValue: 0))
         
         let newDate = newDateWithWeekday!
         return newDate
     }
     
     func addIDtoReminder() {
-        let idAsInteger = list.numberOfReminders.integerValue + idNumber.integerValue
-        idNumber = NSNumber(integer: idAsInteger)
+        let idAsInteger = list.numberOfReminders.intValue + idNumber.intValue
+        idNumber = NSNumber(value: idAsInteger as Int)
     }
     
-    func setTitle(title: String)  {
+    func setTitle(_ title: String)  {
         name = title
     }
     
-    func setDate(date: NSDate) {
+    func setDate(_ date: Date) {
         dueDate = date
     }
     
@@ -183,27 +183,27 @@ class Reminder: NSManagedObject {
 //        nextDueDate = date
 //    }
     
-    func setRepeatInterval(interval: String?) {
+    func setRepeatInterval(_ interval: String?) {
         self.interval = interval
     }
     
-    func setRepeatFrequency(frequency: Int?) {
-        self.frequency = frequency
+    func setRepeatFrequency(_ frequency: Int?) {
+        self.frequency = frequency as NSNumber?
     }
     
-    func setCompletionStatus(status: Bool) {
-        wasCompleted = status
+    func setCompletionStatus(_ status: Bool) {
+        wasCompleted = status as NSNumber
     }
     
-    func setFavorite(choice: Bool) {
-        isFavorite = choice
+    func setFavorite(_ choice: Bool) {
+        isFavorite = choice as NSNumber?
     }
     
-    func setRecurring(choice: Bool) {
+    func setRecurring(_ choice: Bool) {
         repeats = choice as NSNumber
     }
     
-    func addToList(list: List) {
+    func addToList(_ list: List) {
         self.list = list
     }
 

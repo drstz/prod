@@ -20,8 +20,8 @@ class TableSectionHeader: UITableViewHeaderFooterView {
         titleLabel.layer.cornerRadius = 3
         titleLabel.layer.masksToBounds = true
      
-        titleLabel.backgroundColor = UIColor.clearColor()
-        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.backgroundColor = UIColor.clear
+        titleLabel.textColor = UIColor.white
         
         
         

@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 
 protocol AllRemindersViewControllerDelegate: class {
-    func allRemindersViewControllerDelegateDidReceiveNotification (controller: AllRemindersViewController,
+    func allRemindersViewControllerDelegateDidReceiveNotification (_ controller: AllRemindersViewController,
                                                                    reminder: Reminder)
 }
 
@@ -166,7 +166,7 @@ class AllRemindersViewController: UIViewController {
         filterList(filter)
     }
     
-    func filterList(filter: ReminderFilter) {
+    func filterList(_ filter: ReminderFilter) {
         // Handle Segment
         let status = chosenStatus()
         
@@ -176,7 +176,7 @@ class AllRemindersViewController: UIViewController {
         coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
         
         // Reload tableview with choice
-        coreDataHandler.fetchedResultsController.delegate = self
+        coreDataHandler.fetchedResultsController?.delegate = self
         coreDataHandler.performFetch()
         
         tableView.reloadData()
@@ -187,7 +187,7 @@ class AllRemindersViewController: UIViewController {
     
     /// Highlights the selected button.
     /// Sets the previous one to normal state.
-    func selectButton(chosenButton: UIButton) {
+    func selectButton(_ chosenButton: UIButton) {
         // Save previous button for later
         let previouslySelectedButton = selectedButton
         
@@ -207,16 +207,16 @@ class AllRemindersViewController: UIViewController {
     func chosenStatus() -> ReminderStatus {
         let segment = segmentedControl.selectedSegmentIndex
         if segment == 0 {
-            return .Incomplete
+            return .incomplete
         } else {
-            return .Complete
+            return .complete
         }
     }
     
     // MARK: Unwind segue
     
     /// This is used to allow the settings viewcontroller to perform the unwind segue
-    @IBAction func doneSettings(segue: UIStoryboardSegue) {}
+    @IBAction func doneSettings(_ segue: UIStoryboardSegue) {}
     
     // MARK: - Methods
     
@@ -244,7 +244,7 @@ class AllRemindersViewController: UIViewController {
         for button in buttons {
             button.layer.cornerRadius = 10
             button.layer.borderWidth = 1
-            button.layer.borderColor = UIColor.whiteColor().CGColor
+            button.layer.borderColor = UIColor.white.cgColor
         }
         
         // Chosen filter
@@ -266,7 +266,7 @@ class AllRemindersViewController: UIViewController {
         }
         
         // Customize table view
-        tableView.separatorColor = UIColor.clearColor()
+        tableView.separatorColor = UIColor.clear
         tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
         
         // Customize bars
@@ -291,7 +291,7 @@ class AllRemindersViewController: UIViewController {
         }	
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         print(#function)
         super.viewWillAppear(animated)
         
@@ -309,7 +309,7 @@ class AllRemindersViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         print(#function)
         super.viewDidAppear(animated)
         
@@ -317,12 +317,12 @@ class AllRemindersViewController: UIViewController {
         saveSelectedTab(selectedIndex!)
         
         if notificationWasTapped {
-            NSNotificationCenter.defaultCenter().postNotificationName("viewReminder", object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "viewReminder"), object: nil)
             notificationWasTapped = false
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         print(#function)
         super.viewWillDisappear(animated)
         print("Here comes the recieved message: \(sentMessage)")
@@ -333,14 +333,14 @@ class AllRemindersViewController: UIViewController {
     
     // MARK: Buttons
     
-    func unselectedButtons(selectedButton: UIButton, buttons: [UIButton]) -> [UIButton] {
+    func unselectedButtons(_ selectedButton: UIButton, buttons: [UIButton]) -> [UIButton] {
         // Index of selected buttons
-        let indexOfChosenButton = buttons.indexOf(selectedButton)
+        let indexOfChosenButton = buttons.index(of: selectedButton)
         var unselectedButtons = buttons
         
         // Remove selected button from new array
         if let index = indexOfChosenButton {
-            unselectedButtons.removeAtIndex(index)
+            unselectedButtons.remove(at: index)
         }
         return unselectedButtons
     }
@@ -369,16 +369,16 @@ class AllRemindersViewController: UIViewController {
         buttons.append(favoritesButton)
     }
     
-    func customizeButton(button: UIButton, selected: Bool) {
+    func customizeButton(_ button: UIButton, selected: Bool) {
         if selected {
             //button.backgroundColor = UIColor(red: 33/255, green: 69/255, blue: 59/255, alpha: 1)
-            button.backgroundColor = UIColor.whiteColor()
+            button.backgroundColor = UIColor.white
             button.tintColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
-            button.layer.borderColor = UIColor.whiteColor().CGColor
+            button.layer.borderColor = UIColor.white.cgColor
         } else {
-            button.backgroundColor = UIColor.clearColor()
-            button.tintColor = UIColor.whiteColor()
-            button.layer.borderColor = UIColor.whiteColor().CGColor
+            button.backgroundColor = UIColor.clear
+            button.tintColor = UIColor.white
+            button.layer.borderColor = UIColor.white.cgColor
         }
     }
     
@@ -387,28 +387,28 @@ class AllRemindersViewController: UIViewController {
     /// This is called when a user uses the 3D touch Quick Action
     func newReminder() {
         NSLog(#function)
-        performSegueWithIdentifier("AddReminder", sender: self)
+        performSegue(withIdentifier: "AddReminder", sender: self)
     }
     
     // MARK: Observers
     
     func addObservers() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(completeReminder), name: "completeReminder", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(snoozeReminder), name: "snoozeReminder", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(viewReminder), name: "viewReminder", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(setBadgeForTodayTab), name: "setBadgeForTodayTab", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshTableView), name: "refresh", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(newReminder), name: "newReminder", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(completeReminder), name: NSNotification.Name(rawValue: "completeReminder"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(snoozeReminder), name: NSNotification.Name(rawValue: "snoozeReminder"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(viewReminder), name: NSNotification.Name(rawValue: "viewReminder"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(setBadgeForTodayTab), name: NSNotification.Name(rawValue: "setBadgeForTodayTab"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshTableView), name: NSNotification.Name(rawValue: "refresh"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(newReminder), name: NSNotification.Name(rawValue: "newReminder"), object: nil)
     }
     
     /// Removes observers so that messages are only sent to one view controller at a time
     func removeObservers() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "completeReminder", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "snoozeReminder", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "viewReminder", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "setBadgeForTodayTab", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "refresh", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "newReminder", object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "completeReminder"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "snoozeReminder"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "viewReminder"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "setBadgeForTodayTab"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "refresh"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "newReminder"), object: nil)
     }
     
     // MARK: Selection
@@ -416,7 +416,7 @@ class AllRemindersViewController: UIViewController {
     func deselectRows() {
         if let selectedIndexPaths = tableView.indexPathsForSelectedRows {
             for indexPath in selectedIndexPaths {
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                tableView.deselectRow(at: indexPath, animated: true)
             }
         }
     }
@@ -432,7 +432,7 @@ class AllRemindersViewController: UIViewController {
     }
     
     func toolbarIsHidden() -> Bool {
-        return (navigationController?.toolbarHidden)!
+        return (navigationController?.isToolbarHidden)!
     }
     
     // MARK: Cell
@@ -440,10 +440,10 @@ class AllRemindersViewController: UIViewController {
     func loadCell() {
         //print(#function)
         let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
-        tableView.registerNib(cellNib, forCellReuseIdentifier: "ReminderCell")
+        tableView.register(cellNib, forCellReuseIdentifier: "ReminderCell")
         
         let sectionHeaderNib = UINib(nibName: "TableSectionHeader", bundle: nil)
-        tableView.registerNib(sectionHeaderNib, forHeaderFooterViewReuseIdentifier: "TableSectionHeader")
+        tableView.register(sectionHeaderNib, forHeaderFooterViewReuseIdentifier: "TableSectionHeader")
         tableView.rowHeight = 100
         
     }
@@ -457,7 +457,7 @@ class AllRemindersViewController: UIViewController {
         let status = chosenStatus()
         
         coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
-        coreDataHandler.fetchedResultsController.delegate = self
+        coreDataHandler.fetchedResultsController?.delegate = self
         coreDataHandler.performFetch()
     }
     
@@ -486,18 +486,18 @@ class AllRemindersViewController: UIViewController {
         // Core Data
         let managedObjectContext = coreDataHandler.managedObjectContext
         
-        let now = NSDate()
+        let now = Date()
         
-        let fetchRequest = NSFetchRequest()
+        let fetchRequest = NSFetchRequest<Reminder>(entityName: "Reminder")
         fetchRequest.fetchBatchSize = 20
         
-        let entity = NSEntityDescription.entityForName("Reminder", inManagedObjectContext: managedObjectContext)
+        let entity = NSEntityDescription.entity(forEntityName: "Reminder", in: managedObjectContext)
         fetchRequest.entity = entity
         
         let sortDescriptor = NSSortDescriptor(key: "dueDate", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", "wasCompleted", false, "dueDate", now)
+        let predicate = NSPredicate(format: "%K == %@ AND %K <= %@", "wasCompleted", false as CVarArg, "dueDate", now as CVarArg)
         fetchRequest.predicate = predicate
         
         let fetchedResultsController = NSFetchedResultsController(
@@ -523,11 +523,11 @@ class AllRemindersViewController: UIViewController {
         print(#function)
         if tableView.numberOfSections == 0 {
             print("There are no reminders")
-            noReminderScreen.hidden = false
+            noReminderScreen.isHidden = false
             setNoReminderLabel()
         } else {
             print("There are reminders")
-            noReminderScreen.hidden = true
+            noReminderScreen.isHidden = true
         }
     }
     
@@ -559,7 +559,7 @@ class AllRemindersViewController: UIViewController {
     
     // MARK: Segues
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print(#function)
         NSLog(#function)
         // Core Data
@@ -571,7 +571,7 @@ class AllRemindersViewController: UIViewController {
         switch segueIdentifier {
         case "AddReminder":
             NSLog("Segue: Preparing to add reminder")
-            let navigationController = segue.destinationViewController as! UINavigationController
+            let navigationController = segue.destination as! UINavigationController
             let controller = navigationController.topViewController as! AddReminderViewController
             NSLog("Segue: Got add reminder view controller")
             controller.delegate = self
@@ -580,17 +580,17 @@ class AllRemindersViewController: UIViewController {
             controller.list = list
             NSLog("Segue: Done")
         case "EditReminder":
-            let navigationController = segue.destinationViewController as! UINavigationController
+            let navigationController = segue.destination as! UINavigationController
             let controller = navigationController.topViewController as! AddReminderViewController
             controller.delegate = self
             controller.managedObjectContext = managedObjectContext
             
-            if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
                 let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
                 controller.reminderToEdit = reminder
             }
         case "Popup":
-            let popupViewController = segue.destinationViewController as! PopupViewController
+            let popupViewController = segue.destination as! PopupViewController
             popupViewController.delegate = self
             
             if let reminder = sender as? Reminder {
@@ -600,7 +600,7 @@ class AllRemindersViewController: UIViewController {
                 popupViewController.managedObjectContext = managedObjectContext
             } else {
                 // When coming from list
-                if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
+                if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
                     let reminder = coreDataHandler.reminderFromIndexPath(indexPath)
                     popupViewController.incomingReminder = reminder
                     popupViewController.managedObjectContext = managedObjectContext
@@ -619,9 +619,9 @@ class AllRemindersViewController: UIViewController {
     /// Delete a reminder
     /// - Parameter reminder: The reminder to delete
     /// - Parameter save: Indicate whether the methode should save or not to repeat saving twice
-    func deleteReminder(reminder: Reminder, save: Bool = true) {
+    func deleteReminder(_ reminder: Reminder, save: Bool = true) {
         print(#function)
-        if coreDataHandler.fetchedResultsController.indexPathForObject(reminder) != nil {
+        if coreDataHandler.fetchedResultsController?.indexPath(forObject: reminder) != nil {
             let reminderNotificationHandler = reminder.notificationHandler
             reminderNotificationHandler.deleteReminderNotifications(reminder)
             

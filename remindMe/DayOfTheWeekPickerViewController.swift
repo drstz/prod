@@ -9,8 +9,8 @@
 import UIKit
 
 protocol DaysOfTheWeekPickerViewControllerDelegate: class {
-    func daysOfTheWeekPickerViewControllerDidChooseDay(controller: DayOfTheWeekPickerViewController, days: [Int])
-    func daysOfTheWeekPickerViewControllerDidCancel(controller: DayOfTheWeekPickerViewController)
+    func daysOfTheWeekPickerViewControllerDidChooseDay(_ controller: DayOfTheWeekPickerViewController, days: [Int])
+    func daysOfTheWeekPickerViewControllerDidCancel(_ controller: DayOfTheWeekPickerViewController)
 }
 
 class DayOfTheWeekPickerViewController: UITableViewController {
@@ -39,13 +39,13 @@ class DayOfTheWeekPickerViewController: UITableViewController {
     
     var selectedDays = [Int]()
     
-    var selectedIndexPaths = [NSIndexPath]()
+    var selectedIndexPaths = [IndexPath]()
     
     // MARK: Actions
     
     @IBAction func done() {
         // Keep results in proper order
-        selectedDays = selectedDays.sort()
+        selectedDays = selectedDays.sorted()
         delegate?.daysOfTheWeekPickerViewControllerDidChooseDay(self, days: selectedDays)
     }
     
@@ -61,7 +61,7 @@ class DayOfTheWeekPickerViewController: UITableViewController {
         
         for i in 0..<weekdayUnits.count {
             if selectedDays.contains(weekdayUnits[i]) {
-                selectedIndexPaths.append(NSIndexPath(forRow: i, inSection: 0))
+                selectedIndexPaths.append(IndexPath(row: i, section: 0))
             }
         }
         
@@ -73,72 +73,72 @@ class DayOfTheWeekPickerViewController: UITableViewController {
         tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
         
         // Table view separator
-        tableView.separatorColor = UIColor.whiteColor()
+        tableView.separatorColor = UIColor.white
     }
     
     // MARK: Tableview
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       return weekdayUnits.count
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = UIColor.whiteColor()
+        header.textLabel?.textColor = UIColor.white
         // header.titleLabel.textColor = UIColor.whiteColor()
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        cell.detailTextLabel?.textColor = UIColor.whiteColor()
-        cell.tintColor = UIColor.whiteColor()
+        cell.textLabel?.textColor = UIColor.white
+        cell.detailTextLabel?.textColor = UIColor.white
+        cell.tintColor = UIColor.white
         
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("weekday", forIndexPath: indexPath)
-        let dayForRow = daysOfWeek[indexPath.row]
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "weekday", for: indexPath)
+        let dayForRow = daysOfWeek[(indexPath as NSIndexPath).row]
         
         cell.textLabel?.text = dayForRow
         
         if selectedIndexPaths.contains(indexPath) {
-            cell.accessoryType = .Checkmark
+            cell.accessoryType = .checkmark
         } else {
-            cell.accessoryType = .None
+            cell.accessoryType = .none
         }
         
         return cell
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Pick one or more days"
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedCell = tableView.cellForRowAtIndexPath(indexPath)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCell = tableView.cellForRow(at: indexPath)
         if selectedIndexPaths.contains(indexPath) {
-            selectedCell?.accessoryType = .None
+            selectedCell?.accessoryType = .none
             
             // Remove Index Path
-            if let indexOfElement = selectedIndexPaths.indexOf(indexPath) {
-                selectedIndexPaths.removeAtIndex(indexOfElement)
+            if let indexOfElement = selectedIndexPaths.index(of: indexPath) {
+                selectedIndexPaths.remove(at: indexOfElement)
             }
             
             // Remove Day
-            let weekDay = weekdayUnits[indexPath.row]
-            if let indexOfDay = selectedDays.indexOf(weekDay) {
-                selectedDays.removeAtIndex(indexOfDay)
+            let weekDay = weekdayUnits[(indexPath as NSIndexPath).row]
+            if let indexOfDay = selectedDays.index(of: weekDay) {
+                selectedDays.remove(at: indexOfDay)
             }
             
         } else {
-            selectedCell?.accessoryType = .Checkmark
+            selectedCell?.accessoryType = .checkmark
             
             // Add index path
             selectedIndexPaths.append(indexPath)
             
             // Add day
-            let day = weekdayUnits[indexPath.row]
+            let day = weekdayUnits[(indexPath as NSIndexPath).row]
             selectedDays.append(day)
         }
         
@@ -152,7 +152,7 @@ class DayOfTheWeekPickerViewController: UITableViewController {
             print("None")
         }
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     

@@ -32,7 +32,7 @@ class SnoozePickerViewController: UITableViewController {
         (1, .Hours)
     ]
     
-    var selectedIndexPath = NSIndexPath()
+    var selectedIndexPath = IndexPath()
     
     override func viewDidLoad() {
         print(#function)
@@ -49,18 +49,18 @@ class SnoozePickerViewController: UITableViewController {
             if snoozeTimes[i] == durationAndUnit && !isUsingCustomSnoozeTime() {
                 print("Got in if")
                 foundSomething = true
-                selectedIndexPath = NSIndexPath(forRow: i, inSection: 0)
+                selectedIndexPath = IndexPath(row: i, section: 0)
                 break
             }
         }
         if !foundSomething {
-            selectedIndexPath = NSIndexPath(forRow: 0, inSection: 1)
+            selectedIndexPath = IndexPath(row: 0, section: 1)
         }
         
         setColorTheme()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         print(#function)
         super.viewWillAppear(animated)
     }
@@ -70,18 +70,18 @@ class SnoozePickerViewController: UITableViewController {
         tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
         
         // Table view separator
-        tableView.separatorColor = UIColor.whiteColor()
+        tableView.separatorColor = UIColor.white
     }
     
     
     
     // MARK: - Table View
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var rowCount = 0
         
         switch section {
@@ -96,7 +96,7 @@ class SnoozePickerViewController: UITableViewController {
         return rowCount
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 1 {
             return "Custom Snooze Time"
         } else {
@@ -104,71 +104,71 @@ class SnoozePickerViewController: UITableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = UIColor.whiteColor()
+        header.textLabel?.textColor = UIColor.white
         // header.titleLabel.textColor = UIColor.whiteColor()
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        cell.detailTextLabel?.textColor = UIColor.whiteColor()
-        cell.tintColor = UIColor.whiteColor()
+        cell.textLabel?.textColor = UIColor.white
+        cell.detailTextLabel?.textColor = UIColor.white
+        cell.tintColor = UIColor.white
         
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
         print(#function)
-        if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("snoozeChoice", forIndexPath: indexPath)
-            let snoozeTime = self.snoozeTimes[indexPath.row]
+        if (indexPath as NSIndexPath).section == 0 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "snoozeChoice", for: indexPath)
+            let snoozeTime = self.snoozeTimes[(indexPath as NSIndexPath).row]
             let unitString = getLabel(snoozeTime.0, snoozeUnit: snoozeTime.1)
             let durationString = Int(snoozeTime.0)
             
             cell.textLabel!.text = "\(durationString) \(unitString)"
             
             if snoozeTime == selectedSnoozeTimeTuple! && !isUsingCustomSnoozeTime() {
-                cell.accessoryType = .Checkmark
+                cell.accessoryType = .checkmark
             } else {
-                cell.accessoryType = .None
+                cell.accessoryType = .none
             }
             
             
-        } else if indexPath.section == 1 && indexPath.row == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("customSnoozeButton", forIndexPath: indexPath)
+        } else if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 0 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "customSnoozeButton", for: indexPath)
             cell.textLabel?.text = customSnoozeTime
             //cell.detailTextLabel?.text = customSnoozeTime
             if isUsingCustomSnoozeTime() {
-                cell.accessoryType = .Checkmark
+                cell.accessoryType = .checkmark
             } else {
-                cell.accessoryType = .None
+                cell.accessoryType = .none
             }
             
-        } else if indexPath.section == 1 && indexPath.row == 1 {
-            cell = tableView.dequeueReusableCellWithIdentifier("addCustomSnooze", forIndexPath: indexPath)
+        } else if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 1 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "addCustomSnooze", for: indexPath)
         }
         
         return cell
         
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(#function)
-        if indexPath.section == 0 {
+        if (indexPath as NSIndexPath).section == 0 {
             setUsingCustomSnoozeTime(false)
             print(selectedIndexPath)
             
-            if indexPath.section == selectedIndexPath.section {
-                if indexPath.row != selectedIndexPath.row {
-                    if let newCell = tableView.cellForRowAtIndexPath(indexPath) {
-                        newCell.accessoryType = .Checkmark
+            if (indexPath as NSIndexPath).section == (selectedIndexPath as NSIndexPath).section {
+                if (indexPath as NSIndexPath).row != (selectedIndexPath as NSIndexPath).row {
+                    if let newCell = tableView.cellForRow(at: indexPath) {
+                        newCell.accessoryType = .checkmark
                     }
                     
-                    if let oldCell = tableView.cellForRowAtIndexPath(selectedIndexPath) {
-                        print("Old cell : section \(selectedIndexPath.section) row \(selectedIndexPath.row)")
-                        oldCell.accessoryType = .None
+                    if let oldCell = tableView.cellForRow(at: selectedIndexPath) {
+                        print("Old cell : section \((selectedIndexPath as NSIndexPath).section) row \((selectedIndexPath as NSIndexPath).row)")
+                        oldCell.accessoryType = .none
                     }
                     selectedIndexPath = indexPath
                     setUsingCustomSnoozeTime(false)
@@ -176,16 +176,16 @@ class SnoozePickerViewController: UITableViewController {
                     saveSnoozeTime(indexPath)
                     
                     
-                    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                    tableView.deselectRow(at: indexPath, animated: true)
                 }
             } else {
-                if let newCell = tableView.cellForRowAtIndexPath(indexPath) {
-                    newCell.accessoryType = .Checkmark
+                if let newCell = tableView.cellForRow(at: indexPath) {
+                    newCell.accessoryType = .checkmark
                 }
                 
-                if let oldCell = tableView.cellForRowAtIndexPath(selectedIndexPath) {
-                    print("Old cell : section \(selectedIndexPath.section) row \(selectedIndexPath.row)")
-                    oldCell.accessoryType = .None
+                if let oldCell = tableView.cellForRow(at: selectedIndexPath) {
+                    print("Old cell : section \((selectedIndexPath as NSIndexPath).section) row \((selectedIndexPath as NSIndexPath).row)")
+                    oldCell.accessoryType = .none
                 }
                 selectedIndexPath = indexPath
                 
@@ -193,60 +193,60 @@ class SnoozePickerViewController: UITableViewController {
                 saveSnoozeTime(indexPath)
                 
                 
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                tableView.deselectRow(at: indexPath, animated: true)
                 
             }
             
         }
         
-        if indexPath.section == 1 {
+        if (indexPath as NSIndexPath).section == 1 {
             
-            if indexPath.section == selectedIndexPath.section {
-                if indexPath.row != selectedIndexPath.row {
-                    if indexPath.row == 0 {
+            if (indexPath as NSIndexPath).section == (selectedIndexPath as NSIndexPath).section {
+                if (indexPath as NSIndexPath).row != (selectedIndexPath as NSIndexPath).row {
+                    if (indexPath as NSIndexPath).row == 0 {
                         let customSnoozeTime = getCustomSnoozeTime()
                         if customSnoozeTime.0 != 0 {
                             setUsingCustomSnoozeTime(true)
                             
                             setSnoozeTime(customSnoozeTime.0, unit: customSnoozeTime.1)
-                            if let newCell = tableView.cellForRowAtIndexPath(indexPath) {
-                                newCell.accessoryType = .Checkmark
+                            if let newCell = tableView.cellForRow(at: indexPath) {
+                                newCell.accessoryType = .checkmark
                             }
                             
-                            if let oldCell = tableView.cellForRowAtIndexPath(selectedIndexPath) {
-                                print("Old cell : section \(selectedIndexPath.section) row \(selectedIndexPath.row)")
-                                oldCell.accessoryType = .None
+                            if let oldCell = tableView.cellForRow(at: selectedIndexPath) {
+                                print("Old cell : section \((selectedIndexPath as NSIndexPath).section) row \((selectedIndexPath as NSIndexPath).row)")
+                                oldCell.accessoryType = .none
                             }
                             selectedIndexPath = indexPath
                         }
                     }
                 }
             } else {
-                if indexPath.row == 0 {
+                if (indexPath as NSIndexPath).row == 0 {
         
                     
                     let customSnoozeTime = getCustomSnoozeTime()
                     if  customSnoozeTime.0 != 0 {
                         setUsingCustomSnoozeTime(true)
                         setSnoozeTime(customSnoozeTime.0, unit: customSnoozeTime.1)
-                        if let newCell = tableView.cellForRowAtIndexPath(indexPath) {
-                            newCell.accessoryType = .Checkmark
+                        if let newCell = tableView.cellForRow(at: indexPath) {
+                            newCell.accessoryType = .checkmark
                         }
                         
-                        if let oldCell = tableView.cellForRowAtIndexPath(selectedIndexPath) {
-                            print("Old cell : section \(selectedIndexPath.section) row \(selectedIndexPath.row)")
-                            oldCell.accessoryType = .None
+                        if let oldCell = tableView.cellForRow(at: selectedIndexPath) {
+                            print("Old cell : section \((selectedIndexPath as NSIndexPath).section) row \((selectedIndexPath as NSIndexPath).row)")
+                            oldCell.accessoryType = .none
                         }
                         selectedIndexPath = indexPath
                     }
                     
                 }
                 
-                if indexPath.row == 1 {
-                    performSegueWithIdentifier("setCustomSnoozeTime", sender: self)
+                if (indexPath as NSIndexPath).row == 1 {
+                    performSegue(withIdentifier: "setCustomSnoozeTime", sender: self)
                 }
             }
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
 
         }
         
@@ -265,8 +265,8 @@ class SnoozePickerViewController: UITableViewController {
         
     }
     
-    func saveSnoozeTime(indexPath: NSIndexPath) {
-        selectedSnoozeTimeIndex = indexPath.row
+    func saveSnoozeTime(_ indexPath: IndexPath) {
+        selectedSnoozeTimeIndex = (indexPath as NSIndexPath).row
         switch selectedSnoozeTimeIndex {
         case 0:
             setSnoozeTime(5, unit: .Minutes)
@@ -284,7 +284,7 @@ class SnoozePickerViewController: UITableViewController {
         
     }
     
-    func overwriteOldTimes(duration: Double, unit: SnoozeUnit) {
+    func overwriteOldTimes(_ duration: Double, unit: SnoozeUnit) {
         chosenDuration = duration
         chosenUnit = unit
         selectedSnoozeTimeTuple = (duration, unit)
@@ -292,10 +292,10 @@ class SnoozePickerViewController: UITableViewController {
     
     // MARK: - Segues
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print(#function)
         if segue.identifier == "setCustomSnoozeTime" {
-            let navigationController = segue.destinationViewController as! UINavigationController
+            let navigationController = segue.destination as! UINavigationController
             let controller = navigationController.topViewController as! CustomSnoozePickerController
             let customSnoozeTime = getCustomSnoozeTime()
             let duration = customSnoozeTime.0
@@ -310,12 +310,12 @@ class SnoozePickerViewController: UITableViewController {
 }
 
 extension SnoozePickerViewController: CustomSnoozePickerDelegate {
-    func customSnoozePickerDidCancel(controller: CustomSnoozePickerController) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func customSnoozePickerDidCancel(_ controller: CustomSnoozePickerController) {
+        dismiss(animated: true, completion: nil)
     }
     
-    func customSnoozePicker(controller: CustomSnoozePickerController, didChooseTime delay: Double, unit: SnoozeUnit) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func customSnoozePicker(_ controller: CustomSnoozePickerController, didChooseTime delay: Double, unit: SnoozeUnit) {
+        dismiss(animated: true, completion: nil)
         
         saveCustomSnoozeTime(delay, unit: unit)
         
@@ -331,9 +331,9 @@ extension SnoozePickerViewController: CustomSnoozePickerDelegate {
             print(selectedIndexPath)
         } else {
             if isUsingCustomSnoozeTime() {
-                let indexPath = NSIndexPath(forItem: 2, inSection: 0)
-                let cell = tableView.cellForRowAtIndexPath(indexPath)
-                cell?.accessoryType = .Checkmark
+                let indexPath = IndexPath(item: 2, section: 0)
+                let cell = tableView.cellForRow(at: indexPath)
+                cell?.accessoryType = .checkmark
                 selectedIndexPath = indexPath
                 saveSnoozeTime(selectedIndexPath)
                 setUsingCustomSnoozeTime(false)

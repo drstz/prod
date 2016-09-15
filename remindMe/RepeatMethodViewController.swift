@@ -7,11 +7,22 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 protocol RepeatMethodViewControllerDelegate: class {
-    func repeatMethodViewControllerDidChooseCustomPattern(controller: RepeatMethodViewController, frequency: Int, interval: String)
-    func repeatMethodViewControllerDidChooseWeekDayPattern(controller: RepeatMethodViewController, days: [Int])
-    func repeatMethodViewControllerDidChooseRepeatMethod(controller: RepeatMethodViewController, useNoPattern: Bool, useCustomPattern: Bool, useDayPattern: Bool)
+    func repeatMethodViewControllerDidChooseCustomPattern(_ controller: RepeatMethodViewController, frequency: Int, interval: String)
+    func repeatMethodViewControllerDidChooseWeekDayPattern(_ controller: RepeatMethodViewController, days: [Int])
+    func repeatMethodViewControllerDidChooseRepeatMethod(_ controller: RepeatMethodViewController, useNoPattern: Bool, useCustomPattern: Bool, useDayPattern: Bool)
     func repeatMethodViewControllerIsDone()
     func repeatMethodViewControllerDidCancel()
     
@@ -82,7 +93,7 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
     
     
     // MARK: Pattern Picker View Controller Delegate
-    func patternPickerViewControllerDidChoosePattern(controller: PatternPickerViewController, frequency: Int, interval: String) {
+    func patternPickerViewControllerDidChoosePattern(_ controller: PatternPickerViewController, frequency: Int, interval: String) {
         selectedInterval = interval
         selectedFrequency = frequency
         
@@ -92,7 +103,7 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
     }
     
     // MARK: Days of the week view controller delegate
-    func daysOfTheWeekPickerViewControllerDidCancel(controller: DayOfTheWeekPickerViewController) {
+    func daysOfTheWeekPickerViewControllerDidCancel(_ controller: DayOfTheWeekPickerViewController) {
         updateDayLabel()
         updateRepeatMethodCells()
         updatePatternCreationLabels()
@@ -100,10 +111,10 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
         if selectedDays.count == 0 {
             selectMethodWithDate()
         }
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func daysOfTheWeekPickerViewControllerDidChooseDay(controller: DayOfTheWeekPickerViewController, days: [Int]) {
+    func daysOfTheWeekPickerViewControllerDidChooseDay(_ controller: DayOfTheWeekPickerViewController, days: [Int]) {
         print(#function)
         
         selectedDays = days
@@ -115,29 +126,29 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
             selectMethodWithDate()
         }
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     func selectMethodWithDate() {
         if selectedDays.count == 0 {
             if selectedInterval != nil {
-                let indexPath = NSIndexPath(forRow: 1, inSection: 0)
-                tableView.selectRowAtIndexPath(indexPath, animated: true , scrollPosition: .None)
-                tableView(tableView, didSelectRowAtIndexPath: indexPath)
+                let indexPath = IndexPath(row: 1, section: 0)
+                tableView.selectRow(at: indexPath, animated: true , scrollPosition: .none)
+                tableView(tableView, didSelectRowAt: indexPath)
             } else {
-                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                tableView.selectRowAtIndexPath(indexPath, animated: true , scrollPosition: .None)
-                tableView(tableView, didSelectRowAtIndexPath: indexPath)
+                let indexPath = IndexPath(row: 0, section: 0)
+                tableView.selectRow(at: indexPath, animated: true , scrollPosition: .none)
+                tableView(tableView, didSelectRowAt: indexPath)
             }
         } else if selectedInterval == nil {
             if selectedDays.count != 0 {
-                let indexPath = NSIndexPath(forRow: 2, inSection: 0)
-                tableView.selectRowAtIndexPath(indexPath, animated: true , scrollPosition: .None)
-                tableView(tableView, didSelectRowAtIndexPath: indexPath)
+                let indexPath = IndexPath(row: 2, section: 0)
+                tableView.selectRow(at: indexPath, animated: true , scrollPosition: .none)
+                tableView(tableView, didSelectRowAt: indexPath)
             } else {
-                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                tableView.selectRowAtIndexPath(indexPath, animated: true , scrollPosition: .None)
-                tableView(tableView, didSelectRowAtIndexPath: indexPath)
+                let indexPath = IndexPath(row: 0, section: 0)
+                tableView.selectRow(at: indexPath, animated: true , scrollPosition: .none)
+                tableView(tableView, didSelectRowAt: indexPath)
             }
             
         }
@@ -155,10 +166,10 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
         tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
         
         // Table view separator
-        tableView.separatorColor = UIColor.whiteColor()
+        tableView.separatorColor = UIColor.white
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         updatePatternLabel()
@@ -170,30 +181,30 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
     
     // MARK: Table View
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = UIColor.whiteColor()
+        header.textLabel?.textColor = UIColor.white
         // header.titleLabel.textColor = UIColor.whiteColor()
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        cell.detailTextLabel?.textColor = UIColor.whiteColor()
-        cell.tintColor = UIColor.whiteColor()
+        cell.textLabel?.textColor = UIColor.white
+        cell.detailTextLabel?.textColor = UIColor.white
+        cell.tintColor = UIColor.white
         
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(#function)
-        if indexPath.section == 0 {
-            if indexPath.row == 0 {
+        if (indexPath as NSIndexPath).section == 0 {
+            if (indexPath as NSIndexPath).row == 0 {
                 usingNoPattern = true
                 usingCustomPattern = false
                 usingDayPattern = false
                 
                 updateSelectedMethod()
-            } else if indexPath.row == 1 {
+            } else if (indexPath as NSIndexPath).row == 1 {
                 usingNoPattern = false
                 usingCustomPattern = true
                 usingDayPattern = false
@@ -201,9 +212,9 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
                 updateSelectedMethod()
                 
                 if selectedInterval == nil && selectedFrequency == nil {
-                    performSegueWithIdentifier("PickPattern", sender: nil)
+                    performSegue(withIdentifier: "PickPattern", sender: nil)
                 }
-            } else if indexPath.row == 2 {
+            } else if (indexPath as NSIndexPath).row == 2 {
                 usingNoPattern = false
                 usingCustomPattern = false
                 usingDayPattern = true
@@ -211,24 +222,24 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
                 updateSelectedMethod()
                 
                 if selectedDays.count == 0 {
-                    performSegueWithIdentifier("PickWeekday", sender: nil)
+                    performSegue(withIdentifier: "PickWeekday", sender: nil)
                 }
             }
         }
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     // MARK: Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PickPattern" {
-            let controller = segue.destinationViewController as? PatternPickerViewController
+            let controller = segue.destination as? PatternPickerViewController
             
             controller?.delegate = self
             controller?.selectedFrequency = selectedFrequency
             controller?.selectedInterval = selectedInterval
         } else if segue.identifier == "PickWeekday" {
             print("Setting delegate to weekday")
-            let navigationController = segue.destinationViewController as? UINavigationController
+            let navigationController = segue.destination as? UINavigationController
             let dayOfTheWeekPickerViewController = navigationController?.viewControllers[0] as? DayOfTheWeekPickerViewController
             dayOfTheWeekPickerViewController?.delegate = self
             
@@ -254,26 +265,26 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
             for day in selectedDays {
                 switch day {
                 case 1:
-                    stringOfDays.appendContentsOf("Sun")
+                    stringOfDays.append("Sun")
                 case 2:
-                    stringOfDays.appendContentsOf("Mon")
+                    stringOfDays.append("Mon")
                 case 3:
-                    stringOfDays.appendContentsOf("Tue")
+                    stringOfDays.append("Tue")
                 case 4:
-                    stringOfDays.appendContentsOf("Wed")
+                    stringOfDays.append("Wed")
                 case 5:
-                    stringOfDays.appendContentsOf("Thu")
+                    stringOfDays.append("Thu")
                 case 6:
-                    stringOfDays.appendContentsOf("Fri")
+                    stringOfDays.append("Fri")
                 case 7:
-                    stringOfDays.appendContentsOf("Sat")
+                    stringOfDays.append("Sat")
                 default:
                     print("Error appending strings of days")
                 }
                 if selectedDays.count > 1 {
                     // Do not print comma after last word
-                    if selectedDays.indexOf(day) < selectedDays.count - 1 {
-                        stringOfDays.appendContentsOf(", ")
+                    if selectedDays.index(of: day) < selectedDays.count - 1 {
+                        stringOfDays.append(", ")
                     }
                 }
             }
@@ -283,17 +294,17 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
     
     func updateSelectedMethod() {
         if usingNoPattern {
-            selectNoPatternCell.accessoryType = .Checkmark
-            selectCustomPatternCell.accessoryType = .None
-            selectDayPatternCell.accessoryType = .None
+            selectNoPatternCell.accessoryType = .checkmark
+            selectCustomPatternCell.accessoryType = .none
+            selectDayPatternCell.accessoryType = .none
         } else {
-            selectNoPatternCell.accessoryType = .None
+            selectNoPatternCell.accessoryType = .none
             if usingCustomPattern {
-                selectCustomPatternCell.accessoryType = .Checkmark
-                selectDayPatternCell.accessoryType = .None
+                selectCustomPatternCell.accessoryType = .checkmark
+                selectDayPatternCell.accessoryType = .none
             } else if usingDayPattern {
-                selectCustomPatternCell.accessoryType = .None
-                selectDayPatternCell.accessoryType = .Checkmark
+                selectCustomPatternCell.accessoryType = .none
+                selectDayPatternCell.accessoryType = .checkmark
             }
         }
         

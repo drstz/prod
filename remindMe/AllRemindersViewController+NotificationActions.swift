@@ -46,7 +46,7 @@ extension AllRemindersViewController {
 //            print("Error")
 //        }
         if let reminder = reminderFromNotification {
-            performSegueWithIdentifier("Popup", sender: reminder)
+            performSegue(withIdentifier: "Popup", sender: reminder)
         }
         
     }

@@ -11,11 +11,11 @@ import UIKit
 class DimmingPresentationController: UIPresentationController {
     
     var blurringView: UIVisualEffectView {
-        let blurEffect = UIBlurEffect(style: .Dark)
+        let blurEffect = UIBlurEffect(style: .dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         //always fill the view
         blurEffectView.frame = containerView!.bounds
-        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurEffectView.tag = 999
         return blurEffectView
     }
@@ -23,7 +23,7 @@ class DimmingPresentationController: UIPresentationController {
     var blurredView: UIVisualEffectView?
     
     
-    override func shouldRemovePresentersView() -> Bool {
+    override var shouldRemovePresentersView : Bool {
         return false
     }
     
@@ -32,10 +32,10 @@ class DimmingPresentationController: UIPresentationController {
         let blurEffectView = blurringView
         blurredView = blurEffectView
         
-        containerView!.insertSubview(blurredView!, atIndex: 0)
+        containerView!.insertSubview(blurredView!, at: 0)
         blurredView!.alpha = 0
-        if let transitionCoordinator = presentedViewController.transitionCoordinator() {
-            transitionCoordinator.animateAlongsideTransition({ _ in
+        if let transitionCoordinator = presentedViewController.transitionCoordinator {
+            transitionCoordinator.animate(alongsideTransition: { _ in
                 self.blurredView!.alpha = 1
                 }, completion: nil)
         }
@@ -43,8 +43,8 @@ class DimmingPresentationController: UIPresentationController {
     
     override func dismissalTransitionWillBegin() {
         
-        if let transitionCoordinator = presentedViewController.transitionCoordinator() {
-            transitionCoordinator.animateAlongsideTransition({ _ in
+        if let transitionCoordinator = presentedViewController.transitionCoordinator {
+            transitionCoordinator.animate(alongsideTransition: { _ in
                 self.blurredView!.alpha = 0 } , completion: nil)
         }
     }

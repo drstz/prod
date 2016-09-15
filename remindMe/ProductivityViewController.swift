@@ -45,7 +45,6 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Productivity"
         
         averageTimeBetweenCreationCompletionCell.detailTextLabel?.textColor = UIColor.whiteColor()
         
@@ -150,7 +149,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     }
     
     func calculateAverageTimeBetweenDueDateCompletion(reminders: [Reminder]) {
-        var unit = "minutes"
+        var unit = ""
         
         
         let totalTimeBetweenCreationAndCompletionDates = list.differenceBetweenDueCompletionDate.floatValue
@@ -158,23 +157,35 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         if nbOfCompletedReminders != 0 {
             var averageTimeBetweenDates = totalTimeBetweenCreationAndCompletionDates / nbOfCompletedReminders
             print("Average time is : \(averageTimeBetweenDates)")
+            if averageTimeBetweenDates > 1 {
+                unit = "minutes"
+            } else {
+                unit = "minute"
+            }
+            
             if averageTimeBetweenDates > 60 {
                 
                 averageTimeBetweenDates = averageTimeBetweenDates / 60
-                unit = "hours"
+                if averageTimeBetweenDates > 1 {
+                    unit = "hours"
+                } else {
+                    unit = "hour"
+                }
+                
                 
                 if averageTimeBetweenDates > 24{
                     averageTimeBetweenDates = averageTimeBetweenDates / 24
-                    unit = "days"
+                    if averageTimeBetweenDates > 1 {
+                        unit = "days"
+                    } else {
+                       unit = "day"
+                    }
+                    
                 }
                 
             }
-            if averageTimeBetweenDates < 0 {
-                averageTimeBetweenDates = averageTimeBetweenDates * -1
-                
-            }
             
-            if averageTimeBetweenDates <= 1 {
+            if averageTimeBetweenDates < 1 {
                  averageTimeBetweenCreationCompletionLabel.text = "<1 \(unit)"
             } else {
                 averageTimeBetweenCreationCompletionLabel.text = String(averageTimeBetweenDates) + " " + unit

@@ -136,10 +136,6 @@ func setAutoSnooze(enabled: Bool) {
     let userDefaults = NSUserDefaults.standardUserDefaults()
     userDefaults.setBool(enabled, forKey: "AutoSnoozeEnabled")
     userDefaults.synchronize()
-    
-    let notificationHandler = NotificationHandler()
-    // Do not need to update because this is for new reminders now and not old
-    // notificationHandler.updateAllSnoozeTimes()
 }
 
 func setDefaultAutoSnoozeTime(autoSnoozeTime: AutoSnoozeDefaults) {

@@ -174,8 +174,6 @@ extension CustomSnoozePickerController: UIPickerViewDelegate, UIPickerViewDataSo
             snoozePicker.selectRow(2, inComponent: 0, animated: false)
         case .Days:
             snoozePicker.selectRow(3, inComponent: 0, animated: false)
-        default:
-            snoozePicker.selectRow(0, inComponent: 0, animated: false)
         }
     }
     

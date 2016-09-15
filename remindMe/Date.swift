@@ -80,11 +80,8 @@ func convertDateToString(dateToConvert date: NSDate) -> String {
 }
 
 func convertDateToString(format: DateFormats, date: NSDate) -> String {
-    let today = NSDate()
-    let startOfDay = today.startOfDay
-    let endOfDay = today.endOfDay
-    let earlierDate = date.earlierDate(endOfDay)
-    let earlierBetweenMorningAndDate = startOfDay.earlierDate(date)
+    
+    
     let formatter = NSDateFormatter()
     var dateFormat = ""
     formatter.locale = NSLocale(localeIdentifier: preferredLanguage)

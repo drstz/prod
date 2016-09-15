@@ -225,18 +225,15 @@ class ReminderCell: UITableViewCell {
     
     
     func configureLabels(_ name: String, dueDate: Date, frequency: Int?, interval: String?) {
-        //print(#function)
-        
-        
-        
         reminderLabel.text = name
         dayLabel.text = convertDateToString(.Day, date: dueDate)
         timeLabel.text = convertDateToString(.Time, date: dueDate)
         if dueDate.isPresent() {
-            // shortDateLabel.text = convertDateToString(.ShortDate, date: dueDate)
-            shortDateLabel.text = convertDateToString(.Day, date: dueDate) + ", " + convertDateToString(.ShortDate, date: dueDate)
+            shortDateLabel.text = convertDateToString(.ShortDate, date: dueDate)
+            //shortDateLabel.text = convertDateToString(.Day, date: dueDate) + ", " + convertDateToString(.ShortDate, date: dueDate)
         } else {
-            shortDateLabel.text = convertDateToString(.Day, date: dueDate) + ", " + convertDateToString(.ShortDate, date: dueDate)
+            shortDateLabel.text = convertDateToString(.ShortDate, date: dueDate)
+            // shortDateLabel.text = convertDateToString(.Day, date: dueDate) + ", " + convertDateToString(.ShortDate, date: dueDate)
         }
         
         

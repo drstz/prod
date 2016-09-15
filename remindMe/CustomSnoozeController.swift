@@ -55,10 +55,21 @@ class CustomSnoozePickerController: UITableViewController {
         super.viewDidLoad()
         setColorTheme()
         snoozePicker.backgroundColor = UIColor.clear
-        textField.backgroundColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
+        
+        textField.backgroundColor = UIColor.clear
+        textField.borderStyle = .none
         textField.textColor = UIColor.white
         textField.attributedPlaceholder = NSAttributedString(string: "Please enter a number",
                                                              attributes: [NSForegroundColorAttributeName:UIColor.white])
+        
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        
+        tableView.addGestureRecognizer(gesture)
+    }
+    
+    func dismissKeyboard() {
+        print(#function)
+        textField.resignFirstResponder()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,7 +112,12 @@ class CustomSnoozePickerController: UITableViewController {
         cell.textLabel?.textColor = UIColor.white
         cell.detailTextLabel?.textColor = UIColor.white
         cell.tintColor = UIColor.white
-        
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 1 && indexPath.section == 1 {
+            textField.resignFirstResponder()
+        }
     }
     
 }

@@ -158,7 +158,7 @@ class ReminderCell: UITableViewCell {
     }
     
     func updateRepeatLabelWithDayPattern(_ reminder: Reminder) {
-        var stringOfDays = "every "
+        var stringOfDays = ""
         var selectedDays = [Int]()
         for day in reminder.selectedDays {
             selectedDays.append(Int(day as! NSNumber))
@@ -245,14 +245,19 @@ class ReminderCell: UITableViewCell {
     func configureBackgroundColors(_ isFavorite: Bool, isLate: Bool, isComplete: Bool) {
         //print(#function)
         if isFavorite == true {
-            favoriteStar.isHidden = false
+            let yellowStar = UIImage.init(named: "Star Filled-44 (1)")
+            favoriteStar.image = yellowStar
+            favoriteStar.alpha = 1
+            //favoriteStar.isHidden = false
             if isLate && !isComplete {
                 backgroundDelegate?.changeBackgroundColor(lateColor)
             } else {
                 backgroundDelegate?.changeBackgroundColor(cellBackgroundColor)
             }
         } else {
-            favoriteStar.isHidden = true
+            let whiteStar = UIImage.init(named: "Star-44")
+            favoriteStar.image = whiteStar
+            favoriteStar.alpha = 0.3
             if isLate && !isComplete {
                 backgroundDelegate?.changeBackgroundColor(lateColor)
             } else {
@@ -263,6 +268,7 @@ class ReminderCell: UITableViewCell {
     
     func configureLabelColors(_ isComplete: Bool, isLate: Bool) {
 //        print(#function)
+        reminderLabel.textColor = UIColor.white
         if isComplete || !isLate {
             dayLabel.textColor = UIColor.white
             shortDateLabel.textColor = UIColor.white

@@ -109,7 +109,7 @@ class AllRemindersViewController: UIViewController {
     @IBAction func loadRemindersForToday() {
         // Set choice
         let filter: ReminderFilter = .Today
-        saveFilter(filter)
+        save(filter)
         
         // Selected Button
         let chosenButton = button(from: filter)
@@ -124,7 +124,7 @@ class AllRemindersViewController: UIViewController {
     @IBAction func loadAllReminders() {
         // Set choice
         let filter: ReminderFilter = .All
-        saveFilter(filter)
+        save(filter)
         
         // Selected Button
         let chosenButton = button(from: filter)
@@ -139,7 +139,7 @@ class AllRemindersViewController: UIViewController {
     @IBAction func loadRemindersForWeek() {
         // Set choice
         let filter: ReminderFilter = .Week
-        saveFilter(filter)
+        save(filter)
         
         // Selected Button
         let chosenButton = button(from: filter)
@@ -154,7 +154,7 @@ class AllRemindersViewController: UIViewController {
     @IBAction func loadFavoriteReminders() {
         // Set choice
         let filter: ReminderFilter = .Favorite
-        saveFilter(filter)
+        save(filter)
         
         // Selected Button
         let chosenButton = button(from: filter)

@@ -57,7 +57,7 @@ func isFirstTime() -> Bool {
     return false
 }
 
-func saveFilter(_ filter: ReminderFilter) {
+func save(_ filter: ReminderFilter) {
     print("Going to save filter: \(filter)")
     print("The filter's raw value is \(filter.rawValue)")
     

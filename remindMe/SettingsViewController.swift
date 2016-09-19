@@ -186,28 +186,3 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
-
-extension SettingsViewController: MFMailComposeViewControllerDelegate {
-    func sendSupportEmail() {
-        if MFMailComposeViewController.canSendMail() {
-            let controller = MFMailComposeViewController()
-            controller.setSubject(NSLocalizedString("Support Request", comment: "Email Subject"))
-            controller.setToRecipients(["duane.stoltz@gmail.com"])
-            controller.mailComposeDelegate = self
-            self.present(controller, animated: true, completion: nil)
-        } else {
-            let alert = UIAlertController(title: "Can't send email", message: "Please configure your device to send email in Settings -> Mail, Contacts, Calendar. You can also send me a mail at duane.stoltz@gmail.com", preferredStyle: .alert)
-            let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-            
-            alert.addAction(cancel)
-           
-
-            present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        dismiss(animated: true, completion: nil)
-    }
-}
-

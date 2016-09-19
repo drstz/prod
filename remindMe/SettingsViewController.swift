@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class SettingsViewController: UITableViewController {
+class SettingsViewController: UITableViewController, PremiumUserViewControllerDelegate {
     @IBOutlet weak var snoozeTimeLabel: UILabel!
     @IBOutlet weak var autoSnoozeLabel: UILabel!
     @IBOutlet weak var timePickerLabel: UILabel!
@@ -51,6 +51,13 @@ class SettingsViewController: UITableViewController {
     @IBAction func setAutoSnoozeFromSwitch() {
         let enabled = autoSnoozeSwitch.isOn
         setAutoSnooze(enabled)
+    }
+    
+    // MARK: - Delegate Methods
+    
+    // MARK: Premium User View Controller Delegate
+    func premiumUserViewControllerDelegateDidCancel(controller: PremiumUserViewController) {
+        dismiss(animated: true, completion: nil)
     }
     
     
@@ -162,6 +169,10 @@ class SettingsViewController: UITableViewController {
             case "PickTimePickerInterval":
                 let controller = segue.destination as! TimePickerViewController
                 controller.selectedInterval = interval
+            case "PremiumUser":
+                let navigationController = segue.destination as! UINavigationController
+                let controller = navigationController.topViewController as! PremiumUserViewController
+                controller.delegate = self
             default:
                 print("Error: No segue")
             }

@@ -42,8 +42,8 @@ class ReminderCell: UITableViewCell {
     @IBOutlet weak var reminderBackgroundView: ReminderCellBackground!
     @IBOutlet weak var reminderSelectionView: UIView!
 
-    
-    @IBOutlet weak var favoriteStar: UIImageView!
+    // MARK: Icons
+    @IBOutlet weak var starIcon: UIImageView!
     
     @IBOutlet weak var repeatIcon: UIImageView!
     @IBOutlet weak var commentIcon: UIImageView!
@@ -246,8 +246,8 @@ class ReminderCell: UITableViewCell {
         //print(#function)
         if isFavorite == true {
             let yellowStar = UIImage.init(named: "Star Filled-44 (1)")
-            favoriteStar.image = yellowStar
-            favoriteStar.alpha = 1
+            starIcon.image = yellowStar
+            starIcon.alpha = 1
             //favoriteStar.isHidden = false
             if isLate && !isComplete {
                 backgroundDelegate?.changeBackgroundColor(lateColor)
@@ -256,8 +256,8 @@ class ReminderCell: UITableViewCell {
             }
         } else {
             let whiteStar = UIImage.init(named: "Star-44")
-            favoriteStar.image = whiteStar
-            favoriteStar.alpha = 0.3
+            starIcon.image = whiteStar
+            starIcon.alpha = 0.3
             if isLate && !isComplete {
                 backgroundDelegate?.changeBackgroundColor(lateColor)
             } else {

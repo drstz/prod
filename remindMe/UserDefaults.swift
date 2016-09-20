@@ -56,6 +56,7 @@ func disablePremium() {
 func enablePremium() {
     let userDefaults = UserDefaults.standard
     userDefaults.set(true, forKey: "Premium")
+    userDefaults.synchronize()
 }
 
 func isPremium() -> Bool {

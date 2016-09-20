@@ -829,9 +829,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="tov-aB-IjW" kind="presentation" identifier="PickRepeatMethod" id="OwB-dW-bdD"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="HIJ-ij-8PU">
                                         <rect key="frame" x="0.0" y="387" width="375" height="44"/>
@@ -898,6 +895,7 @@
                         <outlet property="reminderCommentFieldCell" destination="7oh-oI-TDq" id="cea-zG-87Q"/>
                         <outlet property="reminderNameField" destination="dvW-lG-G6W" id="xbw-oL-hrw"/>
                         <segue destination="y8z-b7-yRZ" kind="presentation" identifier="AddComment" id="nxO-Ts-y65"/>
+                        <segue destination="tov-aB-IjW" kind="presentation" identifier="PickRepeatMethod" id="lKe-QL-b4D"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NWt-mi-rqE" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -15,7 +15,7 @@ extension AllRemindersViewController: UITableViewDataSource {
         return (coreDataHandler.fetchedResultsController!.sections?.count)! 
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    private func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 //        print(#function)
         let sectionInfo = (coreDataHandler.fetchedResultsController?.sections!)! as [NSFetchedResultsSectionInfo]
         let text = sectionInfo[section].name
@@ -40,9 +40,11 @@ extension AllRemindersViewController: UITableViewDataSource {
         header.titleLabel.backgroundColor = UIColor(red: 40/255, green: 114/255, blue: 192/255, alpha: 1)
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    private func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
+    
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = coreDataHandler.fetchedResultsController?.sections![section]
@@ -94,7 +96,7 @@ extension AllRemindersViewController: UITableViewDelegate {
         
     }
     
-    @objc(tableView:commitEditingStyle:forRowAtIndexPath:) func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+   private func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             let reminder = coreDataHandler.reminderFromIndexPath(indexPath)

@@ -35,7 +35,7 @@ protocol AddReminderViewControllerDelegate: class {
     
 }
 
-class AddReminderViewController: UITableViewController, UITextFieldDelegate, DatePickerViewControllerDelegate, RepeatMethodViewControllerDelegate, ReminderCommentViewControllerDelegate {
+class AddReminderViewController: UITableViewController, UITextFieldDelegate, DatePickerViewControllerDelegate, RepeatMethodViewControllerDelegate, ReminderCommentViewControllerDelegate, PremiumUserViewControllerDelegate {
     
     // MARK: Properties
     
@@ -364,7 +364,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     }
     
     func openCommentView() {
-        performSegue(withIdentifier: "AddComment", sender: nil)
+        if isPremium() {
+            performSegue(withIdentifier: "AddComment", sender: nil)
+        } else {
+            presentPremiumView()
+        }
+        
     }
     
     func prepareViewForReminder(_ reminder: Reminder) {
@@ -419,6 +424,24 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         if reminderToEdit != nil {
             doneBarButton.isEnabled = true
         }
+    }
+    
+    // MARK: - Premium View Controller delegate
+    func presentPremiumView() {
+        let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+        
+        
+        let premiumView = storyboard.instantiateViewController(withIdentifier: "PremiumView") as! PremiumUserViewController
+        premiumView.delegate = self
+        
+        let navigationController = UINavigationController()
+        navigationController.viewControllers.append(premiumView)
+        
+        present(navigationController, animated: true, completion: nil)
+    }
+    
+    func premiumUserViewControllerDelegateDidCancel(controller: PremiumUserViewController) {
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Date Picker View Controller Delegate
@@ -575,9 +598,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         reminderNameField.resignFirstResponder()
-        
-        
-        
+        if indexPath.section == 2 && indexPath.row == 1 {
+            if isPremium() {
+                performSegue(withIdentifier: "PickRepeatMethod", sender: nil)
+            } else {
+                presentPremiumView()
+            }
+        }
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {

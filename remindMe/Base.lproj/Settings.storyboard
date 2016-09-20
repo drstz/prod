@@ -269,7 +269,7 @@
         <!--Premium User View Controller-->
         <scene sceneID="JPu-cG-wKY">
             <objects>
-                <viewController id="ptl-VH-JCR" customClass="PremiumUserViewController" customModule="Prod" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PremiumView" id="ptl-VH-JCR" customClass="PremiumUserViewController" customModule="Prod" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ID9-G6-XJf"/>
                         <viewControllerLayoutGuide type="bottom" id="ya5-5Z-XPa"/>
@@ -683,7 +683,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="Set custom snooze"/>
                                             <connections>
-                                                <segue destination="fdi-kd-bTg" kind="presentation" identifier="setCustomSnoozeTime" id="68R-SR-ETg"/>
+                                                <action selector="selectCustomSnoozeTime" destination="HjL-xw-Wes" eventType="touchUpInside" id="9hA-rZ-uJq"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -697,6 +697,7 @@
                     </tableView>
                     <connections>
                         <segue destination="Nrg-xY-3dX" kind="unwind" identifier="PickedSnoozeTime" unwindAction="snoozePickerDidPickSnoozeTime:" id="Jl3-2x-QGM"/>
+                        <segue destination="fdi-kd-bTg" kind="presentation" identifier="setCustomSnoozeTime" id="NX5-Vi-qaL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="85F-6z-tYL" userLabel="First Responder" sceneMemberID="firstResponder"/>

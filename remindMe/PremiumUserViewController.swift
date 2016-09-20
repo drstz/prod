@@ -50,6 +50,11 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate {
     }
     
     // MARK: - View Lifecyle
+    
+    deinit {
+        print("Premium view was deallocated")
+        delegate = nil
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         

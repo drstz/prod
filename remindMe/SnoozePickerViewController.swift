@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SnoozePickerViewController: UITableViewController {
+class SnoozePickerViewController: UITableViewController, PremiumUserViewControllerDelegate {
     
     @IBOutlet weak var customSnoozeLabel: UILabel!
     
@@ -33,6 +33,13 @@ class SnoozePickerViewController: UITableViewController {
     ]
     
     var selectedIndexPath = IndexPath()
+    // MARK: - Actions
+    
+    @IBAction func selectCustomSnoozeTime() {
+        selectCustomSnoozeTime()
+    }
+    
+    // MARK: View life cycle
     
     override func viewDidLoad() {
         print(#function)
@@ -242,14 +249,46 @@ class SnoozePickerViewController: UITableViewController {
                     
                 }
                 
-                if (indexPath as NSIndexPath).row == 1 {
-                    performSegue(withIdentifier: "setCustomSnoozeTime", sender: self)
-                }
+//                if (indexPath as NSIndexPath).row == 1 {
+//                    print("Going to perform segue to set custom snooze time")
+//                    performSegue(withIdentifier: "setCustomSnoozeTime", sender: self)
+//                }
             }
             tableView.deselectRow(at: indexPath, animated: true)
 
         }
         
+        if indexPath.section == 1 && indexPath.row == 1 {
+            setCustomSnoozeTime()
+        }
+        
+    }
+    
+    func setCustomSnoozeTime() {
+        
+        presentPremiumView()
+        
+//        if isPremium() {
+//            performSegue(withIdentifier: "setCustomSnoozeTime", sender: nil)
+//        } else {
+//            presentPremiumView()
+//        }
+        
+    }
+    
+    func presentPremiumView() {
+        
+        let premiumView = storyboard?.instantiateViewController(withIdentifier: "PremiumView") as! PremiumUserViewController
+        premiumView.delegate = self
+        
+        let navigationController = UINavigationController()
+        navigationController.viewControllers.append(premiumView)
+        
+        present(navigationController, animated: true, completion: nil)
+    }
+    
+    func premiumUserViewControllerDelegateDidCancel(controller: PremiumUserViewController) {
+        dismiss(animated: true, completion: nil)
     }
     
     func updateCustomSnoozeLabel() {

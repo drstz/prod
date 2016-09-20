@@ -596,6 +596,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(#function)
         tableView.deselectRow(at: indexPath, animated: true)
         reminderNameField.resignFirstResponder()
         if indexPath.section == 2 && indexPath.row == 1 {

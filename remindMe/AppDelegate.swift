@@ -66,6 +66,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKPaymentTransactionObser
             // This is for the creation of the list variable. It is needed to add reminders
             if isFirstTime() {
                 setUpFirstTime(allRemindersViewController)
+                let notificationHandler = NotificationHandler()
+                let allNotifications = notificationHandler.allNotifications()
+                for notification in allNotifications {
+                    UIApplication.shared.cancelLocalNotification(notification)
+                }
             } else {
                 loadList(allRemindersViewController)
             }
@@ -197,6 +202,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKPaymentTransactionObser
             case .restored:
                 print("Restored")
                 enablePremium()
+                queue.finishTransaction(transaction)
             }
         }
     }

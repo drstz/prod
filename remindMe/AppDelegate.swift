@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import StoreKit
 
 let MyManagedObjectContextSaveDidFailNotification = "MyManagedObjectContextSaveDidFailNotification"
 
@@ -17,7 +18,7 @@ func fatalCoreDataError(_ error: Error) {
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, SKPaymentTransactionObserver {
     
     let coreDataHandler = CoreDataHandler()
     let notificationHandler = NotificationHandler()
@@ -37,6 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         NSLog(#function)
         print(#function)
+        
+        // Payment 
+        
+        SKPaymentQueue.default().add(self)
+        
         // User Defaults
         registerDefaults()
         
@@ -169,6 +175,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         return shouldPerformShortcutDelegate
+    }
+    
+    // MARK: - Payments
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        print(#function)
+        
+        for transaction in transactions {
+            switch transaction.transactionState {
+            case .purchased:
+                print("Purchased")
+                // Validate Purchase
+                enablePremium()
+                queue.finishTransaction(transaction)
+            case .failed:
+                print("Failed")
+            case .deferred:
+                print("Deferred")
+            case .purchasing:
+                print("Purchasing")
+            case .restored:
+                print("Restored")
+                enablePremium()
+            }
+        }
+    }
+    
+    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
+        print(#function)
+        // enablePremium()
+    }
+    
+    func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
+        print(#function)
     }
     
     // MARK: Go to background

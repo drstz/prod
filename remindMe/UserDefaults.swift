@@ -41,9 +41,26 @@ func registerDefaults() {
         "SavedSnoozeDuration" : 0,
         "SavedSnoozeUnit" : "min",
         "Filter" : "All",
-        "TimePickerInterval" : 1
+        "TimePickerInterval" : 1,
+        "Premium" : false
     ] as [String : Any]
     UserDefaults.standard.register(defaults: dictionary)
+}
+
+func disablePremium() {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(false, forKey: "Premium")
+    userDefaults.synchronize()
+}
+
+func enablePremium() {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(true, forKey: "Premium")
+}
+
+func isPremium() -> Bool {
+    let userDefaults = UserDefaults.standard
+    return userDefaults.bool(forKey: "Premium")
 }
 
 func isFirstTime() -> Bool {

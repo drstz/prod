@@ -154,8 +154,10 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         
         let totalTimeBetweenCreationAndCompletionDates = list.differenceBetweenDueCompletionDate.floatValue
         let nbOfCompletedReminders = list.numberOfCompletedReminders.floatValue
-        if nbOfCompletedReminders != 0 {
-            var averageTimeBetweenDates = totalTimeBetweenCreationAndCompletionDates / nbOfCompletedReminders
+        let nbOfRemindersCompletedBeforeDueDate = list.numberOfRemindersCompletedBeforeDueDate.floatValue
+        let totalNumberOfRemindersCompeltedAfterDueDate = nbOfCompletedReminders - nbOfRemindersCompletedBeforeDueDate
+        if totalNumberOfRemindersCompeltedAfterDueDate != 0 {
+            var averageTimeBetweenDates = totalTimeBetweenCreationAndCompletionDates / totalNumberOfRemindersCompeltedAfterDueDate
             print("Average time is : \(averageTimeBetweenDates)")
             if averageTimeBetweenDates > 1 {
                 unit = "minutes"
@@ -210,16 +212,6 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         }
     }
     
-    func updateNumberOfCreatedRemindersLabel() {
-        let nbOfCreatedReminders = list.numberOfReminders.intValue
-        numberOfCreatedRemindersLabel.text = String(nbOfCreatedReminders)
-    }
-    
-    func updateNumberOfCompletedRemindersLabel() {
-        let nbOfCompletedReminders = list.numberOfCompletedReminders.intValue
-        numberOfCompletedRemindersLabel.text = String(nbOfCompletedReminders)
-    }
-    
     func calcutePercentageOfRemindersSnoozed() {
         let nbOfCompletedReminders = list.numberOfCompletedReminders.floatValue
         let nbOfRemindersSnoozed = list.numberOfSnoozedReminders.floatValue
@@ -233,6 +225,16 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         }
         
     
+    }
+    
+    func updateNumberOfCreatedRemindersLabel() {
+        let nbOfCreatedReminders = list.numberOfReminders.intValue
+        numberOfCreatedRemindersLabel.text = String(nbOfCreatedReminders)
+    }
+    
+    func updateNumberOfCompletedRemindersLabel() {
+        let nbOfCompletedReminders = list.numberOfCompletedReminders.intValue
+        numberOfCompletedRemindersLabel.text = String(nbOfCompletedReminders)
     }
     
     

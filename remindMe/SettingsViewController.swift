@@ -164,7 +164,7 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
                 controller.selectedAutoSnoozeTime = autoSnoozeTime
             case "SendFeedback":
                 let controller = segue.destination as! AboutViewController
-                controller.htmlFile = Bundle.main.path(forResource: "feedback", ofType: "html")
+                controller.htmlFile = Bundle.main.path(forResource: "aboutDeveloper", ofType: "html")
                 controller.title = "Feedback"
             case "AboutDeveloper":
                 let controller = segue.destination as! AboutViewController

@@ -1,11 +1,13 @@
-h1, h2 {
-    color: aquamarine;
-}
-
 html {
     width: 100%;
+    background-color: #286c95;
 }
 
-p, li {
-    font-size: 1em;
+p, li, h1, h2 {
+    font-size: 1.2em;
+    color: white;
+}
+
+a {
+    color: orange;
 }

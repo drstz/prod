@@ -134,8 +134,8 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     }
     
     func countTimesSnoozed(_ reminders: [Reminder]) {
-        let numberOfTimesSnoozedBeforeCompletion = list.totalTimesSnoozed.intValue
-        let nbOfCompletedReminders = list.numberOfCompletedReminders.intValue
+        let numberOfTimesSnoozedBeforeCompletion = list.totalTimesSnoozed.floatValue
+        let nbOfCompletedReminders = list.numberOfCompletedReminders.floatValue
         
         print("Number of times snoozed \(numberOfTimesSnoozedBeforeCompletion)")
         print("Number of completed reminders \(nbOfCompletedReminders)")
@@ -184,7 +184,6 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
                     }
                     
                 }
-                
             }
             
             if averageTimeBetweenDates < 1 {
@@ -196,8 +195,6 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         } else {
             averageTimeBetweenCreationCompletionLabel.text = "No data"
         }
-        
-        
     }
     
     func calculateRemindersCompletedBeforeDueDate(_ reminders: [Reminder]) {

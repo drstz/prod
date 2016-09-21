@@ -18,6 +18,8 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
     
     @IBOutlet weak var autoSnoozeEnableLabel: UILabel!
     
+    @IBOutlet weak var goPremiumLabel: UILabel!
+    
     
     var snoozeTime = ""
     var snoozeDuration = 0.0
@@ -79,6 +81,12 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         loadSettings()
+        
+        if isPremium() {
+            goPremiumLabel.text = "Premium Features"
+        } else {
+            goPremiumLabel.text = "Become a premium user"
+        }
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

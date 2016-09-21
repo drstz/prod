@@ -257,6 +257,7 @@
                         <outlet property="autoSnoozeEnableLabel" destination="1x0-rJ-bsM" id="IN4-K0-K1i"/>
                         <outlet property="autoSnoozeLabel" destination="S7s-Iz-6w2" id="IMQ-ZG-V3e"/>
                         <outlet property="autoSnoozeSwitch" destination="mjj-fZ-4Rg" id="g7z-36-AWa"/>
+                        <outlet property="goPremiumLabel" destination="ek6-E2-gCX" id="IYR-6J-MqD"/>
                         <outlet property="snoozeTimeLabel" destination="CCR-ky-hgZ" id="DQb-HX-NPx"/>
                         <outlet property="timePickerLabel" destination="Dw2-ft-s17" id="ETP-9I-152"/>
                     </connections>
@@ -315,7 +316,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Customize how you want your reminders to be snoozed" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5U9-X8-3GK">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Customize when you want to be reminded again" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5U9-X8-3GK">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="201" id="Q6P-SE-KDo"/>
                                     <constraint firstAttribute="width" constant="300" id="lw7-kE-SQ2"/>
@@ -392,12 +393,12 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="113" id="0Vk-1b-MOB"/>
                                     <constraint firstAttribute="height" constant="44" id="Zxd-ZB-jhh"/>
-                                    <constraint firstAttribute="width" constant="113" id="eXP-TH-oS9"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="113" id="eXP-TH-oS9"/>
                                     <constraint firstAttribute="height" constant="44" id="myR-5p-kYo"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <inset key="contentEdgeInsets" minX="3" minY="0.0" maxX="3" maxY="0.0"/>
-                                <state key="normal" title="Go Premium">
+                                <state key="normal" title="Unlock Premium (3.99)">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
@@ -449,15 +450,6 @@
                                     <action selector="restore" destination="ptl-VH-JCR" eventType="touchUpInside" id="dOA-zU-m50"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zQ3-XB-9qx">
-                                <color key="backgroundColor" red="0.50196081400000003" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Buy Non Consumable">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="buyNC" destination="ptl-VH-JCR" eventType="touchUpInside" id="UWz-Qd-xLw"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.15686274510000001" green="0.32549019610000002" blue="0.42352941179999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -487,7 +479,6 @@
                             <constraint firstItem="yDu-fz-2Xu" firstAttribute="top" secondItem="CoS-lc-APZ" secondAttribute="bottom" constant="8" id="E89-LT-Stv">
                                 <variation key="heightClass=compact-widthClass=compact" constant="7.5"/>
                             </constraint>
-                            <constraint firstItem="zQ3-XB-9qx" firstAttribute="centerX" secondItem="vDW-D1-qPf" secondAttribute="centerX" id="FBL-zU-E74"/>
                             <constraint firstItem="vDW-D1-qPf" firstAttribute="leading" secondItem="Ifn-5M-G57" secondAttribute="leadingMargin" constant="138" id="GOh-OK-gIc">
                                 <variation key="heightClass=compact-widthClass=compact" constant="216"/>
                             </constraint>
@@ -506,7 +497,6 @@
                                 <variation key="heightClass=compact-widthClass=compact" constant="44"/>
                             </constraint>
                             <constraint firstAttribute="leadingMargin" secondItem="Jpi-1p-6CS" secondAttribute="leading" id="SWp-tP-oDh"/>
-                            <constraint firstItem="zQ3-XB-9qx" firstAttribute="top" secondItem="vDW-D1-qPf" secondAttribute="bottom" constant="8" id="Swk-28-zYc"/>
                             <constraint firstItem="Vy7-Rx-hWN" firstAttribute="top" secondItem="Gen-nm-bLl" secondAttribute="bottom" constant="8" id="T0x-T7-KB5">
                                 <variation key="heightClass=compact-widthClass=compact" constant="7"/>
                             </constraint>
@@ -515,7 +505,7 @@
                                 <variation key="heightClass=compact-widthClass=compact" constant="33.5"/>
                             </constraint>
                             <constraint firstAttribute="leadingMargin" secondItem="AKr-ky-mVs" secondAttribute="leading" id="UAf-NF-mTV"/>
-                            <constraint firstItem="LJz-hy-6VE" firstAttribute="top" secondItem="vDW-D1-qPf" secondAttribute="bottom" constant="56" id="VJq-mB-IX9"/>
+                            <constraint firstItem="LJz-hy-6VE" firstAttribute="top" secondItem="vDW-D1-qPf" secondAttribute="bottom" constant="15" id="VJq-mB-IX9"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Gen-nm-bLl" secondAttribute="leading" id="VVH-sq-zmO"/>
                             <constraint firstItem="Y3B-QF-X5J" firstAttribute="top" secondItem="ID9-G6-XJf" secondAttribute="bottom" constant="8" id="YQB-E2-JXZ"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Jpi-1p-6CS" secondAttribute="leading" id="YTj-zz-8bW"/>
@@ -620,7 +610,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="goPremiumButton" destination="vDW-D1-qPf" id="WvM-e5-n0S"/>
-                        <outlet property="ncPremiumButton" destination="zQ3-XB-9qx" id="b7S-4z-i7Z"/>
+                        <outlet property="introSentenceLabel" destination="Y3B-QF-X5J" id="Xlp-s8-wlb"/>
                         <outlet property="restorePurchaseButton" destination="LJz-hy-6VE" id="DB1-fw-6tz"/>
                     </connections>
                 </viewController>

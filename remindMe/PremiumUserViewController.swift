@@ -24,7 +24,9 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate {
     // MARK: - Outlets
     @IBOutlet weak var goPremiumButton: UIButton!
     @IBOutlet weak var restorePurchaseButton: UIButton!
-    @IBOutlet weak var ncPremiumButton: UIButton!
+    // @IBOutlet weak var ncPremiumButton: UIButton!
+    
+    @IBOutlet weak var introSentenceLabel: UILabel!
     
     // MARK: - Actions
     @IBAction func cancel() {
@@ -38,12 +40,12 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate {
         }
     }
     
-    @IBAction func buyNC() {
-        if let product = ncProduct {
-            let payment = SKPayment(product: product)
-            SKPaymentQueue.default().add(payment)
-        }
-    }
+//    @IBAction func buyNC() {
+//        if let product = ncProduct {
+//            let payment = SKPayment(product: product)
+//            SKPaymentQueue.default().add(payment)
+//        }
+//    }
     
     @IBAction func restore() {
         SKPaymentQueue.default().restoreCompletedTransactions()
@@ -65,10 +67,14 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate {
         print("User is premium: \(isPremium())")
         
         if isPremium() {
-            goPremiumButton.setTitle("P User", for: .normal)
+            goPremiumButton.isHidden = true
+            restorePurchaseButton.isHidden = true
+            introSentenceLabel.text = "Thank you for your support. You now have access to the following features."
         } else {
-            let productIdentifiers: Set<String> = ["com.coconutdust.prod.premiumConsumableTest",
-                                                   "com.coconutdust.prod.premiumNonConsumableTest"]
+            introSentenceLabel.text = "Go premium and access the following features."
+            goPremiumButton.isHidden = false
+            restorePurchaseButton.isHidden = false
+            let productIdentifiers: Set<String> = ["com.coconutdust.prod.unlockPremium"]
             let request = SKProductsRequest(productIdentifiers: productIdentifiers)
             request.delegate = self
             request.start()
@@ -83,18 +89,12 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate {
             print("price: \(product.price)")
         }
         premiumProduct = response.products[0]
-        ncProduct = response.products[1]
         
         if let product = premiumProduct {
             print("Got product")
             let price = product.price
-            goPremiumButton.titleLabel?.text = "Buy (\(price))"
+            goPremiumButton.titleLabel?.text = "\(product.localizedTitle) (\(price))"
         }
         
-        if let product = ncProduct {
-            print("Got product")
-            let price = product.price
-            ncPremiumButton.setTitle("Buy (\(price))", for: .normal)
-        }
     }
 }

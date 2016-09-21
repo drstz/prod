@@ -36,7 +36,7 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
     // MARK: - Actions
     
     @IBAction func selectCustomSnoozeTime() {
-        selectCustomSnoozeTime()
+        setCustomSnoozeTime()
     }
     
     // MARK: View life cycle
@@ -265,15 +265,11 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
     }
     
     func setCustomSnoozeTime() {
-        
-        presentPremiumView()
-        
-//        if isPremium() {
-//            performSegue(withIdentifier: "setCustomSnoozeTime", sender: nil)
-//        } else {
-//            presentPremiumView()
-//        }
-        
+        if isPremium() {
+            performSegue(withIdentifier: "setCustomSnoozeTime", sender: nil)
+        } else {
+            presentPremiumView()
+        }
     }
     
     func presentPremiumView() {

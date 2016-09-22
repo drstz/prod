@@ -13,8 +13,6 @@
 		7130E43C1D58AB460013B568 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 7130E43A1D58AB450013B568 /* style.css */; };
 		7130E43D1D58AB460013B568 /* aboutDeveloper.html in Resources */ = {isa = PBXBuildFile; fileRef = 7130E43B1D58AB460013B568 /* aboutDeveloper.html */; };
 		7134A55D1D90F35B00557C5A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7134A55C1D90F35A00557C5A /* StoreKit.framework */; };
-		7134A55F1D90F3BA00557C5A /* ProdProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7134A55E1D90F3BA00557C5A /* ProdProducts.swift */; };
-		7134A5611D90F40C00557C5A /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7134A5601D90F40C00557C5A /* IAPHelper.swift */; };
 		7135B90D1D056E3D0021105F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7135B90C1D056E3D0021105F /* SettingsViewController.swift */; };
 		714CB6B51CCBA00E00723399 /* List+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714CB6B31CCBA00E00723399 /* List+CoreDataProperties.swift */; };
 		714CB6B61CCBA00E00723399 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714CB6B41CCBA00E00723399 /* List.swift */; };
@@ -69,8 +67,6 @@
 		7130E43A1D58AB450013B568 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		7130E43B1D58AB460013B568 /* aboutDeveloper.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = aboutDeveloper.html; sourceTree = "<group>"; };
 		7134A55C1D90F35A00557C5A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		7134A55E1D90F3BA00557C5A /* ProdProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProdProducts.swift; sourceTree = "<group>"; };
-		7134A5601D90F40C00557C5A /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
 		7135B90C1D056E3D0021105F /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		714CB6B31CCBA00E00723399 /* List+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "List+CoreDataProperties.swift"; path = "../List+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		714CB6B41CCBA00E00723399 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = List.swift; path = ../List.swift; sourceTree = "<group>"; };
@@ -254,8 +250,6 @@
 				71A7884C1CE5B54300D5CE47 /* Reminder View */,
 				7135B90B1D056E030021105F /* Settings */,
 				71F07E7C1D658FA50070F932 /* Stats */,
-				7134A55E1D90F3BA00557C5A /* ProdProducts.swift */,
-				7134A5601D90F40C00557C5A /* IAPHelper.swift */,
 			);
 			path = remindMe;
 			sourceTree = "<group>";
@@ -426,7 +420,6 @@
 				714CB6B61CCBA00E00723399 /* List.swift in Sources */,
 				71D620761D36286B0038FE56 /* TableSectionHeader.swift in Sources */,
 				71818D4A1D6DBD4D00F8B732 /* DatePickerViewController.swift in Sources */,
-				7134A55F1D90F3BA00557C5A /* ProdProducts.swift in Sources */,
 				71EE90CC1D2A28C400431D56 /* AllRemindersViewController+FetchedResultsDelegate.swift in Sources */,
 				7165A5981CBB92C30088EA76 /* ReminderCell.swift in Sources */,
 				71238DE11CD70AC100F9D706 /* UserDefaults.swift in Sources */,
@@ -441,7 +434,6 @@
 				7175A3291D2B6C4200076370 /* AllRemindersViewController+AddReminderDelegate.swift in Sources */,
 				71878B421CC49A9700AD0F27 /* Reminder+CoreDataProperties.swift in Sources */,
 				71EE90CE1D2A292400431D56 /* AllRemindersViewController+TableView.swift in Sources */,
-				7134A5611D90F40C00557C5A /* IAPHelper.swift in Sources */,
 				71EE90C81D2A222900431D56 /* AllRemindersViewController+NotificationActions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

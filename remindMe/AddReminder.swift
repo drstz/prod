@@ -426,6 +426,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if reminderNameField.text?.characters.count == 0 {
+            reminderNameField.becomeFirstResponder()
+        }
+    }
+    
     // MARK: - Premium View Controller delegate
     func presentPremiumView() {
         let storyboard = UIStoryboard(name: "Settings", bundle: nil)

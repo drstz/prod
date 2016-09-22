@@ -71,7 +71,6 @@
 		714CB6B31CCBA00E00723399 /* List+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "List+CoreDataProperties.swift"; path = "../List+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		714CB6B41CCBA00E00723399 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = List.swift; path = ../List.swift; sourceTree = "<group>"; };
 		714ECEA11D2B8A40002F9F27 /* NSDate+more.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+more.swift"; sourceTree = "<group>"; };
-		714ECEA31D2B8F2D002F9F27 /* datePlay.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = datePlay.playground; sourceTree = "<group>"; };
 		7165A5781CBB6A310088EA76 /* Prod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Prod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7165A57B1CBB6A310088EA76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7165A57D1CBB6A310088EA76 /* AllRemindersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AllRemindersViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -303,7 +302,6 @@
 		71F6A53A1CF722AF0010C135 /* Date */ = {
 			isa = PBXGroup;
 			children = (
-				714ECEA31D2B8F2D002F9F27 /* datePlay.playground */,
 				71ABD7091CC0A87600F0BF90 /* Date.swift */,
 				714ECEA11D2B8A40002F9F27 /* NSDate+more.swift */,
 			);

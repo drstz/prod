@@ -102,6 +102,13 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
         // header.titleLabel.textColor = UIColor.whiteColor()
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 2 && indexPath.row == 1 {
+            UIApplication.shared.openURL(URL(string: "itms-apps://itunes.apple.com/app/id1156082380")!)
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
    
     
     
@@ -188,9 +195,5 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
         }
         
         
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

@@ -8,6 +8,8 @@
 
 import UIKit
 import MessageUI
+import Fabric
+import Crashlytics
 
 class SettingsViewController: UITableViewController, PremiumUserViewControllerDelegate {
     @IBOutlet weak var snoozeTimeLabel: UILabel!
@@ -87,6 +89,8 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
         } else {
             goPremiumLabel.text = "Become a premium user"
         }
+        
+        Answers.logCustomEvent(withName: "Settings Viewed", customAttributes: nil)
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

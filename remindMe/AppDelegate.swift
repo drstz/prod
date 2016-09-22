@@ -10,6 +10,9 @@ import UIKit
 import CoreData
 import StoreKit
 
+import Fabric
+import Crashlytics
+
 let MyManagedObjectContextSaveDidFailNotification = "MyManagedObjectContextSaveDidFailNotification"
 
 func fatalCoreDataError(_ error: Error) {
@@ -38,6 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKPaymentTransactionObser
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         NSLog(#function)
         print(#function)
+        
+        Fabric.with([Crashlytics.self])
         
         // Payment 
         

@@ -8,6 +8,11 @@
 
 import UIKit
 import CoreData
+
+import Fabric
+import Crashlytics
+
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -249,6 +254,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         // Create notification
         let notificationHandler = reminder!.notificationHandler
         notificationHandler.scheduleNotifications(reminder!)
+        
+        let nameLength = (reminder?.name.characters.count)! as Int
+        let nameLengthAsNSNumber = NSNumber(value: nameLength)
+        Answers.logCustomEvent(withName: "Created Reminder", customAttributes: ["Length": nameLengthAsNSNumber])
     }
     
     func updateReminder(_ reminder: Reminder) {
@@ -305,6 +314,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             let notificationHandler = reminder.notificationHandler
             notificationHandler.scheduleNotifications(reminder)
         }
+        
+        
     }
     
     // MARK: - Deinit 

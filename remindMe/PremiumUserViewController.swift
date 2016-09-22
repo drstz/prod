@@ -18,14 +18,18 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate {
     // MARK: - Properties
     var delegate: PremiumUserViewControllerDelegate?
     
-    var premiumProduct: SKProduct?
-    var ncProduct: SKProduct?
+    // MARK: Products
+    var unlockPremiumProduct: SKProduct?
+    let unlockPremiumProductIdentifier = "com.coconutdust.prod.unlockPremium"
     
     // MARK: - Outlets
+    
+    // MARK: Buttons
     @IBOutlet weak var goPremiumButton: UIButton!
     @IBOutlet weak var restorePurchaseButton: UIButton!
-    // @IBOutlet weak var ncPremiumButton: UIButton!
     
+    
+    // MARK: Labels
     @IBOutlet weak var introSentenceLabel: UILabel!
     
     // MARK: - Actions
@@ -34,21 +38,36 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate {
     }
     
     @IBAction func buy() {
-        if let product = premiumProduct {
+        if let product = unlockPremiumProduct {
             let payment = SKPayment(product: product)
             SKPaymentQueue.default().add(payment)
         }
     }
     
-//    @IBAction func buyNC() {
-//        if let product = ncProduct {
-//            let payment = SKPayment(product: product)
-//            SKPaymentQueue.default().add(payment)
-//        }
-//    }
-    
     @IBAction func restore() {
         SKPaymentQueue.default().restoreCompletedTransactions()
+    }
+    
+    // MARK: - Delegates
+    
+    // MARK: Product Request Delegate
+    
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        print(#function)
+        for product in response.products {
+            print("Title: \(product.localizedTitle)")
+            print("price: \(product.price)")
+        }
+        unlockPremiumProduct = response.products[0]
+        
+        if let product = unlockPremiumProduct {
+            print("Got product")
+            let productTitle = product.localizedTitle
+            let price = format(price: product.price, for: product.priceLocale)
+
+            let buttonTitle = productTitle + " " + price
+            goPremiumButton.setTitle(buttonTitle, for: .normal)
+        }
     }
     
     // MARK: - View Lifecyle
@@ -56,6 +75,7 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate {
     deinit {
         print("Premium view was deallocated")
         delegate = nil
+        print("All is deallocated")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,34 +87,38 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate {
         print("User is premium: \(isPremium())")
         
         if isPremium() {
+            introSentenceLabel.text = "Thank you for your support. You now have access to the following features."
+            
             goPremiumButton.isHidden = true
             restorePurchaseButton.isHidden = true
-            introSentenceLabel.text = "Thank you for your support. You now have access to the following features."
         } else {
             introSentenceLabel.text = "Go premium and access the following features."
+            
             goPremiumButton.isHidden = false
             restorePurchaseButton.isHidden = false
-            let productIdentifiers: Set<String> = ["com.coconutdust.prod.unlockPremium"]
+            
+            // Request Product
+            let productIdentifiers: Set<String> = [unlockPremiumProductIdentifier]
             let request = SKProductsRequest(productIdentifiers: productIdentifiers)
             request.delegate = self
             request.start()
         }
     }
     
+    // MARK: - Functions
     
-    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        print(#function)
-        for product in response.products {
-            print("Title: \(product.localizedTitle)")
-            print("price: \(product.price)")
-        }
-        premiumProduct = response.products[0]
+    func format(price: NSDecimalNumber, for locale: Locale) -> String {
+        let formatter = NumberFormatter()
+        formatter.locale = locale
+        formatter.numberStyle = .currency
         
-        if let product = premiumProduct {
-            print("Got product")
-            let price = product.price
-            goPremiumButton.titleLabel?.text = "\(product.localizedTitle) (\(price))"
-        }
         
+        let formattedPrice = formatter.string(from: price as NSNumber)
+        
+        if let price = formattedPrice {
+            return price
+        } else {
+            return "Error"
+        }
     }
 }

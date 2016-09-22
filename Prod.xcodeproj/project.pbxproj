@@ -41,7 +41,6 @@
 		71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 71ABD7021CBF893300F0BF90 /* DataModel.xcdatamodeld */; };
 		71ABD70A1CC0A87600F0BF90 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ABD7091CC0A87600F0BF90 /* Date.swift */; };
 		71C3EFB01D0ED79A00A87525 /* AutoSnoozePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C3EFAF1D0ED79A00A87525 /* AutoSnoozePickerViewController.swift */; };
-		71C9EF471D5984CE00F1717B /* feedback.html in Resources */ = {isa = PBXBuildFile; fileRef = 71C9EF461D5984CE00F1717B /* feedback.html */; };
 		71C9EF491D598A0F00F1717B /* aboutApp.html in Resources */ = {isa = PBXBuildFile; fileRef = 71C9EF481D598A0F00F1717B /* aboutApp.html */; };
 		71D365541D6EA8D1004D4953 /* PatternPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D365531D6EA8D1004D4953 /* PatternPickerViewController.swift */; };
 		71D365561D6EAAD2004D4953 /* RepeatMethodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D365551D6EAAD2004D4953 /* RepeatMethodViewController.swift */; };
@@ -97,7 +96,6 @@
 		71ABD7031CBF893300F0BF90 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		71ABD7091CC0A87600F0BF90 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Date.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		71C3EFAF1D0ED79A00A87525 /* AutoSnoozePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoSnoozePickerViewController.swift; sourceTree = "<group>"; };
-		71C9EF461D5984CE00F1717B /* feedback.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = feedback.html; sourceTree = "<group>"; };
 		71C9EF481D598A0F00F1717B /* aboutApp.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = aboutApp.html; sourceTree = "<group>"; };
 		71D365531D6EA8D1004D4953 /* PatternPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatternPickerViewController.swift; sourceTree = "<group>"; };
 		71D365551D6EAAD2004D4953 /* RepeatMethodViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepeatMethodViewController.swift; sourceTree = "<group>"; };
@@ -159,7 +157,6 @@
 				7130E43A1D58AB450013B568 /* style.css */,
 				71C9EF481D598A0F00F1717B /* aboutApp.html */,
 				7130E43B1D58AB460013B568 /* aboutDeveloper.html */,
-				71C9EF461D5984CE00F1717B /* feedback.html */,
 				7130E4381D58A85E0013B568 /* AboutViewController.swift */,
 			);
 			name = About;
@@ -380,7 +377,6 @@
 				71D620781D3629260038FE56 /* TableSectionHeader.xib in Resources */,
 				7130E43D1D58AB460013B568 /* aboutDeveloper.html in Resources */,
 				71C9EF491D598A0F00F1717B /* aboutApp.html in Resources */,
-				71C9EF471D5984CE00F1717B /* feedback.html in Resources */,
 				7165A5961CBB910B0088EA76 /* ReminderCell.xib in Resources */,
 				71D86C401D067929002A5CAE /* Settings.storyboard in Resources */,
 			);

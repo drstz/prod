@@ -107,63 +107,71 @@ class AllRemindersViewController: UIViewController {
     }
     
     @IBAction func loadRemindersForToday() {
-        // Set choice
-        let filter: ReminderFilter = .Today
-        save(filter)
-        
-        // Selected Button
-        let chosenButton = button(from: filter)
-        
-        // Show selected
-        selectButton(chosenButton)
-        
-        // Filter list
-        filterList(filter)
+        if savedFilter() != .Today {
+            // Set choice
+            let filter: ReminderFilter = .Today
+            save(filter)
+            
+            // Selected Button
+            let chosenButton = button(from: filter)
+            
+            // Show selected
+            selectButton(chosenButton)
+            
+            // Filter list
+            filterList(filter)
+        }
     }
     
     @IBAction func loadAllReminders() {
-        // Set choice
-        let filter: ReminderFilter = .All
-        save(filter)
-        
-        // Selected Button
-        let chosenButton = button(from: filter)
-        
-        // Show selected
-        selectButton(chosenButton)
-        
-        // Filter list
-        filterList(filter)
+        if savedFilter() != .All {
+            // Set choice
+            let filter: ReminderFilter = .All
+            save(filter)
+            
+            // Selected Button
+            let chosenButton = button(from: filter)
+            
+            // Show selected
+            selectButton(chosenButton)
+            
+            // Filter list
+            filterList(filter)
+        }
     }
     
     @IBAction func loadRemindersForWeek() {
-        // Set choice
-        let filter: ReminderFilter = .Week
-        save(filter)
-        
-        // Selected Button
-        let chosenButton = button(from: filter)
-        
-        // Show selected
-        selectButton(chosenButton)
-        
-        // Filter list
-        filterList(filter)
+        if savedFilter() != .Week {
+            // Set choice
+            let filter: ReminderFilter = .Week
+            save(filter)
+            
+            // Selected Button
+            let chosenButton = button(from: filter)
+            
+            // Show selected
+            selectButton(chosenButton)
+            
+            // Filter list
+            filterList(filter)
+        }
     }
     
     @IBAction func loadFavoriteReminders() {
-        // Set choice
-        let filter: ReminderFilter = .Favorite
-        save(filter)
-        
-        // Selected Button
-        let chosenButton = button(from: filter)
-        
-        // Show selected
-        selectButton(chosenButton)
-        
-        // Filter list
-        filterList(filter)
+        if savedFilter() != .Favorite {
+            // Set choice
+            let filter: ReminderFilter = .Favorite
+            save(filter)
+            
+            // Selected Button
+            let chosenButton = button(from: filter)
+            
+            // Show selected
+            selectButton(chosenButton)
+            
+            // Filter list
+            filterList(filter)
+        }
     }
     
     func filterList(_ filter: ReminderFilter) {

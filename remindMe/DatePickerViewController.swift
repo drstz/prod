@@ -34,7 +34,8 @@ class DatePickerViewController: UIViewController {
     // MARK: Actions
     
     @IBAction func done() {
-        delegate?.datePickerViewControllerDidChooseDate(self, date: datePicker.date)
+        let date = datePicker.date.roundSecondsToZero()
+        delegate?.datePickerViewControllerDidChooseDate(self, date: date)
     }
     
     @IBAction func close() {

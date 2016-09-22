@@ -103,7 +103,6 @@ class AllRemindersViewController: UIViewController {
         
         setNoReminderView()
         setBadgeForTodayTab()
-        
     }
     
     @IBAction func loadRemindersForToday() {
@@ -177,8 +176,6 @@ class AllRemindersViewController: UIViewController {
     func filterList(_ filter: ReminderFilter) {
         // Handle Segment
         let status = chosenStatus()
-        
-        //coreDataHandler.setObjectContext(managedObjectContext)
         
         // Fetch choice
         coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)

@@ -230,7 +230,8 @@ class NotificationHandler {
         localNotification.timeZone = TimeZone.current
         
         localNotification.alertBody = reminder.name
-        localNotification.alertTitle = reminder.name
+        
+
         
         localNotification.category = "Category"
         localNotification.soundName = UILocalNotificationDefaultSoundName

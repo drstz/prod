@@ -198,6 +198,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKPaymentTransactionObser
                 // Validate Purchase
                 enablePremium()
                 queue.finishTransaction(transaction)
+                
+                // Tracking
+                Answers.logCustomEvent(withName: "Purchased Premium", customAttributes: nil)
             case .failed:
                 print("Failed")
             case .deferred:
@@ -208,6 +211,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKPaymentTransactionObser
                 print("Restored")
                 enablePremium()
                 queue.finishTransaction(transaction)
+                
+                // Tracking
+                Answers.logCustomEvent(withName: "Restored Premium", customAttributes: nil)
             }
         }
     }
@@ -314,6 +320,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKPaymentTransactionObser
         
         notificationHandler.handleAction(reminder, category: notification.category!, identifier: identifier!)
         coreDataHandler.save()
+        
         
         completionHandler()
     }

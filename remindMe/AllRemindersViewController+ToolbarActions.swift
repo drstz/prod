@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import Fabric
+import Crashlytics
 
 extension AllRemindersViewController {
     // MARK: Toolbar Actions
@@ -16,6 +18,9 @@ extension AllRemindersViewController {
         let reminders = selectedReminders()
         for reminder in reminders {
            reminder.complete()
+            
+            // Tracking
+            Answers.logCustomEvent(withName: "Completed", customAttributes: ["Category": "Toolbar"])
         }
         coreDataHandler.save()
         deselectRows()
@@ -43,6 +48,9 @@ extension AllRemindersViewController {
             self.deselectRows()
             self.refreshTableView()
             self.hideToolbar()
+            
+            // Tracking
+            Answers.logCustomEvent(withName: "Delete", customAttributes: ["Category": "Toolbar"])
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         alert.addAction(deleteAction)
@@ -56,13 +64,16 @@ extension AllRemindersViewController {
         if selectionHasFavorite(reminders) && selectionIsMixed(reminders) {
             for reminder in reminders {
                 reminder.setFavorite(true)
+                Answers.logCustomEvent(withName: "Favorited", customAttributes: ["Category": "Toolbar"])
             }
         } else {
             for reminder in reminders {
                 if reminder.isFavorite == false {
                     reminder.setFavorite(true)
+                    Answers.logCustomEvent(withName: "Favorited", customAttributes: ["Category": "Toolbar"])
                 } else {
                     reminder.setFavorite(false)
+                    Answers.logCustomEvent(withName: "Unfavorited", customAttributes: ["Category": "Toolbar"])
                 }
             }
         }

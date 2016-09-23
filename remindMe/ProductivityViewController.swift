@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 class ProductivityViewController: UITableViewController, UITabBarControllerDelegate {
     
@@ -80,6 +82,9 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         super.viewDidAppear(animated)
         saveSelectedTab((tabBarController?.selectedIndex)!)
         averageTimeBetweenCreationCompletionCell.detailTextLabel?.textColor = UIColor.white
+        
+        // Tracking
+        Answers.logCustomEvent(withName: "Open Stats", customAttributes: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

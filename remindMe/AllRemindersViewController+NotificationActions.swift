@@ -8,26 +8,34 @@
 
 import Foundation
 import UIKit
+import Fabric
+import Crashlytics
 
 extension AllRemindersViewController {
     
-    func completeReminder() {
-        print(#function)
-        NSLog(#function)
-        if let reminder = reminderFromNotification {
-            reminder.complete()
-        }
-        coreDataHandler.save()
-    }
-    
-    func snoozeReminder() {
-        NSLog(#function)
-        print(#function)
-        if let reminder = reminderFromNotification {
-            reminder.snooze()
-        }
-        coreDataHandler.save()
-    }
+//    func completeReminder() {
+//        print(#function)
+//        NSLog(#function)
+//        if let reminder = reminderFromNotification {
+//            reminder.complete()
+//            
+//            // Tracking
+//            Answers.logCustomEvent(withName: "Completed", customAttributes: ["Category": "Notification"])
+//        }
+//        coreDataHandler.save()
+//    }
+//    
+//    func snoozeReminder() {
+//        NSLog(#function)
+//        print(#function)
+//        if let reminder = reminderFromNotification {
+//            reminder.snooze()
+//            
+//            // Tracking
+//            Answers.logCustomEvent(withName: "Snoozed", customAttributes: ["Category": "Notification"])
+//        }
+//        coreDataHandler.save()
+//    }
     
     func viewReminder() {
         NSLog(#function)
@@ -46,6 +54,8 @@ extension AllRemindersViewController {
 //            print("Error")
 //        }
         if let reminder = reminderFromNotification {
+            // Tracking
+            Answers.logCustomEvent(withName: "View Reminder", customAttributes: ["Category": "Notification"])
             performSegue(withIdentifier: "Popup", sender: reminder)
         }
         

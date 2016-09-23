@@ -166,6 +166,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             // Save MOC
             do {
                 try managedObjectContext.save()
+                
+                // Tracking
+                Answers.logCustomEvent(withName: "Updated Reminder", customAttributes: nil)
+                
                 delegate?.addReminderViewController(self, didFinishEditingReminder: reminder)
             } catch {
                 fatalCoreDataError(error)
@@ -220,6 +224,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         // Set if recurring
         if reminder?.usesDayPattern == true || reminder?.usesCustomPattern == true {
             reminder?.setRecurring(true)
+            
+            // Tracking
+            if reminder?.usesDayPattern == true {
+                Answers.logCustomEvent(withName: "Recurring Reminder", customAttributes: ["Pattern":"Days"])
+            } else if reminder?.usesCustomPattern == true {
+                Answers.logCustomEvent(withName: "Recurring Reminder", customAttributes: ["Pattern":"Custom"])
+            }
         } else {
             reminder?.setRecurring(false)
         }
@@ -236,8 +247,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         // Update amount of reminders
         reminder?.list.increaseNbOfReminders()
         print("There are now \((reminder?.list.numberOfReminders)!) reminders")
-//        let nbOfReminders = list.numberOfReminders.integerValue
-//        list.numberOfReminders = NSNumber(integer: nbOfReminders + 1)
         
         // Set reminder ID
         reminder?.addIDtoReminder()
@@ -257,6 +266,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         
         let nameLength = (reminder?.name.characters.count)! as Int
         let nameLengthAsNSNumber = NSNumber(value: nameLength)
+        
+        // Tracking
         Answers.logCustomEvent(withName: "Created Reminder", customAttributes: ["Length": nameLengthAsNSNumber])
     }
     

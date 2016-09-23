@@ -398,8 +398,8 @@ class AllRemindersViewController: UIViewController {
     // MARK: Observers
     
     func addObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(completeReminder), name: NSNotification.Name(rawValue: "completeReminder"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(snoozeReminder), name: NSNotification.Name(rawValue: "snoozeReminder"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(completeReminder), name: NSNotification.Name(rawValue: "completeReminder"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(snoozeReminder), name: NSNotification.Name(rawValue: "snoozeReminder"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(viewReminder), name: NSNotification.Name(rawValue: "viewReminder"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(setBadgeForTodayTab), name: NSNotification.Name(rawValue: "setBadgeForTodayTab"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshTableView), name: NSNotification.Name(rawValue: "refresh"), object: nil)
@@ -408,8 +408,8 @@ class AllRemindersViewController: UIViewController {
     
     /// Removes observers so that messages are only sent to one view controller at a time
     func removeObservers() {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "completeReminder"), object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "snoozeReminder"), object: nil)
+//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "completeReminder"), object: nil)
+//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "snoozeReminder"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "viewReminder"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "setBadgeForTodayTab"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "refresh"), object: nil)

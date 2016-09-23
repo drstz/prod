@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 protocol ReminderCommentViewControllerDelegate: class {
     func reminderCommentViewControllerDidCancel(_ controller: ReminderCommentViewController)
@@ -30,6 +32,12 @@ class ReminderCommentViewController: UIViewController {
         
         if commentField.isFirstResponder == false {
             delegate?.reminderCommentViewControllerDidSave(self, comment: commentField.text)
+            
+            // Tracking
+            if (commentField.text.characters.count > 0) {
+                Answers.logCustomEvent(withName: "Added Comment", customAttributes: nil)
+            }
+            
         }
         
     }

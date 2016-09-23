@@ -8,6 +8,10 @@
 
 import UIKit
 import CoreData
+
+import Fabric
+import Crashlytics
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -89,16 +93,25 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     
     @IBAction func complete() {
         delegate?.popupViewControllerDidComplete(self, reminder: incomingReminder!)
+        
+        // Tracking
+        Answers.logCustomEvent(withName: "Completed", customAttributes: ["Category": "Popup"])
     }
     
     @IBAction func snooze() {
+        
         delegate?.popupViewControllerDidSnooze(self, reminder: incomingReminder!)
+        
+        // Tracking
+        Answers.logCustomEvent(withName: "Snoozed", customAttributes: ["Category": "Popup"])
     }
     
     @IBAction func delete() {
         let alert = UIAlertController(title: "Delete \"\((incomingReminder?.name)!)\" ?", message: "You cannot undo this", preferredStyle: .alert)
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
             action in
+            // Tracking
+            Answers.logCustomEvent(withName: "Delete", customAttributes: ["Category": "Popup"])
                 self.delegate?.popupViewControllerDidDelete(self, reminder: self.incomingReminder!)
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
@@ -111,14 +124,22 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         if let reminder = incomingReminder {
             if reminder.isFavorite == true {
                 reminder.setFavorite(false)
+                
+                // Tracking
+                Answers.logCustomEvent(withName: "Unfavorited", customAttributes: ["Category": "Popup"])
             } else {
                 reminder.setFavorite(true)
+                
+                // Tracking
+                Answers.logCustomEvent(withName: "Favorited", customAttributes: ["Category": "Popup"])
             }
         }
         let coreDataHandler = CoreDataHandler()
         coreDataHandler.setObjectContext(managedObjectContext)
         coreDataHandler.save()
         setFavoriteStar()
+        
+        
         
     }
     

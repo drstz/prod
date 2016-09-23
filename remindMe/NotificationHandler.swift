@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import Fabric
+import Crashlytics
 
 class NotificationHandler {
     
@@ -304,8 +306,14 @@ class NotificationHandler {
         if category == "Category" {
             if identifier == "Complete" {
                 reminder.complete()
+                
+                // Tracking
+                Answers.logCustomEvent(withName: "Completed", customAttributes: ["Category": "Notification"])
             } else  if identifier == "Defer" {
                 reminder.snooze()
+                
+                // Tracking
+                Answers.logCustomEvent(withName: "Snoozed", customAttributes: ["Category": "Notification"])
             }
         }
     }

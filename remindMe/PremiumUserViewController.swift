@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 import StoreKit
+import Fabric
+import Crashlytics
 
 protocol PremiumUserViewControllerDelegate {
     func premiumUserViewControllerDelegateDidCancel(controller: PremiumUserViewController)
@@ -103,6 +105,9 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate {
             request.delegate = self
             request.start()
         }
+        
+        // Tracking
+        Answers.logCustomEvent(withName: "Open Premium View", customAttributes: nil)
     }
     
     // MARK: - Functions

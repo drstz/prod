@@ -130,9 +130,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         let objects = frc?.fetchedObjects
         if let objects = objects {
             for object in objects {
-                if let reminder = object as? Reminder {
-                    reminders.append(reminder)
-                }
+                reminders.append(object as Reminder)
             }
         }
         return reminders

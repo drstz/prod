@@ -283,7 +283,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKPaymentTransactionObser
         
         guard let shortcut = shortcutItem else { return }
         
-        handleShortcut(shortcut)
+        _ = handleShortcut(shortcut)
         
         self.shortcutItem = nil 
         

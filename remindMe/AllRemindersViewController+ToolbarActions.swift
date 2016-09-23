@@ -112,7 +112,7 @@ extension AllRemindersViewController {
             if isFavorite == nil {
                 isFavorite = reminder.isFavorite as? Bool
             } else {
-                if reminder.isFavorite as! Bool != isFavorite {
+                if reminder.isFavorite as? Bool != isFavorite {
                     return true
                 }
             }

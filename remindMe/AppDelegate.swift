@@ -90,9 +90,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKPaymentTransactionObser
             let navigationController = tabs[1] as! UINavigationController
             let viewControllers = navigationController.viewControllers
             
-            // All reminder view controller
-            let statisticsViewController = viewControllers[0] as! ProductivityViewController
-            statisticsViewController.coreDataHandler = coreDataHandler
+            // Productivity view controller
+            let productivityViewController = viewControllers[0] as! ProductivityViewController
+            productivityViewController.coreDataHandler = coreDataHandler
             
             // Load list
             let managedObjectContext = coreDataHandler.managedObjectContext
@@ -106,17 +106,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKPaymentTransactionObser
             do {
                 let result = try managedObjectContext.fetch(fetchRequest)
                 let list = result[0] as NSManagedObject as! List
-                statisticsViewController.list = list
+                productivityViewController.list = list
             } catch {
                 let fetchError = error as NSError
                 print(fetchError)
             }
             
             // Make View Controller a delegate of the tab bar controller
-            statisticsViewController.tabBarController?.delegate = statisticsViewController
+            productivityViewController.tabBarController?.delegate = productivityViewController
             
             // Select index
-            statisticsViewController.tabBarController?.selectedIndex = savedTab
+            productivityViewController.tabBarController?.selectedIndex = savedTab
         }
         
         // Set badge
@@ -297,9 +297,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKPaymentTransactionObser
         let viewControllers = navigationController.viewControllers
         
         // All reminder view controller
-        let statisticsViewController = viewControllers[0] as! ProductivityViewController
+        let productivityViewController = viewControllers[0] as! ProductivityViewController
         
-        return statisticsViewController
+        return productivityViewController
     }
     
     // MARK: Notifications
@@ -314,9 +314,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKPaymentTransactionObser
         NSLog(#function)
         
         let reminder = reminderFromNotification(notification)
-        // sendReminderToController(reminder)
-        
-        //notificationHandler.handleActionInCategory(notification, actionIdentifier: identifier!)
         
         notificationHandler.handleAction(reminder, category: notification.category!, identifier: identifier!)
         coreDataHandler.save()

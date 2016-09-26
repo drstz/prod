@@ -12,11 +12,13 @@ import CoreData
 
 extension AllRemindersViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
+        print(#function)
+        print(coreDataHandler.fetchedResultsController!.sections?.count)
         return (coreDataHandler.fetchedResultsController!.sections?.count)! 
     }
     
-    private func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        print(#function)
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        print(#function)
         let sectionInfo = (coreDataHandler.fetchedResultsController?.sections!)! as [NSFetchedResultsSectionInfo]
         let text = sectionInfo[section].name
         
@@ -30,7 +32,7 @@ extension AllRemindersViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-//        print(#function)
+        print(#function)
         let sectionInfo = (coreDataHandler.fetchedResultsController?.sections!)! as [NSFetchedResultsSectionInfo]
         let text = sectionInfo[section].name
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TableSectionHeader")
@@ -40,7 +42,7 @@ extension AllRemindersViewController: UITableViewDataSource {
         header.titleLabel.backgroundColor = UIColor(red: 40/255, green: 114/255, blue: 192/255, alpha: 1)
     }
     
-    private func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
     

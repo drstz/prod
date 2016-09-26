@@ -161,6 +161,9 @@ class NotificationHandler {
             if isBeingDeferred {
                 print("Snoozing notification for \(reminder.name)")
                 localNotification = snoozeNotification()
+                
+                // Autosnooze
+                setAutoSnooze(localNotification, reminder: reminder)
             } else {
                 print("Setting notification for \(reminder.name)")
                 localNotification = scheduleNotification(forDate: reminder.dueDate as Date, reminder: reminder)

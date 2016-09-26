@@ -21,6 +21,7 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
     var delegate: PremiumUserViewControllerDelegate?
     
     var requestFromButton = false
+    var isRequestForRestore = false
     
     // MARK: Products
     var unlockPremiumProduct: SKProduct?
@@ -67,7 +68,9 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
     }
     
     @IBAction func restore() {
-        SKPaymentQueue.default().restoreCompletedTransactions()
+        isRequestForRestore = true
+        fetchProducts()
+        
     }
     
     // MARK: - Delegates
@@ -82,6 +85,9 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
                 SKPaymentQueue.default().add(payment)
             }
             requestFromButton = false
+        } else if isRequestForRestore {
+            SKPaymentQueue.default().restoreCompletedTransactions()
+            isRequestForRestore = false
         }
         
         activityView.stopAnimating()
@@ -89,6 +95,10 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
     }
     
     func request(_ request: SKRequest, didFailWithError error: Error) {
+        // Reset request type
+        requestFromButton = false
+        isRequestForRestore = false
+        
         activityView.stopAnimating()
         activityView.removeFromSuperview()
         
@@ -172,6 +182,8 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
         activityView.startAnimating()
         
         self.view.addSubview(activityView)
+        
+        
     }
     
     func format(price: NSDecimalNumber, for locale: Locale) -> String {

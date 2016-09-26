@@ -147,7 +147,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
             let averageTimesSnoozedBeforeCompletion = numberOfTimesSnoozedBeforeCompletion / nbOfCompletedReminders
             averageSnoozeBeforeCompletionLabel.text = String(averageTimesSnoozedBeforeCompletion)
         } else {
-            averageSnoozeBeforeCompletionLabel.text = "No data"
+            averageSnoozeBeforeCompletionLabel.text = "0"
         }
     }
     
@@ -196,7 +196,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
             }
             
         } else {
-            averageTimeBetweenCreationCompletionLabel.text = "No data"
+            averageTimeBetweenCreationCompletionLabel.text = "0"
         }
     }
     
@@ -208,7 +208,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
             let percentageOfRemindersCompletedBeforeDueDate = Int((nbOfRemindersCompletedBeforeDueDate / nbOfCompletedReminders) * 100.0)
             nbOfRemindersCompletedBeforeDueDateLabel.text = String(percentageOfRemindersCompletedBeforeDueDate) + "%"
         } else {
-            nbOfRemindersCompletedBeforeDueDateLabel.text = "None"
+            nbOfRemindersCompletedBeforeDueDateLabel.text = "0"
         }
     }
     
@@ -221,7 +221,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
             let percentageOfSnoozedReminders = Int((nbOfRemindersSnoozed / nbOfCompletedReminders) * 100.0)
             percentageRemindersSnoozedBeforeCompletion.text = String(percentageOfSnoozedReminders) + "%"
         } else {
-            percentageRemindersSnoozedBeforeCompletion.text = "No data"
+            percentageRemindersSnoozedBeforeCompletion.text = "0"
         }
         
     

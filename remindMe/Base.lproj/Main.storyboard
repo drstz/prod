@@ -323,7 +323,7 @@
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send email to Tim re New iPhone" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="if0-ro-VbL">
                                         <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="46" id="Hjz-Zm-SRD"/>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="48" id="Hjz-Zm-SRD"/>
                                             <constraint firstAttribute="width" constant="216" id="k69-jM-urn"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>

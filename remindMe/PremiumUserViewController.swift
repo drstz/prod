@@ -16,13 +16,21 @@ protocol PremiumUserViewControllerDelegate {
     func premiumUserViewControllerDelegateDidCancel(controller: PremiumUserViewController)
 }
 
-class PremiumUserViewController: UIViewController, SKProductsRequestDelegate {
+class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SKRequestDelegate {
     // MARK: - Properties
     var delegate: PremiumUserViewControllerDelegate?
+    
+    var requestFromButton = false
     
     // MARK: Products
     var unlockPremiumProduct: SKProduct?
     let unlockPremiumProductIdentifier = "com.coconutdust.prod.unlockPremium"
+    
+    // MARK: Request
+    var requestForProducts: SKRequest?
+    
+    // MARK: Activity View
+    var activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     
     // MARK: - Outlets
     
@@ -30,20 +38,32 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate {
     @IBOutlet weak var goPremiumButton: UIButton!
     @IBOutlet weak var restorePurchaseButton: UIButton!
     
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    
     
     // MARK: Labels
     @IBOutlet weak var introSentenceLabel: UILabel!
     
     // MARK: - Actions
     @IBAction func cancel() {
+        requestForProducts?.cancel()
+        requestForProducts?.delegate = nil
         delegate?.premiumUserViewControllerDelegateDidCancel(controller: self)
     }
     
     @IBAction func buy() {
-        if let product = unlockPremiumProduct {
-            let payment = SKPayment(product: product)
-            SKPaymentQueue.default().add(payment)
-        }
+//        if let product = unlockPremiumProduct {
+//            let payment = SKPayment(product: product)
+//            SKPaymentQueue.default().add(payment)
+//        } else {
+//            fetchProducts()
+//            requestFromButton = true
+//            
+//        }
+        
+        requestFromButton = true
+        fetchProducts()
+        
     }
     
     @IBAction func restore() {
@@ -51,6 +71,34 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate {
     }
     
     // MARK: - Delegates
+    
+    // MARK: Storekit Request Delegate
+    
+    func requestDidFinish(_ request: SKRequest) {
+        print(#function)
+        if requestFromButton {
+            if let product = unlockPremiumProduct {
+                let payment = SKPayment(product: product)
+                SKPaymentQueue.default().add(payment)
+            }
+            requestFromButton = false
+        }
+        
+        activityView.stopAnimating()
+        activityView.removeFromSuperview()
+    }
+    
+    func request(_ request: SKRequest, didFailWithError error: Error) {
+        activityView.stopAnimating()
+        activityView.removeFromSuperview()
+        
+        print("Request failed: \(error)")
+        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
+   
+    }
     
     // MARK: Product Request Delegate
     
@@ -100,10 +148,7 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate {
             restorePurchaseButton.isHidden = false
             
             // Request Product
-            let productIdentifiers: Set<String> = [unlockPremiumProductIdentifier]
-            let request = SKProductsRequest(productIdentifiers: productIdentifiers)
-            request.delegate = self
-            request.start()
+            fetchProducts()
         }
         
         // Tracking
@@ -111,6 +156,23 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate {
     }
     
     // MARK: - Functions
+    
+    // MARK: Storekit
+    
+    func fetchProducts() {
+        let productIdentifiers: Set<String> = [unlockPremiumProductIdentifier]
+        requestForProducts = SKProductsRequest(productIdentifiers: productIdentifiers)
+        requestForProducts?.delegate = self
+        requestForProducts?.start()
+        
+        
+        
+        activityView.center = self.view.center
+        
+        activityView.startAnimating()
+        
+        self.view.addSubview(activityView)
+    }
     
     func format(price: NSDecimalNumber, for locale: Locale) -> String {
         let formatter = NumberFormatter()

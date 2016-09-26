@@ -119,6 +119,10 @@ class AllRemindersViewController: UIViewController {
             
             // Filter list
             filterList(filter)
+            
+            // Hide toolbar
+            deselectRows()
+            hideToolbar()
         }
     }
     
@@ -136,6 +140,10 @@ class AllRemindersViewController: UIViewController {
             
             // Filter list
             filterList(filter)
+            
+            // Hide toolbar
+            deselectRows()
+            hideToolbar()
         }
     }
     
@@ -153,6 +161,10 @@ class AllRemindersViewController: UIViewController {
             
             // Filter list
             filterList(filter)
+            
+            // Hide toolbar
+            deselectRows()
+            hideToolbar()
         }
     }
     
@@ -170,6 +182,10 @@ class AllRemindersViewController: UIViewController {
             
             // Filter list
             filterList(filter)
+            
+            // Hide toolbar
+            deselectRows()
+            hideToolbar()
         }
     }
     

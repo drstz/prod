@@ -3,11 +3,18 @@ html {
     background-color: #286c95;
 }
 
+body {
+    width: 90%;
+    margin: auto;
+    margin-top: 15px;
+}
+
 p, li, h1, h2 {
     font-size: 1.2em;
     color: white;
 }
 
-a {
+a:link {
     color: orange;
+    text-decoration: none;
 }

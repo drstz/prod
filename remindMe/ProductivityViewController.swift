@@ -144,8 +144,9 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         print("Number of completed reminders \(nbOfCompletedReminders)")
         
         if nbOfCompletedReminders != 0 {
-            let averageTimesSnoozedBeforeCompletion = numberOfTimesSnoozedBeforeCompletion / nbOfCompletedReminders
-            averageSnoozeBeforeCompletionLabel.text = String(averageTimesSnoozedBeforeCompletion)
+            var averageTimesSnoozedBeforeCompletion = numberOfTimesSnoozedBeforeCompletion / nbOfCompletedReminders
+            averageTimesSnoozedBeforeCompletion.round(.toNearestOrEven)
+            averageSnoozeBeforeCompletionLabel.text = String(Int(averageTimesSnoozedBeforeCompletion))
         } else {
             averageSnoozeBeforeCompletionLabel.text = "0"
         }
@@ -189,10 +190,12 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
                 }
             }
             
+            averageTimeBetweenDates.round(.toNearestOrEven)
+            
             if averageTimeBetweenDates < 1 {
                  averageTimeBetweenCreationCompletionLabel.text = "<1 \(unit)"
             } else {
-                averageTimeBetweenCreationCompletionLabel.text = String(averageTimeBetweenDates) + " " + unit
+                averageTimeBetweenCreationCompletionLabel.text = String(Int(averageTimeBetweenDates)) + " " + unit
             }
             
         } else {

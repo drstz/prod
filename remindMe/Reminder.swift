@@ -47,8 +47,17 @@ class Reminder: NSManagedObject {
             list.increaseNumberOfRemindersCompletedBeforeDueDate()
         }
         
-        list.increaseTotalTimesSnoozedBeforeCompletion(timesSnoozed.intValue)
+        if timesSnoozed.intValue > 0 {
+            list.increaseNbOfSnoozedReminders()
+        }
         
+        list.increaseTotalTimesSnoozedBeforeCompletion(timesSnoozed.intValue)
+        resetStats()
+        
+    }
+    
+    private func resetStats() {
+        timesSnoozed = 0
     }
     
     func calculateNbOfMinutesDifference(_ firstDate: Date, secondDate: Date) -> Int {
@@ -63,11 +72,6 @@ class Reminder: NSManagedObject {
         print("Going to snooze reminder")
         print("")
         
-        // This counts the number of reminders that were snoozed
-        if timesSnoozed == 0 {
-            list.increaseNbOfSnoozedReminders()
-        }
-        
         let newDate = calculateNewDate()
         setDate(newDate)
         
@@ -75,8 +79,6 @@ class Reminder: NSManagedObject {
         var nbOfSnoozesAsInt = timesSnoozed.intValue
         nbOfSnoozesAsInt += 1
         timesSnoozed = NSNumber(value: nbOfSnoozesAsInt as Int)
-        
-        
         
     }
     

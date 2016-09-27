@@ -203,6 +203,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKPaymentTransactionObser
                 Answers.logCustomEvent(withName: "Purchased Premium", customAttributes: nil)
             case .failed:
                 print("Failed")
+                queue.finishTransaction(transaction)
             case .deferred:
                 print("Deferred")
             case .purchasing:

@@ -22,6 +22,10 @@ enum ReminderStatus {
     case incomplete
 }
 
+enum FetchingError: Error {
+    case cannotRetrieveReminder
+}
+
 class CoreDataHandler {
     
     // MARK: - Object Context
@@ -98,8 +102,8 @@ class CoreDataHandler {
     }
     
     func reminderFromIndexPath(_ indexPath: IndexPath) -> Reminder {
-        let reminder = fetchedResultsController?.object(at: indexPath) //as! Reminder
-        
+        print(fetchedResultsController.debugDescription)
+        let reminder = fetchedResultsController?.object(at: indexPath)
         return reminder!
     }
     
@@ -112,7 +116,7 @@ class CoreDataHandler {
             fetchRequest: fetchRequest,
             managedObjectContext: managedObjectContext,
             // This allows the app to seperate reminders into sections
-            sectionNameKeyPath: "section",
+            sectionNameKeyPath: nil, // Switch to "section" when ready
             cacheName: nil
         )
         

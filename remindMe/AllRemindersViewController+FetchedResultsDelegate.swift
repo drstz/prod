@@ -13,7 +13,9 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         print(#function)
+       
         tableView.beginUpdates()
+         print("Number of rows in section 0 : \(tableView.numberOfRows(inSection: 0))")
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
@@ -35,7 +37,16 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
         case .update:
             print("*** NSFetchedResultsChangeUpdate (object")
             if let cell = tableView.cellForRow(at: indexPath!) as? ReminderCell {
+                print("Cell: \(cell.reminderLabel.text) at row \(indexPath?.row) in section \(indexPath?.section)")
+                
                 let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)
+                
+//                for object in controller.fetchedObjects! {
+//                    let indexPath = controller.indexPath(forObject: object)
+//                    print(object.description)
+//                    print("Row: \(indexPath?.row). Section: \(indexPath?.section)")
+//                }
+        
                 cell.configureForReminder(reminder)
             }
         case .move:
@@ -61,6 +72,7 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
             print("*** NSFetchedResultsChangeUpdate (section)")
         case .move:
             print("*** NSFetchedResultsChangeMove (section)")
+            
         }
     }
     
@@ -68,7 +80,10 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
         print(#function)
         print("*** controllerDidChangeContent")
         
+        
+        
         tableView.endUpdates()
+        print("Number of rows in section 0 : \(tableView.numberOfRows(inSection: 0))")
         setNoReminderView()
         setBadgeForTodayTab()
     }

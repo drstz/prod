@@ -61,6 +61,7 @@ class Reminder: NSManagedObject {
     
     func snooze() {
         print("Going to snooze reminder")
+        print("")
         
         // This counts the number of reminders that were snoozed
         if timesSnoozed == 0 {

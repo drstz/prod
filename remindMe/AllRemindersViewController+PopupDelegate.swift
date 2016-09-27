@@ -16,6 +16,7 @@ extension AllRemindersViewController: PopupViewControllerDelegate {
     }
     
     func popupViewControllerDidSnooze(_ controller: PopupViewController, reminder: Reminder) {
+        print(#function)
         reminder.snooze()
         coreDataHandler.save()
         dismiss(animated: true, completion: nil)

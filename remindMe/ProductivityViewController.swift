@@ -145,8 +145,14 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
         
         if nbOfCompletedReminders != 0 {
             var averageTimesSnoozedBeforeCompletion = numberOfTimesSnoozedBeforeCompletion / nbOfCompletedReminders
-            averageTimesSnoozedBeforeCompletion.round(.toNearestOrEven)
-            averageSnoozeBeforeCompletionLabel.text = String(Int(averageTimesSnoozedBeforeCompletion))
+            // averageTimesSnoozedBeforeCompletion.round(.up)
+            
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            formatter.minimumFractionDigits = 1
+            let averageString = formatter.string(from: NSNumber(value: averageTimesSnoozedBeforeCompletion))
+            averageSnoozeBeforeCompletionLabel.text = averageString
         } else {
             averageSnoozeBeforeCompletionLabel.text = "0"
         }

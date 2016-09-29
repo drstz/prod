@@ -107,7 +107,7 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
         if section == 1 {
             return "Custom Snooze Time"
         } else {
-            return "Defaut Snooze Times"
+            return "Default Snooze Times"
         }
     }
     

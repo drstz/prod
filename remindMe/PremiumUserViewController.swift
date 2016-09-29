@@ -20,7 +20,7 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
     // MARK: - Properties
     var delegate: PremiumUserViewControllerDelegate?
     
-    var requestFromButton = false
+    var isRequestForPurchase = false
     var isRequestForRestore = false
     
     // MARK: Products
@@ -53,22 +53,15 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
     }
     
     @IBAction func buy() {
-//        if let product = unlockPremiumProduct {
-//            let payment = SKPayment(product: product)
-//            SKPaymentQueue.default().add(payment)
-//        } else {
-//            fetchProducts()
-//            requestFromButton = true
-//            
-//        }
-        
-        requestFromButton = true
+        isRequestForPurchase = true
+        isRequestForRestore = false
         fetchProducts()
         
     }
     
     @IBAction func restore() {
         isRequestForRestore = true
+        isRequestForPurchase = false
         fetchProducts()
         
     }
@@ -79,24 +72,27 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
     
     func requestDidFinish(_ request: SKRequest) {
         print(#function)
-        if requestFromButton {
+        if isRequestForPurchase {
             if let product = unlockPremiumProduct {
                 let payment = SKPayment(product: product)
                 SKPaymentQueue.default().add(payment)
+                delegate?.premiumUserViewControllerDelegateDidCancel(controller: self)
             }
-            requestFromButton = false
+            isRequestForPurchase = false
         } else if isRequestForRestore {
             SKPaymentQueue.default().restoreCompletedTransactions()
             isRequestForRestore = false
+            delegate?.premiumUserViewControllerDelegateDidCancel(controller: self)
         }
         
         activityView.stopAnimating()
         activityView.removeFromSuperview()
+        
     }
     
     func request(_ request: SKRequest, didFailWithError error: Error) {
         // Reset request type
-        requestFromButton = false
+        isRequestForPurchase = false
         isRequestForRestore = false
         
         activityView.stopAnimating()
@@ -129,6 +125,8 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
             goPremiumButton.setTitle(buttonTitle, for: .normal)
         }
     }
+    
+    
     
     // MARK: - View Lifecyle
     

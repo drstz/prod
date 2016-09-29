@@ -81,7 +81,7 @@
                                                         <action selector="setAutoSnoozeFromSwitch" destination="9bW-KE-adq" eventType="valueChanged" id="0Hh-Pd-iC0"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Auto Snooze For All New Reminders" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="1x0-rJ-bsM">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remind Until Complete For All New Reminders" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="1x0-rJ-bsM">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="260" id="JFs-zQ-ObB"/>
                                                     </constraints>
@@ -95,7 +95,7 @@
                                                 <constraint firstItem="1x0-rJ-bsM" firstAttribute="top" secondItem="L2I-j8-Cgh" secondAttribute="topMargin" constant="-3" id="jSR-fd-Rpq"/>
                                                 <constraint firstItem="mjj-fZ-4Rg" firstAttribute="top" secondItem="L2I-j8-Cgh" secondAttribute="topMargin" constant="-2" id="lRx-Se-CDq"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="mjj-fZ-4Rg" secondAttribute="bottom" constant="-2" id="pm6-np-WOI"/>
-                                                <constraint firstItem="1x0-rJ-bsM" firstAttribute="leading" secondItem="L2I-j8-Cgh" secondAttribute="leadingMargin" constant="10" id="sJi-lV-LwH"/>
+                                                <constraint firstItem="1x0-rJ-bsM" firstAttribute="leading" secondItem="L2I-j8-Cgh" secondAttribute="leadingMargin" constant="7" id="sJi-lV-LwH"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -106,8 +106,8 @@
                                             <frame key="frameInset" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Remind until complete" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="y5A-qa-Dfg">
-                                                    <frame key="frameInset" minX="15" minY="13" width="144" height="17"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Remind Until complete" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="y5A-qa-Dfg">
+                                                    <frame key="frameInset" minX="15" minY="13" width="147" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

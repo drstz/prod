@@ -44,12 +44,6 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
                 // When set to indexPath, completing multiple reminders including a repeating one created error: no object at index path
                 let reminder = coreDataHandler.reminderFromIndexPath(newIndexPath!)
                 
-//                for object in controller.fetchedObjects! {
-//                    let indexPath = controller.indexPath(forObject: object)
-//                    print(object.description)
-//                    print("Row: \(indexPath?.row). Section: \(indexPath?.section)")
-//                }
-        
                 cell.configureForReminder(reminder)
             }
         case .move:

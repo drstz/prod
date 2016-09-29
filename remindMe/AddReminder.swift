@@ -360,7 +360,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         reminderCommentFieldCell.addGestureRecognizer(gestureRecognizer)
         
         reminderCommentField.textColor = UIColor.white
-        // reminderCommentField.backgroundColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
         reminderNameField.textColor = UIColor.white
         reminderNameField.backgroundColor = UIColor.clear
         reminderNameField.attributedPlaceholder = NSAttributedString(string: "What would you like to remember?",

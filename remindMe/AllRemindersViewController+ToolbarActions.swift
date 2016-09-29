@@ -24,7 +24,7 @@ extension AllRemindersViewController {
         }
         coreDataHandler.save()
         deselectRows()
-        // refreshTableView()
+        // refreshTableView() // Might need to restore this
         hideToolbar()
     }
     

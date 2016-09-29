@@ -204,11 +204,7 @@ class Reminder: NSManagedObject {
     func setDate(_ date: Date) {
         dueDate = date
     }
-    
-//    func setNextDate(date: NSDate?) {
-//        nextDueDate = date
-//    }
-    
+        
     func setRepeatInterval(_ interval: String?) {
         self.interval = interval
     }

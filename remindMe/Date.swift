@@ -98,22 +98,7 @@ func convertDateToString(_ format: DateFormats, date: Date) -> String {
     }
     
     formatter.dateFormat = dateFormat
-    
-//    if format == .Day {
-//        if earlierDate == date {
-//            if earlierBetweenMorningAndDate == startOfDay {
-//                return "Today"
-//            } else {
-//                return formatter.stringFromDate(date)
-//            }
-//        } else if earlierDate == endOfDay {
-//            let earlyDate = date.earlierDate(tomorrowMidnight())
-//            if earlyDate == date {
-//                return "Tomorrow"
-//            }
-//        }
-//    }
-    
+        
     if format == .Day {
         if date.isToday() {
             return "Today"

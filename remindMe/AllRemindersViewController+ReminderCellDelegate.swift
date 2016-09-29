@@ -35,8 +35,6 @@ extension AllRemindersViewController: ReminderCellDelegate {
                 favoriteText = "Favorite"
             }
             
-            
-            //let complete = UIBarButtonItem.init(title: completeText, style: .Plain, target: self, action: #selector(toolbarComplete))
             let favorite = UIBarButtonItem.init(title: favoriteText, style: .plain, target: self, action: #selector(toolbarFavorite))
             let delete = UIBarButtonItem.init(barButtonSystemItem: .trash, target: self, action: #selector(toolbarDelete))
             let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)

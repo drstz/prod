@@ -29,7 +29,6 @@
 		7165A59A1CBCB4330088EA76 /* AddReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7165A5991CBCB4330088EA76 /* AddReminder.swift */; };
 		716DCD3B1D410F1700A13BB5 /* AllRemindersViewController+PopupDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716DCD3A1D410F1700A13BB5 /* AllRemindersViewController+PopupDelegate.swift */; };
 		7171DC971D8FA48F0034EBF0 /* PremiumUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7171DC961D8FA48F0034EBF0 /* PremiumUserViewController.swift */; };
-		7175A3271D2B6BAA00076370 /* AllReminderViewController+ViewReminderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7175A3261D2B6BAA00076370 /* AllReminderViewController+ViewReminderDelegate.swift */; };
 		7175A3291D2B6C4200076370 /* AllRemindersViewController+AddReminderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7175A3281D2B6C4200076370 /* AllRemindersViewController+AddReminderDelegate.swift */; };
 		7175A32B1D2B6CAB00076370 /* AllRemindersViewController+TabBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7175A32A1D2B6CAB00076370 /* AllRemindersViewController+TabBarDelegate.swift */; };
 		7175A32D1D2B6D7200076370 /* AllRemindersViewController+ReminderCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7175A32C1D2B6D7200076370 /* AllRemindersViewController+ReminderCellDelegate.swift */; };
@@ -86,7 +85,6 @@
 		7165A5991CBCB4330088EA76 /* AddReminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddReminder.swift; sourceTree = "<group>"; };
 		716DCD3A1D410F1700A13BB5 /* AllRemindersViewController+PopupDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllRemindersViewController+PopupDelegate.swift"; sourceTree = "<group>"; };
 		7171DC961D8FA48F0034EBF0 /* PremiumUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PremiumUserViewController.swift; sourceTree = "<group>"; };
-		7175A3261D2B6BAA00076370 /* AllReminderViewController+ViewReminderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllReminderViewController+ViewReminderDelegate.swift"; sourceTree = "<group>"; };
 		7175A3281D2B6C4200076370 /* AllRemindersViewController+AddReminderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllRemindersViewController+AddReminderDelegate.swift"; sourceTree = "<group>"; };
 		7175A32A1D2B6CAB00076370 /* AllRemindersViewController+TabBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllRemindersViewController+TabBarDelegate.swift"; sourceTree = "<group>"; };
 		7175A32C1D2B6D7200076370 /* AllRemindersViewController+ReminderCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllRemindersViewController+ReminderCellDelegate.swift"; sourceTree = "<group>"; };
@@ -279,7 +277,6 @@
 				7175A32A1D2B6CAB00076370 /* AllRemindersViewController+TabBarDelegate.swift */,
 				71EE90CD1D2A292400431D56 /* AllRemindersViewController+TableView.swift */,
 				71EE90C91D2A27FA00431D56 /* AllRemindersViewController+ToolbarActions.swift */,
-				7175A3261D2B6BAA00076370 /* AllReminderViewController+ViewReminderDelegate.swift */,
 				71D620751D36286B0038FE56 /* TableSectionHeader.swift */,
 				71D620771D3629260038FE56 /* TableSectionHeader.xib */,
 			);
@@ -442,7 +439,6 @@
 				71EE90CC1D2A28C400431D56 /* AllRemindersViewController+FetchedResultsDelegate.swift in Sources */,
 				7165A5981CBB92C30088EA76 /* ReminderCell.swift in Sources */,
 				71238DE11CD70AC100F9D706 /* UserDefaults.swift in Sources */,
-				7175A3271D2B6BAA00076370 /* AllReminderViewController+ViewReminderDelegate.swift in Sources */,
 				71878B431CC49A9700AD0F27 /* Reminder.swift in Sources */,
 				71D365541D6EA8D1004D4953 /* PatternPickerViewController.swift in Sources */,
 				7130E4391D58A85E0013B568 /* AboutViewController.swift in Sources */,

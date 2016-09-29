@@ -26,8 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKPaymentTransactionObser
     let coreDataHandler = CoreDataHandler()
     let notificationHandler = NotificationHandler()
     
-    var firstTime = true
-    
     var notificationWentOff = false
 
     var window: UIWindow?
@@ -458,9 +456,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKPaymentTransactionObser
     /// Sends reminder to the view controller
     func sendReminderToController(_ reminder: Reminder) {
         print(#function)
-        
-        // Saved Tab
-        // let savedTab = getSavedTab()
         
         // Tab bar controller
         let tabBarController = window!.rootViewController as! UITabBarController

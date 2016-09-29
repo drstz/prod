@@ -17,8 +17,8 @@ enum DateFormats: String {
     case ShortDate = "dd MMMM"
 }
 
-let languages = Locale.preferredLanguages
-let preferredLanguage = languages[0]
+//let languages = Locale.preferredLanguages
+//let preferredLanguage = languages[0]
 
 func addRecurringDate(_ delayAmount: Int, delayType : String, date: Date) -> Date {
     var newDateComponents = DateComponents()
@@ -73,7 +73,7 @@ func nextSevenDays() -> Date {
 
 func convertDateToString(dateToConvert date: Date) -> String {
     let formatter = DateFormatter()
-    formatter.locale = Locale(identifier: preferredLanguage)
+    //formatter.locale = Locale(identifier: preferredLanguage)
     formatter.dateStyle = .medium
     formatter.timeStyle = .short
     return formatter.string(from: date)
@@ -84,7 +84,7 @@ func convertDateToString(_ format: DateFormats, date: Date) -> String {
     
     let formatter = DateFormatter()
     var dateFormat = ""
-    formatter.locale = Locale(identifier: preferredLanguage)
+    //formatter.locale = Locale(identifier: preferredLanguage)
     
     switch format {
     case .WholeDate:

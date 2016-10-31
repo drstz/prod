@@ -230,10 +230,8 @@ class ReminderCell: UITableViewCell {
         timeLabel.text = convertDateToString(.Time, date: dueDate)
         if dueDate.isPresent() {
             shortDateLabel.text = convertDateToString(.ShortDate, date: dueDate)
-            //shortDateLabel.text = convertDateToString(.Day, date: dueDate) + ", " + convertDateToString(.ShortDate, date: dueDate)
         } else {
             shortDateLabel.text = convertDateToString(.ShortDate, date: dueDate)
-            // shortDateLabel.text = convertDateToString(.Day, date: dueDate) + ", " + convertDateToString(.ShortDate, date: dueDate)
         }
         
         
@@ -248,7 +246,6 @@ class ReminderCell: UITableViewCell {
             let yellowStar = UIImage.init(named: "Star Filled-44 (1)")
             starIcon.image = yellowStar
             starIcon.alpha = 1
-            //favoriteStar.isHidden = false
             if isLate && !isComplete {
                 backgroundDelegate?.changeBackgroundColor(lateColor)
             } else {

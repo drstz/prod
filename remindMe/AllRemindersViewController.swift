@@ -40,7 +40,6 @@ class AllRemindersViewController: UIViewController {
     // MARK: - Coredata
     
     var coreDataHandler: CoreDataHandler!
-    //var managedObjectContext: NSManagedObjectContext!
     
     // MARK: - Segment
     
@@ -67,7 +66,6 @@ class AllRemindersViewController: UIViewController {
     var list: List!
     
     var titleString = ""
-    var nbOfReminders = 0
     
     var notificationHasGoneOff = false
     
@@ -392,7 +390,6 @@ class AllRemindersViewController: UIViewController {
     
     func customizeButton(_ button: UIButton, selected: Bool) {
         if selected {
-            //button.backgroundColor = UIColor(red: 33/255, green: 69/255, blue: 59/255, alpha: 1)
             button.backgroundColor = UIColor.white
             button.tintColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
             button.layer.borderColor = UIColor.white.cgColor
@@ -414,8 +411,6 @@ class AllRemindersViewController: UIViewController {
     // MARK: Observers
     
     func addObservers() {
-//        NotificationCenter.default.addObserver(self, selector: #selector(completeReminder), name: NSNotification.Name(rawValue: "completeReminder"), object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(snoozeReminder), name: NSNotification.Name(rawValue: "snoozeReminder"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(viewReminder), name: NSNotification.Name(rawValue: "viewReminder"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(setBadgeForTodayTab), name: NSNotification.Name(rawValue: "setBadgeForTodayTab"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshTableView), name: NSNotification.Name(rawValue: "refresh"), object: nil)
@@ -424,8 +419,6 @@ class AllRemindersViewController: UIViewController {
     
     /// Removes observers so that messages are only sent to one view controller at a time
     func removeObservers() {
-//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "completeReminder"), object: nil)
-//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "snoozeReminder"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "viewReminder"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "setBadgeForTodayTab"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "refresh"), object: nil)
@@ -459,7 +452,6 @@ class AllRemindersViewController: UIViewController {
     // MARK: Cell
     
     func loadCell() {
-        //print(#function)
         let cellNib = UINib(nibName: "ReminderCell", bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: "ReminderCell")
         
@@ -472,8 +464,6 @@ class AllRemindersViewController: UIViewController {
     // MARK: Coredata
     
     func setUpCoreData() {
-        //coreDataHandler.setObjectContext(managedObjectContext)
-        
         let filter = savedFilter()
         let status = chosenStatus()
         

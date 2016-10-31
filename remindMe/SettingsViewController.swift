@@ -66,7 +66,6 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
     
     
     override func viewDidLoad() {
-        // tableView.backgroundColor = UIColor(red: 47/255, green: 97/255, blue: 127/255, alpha: 1)
         print(#function)
         
         tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)

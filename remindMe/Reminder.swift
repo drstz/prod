@@ -120,6 +120,8 @@ class Reminder: NSManagedObject {
     }
     
     func setNewDueDate() -> Date {
+        
+        
         if usesCustomPattern == true {
             return createNewDate(dueDate, typeOfInterval: interval!, everyAmount: frequency! as Int)
         } else {
@@ -128,6 +130,15 @@ class Reminder: NSManagedObject {
     }
     
     func setNewDay() -> Date {
+//        2,  Monday
+//        3,
+//        4,
+//        5,
+//        6,
+//        7,
+//        1   Sunday
+        
+        var onlyOneDay = false
         var weekdays = [Int]()
         
         // Get weekday of due date
@@ -136,39 +147,49 @@ class Reminder: NSManagedObject {
         let dayOfDueDate = components.weekday
         var chosenWeekday = 0
         
-        // 1, 2, 3, 4 , 5 , 6, 7
         for day in selectedDays {
             weekdays.append(Int(day as! NSNumber))
         }
         
-        for i in 0 ..< weekdays.count {
-            if dayOfDueDate! < weekdays[i]  {
-                chosenWeekday = weekdays[i]
-                break
-            }
-            
-            if i == weekdays.count - 1 {
-                chosenWeekday = weekdays[0]
+        if weekdays.count == 1 {
+            if dayOfDueDate == weekdays[0] {
+                onlyOneDay = true
             }
         }
         
-        // Change Day
-        var newDateWithWeekday = (calendar as NSCalendar).date(
-            bySettingUnit: .weekday,
-            value: chosenWeekday,
-            of: dueDate as Date,
-            options: NSCalendar.Options.init(rawValue: 0))
-        
-        // Change hour back to normal
-        newDateWithWeekday = (calendar as NSCalendar).date(
-            bySettingHour: components.hour!,
-            minute: components.minute!,
-            second: 0,
-            of: newDateWithWeekday!,
-            options: NSCalendar.Options.init(rawValue: 0))
-        
-        let newDate = newDateWithWeekday!
-        return newDate
+        if onlyOneDay {
+            // If there is only one day, and that day is the same, a week should be added
+            return dueDate.addWeeks(1)
+        } else {
+            for i in 0 ..< weekdays.count {
+                if dayOfDueDate! < weekdays[i]  {
+                    chosenWeekday = weekdays[i]
+                    break
+                }
+                
+                if i == weekdays.count - 1 {
+                    chosenWeekday = weekdays[0]
+                }
+            }
+            
+            // Change Day
+            var newDateWithWeekday = (calendar as NSCalendar).date(
+                bySettingUnit: .weekday,
+                value: chosenWeekday,
+                of: dueDate as Date,
+                options: NSCalendar.Options.init(rawValue: 0))
+            
+            // Change hour back to normal
+            newDateWithWeekday = (calendar as NSCalendar).date(
+                bySettingHour: components.hour!,
+                minute: components.minute!,
+                second: 0,
+                of: newDateWithWeekday!,
+                options: NSCalendar.Options.init(rawValue: 0))
+            
+            let newDate = newDateWithWeekday!
+            return newDate
+        }
     }
     
     func addIDtoReminder() {
@@ -183,11 +204,7 @@ class Reminder: NSManagedObject {
     func setDate(_ date: Date) {
         dueDate = date
     }
-    
-//    func setNextDate(date: NSDate?) {
-//        nextDueDate = date
-//    }
-    
+        
     func setRepeatInterval(_ interval: String?) {
         self.interval = interval
     }

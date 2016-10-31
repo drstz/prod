@@ -105,9 +105,9 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 1 {
-            return "Custom Snooze Time"
+            return "Custom Snooze Option"
         } else {
-            return "Defaut Snooze Times"
+            return "Default Snooze Options"
         }
     }
     

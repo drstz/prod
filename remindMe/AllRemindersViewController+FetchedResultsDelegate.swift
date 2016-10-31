@@ -35,18 +35,15 @@ extension AllRemindersViewController: NSFetchedResultsControllerDelegate {
             tableView.deleteRows(at: [indexPath!], with: .fade)
             
         case .update:
-            print("*** NSFetchedResultsChangeUpdate (object")
+            print("*** NSFetchedResultsChangeUpdate (object)")
             if let cell = tableView.cellForRow(at: indexPath!) as? ReminderCell {
                 print("Cell: \(cell.reminderLabel.text) at row \(indexPath?.row) in section \(indexPath?.section)")
                 
-                let reminder = coreDataHandler.reminderFromIndexPath(indexPath!)
                 
-//                for object in controller.fetchedObjects! {
-//                    let indexPath = controller.indexPath(forObject: object)
-//                    print(object.description)
-//                    print("Row: \(indexPath?.row). Section: \(indexPath?.section)")
-//                }
-        
+                // This used to use indexPath instead of newIndexPath
+                // When set to indexPath, completing multiple reminders including a repeating one created error: no object at index path
+                let reminder = coreDataHandler.reminderFromIndexPath(newIndexPath!)
+                
                 cell.configureForReminder(reminder)
             }
         case .move:

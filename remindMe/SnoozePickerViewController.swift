@@ -141,8 +141,6 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
             } else {
                 cell.accessoryType = .none
             }
-            
-            
         } else if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 0 {
             cell = tableView.dequeueReusableCell(withIdentifier: "customSnoozeButton", for: indexPath)
             cell.textLabel?.text = customSnoozeTime
@@ -158,7 +156,6 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
         }
         
         return cell
-        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -201,9 +198,7 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
                 
                 
                 tableView.deselectRow(at: indexPath, animated: true)
-                
             }
-            
         }
         
         if (indexPath as NSIndexPath).section == 1 {
@@ -246,22 +241,14 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
                         }
                         selectedIndexPath = indexPath
                     }
-                    
                 }
-                
-//                if (indexPath as NSIndexPath).row == 1 {
-//                    print("Going to perform segue to set custom snooze time")
-//                    performSegue(withIdentifier: "setCustomSnoozeTime", sender: self)
-//                }
             }
             tableView.deselectRow(at: indexPath, animated: true)
-
         }
         
         if indexPath.section == 1 && indexPath.row == 1 {
             setCustomSnoozeTime()
         }
-        
     }
     
     func setCustomSnoozeTime() {
@@ -296,8 +283,6 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
             customSnoozeUnit = getLabel(customSnoozeTime.0, snoozeUnit: customSnoozeTime.1)
             customSnoozeDelay = "\(Int(customSnoozeTime.0))"
         }
-        
-        
     }
     
     func saveSnoozeTime(_ indexPath: IndexPath) {
@@ -314,9 +299,7 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
             overwriteOldTimes(1, unit: .Hours)
         default:
             break
-            
         }
-        
     }
     
     func overwriteOldTimes(_ duration: Double, unit: SnoozeUnit) {
@@ -338,8 +321,6 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
             controller.delegate = self
             controller.delay = duration
             controller.unit = unit
-            
-            
         }
     }
 }
@@ -355,8 +336,6 @@ extension SnoozePickerViewController: CustomSnoozePickerDelegate {
         saveCustomSnoozeTime(delay, unit: unit)
         
         if delay != 0 {
-            
-            
             customSnoozeUnit = getLabel(delay, snoozeUnit: unit)
             customSnoozeDelay = "\(Int(delay))"
             

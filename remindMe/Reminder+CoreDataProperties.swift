@@ -26,6 +26,8 @@ extension Reminder {
     
     @NSManaged var willAutoSnooze: NSNumber
     
+    @NSManaged var isFavorite: NSNumber?
+    
     // Dates
     @NSManaged var dueDate: Date
     
@@ -37,8 +39,6 @@ extension Reminder {
     
     @NSManaged var usesDayPattern: NSNumber
     @NSManaged var selectedDays: NSMutableArray
-    
-    @NSManaged var isFavorite: NSNumber?
     
     @NSManaged var timesSnoozed: NSNumber
     

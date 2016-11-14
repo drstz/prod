@@ -140,11 +140,7 @@ class NotificationHandler {
         }
         numberOfNotifications = countAllNotifications()
         print("Total of \(numberOfNotifications) notifications" )
-        
-        
     }
-    
-    
     
     // MARK: - Handling Notifications
     

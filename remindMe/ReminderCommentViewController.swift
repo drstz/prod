@@ -37,9 +37,7 @@ class ReminderCommentViewController: UIViewController {
             if (commentField.text.characters.count > 0) {
                 Answers.logCustomEvent(withName: "Added Comment", customAttributes: nil)
             }
-            
         }
-        
     }
     
     @IBAction func cancel() {
@@ -68,7 +66,6 @@ class ReminderCommentViewController: UIViewController {
         commentField.textColor = UIColor.white
         
         view.backgroundColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
-        
     }
 }
 

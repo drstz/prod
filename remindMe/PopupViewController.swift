@@ -23,13 +23,11 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-
 protocol PopupViewControllerDelegate: class {
     func popupViewControllerDidComplete(_ controller: PopupViewController, reminder: Reminder)
     func popupViewControllerDidSnooze(_ controller: PopupViewController, reminder: Reminder)
     func popupViewControllerDidDelete(_ controller: PopupViewController, reminder: Reminder)
 }
-
 
 class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     @IBOutlet weak var popup: UIView!
@@ -138,9 +136,6 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         coreDataHandler.setObjectContext(managedObjectContext)
         coreDataHandler.save()
         setFavoriteStar()
-        
-        
-        
     }
     
     @IBAction func close() {
@@ -189,7 +184,6 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         modalPresentationStyle = .custom
         transitioningDelegate = self
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -242,7 +236,6 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
             } else {
                 commentLabel.isHidden = true
             }
-            
             
             if reminder.isDue() && reminder.wasCompleted == false {
                 popup.backgroundColor = lateColor
@@ -297,7 +290,6 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         } else {
             repeatLabel.isHidden = true
         }
-        
     }
     
     func updateRepeatLabelWithCustomPattern(_ reminder: Reminder) {
@@ -375,8 +367,6 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         }
     }
     
-    
-    
     func setFavoriteStar() {
         if let reminder = incomingReminder {
             if reminder.isFavorite == true {
@@ -402,7 +392,6 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
             controller.reminderToEdit = incomingReminder
         }
     }
-
 }
 
 extension PopupViewController: UIViewControllerTransitioningDelegate {
@@ -419,4 +408,3 @@ extension PopupViewController: UIGestureRecognizerDelegate {
         return (touch.view === self.view)
     }
 }
-

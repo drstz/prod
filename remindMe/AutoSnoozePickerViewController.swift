@@ -56,7 +56,6 @@ class AutoSnoozePickerViewController: UITableViewController {
         cell.textLabel?.textColor = UIColor.white
         cell.detailTextLabel?.textColor = UIColor.white
         cell.tintColor = UIColor.white
-        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -85,7 +84,6 @@ class AutoSnoozePickerViewController: UITableViewController {
                 oldCell.accessoryType = .none
             }
             selectedIndexPath = indexPath
-            
         }
     }
     

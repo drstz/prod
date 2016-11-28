@@ -30,8 +30,6 @@ class AllRemindersViewController: UIViewController {
     
     @IBOutlet weak var filterBar: UIView!
     
-    // MARK: Filter bar buttons
-    
     @IBOutlet weak var allButton: UIButton!
     @IBOutlet weak var todayButton: UIButton!
     @IBOutlet weak var weekButton: UIButton!
@@ -56,7 +54,6 @@ class AllRemindersViewController: UIViewController {
     
     // MARK: - Properties
     
-    var reminders = [Reminder]()
     var reminderFromNotification: Reminder? {
         didSet {
             print("Tab \(tabBarController?.selectedIndex) has reminder \"\(reminderFromNotification!.name)")
@@ -66,16 +63,6 @@ class AllRemindersViewController: UIViewController {
     }
     
     var list: List!
-    
-    var titleString = ""
-    
-    var notificationHasGoneOff = false
-    
-    var upcomingTabNumber: Int?
-    
-    var sentMessage = "I came from nowhere"
-    
-    var editingList = false
     
     // Help with changing toolbar
     var selectionIsMixed = false
@@ -87,6 +74,8 @@ class AllRemindersViewController: UIViewController {
     var notificationWasTapped = false
     
     // MARK: - IBActions
+    
+    // MARK: Segment
     
     @IBAction func changeSegment() {
         print("")
@@ -104,6 +93,17 @@ class AllRemindersViewController: UIViewController {
         setNoReminderView()
         setBadgeForTodayTab()
     }
+    
+    func chosenStatus() -> ReminderStatus {
+        let segment = segmentedControl.selectedSegmentIndex
+        if segment == 0 {
+            return .incomplete
+        } else {
+            return .complete
+        }
+    }
+    
+    // MARK: Filter Bar
     
     @IBAction func loadRemindersForToday() {
         if savedFilter() != .Today {
@@ -189,23 +189,6 @@ class AllRemindersViewController: UIViewController {
         }
     }
     
-    func filterList(_ filter: ReminderFilter) {
-        // Handle Segment
-        let status = chosenStatus()
-        
-        // Fetch choice
-        coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
-        
-        // Reload tableview with choice
-        coreDataHandler.fetchedResultsController?.delegate = self
-        coreDataHandler.performFetch()
-        
-        tableView.reloadData()
-        
-        // Check if no reminder view should be showing or not
-        setNoReminderView()
-    }
-    
     /// Highlights the selected button.
     /// Sets the previous one to normal state.
     func selectButton(_ chosenButton: UIButton) {
@@ -225,13 +208,23 @@ class AllRemindersViewController: UIViewController {
         }
     }
     
-    func chosenStatus() -> ReminderStatus {
-        let segment = segmentedControl.selectedSegmentIndex
-        if segment == 0 {
-            return .incomplete
-        } else {
-            return .complete
-        }
+    // MARK: Filter list
+    
+    func filterList(_ filter: ReminderFilter) {
+        // Handle Segment
+        let status = chosenStatus()
+        
+        // Fetch choice
+        coreDataHandler.setFetchedResultsController("Reminder", cacheName: "AllReminders", filterBy: filter, status: status)
+        
+        // Reload tableview with choice
+        coreDataHandler.fetchedResultsController?.delegate = self
+        coreDataHandler.performFetch()
+        
+        tableView.reloadData()
+        
+        // Check if no reminder view should be showing or not
+        setNoReminderView()
     }
     
     // MARK: Unwind segue
@@ -244,7 +237,6 @@ class AllRemindersViewController: UIViewController {
     // MARK: Init & Deinit
     
     required init?(coder aDecoder: NSCoder) {
-        reminders = [Reminder]()
         super.init(coder: aDecoder)
     }
     
@@ -326,8 +318,6 @@ class AllRemindersViewController: UIViewController {
         
         setNoReminderView()
         setBadgeForTodayTab()
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -346,10 +336,8 @@ class AllRemindersViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         print(#function)
         super.viewWillDisappear(animated)
-        print("Here comes the recieved message: \(sentMessage)")
         deselectRows()
         hideToolbar()
-        // removeObservers()
     }
     
     // MARK: Buttons
@@ -755,7 +743,6 @@ extension AllRemindersViewController {
     func viewReminder() {
         NSLog(#function)
         print(#function)
-        notificationHasGoneOff = true
         
         if let reminder = reminderFromNotification {
             // Tracking
@@ -796,7 +783,6 @@ extension AllRemindersViewController: ReminderCellDelegate {
         
         if longPress.state == .began && selectedReminders().count == 0 {
             print("Going to edit list")
-            editingList = true
             tableView.allowsMultipleSelection = true
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
             

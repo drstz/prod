@@ -192,7 +192,6 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
         cell.textLabel?.textColor = UIColor.white
         cell.detailTextLabel?.textColor = UIColor.white
         cell.tintColor = UIColor.white
-        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -244,7 +243,6 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
             dayOfTheWeekPickerViewController?.delegate = self
             
             dayOfTheWeekPickerViewController?.selectedDays = selectedDays
-            
         }
     }
     
@@ -307,7 +305,6 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
                 selectDayPatternCell.accessoryType = .checkmark
             }
         }
-        
     }
     
     func updateRepeatMethodCells() {

@@ -11,8 +11,6 @@ import UIKit
 
 extension AllRemindersViewController: ReminderCellDelegate {
     
-    
-    
     // MARK: Cell
     
     func cellWasLongPressed(_ cell: ReminderCell, longPress: UILongPressGestureRecognizer) {
@@ -25,7 +23,6 @@ extension AllRemindersViewController: ReminderCellDelegate {
             editingList = true
             tableView.allowsMultipleSelection = true
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-            
             
             var favoriteText = ""
             let completeText = "Complete"
@@ -43,13 +40,8 @@ extension AllRemindersViewController: ReminderCellDelegate {
             if reminder.wasCompleted == false {
                 let complete = UIBarButtonItem.init(title: completeText, style: .plain, target: self, action: #selector(toolbarComplete))
                 toolbarItems?.insert(complete, at: 0)
-    
             }
-            
-            
-            
-            
-            
+ 
             if toolbarIsHidden() {
                 showToolbar()
             } else {

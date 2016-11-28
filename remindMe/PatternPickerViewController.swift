@@ -24,8 +24,6 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     @IBOutlet weak var doneButton: UIButton!
     
-    
-    
     // MARK: - Delegates
     
     weak var delegate: PatternPickerViewControllerDelegate?
@@ -42,7 +40,6 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
             print("Going back with \(interval) and \(frequency)")
             delegate?.patternPickerViewControllerDidChoosePattern(self, frequency: frequency, interval: interval)
             dismiss(animated: true, completion: nil)
-            
         }
     }
     
@@ -55,8 +52,6 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
             
         }
     }
-    
-    
     
     // MARK: Picker View Data Source
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -118,13 +113,6 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
                 print("Error")
             }
         }
-        // updateRecurringLabel()
-        
-        //recurringDateWasSet = true
-        
-        //nextReminderDate = addRecurringDate(selectedFrequency!, delayType: selectedInterval!, date: selectedDate!)
-        
-        //print(nextReminderDate!)
     }
     
     
@@ -204,8 +192,6 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         }
         patternPicker.selectRow(intervalRow, inComponent: 1, animated: false)
     }
-    
-    
 }
 
 extension PatternPickerViewController: UIViewControllerTransitioningDelegate {

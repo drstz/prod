@@ -64,7 +64,6 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
         dismiss(animated: true, completion: nil)
     }
     
-    
     override func viewDidLoad() {
         print(#function)
         
@@ -112,10 +111,6 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-   
-    
-    
-    
     func loadSettings() {
         interval = timePickerInterval()
         var minuteString = ""
@@ -141,7 +136,6 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
         
         autoSnoozeTime = anAutoSnoozeTime
         autoSnoozeLabel.text = "every " + autoSnoozeTime
-        
     }
     
     func loadSnoozeSettings() {
@@ -194,9 +188,6 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
             default:
                 print("Error: No segue")
             }
-            
         }
-        
-        
     }
 }

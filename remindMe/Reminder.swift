@@ -79,7 +79,6 @@ class Reminder: NSManagedObject {
         var nbOfSnoozesAsInt = timesSnoozed.intValue
         nbOfSnoozesAsInt += 1
         timesSnoozed = NSNumber(value: nbOfSnoozesAsInt as Int)
-        
     }
     
     func calculateNewDate() -> Date {
@@ -120,8 +119,6 @@ class Reminder: NSManagedObject {
     }
     
     func setNewDueDate() -> Date {
-        
-        
         if usesCustomPattern == true {
             return createNewDate(dueDate, typeOfInterval: interval!, everyAmount: frequency! as Int)
         } else {

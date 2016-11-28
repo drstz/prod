@@ -222,8 +222,6 @@ class ReminderCell: UITableViewCell {
         }
     }
     
-    
-    
     func configureLabels(_ name: String, dueDate: Date, frequency: Int?, interval: String?) {
         reminderLabel.text = name
         dayLabel.text = convertDateToString(.Day, date: dueDate)
@@ -233,11 +231,6 @@ class ReminderCell: UITableViewCell {
         } else {
             shortDateLabel.text = convertDateToString(.ShortDate, date: dueDate)
         }
-        
-        
-        
-        
-        
     }
     
     func configureBackgroundColors(_ isFavorite: Bool, isLate: Bool, isComplete: Bool) {
@@ -281,7 +274,6 @@ class ReminderCell: UITableViewCell {
         //print(#function)
         longPress = longPressGestureRecognizer
         delegate?.cellWasLongPressed(self, longPress: longPress)
-        
     }
     
     func longPressF(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {

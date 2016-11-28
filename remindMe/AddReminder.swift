@@ -44,8 +44,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     // MARK: Properties
     
-    
-    
     // CoreData
     var managedObjectContext: NSManagedObjectContext!
     
@@ -58,25 +56,25 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     var textFieldHasText = false
     var creatingReminder = false
     
+    // Comment
+    
     var comment: String?
 
-    
     // The Date
     var selectedDate: Date?
-    
-    var selectedInterval: String?
-    var selectedFrequency: Int?
-    
     var dueDateIsSet = false
     
-    var nextReminderDate: Date?
-   
-    var willSetNewDate = false
-    
-    var selectedDays = [Int]()
+    // Recurring Date
     
     var usingDayPattern = false
     var usingCustomPattern = false
+    
+    var nextReminderDate: Date?
+    
+    var selectedDays = [Int]()
+    
+    var selectedInterval: String?
+    var selectedFrequency: Int?
     
     // MARK: Outlets
     
@@ -89,7 +87,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     @IBOutlet weak var reminderNameField : UITextField!
   
-    
     // Comment field
     @IBOutlet weak var reminderCommentField: UILabel!
     @IBOutlet weak var reminderCommentFieldCell: UITableViewCell!
@@ -108,9 +105,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     @IBOutlet weak var autoSnoozeSwitch: UISwitch!
     
-    // @IBOutlet weak var reminderRepeatsSwitch: UISwitch!
-    
-    // Pickers
+    // Cells
     
     var repeatsCell = UITableViewCell()
     var enableRepeatsCell = UITableViewCell()
@@ -118,20 +113,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     @IBOutlet weak var datePickerCell: UITableViewCell!
     @IBOutlet weak var datePicker: UIDatePicker!
     
-    var datePickerVisible = false {
-        didSet {
-            print("Datepicker was set from \(oldValue) to \(datePickerVisible)")
-        }
-    }
-    
     @IBOutlet weak var recurringPickerCell: UITableViewCell!
     @IBOutlet weak var recurringPicker: UIPickerView!
-    
-    var reccuringPickerVisible = false {
-        didSet {
-            print("Recurring was set from \(oldValue) to \(reccuringPickerVisible)")
-        }
-    }
     
     // MARK: - Actions
     
@@ -201,7 +184,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             } else {
                 reminder?.comment = nil
             }
-            
         }
         
         // Set Dates
@@ -325,8 +307,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             let notificationHandler = reminder.notificationHandler
             notificationHandler.scheduleNotifications(reminder)
         }
-        
-        
     }
     
     // MARK: - Deinit 
@@ -373,7 +353,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         // Switch
         autoSnoozeSwitch.onTintColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
         autoSnoozeSwitch.tintColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
-        
     }
     
     func setColorTheme() {
@@ -390,7 +369,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         } else {
             presentPremiumView()
         }
-        
     }
     
     func prepareViewForReminder(_ reminder: Reminder) {
@@ -416,7 +394,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         
         // Update due date label
         setDueDateLabel(with: selectedDate!)
-        
         
         if reminder.repeats == true {
             
@@ -602,7 +579,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.textColor = UIColor.white
-        // header.titleLabel.textColor = UIColor.whiteColor()
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -610,7 +586,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         cell.textLabel?.textColor = UIColor.white
         cell.detailTextLabel?.textColor = UIColor.white
         cell.tintColor = UIColor.white
-        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -637,16 +612,12 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        
-        
         if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 2 {
             return nil
         } else {
             return indexPath
         }
-        
-        
-    
+
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
@@ -685,7 +656,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
 
         textFieldHasText = newText.length > 0
         
-
         enableDoneButton()
         return true
     }
@@ -800,6 +770,4 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             recurringDateLabel.text = "Never"
         }
     }
-    
-    
 }

@@ -72,22 +72,7 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     
     // MARK: Colors
     
-    // Late
-    
-    var lateColor = UIColor(red: 149/255, green: 40/255, blue: 54/255, alpha: 1)
-    var lightLate = UIColor(red: 169/255, green: 45/255, blue: 61/255, alpha: 1)
-    var lighterLate = UIColor(red: 189/255, green: 51/255, blue: 69/255, alpha: 1)
-    var lightestRed = UIColor(red: 203/255, green: 62/255, blue: 80/255, alpha: 1)
-    var shinyRed = UIColor(red: 208/255, green: 82/255, blue: 98/255, alpha: 1)
-    
-    // Normal
-    
-    var normalColor = UIColor(red: 40/255, green: 83/255, blue: 108/255, alpha: 1)
-    var lightNormal = UIColor(red: 47/255, green: 97/255, blue: 127/255, alpha: 1)
-    var lighterNormal = UIColor(red: 54/255, green: 112/255, blue: 145/255, alpha: 1)
-    var lightestNormal = UIColor(red: 61/255, green: 126/255, blue: 164/255, alpha: 1)
-    var shinyNormal = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
-    
+    let theme = Theme()
     
     @IBAction func complete() {
         delegate?.popupViewControllerDidComplete(self, reminder: incomingReminder!)
@@ -238,20 +223,20 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
             }
             
             if reminder.isDue() && reminder.wasCompleted == false {
-                popup.backgroundColor = lateColor
-                completeButton.backgroundColor = lighterLate
-                favoriteButtonBackground.backgroundColor = shinyRed
-                editButton.backgroundColor = lightestRed
-                deleteButton.backgroundColor = lightLate
-                closeButton.backgroundColor = lateColor
-                snoozeButton.backgroundColor = lightestRed
+                popup.backgroundColor = theme.lateColor
+                completeButton.backgroundColor = theme.lighterLate
+                favoriteButtonBackground.backgroundColor = theme.shinyRed
+                editButton.backgroundColor = theme.lightestRed
+                deleteButton.backgroundColor = theme.lightLate
+                closeButton.backgroundColor = theme.lateColor
+                snoozeButton.backgroundColor = theme.lightestRed
             } else {
-                popup.backgroundColor = normalColor
-                completeButton.backgroundColor = lighterNormal
-                favoriteButtonBackground.backgroundColor = shinyNormal
-                editButton.backgroundColor = lightestNormal
-                deleteButton.backgroundColor = lightNormal
-                closeButton.backgroundColor = normalColor
+                popup.backgroundColor = theme.normalColor
+                completeButton.backgroundColor = theme.lighterNormal
+                favoriteButtonBackground.backgroundColor = theme.shinyNormal
+                editButton.backgroundColor = theme.lightestNormal
+                deleteButton.backgroundColor = theme.lightNormal
+                closeButton.backgroundColor = theme.normalColor
             }
             
             if reminder.wasCompleted == true {

@@ -73,6 +73,9 @@ class AllRemindersViewController: UIViewController {
     // Help with popup after notification
     var notificationWasTapped = false
     
+    // MARK: Colors
+    let theme = Theme()
+    
     // MARK: - IBActions
     
     // MARK: Segment
@@ -280,22 +283,22 @@ class AllRemindersViewController: UIViewController {
         
         // Customize table view
         tableView.separatorColor = UIColor.clear
-        tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        tableView.backgroundColor = theme.backgroundColor
         
         // Customize bars
         
         // Navigation Bar
-        navigationController?.navigationBar.tintColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        navigationController?.navigationBar.tintColor = theme.tintColor
         
         // Tab bar
-        navigationController?.tabBarController?.tabBar.tintColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        navigationController?.tabBarController?.tabBar.tintColor = theme.tintColor
         
         // Customize filter bar
-        filterBar.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        filterBar.backgroundColor = theme.backgroundColor
         
         
         // Customize no reminder screen
-        noReminderScreen.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        noReminderScreen.backgroundColor = theme.backgroundColor
         
         // Observers
         if !observersAreSet {
@@ -381,7 +384,7 @@ class AllRemindersViewController: UIViewController {
     func customizeButton(_ button: UIButton, selected: Bool) {
         if selected {
             button.backgroundColor = UIColor.white
-            button.tintColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+            button.tintColor = theme.tintColor
             button.layer.borderColor = UIColor.white.cgColor
         } else {
             button.backgroundColor = UIColor.clear

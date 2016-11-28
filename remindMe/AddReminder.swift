@@ -76,6 +76,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     var selectedInterval: String?
     var selectedFrequency: Int?
     
+    let theme = Theme()
+    
     // MARK: Outlets
     
     // Unwind segue
@@ -351,13 +353,13 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         autoSnoozeLabel.textColor = UIColor.white
         
         // Switch
-        autoSnoozeSwitch.onTintColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
-        autoSnoozeSwitch.tintColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
+        autoSnoozeSwitch.onTintColor = theme.switchTintColor
+        autoSnoozeSwitch.tintColor = theme.switchTintColor
     }
     
     func setColorTheme() {
         // Table view background
-        tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        tableView.backgroundColor = theme.backgroundColor
         
         // Table view separator
         tableView.separatorColor = UIColor.white

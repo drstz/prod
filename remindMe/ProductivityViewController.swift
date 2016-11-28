@@ -44,6 +44,8 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     // This is used when creating a reminder
     var list: List!
     
+    let theme = Theme()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +61,7 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
 
         numberOfCompletedRemindersLabel.textColor = UIColor.lightGray
         
-        tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = UIColor.white
         
     }
@@ -95,15 +97,15 @@ class ProductivityViewController: UITableViewController, UITabBarControllerDeleg
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.isUserInteractionEnabled = true
-        cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
-        cell.textLabel?.textColor = UIColor.white
-        cell.detailTextLabel?.textColor = UIColor.white
+        cell.backgroundColor = theme.normalColor
+        cell.textLabel?.textColor = theme.normalTextColor
+        cell.detailTextLabel?.textColor = theme.normalTextColor
         
     }
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.textLabel?.textColor = UIColor.white
+        header.textLabel?.textColor = theme.normalTextColor
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {

@@ -21,6 +21,8 @@ class ReminderCommentViewController: UIViewController {
     
     weak var delegate: ReminderCommentViewControllerDelegate?
     
+    let theme = Theme()
+    
     // MARK: Outlets
     
     @IBOutlet weak var commentField: UITextView!
@@ -65,7 +67,7 @@ class ReminderCommentViewController: UIViewController {
         commentField.backgroundColor = UIColor.clear
         commentField.textColor = UIColor.white
         
-        view.backgroundColor = UIColor(red: 68/255, green: 140/255, blue: 183/255, alpha: 1)
+        view.backgroundColor = theme.backgroundColor
     }
 }
 

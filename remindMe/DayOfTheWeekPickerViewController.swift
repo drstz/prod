@@ -17,6 +17,8 @@ class DayOfTheWeekPickerViewController: UITableViewController {
     
     var delegate: DaysOfTheWeekPickerViewControllerDelegate?
     
+    let theme = Theme()
+    
     let daysOfWeek = [
         "Monday",
         "Tuesday",
@@ -70,7 +72,7 @@ class DayOfTheWeekPickerViewController: UITableViewController {
     
     func setColorTheme() {
         // Table view background
-        tableView.backgroundColor = UIColor(red: 40/255, green: 108/255, blue: 149/255, alpha: 1)
+        tableView.backgroundColor = theme.backgroundColor
         
         // Table view separator
         tableView.separatorColor = UIColor.white
@@ -89,7 +91,7 @@ class DayOfTheWeekPickerViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
+        cell.backgroundColor = theme.normalColor
         cell.textLabel?.textColor = UIColor.white
         cell.detailTextLabel?.textColor = UIColor.white
         cell.tintColor = UIColor.white

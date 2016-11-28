@@ -42,7 +42,7 @@ func registerDefaults() {
         "SavedSnoozeUnit" : "min",
         "Filter" : "All",
         "TimePickerInterval" : 1,
-        "Premium" : false
+        "Premium" : true
     ] as [String : Any]
     UserDefaults.standard.register(defaults: dictionary)
 }

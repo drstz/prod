@@ -55,22 +55,7 @@ class ReminderCell: UITableViewCell {
     var wasSelected = false
     
     // MARK: Colors
-    
-    // Favorites
-    let favoriteColor = UIColor(red: 1, green: 223/255, blue: 0, alpha: 1)
-    let favoriteColorDimmed = UIColor(red: 1, green: 223/255, blue: 0, alpha: 0.3)
-    
-    // NormalColor
-    let cellBackgroundColor = UIColor(red: 40/255, green: 82/255, blue: 108/255, alpha: 1)
-    let cellBackgroundColorDimmed = UIColor.white
-    
-    // Late color
-    let lateColor = UIColor(red: 149/255, green: 40/255, blue: 54/255, alpha: 1)
-    
-    // Text color
-    let normalTextColor = UIColor.white
-    
-    let selectionColor = UIColor(red: 148/255, green: 191/255, blue: 215/255, alpha: 1)
+    let theme = Theme()
     
     let cornerRadius: CGFloat = 5
     
@@ -100,7 +85,7 @@ class ReminderCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         //print(#function)
         if self.isSelected {
-            reminderSelectionView?.backgroundColor = selectionColor
+            reminderSelectionView?.backgroundColor = theme.selectionColor
         } else {
             reminderSelectionView?.backgroundColor = UIColor.clear
         }
@@ -240,34 +225,27 @@ class ReminderCell: UITableViewCell {
             starIcon.image = yellowStar
             starIcon.alpha = 1
             if isLate && !isComplete {
-                backgroundDelegate?.changeBackgroundColor(lateColor)
+                backgroundDelegate?.changeBackgroundColor(theme.lateColor)
             } else {
-                backgroundDelegate?.changeBackgroundColor(cellBackgroundColor)
+                backgroundDelegate?.changeBackgroundColor(theme.normalColor)
             }
         } else {
             let whiteStar = UIImage.init(named: "Star-44")
             starIcon.image = whiteStar
             starIcon.alpha = 0.3
             if isLate && !isComplete {
-                backgroundDelegate?.changeBackgroundColor(lateColor)
+                backgroundDelegate?.changeBackgroundColor(theme.lateColor)
             } else {
-                backgroundDelegate?.changeBackgroundColor(cellBackgroundColor)
+                backgroundDelegate?.changeBackgroundColor(theme.normalColor)
             }
         }
     }
     
     func configureLabelColors(_ isComplete: Bool, isLate: Bool) {
-//        print(#function)
-        reminderLabel.textColor = UIColor.white
-        if isComplete || !isLate {
-            dayLabel.textColor = UIColor.white
-            shortDateLabel.textColor = UIColor.white
-            timeLabel.textColor = UIColor.white
-        } else {
-            dayLabel.textColor = UIColor.white
-            shortDateLabel.textColor = UIColor.white
-            timeLabel.textColor = UIColor.white
-        }
+        reminderLabel.textColor = theme.normalTextColor
+        dayLabel.textColor = theme.normalTextColor
+        shortDateLabel.textColor = theme.normalTextColor
+        timeLabel.textColor = theme.normalTextColor
     }
     
     func recognizeLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {

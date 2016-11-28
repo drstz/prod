@@ -645,7 +645,6 @@ extension AllRemindersViewController: AddReminderViewControllerDelegate {
         dismiss(animated: true, completion: nil)
     }
     
-    
     func addReminderViewController(_ controller:AddReminderViewController,
                                    didFinishAddingReminder reminder: Reminder) {
         dismiss(animated: true, completion: nil)
@@ -664,7 +663,6 @@ extension AllRemindersViewController: AddReminderViewControllerDelegate {
     func addReminderViewController(_ controller: AddReminderViewController, didFinishEditingReminder reminder: Reminder) {
         dismiss(animated: true, completion: nil)
     }
-    
 }
 
 extension AllRemindersViewController: NSFetchedResultsControllerDelegate {

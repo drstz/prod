@@ -152,7 +152,6 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
                 tableView.selectRow(at: indexPath, animated: true , scrollPosition: .none)
                 tableView(tableView, didSelectRowAt: indexPath)
             }
-            
         }
     }
     
@@ -260,35 +259,8 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
     }
     
     func updateDayLabel() {
-        var stringOfDays = ""
         if selectedDays.count > 0 {
-            for day in selectedDays {
-                switch day {
-                case 1:
-                    stringOfDays.append("Sun")
-                case 2:
-                    stringOfDays.append("Mon")
-                case 3:
-                    stringOfDays.append("Tue")
-                case 4:
-                    stringOfDays.append("Wed")
-                case 5:
-                    stringOfDays.append("Thu")
-                case 6:
-                    stringOfDays.append("Fri")
-                case 7:
-                    stringOfDays.append("Sat")
-                default:
-                    print("Error appending strings of days")
-                }
-                if selectedDays.count > 1 {
-                    // Do not print comma after last word
-                    if selectedDays.index(of: day) < selectedDays.count - 1 {
-                        stringOfDays.append(", ")
-                    }
-                }
-            }
-            dayPatternSubtitleLabel.text = stringOfDays
+            dayPatternSubtitleLabel.text = listOfSelectedDays(selectedDays: selectedDays)
         }
     }
     

@@ -451,7 +451,6 @@ class AllRemindersViewController: UIViewController {
         let sectionHeaderNib = UINib(nibName: "TableSectionHeader", bundle: nil)
         tableView.register(sectionHeaderNib, forHeaderFooterViewReuseIdentifier: "TableSectionHeader")
         tableView.rowHeight = 100
-        
     }
     
     // MARK: Coredata

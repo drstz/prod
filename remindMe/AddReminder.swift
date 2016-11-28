@@ -702,64 +702,8 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     }
     
     func updateRepeatLabelWithDayPattern() {
-        var stringOfDays = ""
-        
         if selectedDays.count > 0 {
-            for day in selectedDays {
-                switch day {
-                case 1:
-                    var day = "Sunday"
-                    if selectedDays.count != 1 {
-                        day = "Sun"
-                    }
-                    stringOfDays.append(day)
-                case 2:
-                    var day = "Monday"
-                    if selectedDays.count != 1 {
-                        day = "M"
-                    }
-                    stringOfDays.append(day)
-                case 3:
-                    var day = "Tuesday"
-                    if selectedDays.count != 1 {
-                        day = "T"
-                    }
-                    stringOfDays.append(day)
-                case 4:
-                    var day = "Wednesday"
-                    if selectedDays.count != 1 {
-                        day = "W"
-                    }
-                    stringOfDays.append(day)
-                case 5:
-                    var day = "Thursday"
-                    if selectedDays.count != 1 {
-                        day = "Th"
-                    }
-                    stringOfDays.append(day)
-                case 6:
-                    var day = "Friday"
-                    if selectedDays.count != 1 {
-                        day = "F"
-                    }
-                    stringOfDays.append(day)
-                case 7:
-                    var day = "Saturday"
-                    if selectedDays.count != 1 {
-                        day = "Sat"
-                    }
-                    stringOfDays.append(day)
-                default:
-                    print("Error appending strings of days")
-                }
-                if selectedDays.count > 1 {
-                    // Do not print comma after last word
-                    if selectedDays.index(of: day) < selectedDays.count - 1 {
-                        stringOfDays.append(", ")
-                    }
-                }
-            }
-            recurringDateLabel.text = stringOfDays
+            recurringDateLabel.text = listOfSelectedDays(selectedDays: selectedDays)
         }
     }
     

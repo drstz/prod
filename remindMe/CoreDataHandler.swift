@@ -60,12 +60,9 @@ class CoreDataHandler {
         } catch {
             fatalError("Error adding persistent store at \(storeURL): \(error)")
         }
-        
     }()
     
     var fetchedResultsController: NSFetchedResultsController<Reminder>?
-    
-    
     
     deinit {
         print("")

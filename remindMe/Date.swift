@@ -17,6 +17,103 @@ enum DateFormats: String {
     case ShortDate = "dd MMMM"
 }
 
+enum Day: String {
+    case monday
+    case tuesday
+    case wednesday
+    case thursday
+    case friday
+    case saturday
+    case sunday
+    
+    var fullDay: String {
+        switch self {
+        case .monday:
+            return NSLocalizedString("Monday", comment: "Day of the week")
+        case .tuesday:
+            return NSLocalizedString("Tuesday", comment: "Day of the week")
+        case .wednesday:
+            return NSLocalizedString("Wednesday", comment: "Day of the week")
+        case .thursday:
+            return NSLocalizedString("Thursday", comment: "Day of the week")
+        case .friday:
+            return NSLocalizedString("Friday", comment: "Day of the week")
+        case .saturday:
+            return NSLocalizedString("Saturday", comment: "Day of the week")
+        case .sunday:
+            return NSLocalizedString("Sunday", comment: "Day of the week")
+        }
+    }
+    
+    var abbreviatedDay: String {
+        switch self {
+        case .monday:
+            return NSLocalizedString("Mo", comment: "Abbreviation of Monday")
+        case .tuesday:
+            return NSLocalizedString("Tu", comment: "Abbreviation of Tuesday")
+        case .wednesday:
+            return NSLocalizedString("We", comment: "Abbreviation of Wednesday")
+        case .thursday:
+            return NSLocalizedString("Th", comment: "Abbreviation of Thursday")
+        case .friday:
+            return NSLocalizedString("Fr", comment: "Abbreviation of Friday")
+        case .saturday:
+            return NSLocalizedString("Sa", comment: "Abbreviation of Saturday")
+        case .sunday:
+            return NSLocalizedString("Su", comment: "Abbreviation of Sunday")
+        }
+    }
+}
+
+func weekday(day : Day, nbOfSelectedDays: Int) -> String {
+    if nbOfSelectedDays != 1 {
+        return day.abbreviatedDay
+    } else {
+        return day.fullDay
+    }
+}
+
+func selectedDay(day: Int) -> Day {
+    switch day {
+    case 1:
+        return .sunday
+    case 2:
+        return .monday
+    case 3:
+        return .tuesday
+    case 4:
+        return .wednesday
+    case 5:
+        return .thursday
+    case 6:
+        return .friday
+    case 7:
+        return .saturday
+    default:
+        print("Error")
+        return .monday
+    }
+}
+
+func listOfSelectedDays(selectedDays: [Int]) -> String {
+    var stringOfDays = ""
+    if selectedDays.count > 0 {
+        for day in selectedDays {
+            let aDay = selectedDay(day: day)
+            let dayAsString = weekday(day: aDay, nbOfSelectedDays: selectedDays.count)
+            stringOfDays.append(dayAsString)
+            
+            if selectedDays.count > 1 {
+                // Do not print comma after last word
+                if selectedDays.index(of: day)! < selectedDays.count - 1 {
+                    stringOfDays.append(", ")
+                }
+            }
+        }
+    }
+    return stringOfDays
+}
+
 //let languages = Locale.preferredLanguages
 //let preferredLanguage = languages[0]
 

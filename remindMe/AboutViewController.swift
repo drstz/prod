@@ -40,7 +40,4 @@ class AboutViewController: UIViewController, UIWebViewDelegate {
         }
         return true
     }
-    
-    
-    
 }

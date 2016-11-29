@@ -83,9 +83,9 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
         loadSettings()
         
         if isPremium() {
-            goPremiumLabel.text = "Premium Features"
+            goPremiumLabel.text = NSLocalizedString("Premium Features", comment: "Tap here to see premium features")
         } else {
-            goPremiumLabel.text = "Become a premium user"
+            goPremiumLabel.text = NSLocalizedString("Become a premium user", comment: "Tap here to become a premium user")
         }
         
         Answers.logCustomEvent(withName: "Settings Viewed", customAttributes: nil)
@@ -116,9 +116,9 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
         var minuteString = ""
         
         if interval == 1 {
-            minuteString = "minute"
+            minuteString = NSLocalizedString("minute", comment: "1 minute")
         } else {
-            minuteString = "minutes"
+            minuteString = NSLocalizedString("minutes", comment: "More than 1 minute")
         }
         
         timePickerLabel.text = String(interval) + " " + minuteString
@@ -135,7 +135,7 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
         autoSnoozeSwitch.setOn(autoSnoozeOn, animated: false)
         
         autoSnoozeTime = anAutoSnoozeTime
-        autoSnoozeLabel.text = "every " + autoSnoozeTime
+        autoSnoozeLabel.text = NSLocalizedString("every \(autoSnoozeTime)", comment: "every 1 minute, every 1 hour")
     }
     
     func loadSnoozeSettings() {
@@ -150,7 +150,7 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
         let durationString = Int(snoozeDuration)
         let unitString = getLabel(snoozeDuration, snoozeUnit: snoozeUnit)
         snoozeTime = "\(durationString) \(unitString)"
-        snoozeTimeLabel.text = "for " + snoozeTime
+        snoozeTimeLabel.text = NSLocalizedString("for \(snoozeTime)", comment: "for x minutes")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -169,7 +169,7 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
             case "SendFeedback":
                 let controller = segue.destination as! AboutViewController
                 controller.htmlFile = Bundle.main.path(forResource: "aboutDeveloper", ofType: "html")
-                controller.title = "Feedback"
+                controller.title = NSLocalizedString("Feedback", comment: "Send ideas, complaints")
             case "AboutDeveloper":
                 let controller = segue.destination as! AboutViewController
                 controller.htmlFile = Bundle.main.path(forResource: "aboutDeveloper", ofType: "html")
@@ -177,7 +177,7 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
             case "AboutApp":
                 let controller = segue.destination as! AboutViewController
                 controller.htmlFile = Bundle.main.path(forResource: "aboutApp", ofType: "html")
-                controller.title = "About the app"
+                controller.title = NSLocalizedString("About Prod", comment: "Some details about the app")
             case "PickTimePickerInterval":
                 let controller = segue.destination as! TimePickerViewController
                 controller.selectedInterval = interval

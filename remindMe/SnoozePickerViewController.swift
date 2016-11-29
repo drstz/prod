@@ -105,9 +105,9 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 1 {
-            return "Custom Snooze Option"
+            return NSLocalizedString("Custom Snooze Option", comment: "")
         } else {
-            return "Default Snooze Options"
+            return NSLocalizedString("Default Snooze Options", comment: "")
         }
     }
     
@@ -144,7 +144,6 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
         } else if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 0 {
             cell = tableView.dequeueReusableCell(withIdentifier: "customSnoozeButton", for: indexPath)
             cell.textLabel?.text = customSnoozeTime
-            //cell.detailTextLabel?.text = customSnoozeTime
             if isUsingCustomSnoozeTime() {
                 cell.accessoryType = .checkmark
             } else {

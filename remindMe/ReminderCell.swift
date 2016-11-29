@@ -135,9 +135,9 @@ class ReminderCell: UITableViewCell {
     func updateRepeatLabelWithCustomPattern(_ reminder: Reminder) {
         if let frequency = reminder.frequency?.intValue, let interval = reminder.interval {
             if frequency != 1 {
-                nextDueDate.text = "every " + "\(frequency) " + "\(interval)" + "s"
+                nextDueDate.text = NSLocalizedString("every \(frequency) \(interval)s", comment: "Example 'Every 2 days'")
             } else if frequency == 1 {
-                nextDueDate.text = "every " + "\(interval)"
+                nextDueDate.text = NSLocalizedString("every \(interval)", comment: "Example: 'every year', 'every day'")
             }
         }
     }

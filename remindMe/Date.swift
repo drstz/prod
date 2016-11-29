@@ -114,9 +114,6 @@ func listOfSelectedDays(selectedDays: [Int]) -> String {
     return stringOfDays
 }
 
-//let languages = Locale.preferredLanguages
-//let preferredLanguage = languages[0]
-
 func addRecurringDate(_ delayAmount: Int, delayType : String, date: Date) -> Date {
     var newDateComponents = DateComponents()
     
@@ -178,7 +175,6 @@ func convertDateToString(dateToConvert date: Date) -> String {
 
 func convertDateToString(_ format: DateFormats, date: Date) -> String {
     
-    
     let formatter = DateFormatter()
     var dateFormat = ""
     //formatter.locale = Locale(identifier: preferredLanguage)
@@ -198,11 +194,11 @@ func convertDateToString(_ format: DateFormats, date: Date) -> String {
         
     if format == .Day {
         if date.isToday() {
-            return "Today"
+            return NSLocalizedString("Today", comment: "")
         } else if date.isTomorrow() {
-            return "Tomorrow"
+            return NSLocalizedString("Tomorrow", comment: "")
         } else if date.isYesterday() {
-            return "Yesterday"
+            return NSLocalizedString("Yesterday", comment: "")
         } else {
             return formatter.string(from: date)
         }

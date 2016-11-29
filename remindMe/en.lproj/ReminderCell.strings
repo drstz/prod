@@ -1,0 +1,15 @@
+
+/* Class = "UILabel"; text = "NDate"; ObjectID = "Bcl-hb-zg4"; */
+"Bcl-hb-zg4.text" = "NDate";
+
+/* Class = "UILabel"; text = "Month"; ObjectID = "Pcd-jg-yJM"; */
+"Pcd-jg-yJM.text" = "Month";
+
+/* Class = "UILabel"; text = "time"; ObjectID = "RT5-B8-dMw"; */
+"RT5-B8-dMw.text" = "time";
+
+/* Class = "UILabel"; text = "Reminder Name"; ObjectID = "cNe-HO-hOr"; */
+"cNe-HO-hOr.text" = "Reminder Name";
+
+/* Class = "UILabel"; text = "Short Date"; ObjectID = "jiE-5L-44b"; */
+"jiE-5L-44b.text" = "Short Date";

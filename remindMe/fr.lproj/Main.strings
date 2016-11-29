@@ -1,0 +1,165 @@
+
+/* Class = "UITextView"; text = "Walk the dog because he will get fat"; ObjectID = "14s-TX-ycf"; */
+"14s-TX-ycf.text" = "Walk the dog because he will get fat";
+
+/* Class = "UIButton"; normalTitle = "Week"; ObjectID = "1gd-5b-s5i"; */
+"1gd-5b-s5i.normalTitle" = "Semaine";
+
+/* Class = "UITableViewSection"; headerTitle = "Due Date"; ObjectID = "1hA-h1-Jhb"; */
+"1hA-h1-Jhb.headerTitle" = "Echéance";
+
+/* Class = "UITableViewSection"; headerTitle = "Productivity"; ObjectID = "5bO-hT-L10"; */
+"5bO-hT-L10.headerTitle" = "Productivity";
+
+/* Class = "UINavigationItem"; title = "Productivity"; ObjectID = "6zI-U9-OSF"; */
+"6zI-U9-OSF.title" = "Productivity";
+
+/* Class = "UIButton"; normalTitle = "Snooze"; ObjectID = "7E1-MU-1kD"; */
+"7E1-MU-1kD.normalTitle" = "Snooze";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "8MQ-L2-qqz"; */
+"8MQ-L2-qqz.text" = "0";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "8jt-HF-c5b"; */
+"8jt-HF-c5b.text" = "Detail";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "8kP-J6-ocQ"; */
+"8kP-J6-ocQ.normalTitle" = "Done";
+
+/* Class = "UIButton"; normalTitle = "Edit"; ObjectID = "Axh-RT-VoZ"; */
+"Axh-RT-VoZ.normalTitle" = "Edit";
+
+/* Class = "UILabel"; text = "Repeats"; ObjectID = "E0O-CF-LUZ"; */
+"E0O-CF-LUZ.text" = "Se répéter";
+
+/* Class = "UITableViewSection"; headerTitle = "Some numbers since you've started"; ObjectID = "Eql-wX-PVu"; */
+"Eql-wX-PVu.headerTitle" = "Some numbers since you've started";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "H53-d9-nl2"; */
+"H53-d9-nl2.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Complete"; ObjectID = "HBV-pR-rmt"; */
+"HBV-pR-rmt.normalTitle" = "Complete";
+
+/* Class = "UILabel"; text = "Never"; ObjectID = "LRS-Z0-BQE"; */
+"LRS-Z0-BQE.text" = "Never";
+
+/* Class = "UINavigationItem"; title = "Comments"; ObjectID = "M4N-cJ-eHL"; */
+"M4N-cJ-eHL.title" = "Comments";
+
+/* Class = "UILabel"; text = "Use a pattern"; ObjectID = "Opn-VK-Cs8"; */
+"Opn-VK-Cs8.text" = "Use a pattern";
+
+/* Class = "UILabel"; text = "Time to complete reminder once due"; ObjectID = "PuM-n5-91W"; */
+"PuM-n5-91W.text" = "Time to complete reminder once due";
+
+/* Class = "UILabel"; text = "14:30"; ObjectID = "QVj-hn-ygk"; */
+"QVj-hn-ygk.text" = "14:30";
+
+/* Class = "UILabel"; text = "21 July"; ObjectID = "RFh-Xr-TD1"; */
+"RFh-Xr-TD1.text" = "21 July";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "RPp-Jl-fnf"; */
+"RPp-Jl-fnf.text" = "0";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "Rlv-8D-LpD"; */
+"Rlv-8D-LpD.text" = "0";
+
+/* Class = "UILabel"; text = "Create pattern"; ObjectID = "SXF-62-rBl"; */
+"SXF-62-rBl.text" = "Create pattern";
+
+/* Class = "UITableViewSection"; headerTitle = "Note"; ObjectID = "StJ-DM-7gC"; */
+"StJ-DM-7gC.headerTitle" = "Note";
+
+/* Class = "UIButton"; normalTitle = "Delete"; ObjectID = "Tgk-4Q-gGl"; */
+"Tgk-4Q-gGl.normalTitle" = "Supprimer";
+
+/* Class = "UITabBarItem"; title = "Productivity"; ObjectID = "V1z-RS-Bwu"; */
+"V1z-RS-Bwu.title" = "Productivité";
+
+/* Class = "UILabel"; text = "Remind Until Complete"; ObjectID = "XMs-sH-lGg"; */
+"XMs-sH-lGg.text" = "Rappeler jusqu'à l'achevement";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Xfw-Uy-wmr"; */
+"Xfw-Uy-wmr.text" = "Label";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "ZWt-nM-kbm"; */
+"ZWt-nM-kbm.text" = "Detail";
+
+/* Class = "UIButton"; normalTitle = "Favorites"; ObjectID = "Ze0-O5-BmV"; */
+"Ze0-O5-BmV.normalTitle" = "Favoris";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "aIo-Ug-j5V"; */
+"aIo-Ug-j5V.normalTitle" = "Done";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "abs-pf-3T6"; */
+"abs-pf-3T6.text" = "0";
+
+/* Class = "UILabel"; text = "Reminders completed before due date"; ObjectID = "bfC-6a-4Wb"; */
+"bfC-6a-4Wb.text" = "Reminders completed before due date";
+
+/* Class = "UILabel"; text = "Due Date"; ObjectID = "cUE-qd-G5q"; */
+"cUE-qd-G5q.text" = "Echéance";
+
+/* Class = "UITextField"; placeholder = "Enter your reminder here"; ObjectID = "dvW-lG-G6W"; */
+"dvW-lG-G6W.placeholder" = "Enter your reminder here";
+
+/* Class = "UITabBarItem"; title = "Reminders"; ObjectID = "dyR-Me-7GN"; */
+"dyR-Me-7GN.title" = "Rappels";
+
+/* Class = "UILabel"; text = "Choose days"; ObjectID = "ecT-c7-UdM"; */
+"ecT-c7-UdM.text" = "Choose days";
+
+/* Class = "UIButton"; normalTitle = "Today"; ObjectID = "f2X-62-Qog"; */
+"f2X-62-Qog.normalTitle" = "Aujourd'hui";
+
+/* Class = "UILabel"; text = "Completed Reminders"; ObjectID = "fBz-Jv-wZ5"; */
+"fBz-Jv-wZ5.text" = "Completed Reminders";
+
+/* Class = "UILabel"; text = "Reminders snoozed before completion"; ObjectID = "fNw-Le-9DW"; */
+"fNw-Le-9DW.text" = "Reminders snoozed before completion";
+
+/* Class = "UILabel"; text = "Created Reminders"; ObjectID = "gAL-K4-IJs"; */
+"gAL-K4-IJs.text" = "Created Reminders";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "gRx-Gl-IHU"; */
+"gRx-Gl-IHU.text" = "0";
+
+/* Class = "UIButton"; normalTitle = "All"; ObjectID = "hrr-dM-Lmf"; */
+"hrr-dM-Lmf.normalTitle" = "All";
+
+/* Class = "UILabel"; text = "Send email to Tim re New iPhone"; ObjectID = "if0-ro-VbL"; */
+"if0-ro-VbL.text" = "Send email to Tim re New iPhone";
+
+/* Class = "UILabel"; text = "Monday"; ObjectID = "nbo-6D-mqr"; */
+"nbo-6D-mqr.text" = "Monday";
+
+/* Class = "UILabel"; text = "Choose days of the week"; ObjectID = "pvK-fs-TVJ"; */
+"pvK-fs-TVJ.text" = "Choose days of the week";
+
+/* Class = "UILabel"; text = "Times reminder snoozed on average"; ObjectID = "qBU-xg-EtP"; */
+"qBU-xg-EtP.text" = "Times reminder snoozed on average";
+
+/* Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "qH4-Iy-lKl"; */
+"qH4-Iy-lKl.title" = "Clear";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "rbX-9U-boS"; */
+"rbX-9U-boS.text" = "0";
+
+/* Class = "UILabel"; text = "Comment"; ObjectID = "rxw-Jz-9ny"; */
+"rxw-Jz-9ny.text" = "Comment";
+
+/* Class = "UITableViewSection"; headerTitle = "Customize"; ObjectID = "smo-Dj-7gs"; */
+"smo-Dj-7gs.headerTitle" = "Personnaliser";
+
+/* Class = "UILabel"; text = "Don't repeat"; ObjectID = "u5r-94-PiR"; */
+"u5r-94-PiR.text" = "Ne pas répéter";
+
+/* Class = "UITableViewSection"; headerTitle = "Choose method"; ObjectID = "ubH-6O-fpV"; */
+"ubH-6O-fpV.headerTitle" = "Comment répéter";
+
+/* Class = "UILabel"; text = "None"; ObjectID = "wOD-0E-6su"; */
+"wOD-0E-6su.text" = "Aucun";
+
+/* Class = "UILabel"; text = "No reminders"; ObjectID = "yHh-K8-F3j"; */
+"yHh-K8-F3j.text" = "Aucun rappel";

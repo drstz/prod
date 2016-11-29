@@ -1,0 +1,90 @@
+
+/* Class = "UILabel"; text = "Remind Until Complete For All New Reminders"; ObjectID = "1x0-rJ-bsM"; */
+"1x0-rJ-bsM.text" = "Sonner jusqu'à l'achèvement pour tout nouveau rappel";
+
+/* Class = "UITableViewSection"; headerTitle = "Behavior"; ObjectID = "2eD-iA-Vti"; */
+"2eD-iA-Vti.headerTitle" = "Comportement";
+
+/* Class = "UILabel"; text = "Customize when you want to be reminded again"; ObjectID = "5U9-X8-3GK"; */
+"5U9-X8-3GK.text" = "Customize when you want to be reminded again";
+
+/* Class = "UILabel"; text = "Add extra details to put your reminders into context"; ObjectID = "AKr-ky-mVs"; */
+"AKr-ky-mVs.text" = "Add extra details to put your reminders into context";
+
+/* Class = "UITableViewSection"; headerTitle = "About"; ObjectID = "AzE-1g-o6u"; */
+"AzE-1g-o6u.headerTitle" = "A propos";
+
+/* Class = "UILabel"; text = "for 5 minutes"; ObjectID = "CCR-ky-hgZ"; */
+"CCR-ky-hgZ.text" = "for 5 minutes";
+
+/* Class = "UILabel"; text = "Recurring Reminders"; ObjectID = "CoS-lc-APZ"; */
+"CoS-lc-APZ.text" = "Recurring Reminders";
+
+/* Class = "UILabel"; text = "1 minute"; ObjectID = "Dw2-ft-s17"; */
+"Dw2-ft-s17.text" = "1 minute";
+
+/* Class = "UILabel"; text = "Productivity tracker"; ObjectID = "Gen-nm-bLl"; */
+"Gen-nm-bLl.text" = "Productivity tracker";
+
+/* Class = "UILabel"; text = "Custom snooze time"; ObjectID = "H4T-e2-xPz"; */
+"H4T-e2-xPz.text" = "Custom snooze time";
+
+/* Class = "UILabel"; text = "Please Rate Prod"; ObjectID = "Hep-Fi-xsn"; */
+"Hep-Fi-xsn.text" = "Noter Prod";
+
+/* Class = "UILabel"; text = "Send Feedback"; ObjectID = "JJZ-Ho-5zs"; */
+"JJZ-Ho-5zs.text" = "Envoyer votre avis";
+
+/* Class = "UILabel"; text = "Set a custom snooze option for your reminders"; ObjectID = "Jpi-1p-6CS"; */
+"Jpi-1p-6CS.text" = "Set a custom snooze option for your reminders";
+
+/* Class = "UILabel"; text = "Snooze"; ObjectID = "L5P-jG-qF6"; */
+"L5P-jG-qF6.text" = "Reporter";
+
+/* Class = "UIButton"; normalTitle = "Restore Purchase"; ObjectID = "LJz-hy-6VE"; */
+"LJz-hy-6VE.normalTitle" = "Restore Purchase";
+
+/* Class = "UILabel"; text = "Auto Snooze Time"; ObjectID = "Nkl-Wr-9MJ"; */
+"Nkl-Wr-9MJ.text" = "Auto Snooze Time";
+
+/* Class = "UILabel"; text = "every minute"; ObjectID = "S7s-Iz-6w2"; */
+"S7s-Iz-6w2.text" = "every minute";
+
+/* Class = "UITableViewSection"; headerTitle = "Feedback"; ObjectID = "VCP-Nn-Tga"; */
+"VCP-Nn-Tga.headerTitle" = "Votre opinion";
+
+/* Class = "UILabel"; text = "Understand your relationship with your reminders"; ObjectID = "Vy7-Rx-hWN"; */
+"Vy7-Rx-hWN.text" = "Understand your relationship with your reminders";
+
+/* Class = "UILabel"; text = "Go premium and access the following features:"; ObjectID = "Y3B-QF-X5J"; */
+"Y3B-QF-X5J.text" = "Go premium and access the following features:";
+
+/* Class = "UIButton"; normalTitle = "Set custom snooze"; ObjectID = "YiN-jt-1c8"; */
+"YiN-jt-1c8.normalTitle" = "Set custom snooze";
+
+/* Class = "UITableViewSection"; headerTitle = "Premium"; ObjectID = "eHI-cf-MbT"; */
+"eHI-cf-MbT.headerTitle" = "Premium";
+
+/* Class = "UILabel"; text = "Become a Premium User"; ObjectID = "ek6-E2-gCX"; */
+"ek6-E2-gCX.text" = "Become a Premium User";
+
+/* Class = "UILabel"; text = "About Prod"; ObjectID = "kHR-1i-kkB"; */
+"kHR-1i-kkB.text" = "A propos de Prod";
+
+/* Class = "UILabel"; text = "Default snooze time"; ObjectID = "mSi-Sn-fDS"; */
+"mSi-Sn-fDS.text" = "Default snooze time";
+
+/* Class = "UILabel"; text = "Add notes to your reminders"; ObjectID = "vBH-j4-man"; */
+"vBH-j4-man.text" = "Add notes to your reminders";
+
+/* Class = "UIButton"; normalTitle = "Unlock Premium"; ObjectID = "vDW-D1-qPf"; */
+"vDW-D1-qPf.normalTitle" = "Unlock Premium";
+
+/* Class = "UILabel"; text = "Time Picker Interval"; ObjectID = "wde-z7-Ud4"; */
+"wde-z7-Ud4.text" = "Intervalle sur l'horloge";
+
+/* Class = "UILabel"; text = "Remind Until complete"; ObjectID = "y5A-qa-Dfg"; */
+"y5A-qa-Dfg.text" = "Rappeler";
+
+/* Class = "UILabel"; text = "Get your reminders to repeat every day, every few hours or only on certain days of the week"; ObjectID = "yDu-fz-2Xu"; */
+"yDu-fz-2Xu.text" = "Get your reminders to repeat every day, every few hours or only on certain days of the week";

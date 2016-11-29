@@ -693,11 +693,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     func updateRepeatLabelWithCustomPattern() {
         if let frequency = selectedFrequency, let interval = selectedInterval {
-            if selectedFrequency != 1 {
-                recurringDateLabel.text = "every " + "\(frequency) " + "\(interval)" + "s"
-            } else if selectedFrequency == 1 {
-                recurringDateLabel.text = "every " + "\(interval)"
-            }
+            recurringDateLabel.text = patternPhrase(frequency: frequency, interval: interval)
         }
     }
     

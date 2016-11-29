@@ -277,13 +277,11 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         }
     }
     
+    
+    
     func updateRepeatLabelWithCustomPattern(_ reminder: Reminder) {
         if let frequency = reminder.frequency?.intValue, let interval = reminder.interval {
-            if frequency != 1 {
-                repeatLabel.text = "every " + "\(frequency) " + "\(interval)" + "s"
-            } else if frequency == 1 {
-                repeatLabel.text = "every " + "\(interval)"
-            }
+            repeatLabel.text = patternPhrase(frequency: frequency, interval: interval)
         }
     }
     

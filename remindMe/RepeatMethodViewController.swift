@@ -250,11 +250,7 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
     // MARK: Helper methods
     func updatePatternLabel() {
         if let frequency = selectedFrequency, let interval = selectedInterval {
-            if selectedFrequency != 1 {
-                customPatternSubtitleLabel.text = "every " + "\(frequency) " + "\(interval)" + "s"
-            } else if selectedFrequency == 1 {
-                customPatternSubtitleLabel.text = "every " + "\(interval)"
-            }
+            customPatternSubtitleLabel.text = patternPhrase(frequency: frequency, interval: interval)
         }
     }
     

@@ -114,6 +114,14 @@ func listOfSelectedDays(selectedDays: [Int]) -> String {
     return stringOfDays
 }
 
+func patternPhrase(frequency: Int, interval: String) -> String {
+    if frequency != 1 {
+        return  NSLocalizedString("every \(frequency) \(interval)s", comment: "Example 'Every 2 days'")
+    } else {
+        return  NSLocalizedString("every \(interval)", comment: "Example: 'every year', 'every day'")
+    }
+}
+
 func addRecurringDate(_ delayAmount: Int, delayType : String, date: Date) -> Date {
     var newDateComponents = DateComponents()
     

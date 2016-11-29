@@ -241,11 +241,11 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
             
             if reminder.wasCompleted == true {
                 completeButton.isEnabled = false
-                completeButton.setTitle("Completed", for: .disabled)
+                completeButton.setTitle(NSLocalizedString("Completed", comment: "The task has been completed"), for: .disabled)
                 completeButton.setTitleColor(UIColor.lightGray, for: .disabled)
             } else {
                 completeButton.isEnabled = true
-                completeButton.setTitle("Complete", for: UIControlState())
+                completeButton.setTitle(NSLocalizedString("Complete", comment: "Complete the task"), for: UIControlState())
                 completeButton.setTitleColor(UIColor.white, for: UIControlState())
             }
             

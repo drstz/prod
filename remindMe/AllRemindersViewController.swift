@@ -97,94 +97,38 @@ class AllRemindersViewController: UIViewController {
         setBadgeForTodayTab()
     }
     
-    func chosenStatus() -> ReminderStatus {
-        let segment = segmentedControl.selectedSegmentIndex
-        if segment == 0 {
-            return .incomplete
-        } else {
-            return .complete
-        }
-    }
-    
     // MARK: Filter Bar
     
     @IBAction func loadRemindersForToday() {
-        if savedFilter() != .Today {
-            // Set choice
-            let filter: ReminderFilter = .Today
-            save(filter)
-            
-            // Selected Button
-            let chosenButton = button(from: filter)
-            
-            // Show selected
-            selectButton(chosenButton)
-            
-            // Filter list
-            filterList(filter)
-            
-            // Hide toolbar
-            deselectRows()
-            hideToolbar()
-        }
+        filterReminders(by: .Today)
     }
     
     @IBAction func loadAllReminders() {
-        if savedFilter() != .All {
-            // Set choice
-            let filter: ReminderFilter = .All
-            save(filter)
-            
-            // Selected Button
-            let chosenButton = button(from: filter)
-            
-            // Show selected
-            selectButton(chosenButton)
-            
-            // Filter list
-            filterList(filter)
-            
-            // Hide toolbar
-            deselectRows()
-            hideToolbar()
-        }
+        filterReminders(by: .All)
     }
     
     @IBAction func loadRemindersForWeek() {
-        if savedFilter() != .Week {
-            // Set choice
-            let filter: ReminderFilter = .Week
-            save(filter)
-            
-            // Selected Button
-            let chosenButton = button(from: filter)
-            
-            // Show selected
-            selectButton(chosenButton)
-            
-            // Filter list
-            filterList(filter)
-            
-            // Hide toolbar
-            deselectRows()
-            hideToolbar()
-        }
+        filterReminders(by: .Week)
     }
     
     @IBAction func loadFavoriteReminders() {
-        if savedFilter() != .Favorite {
+        filterReminders(by: .Favorite)
+    }
+    
+    func filterReminders(by filter: ReminderFilter) {
+        if savedFilter() != filter {
             // Set choice
-            let filter: ReminderFilter = .Favorite
-            save(filter)
+            let chosenFilter: ReminderFilter = filter
+            save(chosenFilter)
             
             // Selected Button
-            let chosenButton = button(from: filter)
+            let chosenButton = button(from: chosenFilter)
             
             // Show selected
             selectButton(chosenButton)
             
             // Filter list
-            filterList(filter)
+            filterList(chosenFilter)
             
             // Hide toolbar
             deselectRows()
@@ -196,7 +140,7 @@ class AllRemindersViewController: UIViewController {
     /// Sets the previous one to normal state.
     func selectButton(_ chosenButton: UIButton) {
         // Save previous button for later
-        let previouslySelectedButton = selectedButton
+        let oldButton = selectedButton
         
         selectedButton = chosenButton
         
@@ -205,8 +149,8 @@ class AllRemindersViewController: UIViewController {
             customizeButton(selectedButton, selected: true)
             
             // Deselected previous button
-            if let previouslySelectedButton = previouslySelectedButton {
-                customizeButton(previouslySelectedButton, selected: false)
+            if let button = oldButton {
+                customizeButton(button, selected: false)
             }
         }
     }
@@ -228,6 +172,15 @@ class AllRemindersViewController: UIViewController {
         
         // Check if no reminder view should be showing or not
         setNoReminderView()
+    }
+    
+    func chosenStatus() -> ReminderStatus {
+        let segment = segmentedControl.selectedSegmentIndex
+        if segment == 0 {
+            return .incomplete
+        } else {
+            return .complete
+        }
     }
     
     // MARK: Unwind segue

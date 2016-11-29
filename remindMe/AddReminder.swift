@@ -78,6 +78,11 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
     
     let theme = Theme()
     
+    var commentPlaceHolderText: String {
+        return NSLocalizedString("Tap to enter extra details here",
+                          comment: "Add extra details to a reminder, like who you need to meet, where you need to go")
+    }
+    
     // MARK: Outlets
     
     // Unwind segue
@@ -126,9 +131,10 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         NSLog(#function)
         reminderNameField.resignFirstResponder()
         
-        let alert = UIAlertController(title: "Are you sure?", message: "You will lose all changes", preferredStyle: .alert)
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let confirm = UIAlertAction(title: "Confirm", style: .default, handler: {
+        let alert = UIAlertController(title: NSLocalizedString("Are you sure?", comment: "Asking to confirm canceling"),
+                                      message: NSLocalizedString("You will lose all changes", comment: "All changes to the reminder that you are editing"), preferredStyle: .alert)
+        let cancel = UIAlertAction(title: NSLocalizedString("Continue editing", comment: "The user does not wish to lose changes"), style: .cancel, handler: nil)
+        let confirm = UIAlertAction(title: NSLocalizedString("Discard changes", comment: "The user wishes to lose changes"), style: .default, handler: {
             action in
             self.delegate?.addReminderViewControllerDidCancel(self)
         })
@@ -335,7 +341,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         enableDoneButton()
         
         if comment == nil {
-            reminderCommentField.text = "Tap to enter extra details here"
+            reminderCommentField.text = commentPlaceHolderText
         }
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openCommentView))
@@ -344,8 +350,9 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         reminderCommentField.textColor = UIColor.white
         reminderNameField.textColor = UIColor.white
         reminderNameField.backgroundColor = UIColor.clear
-        reminderNameField.attributedPlaceholder = NSAttributedString(string: "What would you like to remember?",
-                                                                     attributes: [NSForegroundColorAttributeName:UIColor.lightGray])
+        reminderNameField.attributedPlaceholder = NSAttributedString(
+            string: NSLocalizedString("What would you like to remember?", comment: "This is placeholder for the reminders name"),
+            attributes: [NSForegroundColorAttributeName:UIColor.lightGray])
         setColorTheme()
         
         reminderNameField.borderStyle = .none
@@ -508,7 +515,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         if self.comment!.characters.count != 0 {
             reminderCommentField.text = self.comment
         } else {
-            reminderCommentField.text = "Tap to enter extra details here"
+            reminderCommentField.text = commentPlaceHolderText
         }
         
         dismiss(animated: true, completion: nil)
@@ -558,8 +565,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
             } else {
                 reminderCommentViewController?.previousComment = ""
             }
-            
-            
         }
     }
     
@@ -575,7 +580,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         } else {
             return 50
         }
-        
     }
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -619,7 +623,6 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         } else {
             return indexPath
         }
-
     }
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
@@ -709,7 +712,7 @@ class AddReminderViewController: UITableViewController, UITextFieldDelegate, Dat
         } else if usingCustomPattern {
             updateRepeatLabelWithCustomPattern()
         } else {
-            recurringDateLabel.text = "Never"
+            recurringDateLabel.text = NSLocalizedString("Never", comment: "Reminder never repeats")
         }
     }
 }

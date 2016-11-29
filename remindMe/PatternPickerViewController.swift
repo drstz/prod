@@ -74,17 +74,17 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         } else {
             switch row {
             case 0:
-                return "minutes"
+                return NSLocalizedString("minutes", comment: "")
             case 1:
-                return "hours"
+                return NSLocalizedString("hours", comment: "in a list")
             case 2:
-                return "days"
+                return NSLocalizedString("days", comment: "in a list")
             case 3:
-                return "weeks"
+                return NSLocalizedString("weeks", comment: "")
             case 4:
-                return "months"
+                return NSLocalizedString("months", comment: "")
             case 5:
-                return "years"
+                return NSLocalizedString("years", comment: "")
             default:
                 return "No idea"
             }

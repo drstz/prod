@@ -279,31 +279,31 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
     
     func updateRepeatMethodCells() {
         if selectedDays.count > 0 {
-            dayPatternLabel.text = "Repeat every"
+            dayPatternLabel.text = NSLocalizedString("Repeat every", comment: "Repeat every Monday")
         } else {
-            dayPatternLabel.text = "Repeat on selected days of the week"
+            dayPatternLabel.text = NSLocalizedString("Repeat on selected days of the week", comment: "The user taps to choose which days she wants the reminder to repeat on")
             dayPatternSubtitleLabel.text = ""
         }
         
         if selectedInterval != nil && selectedInterval != nil {
-            customPatternLabel.text = "Repeat every"
+            customPatternLabel.text = NSLocalizedString("Repeat every", comment: "Repeat every day, every 2 weeks")
         } else {
-            customPatternLabel.text = "Repeat using a custom interval"
+            customPatternLabel.text = NSLocalizedString("Repeat using a custom interval", comment: "Pick an interval, like a week, or a day, to select when reminder should repeat")
             customPatternSubtitleLabel.text = ""
         }
     }
     
     func updatePatternCreationLabels() {
         if selectedDays.count > 0 {
-            createDaysPatternLabel.text = "Modify selected days of the week"
+            createDaysPatternLabel.text = NSLocalizedString("Modify selected days of the week", comment: "The selected days of the week when the reminder repeats")
         } else {
-            createDaysPatternLabel.text = "Choose days of the week"
+            createDaysPatternLabel.text = NSLocalizedString("Choose days of the week", comment: "Choose the days of the week for the reminder to repeat")
         }
         
         if selectedInterval != nil && selectedInterval != nil {
-            createCustomPatternLabel.text = "Modify custom interval"
+            createCustomPatternLabel.text = NSLocalizedString("Modify custom interval", comment: "Week, day, months")
         } else {
-            createCustomPatternLabel.text = "Set custom interval"
+            createCustomPatternLabel.text = NSLocalizedString("Set custom interval", comment: "Week, day, months")
         }
     }
 }

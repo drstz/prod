@@ -90,14 +90,15 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     }
     
     @IBAction func delete() {
-        let alert = UIAlertController(title: "Delete \"\((incomingReminder?.name)!)\" ?", message: "You cannot undo this", preferredStyle: .alert)
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
+        let alert = UIAlertController(title: NSLocalizedString("Delete \"\((incomingReminder?.name)!)\" ?", comment: "Delete 'reminder name'"),
+                                      message: NSLocalizedString("You cannot undo this", comment: ""), preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive, handler: {
             action in
             // Tracking
             Answers.logCustomEvent(withName: "Delete", customAttributes: ["Category": "Popup"])
                 self.delegate?.popupViewControllerDidDelete(self, reminder: self.incomingReminder!)
         })
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: nil)
         alert.addAction(deleteAction)
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
@@ -277,8 +278,6 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         }
     }
     
-    
-    
     func updateRepeatLabelWithCustomPattern(_ reminder: Reminder) {
         if let frequency = reminder.frequency?.intValue, let interval = reminder.interval {
             repeatLabel.text = patternPhrase(frequency: frequency, interval: interval)
@@ -291,7 +290,7 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
             selectedDays.append(Int(day as! NSNumber))
         }
         if selectedDays.count > 0 {
-            repeatLabel.text = "every " + listOfSelectedDays(selectedDays: selectedDays)
+            repeatLabel.text = NSLocalizedString("every ", comment: "every Monday; every Wed, Thu, Sun") + listOfSelectedDays(selectedDays: selectedDays)
         }
     }
     

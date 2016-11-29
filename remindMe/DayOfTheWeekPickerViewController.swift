@@ -20,13 +20,13 @@ class DayOfTheWeekPickerViewController: UITableViewController {
     let theme = Theme()
     
     let daysOfWeek = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
+        Day.monday.fullDay,
+        Day.tuesday.fullDay,
+        Day.wednesday.fullDay,
+        Day.thursday.fullDay,
+        Day.friday.fullDay,
+        Day.saturday.fullDay,
+        Day.sunday.fullDay
     ]
     
     let weekdayUnits = [
@@ -114,7 +114,8 @@ class DayOfTheWeekPickerViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Pick one or more days"
+        return NSLocalizedString("Pick one or more days",
+                                 comment: "These days will be used to repeat a reminder")
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -156,9 +157,4 @@ class DayOfTheWeekPickerViewController: UITableViewController {
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
-    
-    
-    
-    
 }

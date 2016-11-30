@@ -161,53 +161,45 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
         return cell
     }
     
-    func noNameYet() {
-        
+    func deselectCell(tableView: UITableView, at selectedIndexPath: IndexPath) {
+        if let oldCell = tableView.cellForRow(at: selectedIndexPath) {
+            oldCell.accessoryType = .none
+        }
+    }
+    
+    func selectCell(tableView: UITableView, at indexPath: IndexPath) {
+        selectedIndexPath = indexPath
+        if let newCell = tableView.cellForRow(at: indexPath) {
+            newCell.accessoryType = .checkmark
+        }
+    }
+    
+    func selectNewLine(tableView: UITableView, at newIndexPath: IndexPath) {
+        deselectCell(tableView: tableView, at: selectedIndexPath)
+        selectCell(tableView: tableView, at: newIndexPath)
+        tableView.deselectRow(at: newIndexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(#function)
         if (indexPath as NSIndexPath).section == 0 {
             setUsingCustomSnoozeTime(false)
-            print(selectedIndexPath)
             
             if (indexPath as NSIndexPath).section == (selectedIndexPath as NSIndexPath).section {
                 if (indexPath as NSIndexPath).row != (selectedIndexPath as NSIndexPath).row {
-                    if let newCell = tableView.cellForRow(at: indexPath) {
-                        newCell.accessoryType = .checkmark
-                    }
-                    
-                    if let oldCell = tableView.cellForRow(at: selectedIndexPath) {
-                        print("Old cell : section \((selectedIndexPath as NSIndexPath).section) row \((selectedIndexPath as NSIndexPath).row)")
-                        oldCell.accessoryType = .none
-                    }
-                    selectedIndexPath = indexPath
-                    
                     setUsingCustomSnoozeTime(false)
+                    selectNewLine(tableView: tableView, at: indexPath)
                     
                     saveSnoozeTime(indexPath)
-                    
-                    tableView.deselectRow(at: indexPath, animated: true)
                 }
             } else {
-                if let newCell = tableView.cellForRow(at: indexPath) {
-                    newCell.accessoryType = .checkmark
-                }
-                
-                if let oldCell = tableView.cellForRow(at: selectedIndexPath) {
-                    print("Old cell : section \((selectedIndexPath as NSIndexPath).section) row \((selectedIndexPath as NSIndexPath).row)")
-                    oldCell.accessoryType = .none
-                }
-                selectedIndexPath = indexPath
+                selectNewLine(tableView: tableView, at: indexPath)
                 
                 saveSnoozeTime(indexPath)
-                
-                tableView.deselectRow(at: indexPath, animated: true)
             }
         }
         
         if (indexPath as NSIndexPath).section == 1 {
-            
             if (indexPath as NSIndexPath).section == (selectedIndexPath as NSIndexPath).section {
                 if (indexPath as NSIndexPath).row != (selectedIndexPath as NSIndexPath).row {
                     if (indexPath as NSIndexPath).row == 0 {
@@ -216,39 +208,22 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
                             setUsingCustomSnoozeTime(true)
                             
                             setSnoozeTime(customSnoozeTime.0, unit: customSnoozeTime.1)
-                            if let newCell = tableView.cellForRow(at: indexPath) {
-                                newCell.accessoryType = .checkmark
-                            }
                             
-                            if let oldCell = tableView.cellForRow(at: selectedIndexPath) {
-                                print("Old cell : section \((selectedIndexPath as NSIndexPath).section) row \((selectedIndexPath as NSIndexPath).row)")
-                                oldCell.accessoryType = .none
-                            }
-                            selectedIndexPath = indexPath
+                            selectNewLine(tableView: tableView, at: indexPath)
                         }
                     }
                 }
             } else {
                 if (indexPath as NSIndexPath).row == 0 {
-        
-                    
                     let customSnoozeTime = getCustomSnoozeTime()
                     if  customSnoozeTime.0 != 0 {
                         setUsingCustomSnoozeTime(true)
                         setSnoozeTime(customSnoozeTime.0, unit: customSnoozeTime.1)
-                        if let newCell = tableView.cellForRow(at: indexPath) {
-                            newCell.accessoryType = .checkmark
-                        }
                         
-                        if let oldCell = tableView.cellForRow(at: selectedIndexPath) {
-                            print("Old cell : section \((selectedIndexPath as NSIndexPath).section) row \((selectedIndexPath as NSIndexPath).row)")
-                            oldCell.accessoryType = .none
-                        }
-                        selectedIndexPath = indexPath
+                        selectNewLine(tableView: tableView, at: indexPath)
                     }
                 }
             }
-            tableView.deselectRow(at: indexPath, animated: true)
         }
         
         if indexPath.section == 1 && indexPath.row == 1 {
@@ -265,7 +240,6 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
     }
     
     func presentPremiumView() {
-        
         let premiumView = storyboard?.instantiateViewController(withIdentifier: "PremiumView") as! PremiumUserViewController
         premiumView.delegate = self
         

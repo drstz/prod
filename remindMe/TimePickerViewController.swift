@@ -65,7 +65,7 @@ class TimePickerViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Pick an interval"
+        return NSLocalizedString("Pick an interval", comment: "Pick how many minutes are changed when you change the clock")
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -86,8 +86,9 @@ class TimePickerViewController: UITableViewController {
         var minuteString = ""
         if intervalForRow == 1 {
             minuteString = "minute"
+            minuteString = NSLocalizedString("minute", comment: "")
         } else {
-            minuteString = "minutes"
+            minuteString = NSLocalizedString("minutes", comment: "")
         }
         
         cell.textLabel?.text = String(intervalForRow) + " " + minuteString

@@ -20,6 +20,7 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
     var chosenUnit: SnoozeUnit?
     
     var customSnoozeTime: String {
+        
         return (customSnoozeDelay + " " + customSnoozeUnit)
     }
     
@@ -79,9 +80,7 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
         // Table view separator
         tableView.separatorColor = UIColor.white
     }
-    
-    
-    
+
     // MARK: - Table View
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -114,7 +113,6 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.textColor = UIColor.white
-        // header.titleLabel.textColor = UIColor.whiteColor()
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -122,7 +120,6 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
         cell.textLabel?.textColor = UIColor.white
         cell.detailTextLabel?.textColor = UIColor.white
         cell.tintColor = UIColor.white
-        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -132,9 +129,16 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
             cell = tableView.dequeueReusableCell(withIdentifier: "snoozeChoice", for: indexPath)
             let snoozeTime = self.snoozeTimes[(indexPath as NSIndexPath).row]
             let unitString = getLabel(snoozeTime.0, snoozeUnit: snoozeTime.1)
+            
+            let intervalString = CustomTimeInterval(rawValue: unitString)!
+            
             let durationString = Int(snoozeTime.0)
             
-            cell.textLabel!.text = "\(durationString) \(unitString)"
+            if snoozeTime.0 > 1.0 {
+                cell.textLabel!.text = "\(durationString) \(intervalString.pluralInterval)"
+            } else {
+                cell.textLabel!.text = "\(durationString) \(intervalString.singularInterval)"
+            }
             
             if snoozeTime == selectedSnoozeTimeTuple! && !isUsingCustomSnoozeTime() {
                 cell.accessoryType = .checkmark
@@ -157,6 +161,10 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
         return cell
     }
     
+    func noNameYet() {
+        
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(#function)
         if (indexPath as NSIndexPath).section == 0 {
@@ -174,10 +182,10 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
                         oldCell.accessoryType = .none
                     }
                     selectedIndexPath = indexPath
+                    
                     setUsingCustomSnoozeTime(false)
                     
                     saveSnoozeTime(indexPath)
-                    
                     
                     tableView.deselectRow(at: indexPath, animated: true)
                 }
@@ -192,9 +200,7 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
                 }
                 selectedIndexPath = indexPath
                 
-                
                 saveSnoozeTime(indexPath)
-                
                 
                 tableView.deselectRow(at: indexPath, animated: true)
             }
@@ -335,7 +341,14 @@ extension SnoozePickerViewController: CustomSnoozePickerDelegate {
         saveCustomSnoozeTime(delay, unit: unit)
         
         if delay != 0 {
-            customSnoozeUnit = getLabel(delay, snoozeUnit: unit)
+            let intervalString = CustomTimeInterval(rawValue: getLabel(delay, snoozeUnit: unit))!
+            //customSnoozeUnit = getLabel(delay, snoozeUnit: unit)
+            if delay > 1 {
+                customSnoozeUnit = intervalString.pluralInterval
+            } else {
+                customSnoozeUnit = intervalString.singularInterval
+            }
+            
             customSnoozeDelay = "\(Int(delay))"
             
             if isUsingCustomSnoozeTime() {

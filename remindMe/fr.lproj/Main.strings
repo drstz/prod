@@ -27,7 +27,7 @@
 "8kP-J6-ocQ.normalTitle" = "Done";
 
 /* Class = "UIButton"; normalTitle = "Edit"; ObjectID = "Axh-RT-VoZ"; */
-"Axh-RT-VoZ.normalTitle" = "Edit";
+"Axh-RT-VoZ.normalTitle" = "Modifier";
 
 /* Class = "UILabel"; text = "Repeats"; ObjectID = "E0O-CF-LUZ"; */
 "E0O-CF-LUZ.text" = "Se répéter";
@@ -69,7 +69,7 @@
 "SXF-62-rBl.text" = "Create pattern";
 
 /* Class = "UITableViewSection"; headerTitle = "Note"; ObjectID = "StJ-DM-7gC"; */
-"StJ-DM-7gC.headerTitle" = "Note";
+"StJ-DM-7gC.headerTitle" = "Commentaire";
 
 /* Class = "UIButton"; normalTitle = "Delete"; ObjectID = "Tgk-4Q-gGl"; */
 "Tgk-4Q-gGl.normalTitle" = "Supprimer";
@@ -126,7 +126,7 @@
 "gRx-Gl-IHU.text" = "0";
 
 /* Class = "UIButton"; normalTitle = "All"; ObjectID = "hrr-dM-Lmf"; */
-"hrr-dM-Lmf.normalTitle" = "All";
+"hrr-dM-Lmf.normalTitle" = "Tout";
 
 /* Class = "UILabel"; text = "Send email to Tim re New iPhone"; ObjectID = "if0-ro-VbL"; */
 "if0-ro-VbL.text" = "Send email to Tim re New iPhone";

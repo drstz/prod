@@ -6,10 +6,10 @@
 "2eD-iA-Vti.headerTitle" = "Comportement";
 
 /* Class = "UILabel"; text = "Customize when you want to be reminded again"; ObjectID = "5U9-X8-3GK"; */
-"5U9-X8-3GK.text" = "Customize when you want to be reminded again";
+"5U9-X8-3GK.text" = "Choisir exactement quand le rappel doit revenir";
 
 /* Class = "UILabel"; text = "Add extra details to put your reminders into context"; ObjectID = "AKr-ky-mVs"; */
-"AKr-ky-mVs.text" = "Add extra details to put your reminders into context";
+"AKr-ky-mVs.text" = "Ajouter vos commentaires pour mieux comprendre vos rappels";
 
 /* Class = "UITableViewSection"; headerTitle = "About"; ObjectID = "AzE-1g-o6u"; */
 "AzE-1g-o6u.headerTitle" = "A propos";
@@ -18,13 +18,13 @@
 "CCR-ky-hgZ.text" = "for 5 minutes";
 
 /* Class = "UILabel"; text = "Recurring Reminders"; ObjectID = "CoS-lc-APZ"; */
-"CoS-lc-APZ.text" = "Recurring Reminders";
+"CoS-lc-APZ.text" = "Vos rappels peuvent se répéter";
 
 /* Class = "UILabel"; text = "1 minute"; ObjectID = "Dw2-ft-s17"; */
 "Dw2-ft-s17.text" = "1 minute";
 
 /* Class = "UILabel"; text = "Productivity tracker"; ObjectID = "Gen-nm-bLl"; */
-"Gen-nm-bLl.text" = "Productivity tracker";
+"Gen-nm-bLl.text" = "Mesurer votre productivité";
 
 /* Class = "UILabel"; text = "Custom snooze time"; ObjectID = "H4T-e2-xPz"; */
 "H4T-e2-xPz.text" = "Custom snooze time";
@@ -54,7 +54,7 @@
 "VCP-Nn-Tga.headerTitle" = "Votre opinion";
 
 /* Class = "UILabel"; text = "Understand your relationship with your reminders"; ObjectID = "Vy7-Rx-hWN"; */
-"Vy7-Rx-hWN.text" = "Understand your relationship with your reminders";
+"Vy7-Rx-hWN.text" = "Comprendre comment vous utilisez les rappels";
 
 /* Class = "UILabel"; text = "Go premium and access the following features:"; ObjectID = "Y3B-QF-X5J"; */
 "Y3B-QF-X5J.text" = "Go premium and access the following features:";
@@ -75,16 +75,16 @@
 "mSi-Sn-fDS.text" = "Default snooze time";
 
 /* Class = "UILabel"; text = "Add notes to your reminders"; ObjectID = "vBH-j4-man"; */
-"vBH-j4-man.text" = "Add notes to your reminders";
+"vBH-j4-man.text" = "Ajouter des commentaires à vos rappels.";
 
 /* Class = "UIButton"; normalTitle = "Unlock Premium"; ObjectID = "vDW-D1-qPf"; */
 "vDW-D1-qPf.normalTitle" = "Unlock Premium";
 
 /* Class = "UILabel"; text = "Time Picker Interval"; ObjectID = "wde-z7-Ud4"; */
-"wde-z7-Ud4.text" = "Intervalle sur l'horloge";
+"wde-z7-Ud4.text" = "Intervalle";
 
 /* Class = "UILabel"; text = "Remind Until complete"; ObjectID = "y5A-qa-Dfg"; */
 "y5A-qa-Dfg.text" = "Rappeler";
 
 /* Class = "UILabel"; text = "Get your reminders to repeat every day, every few hours or only on certain days of the week"; ObjectID = "yDu-fz-2Xu"; */
-"yDu-fz-2Xu.text" = "Get your reminders to repeat every day, every few hours or only on certain days of the week";
+"yDu-fz-2Xu.text" = "Vos rappels se répètent quand vous le voulez: chaque jour, tous les 2 heures ou seulement certains jours de la semaine.";

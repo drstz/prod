@@ -128,9 +128,9 @@ func getLabel(_ snoozeDuration: Double, snoozeUnit: SnoozeUnit) -> String {
     case .Days:
         duration = "day"
     }
-    if snoozeDuration > 1 {
-        duration += "s"
-    }
+//    if snoozeDuration > 1 {
+//        duration += "s"
+//    }
     return duration
 }
 

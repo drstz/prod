@@ -102,7 +102,6 @@ class AutoSnoozePickerViewController: UITableViewController {
                     break
                     
                 }
-                
             }
         }
     }

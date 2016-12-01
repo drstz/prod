@@ -59,7 +59,7 @@ class ReminderCommentViewController: UIViewController {
         commentField.becomeFirstResponder()
         
         if previousComment?.characters.count == 0 {
-            commentField.text = "Enter a short comment here"
+            commentField.text = NSLocalizedString("Enter a short comment here", comment: "A comment is short details that you can add to a reminder")
             commentField.selectedRange = NSMakeRange(0, commentField.text.characters.count)
         } else {
             commentField.text = previousComment
@@ -81,9 +81,9 @@ extension ReminderCommentViewController: UITextViewDelegate {
         let newLength = currentCharacterCount + text.characters.count - range.length
         let remainingCharacters = maximumLength - newLength
         if remainingCharacters == -1 {
-            title = String(maximumLength - newLength + 1) + " " + "characters" + " " + "left"
+            title = String(maximumLength - newLength + 1) //+ " " + "characters" + " " + "left"
         } else {
-            title = String(maximumLength - newLength) + " " + "characters" + " " + "left"
+            title = String(maximumLength - newLength) //+ " " + "characters" + " " + "left"
         }
         
         return newLength <= maximumLength

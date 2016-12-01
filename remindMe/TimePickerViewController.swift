@@ -86,9 +86,9 @@ class TimePickerViewController: UITableViewController {
         var minuteString = ""
         if intervalForRow == 1 {
             minuteString = "minute"
-            minuteString = NSLocalizedString("minute", comment: "")
+            minuteString = CustomTimeInterval.minute.singularInterval
         } else {
-            minuteString = NSLocalizedString("minutes", comment: "")
+            minuteString = CustomTimeInterval.minute.pluralInterval
         }
         
         cell.textLabel?.text = String(intervalForRow) + " " + minuteString

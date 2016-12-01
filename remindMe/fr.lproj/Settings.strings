@@ -1,6 +1,6 @@
 
 /* Class = "UILabel"; text = "Remind Until Complete For All New Reminders"; ObjectID = "1x0-rJ-bsM"; */
-"1x0-rJ-bsM.text" = "Sonner jusqu'à l'achèvement pour tout nouveau rappel";
+"1x0-rJ-bsM.text" = "Rappeler jusqu'à l'achèvement pour tout nouveau rappel";
 
 /* Class = "UITableViewSection"; headerTitle = "Behavior"; ObjectID = "2eD-iA-Vti"; */
 "2eD-iA-Vti.headerTitle" = "Comportement";
@@ -36,13 +36,13 @@
 "JJZ-Ho-5zs.text" = "Envoyer votre avis";
 
 /* Class = "UILabel"; text = "Set a custom snooze option for your reminders"; ObjectID = "Jpi-1p-6CS"; */
-"Jpi-1p-6CS.text" = "Set a custom snooze option for your reminders";
+"Jpi-1p-6CS.text" = "Reporter vos rappels comme vous le souhaitez";
 
 /* Class = "UILabel"; text = "Snooze"; ObjectID = "L5P-jG-qF6"; */
 "L5P-jG-qF6.text" = "Reporter";
 
 /* Class = "UIButton"; normalTitle = "Restore Purchase"; ObjectID = "LJz-hy-6VE"; */
-"LJz-hy-6VE.normalTitle" = "Restore Purchase";
+"LJz-hy-6VE.normalTitle" = "Réstaurer l'achat";
 
 /* Class = "UILabel"; text = "Auto Snooze Time"; ObjectID = "Nkl-Wr-9MJ"; */
 "Nkl-Wr-9MJ.text" = "Auto Snooze Time";
@@ -57,10 +57,10 @@
 "Vy7-Rx-hWN.text" = "Comprendre comment vous utilisez les rappels";
 
 /* Class = "UILabel"; text = "Go premium and access the following features:"; ObjectID = "Y3B-QF-X5J"; */
-"Y3B-QF-X5J.text" = "Go premium and access the following features:";
+"Y3B-QF-X5J.text" = "Activer le premium pour avoir accès aux fonctionnalités suivantes:";
 
 /* Class = "UIButton"; normalTitle = "Set custom snooze"; ObjectID = "YiN-jt-1c8"; */
-"YiN-jt-1c8.normalTitle" = "Set custom snooze";
+"YiN-jt-1c8.normalTitle" = "Personnaliser la durée";
 
 /* Class = "UITableViewSection"; headerTitle = "Premium"; ObjectID = "eHI-cf-MbT"; */
 "eHI-cf-MbT.headerTitle" = "Premium";
@@ -78,7 +78,7 @@
 "vBH-j4-man.text" = "Ajouter des commentaires à vos rappels.";
 
 /* Class = "UIButton"; normalTitle = "Unlock Premium"; ObjectID = "vDW-D1-qPf"; */
-"vDW-D1-qPf.normalTitle" = "Unlock Premium";
+"vDW-D1-qPf.normalTitle" = "Acheter Premium";
 
 /* Class = "UILabel"; text = "Time Picker Interval"; ObjectID = "wde-z7-Ud4"; */
 "wde-z7-Ud4.text" = "Intervalle";

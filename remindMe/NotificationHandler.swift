@@ -37,7 +37,7 @@ class NotificationHandler {
         
         let completeAction = UIMutableUserNotificationAction()
         completeAction.identifier = "Complete"
-        completeAction.title = "Complete"
+        completeAction.title = NSLocalizedString("Complete", comment: "")
         completeAction.activationMode = UIUserNotificationActivationMode.background
         completeAction.isAuthenticationRequired = false
         completeAction.isDestructive = false
@@ -59,21 +59,20 @@ class NotificationHandler {
         var unitString = ""
         switch unit! {
         case .Seconds:
-            unitString = "s"
+            unitString = CustomTimeInterval.second.abbreviation
         case .Minutes:
-            unitString = "min"
+            unitString = CustomTimeInterval.minute.abbreviation
         case .Days:
             if duration > 1 {
-                unitString = "days"
+                unitString = CustomTimeInterval.day.pluralInterval
             } else {
-                unitString = "day"
+                unitString = CustomTimeInterval.day.singularInterval
             }
         case .Hours:
-            unitString = "h"
+            unitString = CustomTimeInterval.hour.abbreviation
         }
         
         return "+\(Int(duration))" + unitString
-        
     }
     
     func setNotificationCategories(_ actions : [UIMutableUserNotificationAction]) -> Set<UIMutableUserNotificationCategory>  {

@@ -45,7 +45,7 @@
 "LRS-Z0-BQE.text" = "Never";
 
 /* Class = "UINavigationItem"; title = "Comments"; ObjectID = "M4N-cJ-eHL"; */
-"M4N-cJ-eHL.title" = "Comments";
+"M4N-cJ-eHL.title" = "Commentaire";
 
 /* Class = "UILabel"; text = "Use a pattern"; ObjectID = "Opn-VK-Cs8"; */
 "Opn-VK-Cs8.text" = "Use a pattern";
@@ -141,7 +141,7 @@
 "qBU-xg-EtP.text" = "Times reminder snoozed on average";
 
 /* Class = "UIBarButtonItem"; title = "Clear"; ObjectID = "qH4-Iy-lKl"; */
-"qH4-Iy-lKl.title" = "Clear";
+"qH4-Iy-lKl.title" = "Supprimer";
 
 /* Class = "UILabel"; text = "0"; ObjectID = "rbX-9U-boS"; */
 "rbX-9U-boS.text" = "0";
@@ -159,7 +159,7 @@
 "ubH-6O-fpV.headerTitle" = "Comment répéter";
 
 /* Class = "UILabel"; text = "None"; ObjectID = "wOD-0E-6su"; */
-"wOD-0E-6su.text" = "Aucun";
+"wOD-0E-6su.text" = "aucune";
 
 /* Class = "UILabel"; text = "No reminders"; ObjectID = "yHh-K8-F3j"; */
 "yHh-K8-F3j.text" = "Aucun rappel";

@@ -64,6 +64,25 @@ enum CustomTimeInterval: String {
         }
     }
     
+    var abbreviation: String {
+        switch self {
+        case .second:
+            return NSLocalizedString("s", comment: "abb seconds")
+        case .minute:
+            return NSLocalizedString("min", comment: "abb minutes")
+        case .hour:
+            return NSLocalizedString("h", comment: "abb hours")
+        case .day:
+            return NSLocalizedString("d", comment: "abb days")
+        case .week:
+            return NSLocalizedString("w", comment: "abb weeks")
+        case .month:
+            return NSLocalizedString("m", comment: "abb months")
+        case .year:
+            return NSLocalizedString("y", comment: "abb years")
+        }
+    }
+    
 }
 
 enum Day: String {

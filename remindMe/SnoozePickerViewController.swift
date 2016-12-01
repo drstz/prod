@@ -20,7 +20,6 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
     var chosenUnit: SnoozeUnit?
     
     var customSnoozeTime: String {
-        
         return (customSnoozeDelay + " " + customSnoozeUnit)
     }
     
@@ -51,11 +50,7 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
         let durationAndUnit = (chosenDuration!, chosenUnit!)
         
         for i in 0..<snoozeTimes.count {
-            print("Checking index path")
-            print(durationAndUnit)
-            print(snoozeTimes[i] == durationAndUnit)
             if snoozeTimes[i] == durationAndUnit && !isUsingCustomSnoozeTime() {
-                print("Got in if")
                 foundSomething = true
                 selectedIndexPath = IndexPath(row: i, section: 0)
                 break
@@ -161,25 +156,6 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
         return cell
     }
     
-    func deselectCell(tableView: UITableView, at selectedIndexPath: IndexPath) {
-        if let oldCell = tableView.cellForRow(at: selectedIndexPath) {
-            oldCell.accessoryType = .none
-        }
-    }
-    
-    func selectCell(tableView: UITableView, at indexPath: IndexPath) {
-        selectedIndexPath = indexPath
-        if let newCell = tableView.cellForRow(at: indexPath) {
-            newCell.accessoryType = .checkmark
-        }
-    }
-    
-    func selectNewLine(tableView: UITableView, at newIndexPath: IndexPath) {
-        deselectCell(tableView: tableView, at: selectedIndexPath)
-        selectCell(tableView: tableView, at: newIndexPath)
-        tableView.deselectRow(at: newIndexPath, animated: true)
-    }
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(#function)
         if (indexPath as NSIndexPath).section == 0 {
@@ -229,6 +205,26 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
         if indexPath.section == 1 && indexPath.row == 1 {
             setCustomSnoozeTime()
         }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func selectNewLine(tableView: UITableView, at newIndexPath: IndexPath) {
+        deselectCell(tableView: tableView, at: selectedIndexPath)
+        selectCell(tableView: tableView, at: newIndexPath)
+        
+    }
+    
+    func deselectCell(tableView: UITableView, at selectedIndexPath: IndexPath) {
+        if let oldCell = tableView.cellForRow(at: selectedIndexPath) {
+            oldCell.accessoryType = .none
+        }
+    }
+    
+    func selectCell(tableView: UITableView, at indexPath: IndexPath) {
+        selectedIndexPath = indexPath
+        if let newCell = tableView.cellForRow(at: indexPath) {
+            newCell.accessoryType = .checkmark
+        }
     }
     
     func setCustomSnoozeTime() {
@@ -239,20 +235,6 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
         }
     }
     
-    func presentPremiumView() {
-        let premiumView = storyboard?.instantiateViewController(withIdentifier: "PremiumView") as! PremiumUserViewController
-        premiumView.delegate = self
-        
-        let navigationController = UINavigationController()
-        navigationController.viewControllers.append(premiumView)
-        
-        present(navigationController, animated: true, completion: nil)
-    }
-    
-    func premiumUserViewControllerDelegateDidCancel(controller: PremiumUserViewController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
     func updateCustomSnoozeLabel() {
         let customSnoozeTime = getCustomSnoozeTime()
         if customSnoozeTime.0 == 0 {
@@ -261,6 +243,13 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
         } else {
             customSnoozeUnit = getLabel(customSnoozeTime.0, snoozeUnit: customSnoozeTime.1)
             customSnoozeDelay = "\(Int(customSnoozeTime.0))"
+            if customSnoozeTime.0 > 1.0 {
+                let customUnit = CustomTimeInterval(rawValue: customSnoozeUnit)!
+                customSnoozeUnit = customUnit.pluralInterval
+            } else {
+                let customUnit = CustomTimeInterval(rawValue: customSnoozeUnit)!
+                customSnoozeUnit = customUnit.singularInterval
+            }
         }
     }
     
@@ -285,6 +274,20 @@ class SnoozePickerViewController: UITableViewController, PremiumUserViewControll
         chosenDuration = duration
         chosenUnit = unit
         selectedSnoozeTimeTuple = (duration, unit)
+    }
+    
+    func presentPremiumView() {
+        let premiumView = storyboard?.instantiateViewController(withIdentifier: "PremiumView") as! PremiumUserViewController
+        premiumView.delegate = self
+        
+        let navigationController = UINavigationController()
+        navigationController.viewControllers.append(premiumView)
+        
+        present(navigationController, animated: true, completion: nil)
+    }
+    
+    func premiumUserViewControllerDelegateDidCancel(controller: PremiumUserViewController) {
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Segues
@@ -328,7 +331,6 @@ extension SnoozePickerViewController: CustomSnoozePickerDelegate {
             if isUsingCustomSnoozeTime() {
                 setSnoozeTime(delay, unit: unit)
             }
-            print(selectedIndexPath)
         } else {
             if isUsingCustomSnoozeTime() {
                 let indexPath = IndexPath(item: 2, section: 0)

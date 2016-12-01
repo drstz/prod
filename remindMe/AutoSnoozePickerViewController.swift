@@ -41,14 +41,12 @@ class AutoSnoozePickerViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(#function)
         return autoSnoozeTime.count
     }
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.textColor = UIColor.white
-        // header.titleLabel.textColor = UIColor.whiteColor()
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -59,10 +57,15 @@ class AutoSnoozePickerViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print(#function)
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let autoSnoozeTime = self.autoSnoozeTime[(indexPath as NSIndexPath).row]
-        cell.textLabel!.text = autoSnoozeTime
+        
+        let selectedAutoSnoozeTimeArray = autoSnoozeTime.components(separatedBy: " ")
+        let newUnit = CustomTimeInterval(rawValue: selectedAutoSnoozeTimeArray[1])!
+        let newTime = selectedAutoSnoozeTimeArray[0] + " " + newUnit.singularInterval
+        
+        // cell.textLabel!.text = autoSnoozeTime
+        cell.textLabel!.text = newTime
         
         if autoSnoozeTime == selectedAutoSnoozeTime {
             cell.accessoryType = .checkmark

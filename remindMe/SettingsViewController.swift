@@ -136,8 +136,12 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
         
         autoSnoozeTime = anAutoSnoozeTime
         
+        let selectedAutoSnoozeTimeArray = autoSnoozeTime.components(separatedBy: " ")
+        let newUnit = CustomTimeInterval(rawValue: selectedAutoSnoozeTimeArray[1])!
+        let newTime = newUnit.singularInterval
+        
         //autoSnoozeLabel.text = NSLocalizedString("every \(autoSnoozeTime)", comment: "every 1 minute, every 1 hour")
-        autoSnoozeLabel.text = String(format: NSLocalizedString("every %@", comment: "every 1 minute, every 1 hour"), autoSnoozeTime)
+        autoSnoozeLabel.text = String(format: NSLocalizedString("every %@", comment: "every 1 minute, every 1 hour"), newTime)
     }
     
     func loadSnoozeSettings() {

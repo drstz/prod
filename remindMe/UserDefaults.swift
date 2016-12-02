@@ -101,7 +101,6 @@ func isUsingCustomSnoozeTime() -> Bool {
 func setUsingCustomSnoozeTime(_ enabled: Bool) {
     let userDefaults = UserDefaults.standard
     userDefaults.set(enabled, forKey: "UsingCustomSnooze")
-    
 }
 
 func setSnoozeTime(_ duration: Double, unit: SnoozeUnit) {

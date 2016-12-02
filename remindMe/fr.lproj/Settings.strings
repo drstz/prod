@@ -1,6 +1,6 @@
 
 /* Class = "UILabel"; text = "Remind Until Complete For All New Reminders"; ObjectID = "1x0-rJ-bsM"; */
-"1x0-rJ-bsM.text" = "Rappeler jusqu'à l'achèvement pour tout nouveau rappel";
+"1x0-rJ-bsM.text" = "Rappeler jusqu'à achèvement pour tout nouveau rappel";
 
 /* Class = "UITableViewSection"; headerTitle = "Behavior"; ObjectID = "2eD-iA-Vti"; */
 "2eD-iA-Vti.headerTitle" = "Comportement";

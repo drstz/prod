@@ -116,9 +116,9 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
         var minuteString = ""
         
         if interval == 1 {
-            minuteString = NSLocalizedString("minute", comment: "1 minute")
+            minuteString = CustomTimeInterval.minute.singularInterval
         } else {
-            minuteString = NSLocalizedString("minutes", comment: "More than 1 minute")
+            minuteString = CustomTimeInterval.minute.pluralInterval
         }
         
         timePickerLabel.text = String(interval) + " " + minuteString
@@ -135,7 +135,13 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
         autoSnoozeSwitch.setOn(autoSnoozeOn, animated: false)
         
         autoSnoozeTime = anAutoSnoozeTime
-        autoSnoozeLabel.text = NSLocalizedString("every \(autoSnoozeTime)", comment: "every 1 minute, every 1 hour")
+        
+        let selectedAutoSnoozeTimeArray = autoSnoozeTime.components(separatedBy: " ")
+        let newUnit = CustomTimeInterval(rawValue: selectedAutoSnoozeTimeArray[1])!
+        let newTime = newUnit.singularInterval
+        
+        //autoSnoozeLabel.text = NSLocalizedString("every \(autoSnoozeTime)", comment: "every 1 minute, every 1 hour")
+        autoSnoozeLabel.text = String(format: NSLocalizedString("every %@", comment: "every 1 minute, every 1 hour"), newTime)
     }
     
     func loadSnoozeSettings() {
@@ -149,8 +155,18 @@ class SettingsViewController: UITableViewController, PremiumUserViewControllerDe
         
         let durationString = Int(snoozeDuration)
         let unitString = getLabel(snoozeDuration, snoozeUnit: snoozeUnit)
-        snoozeTime = "\(durationString) \(unitString)"
-        snoozeTimeLabel.text = NSLocalizedString("for \(snoozeTime)", comment: "for x minutes")
+        
+        
+        let interval = CustomTimeInterval(rawValue: unitString)!
+        
+        
+        if snoozeDuration == 1 {
+            snoozeTime = "\(durationString) \(interval.singularInterval)"
+        } else {
+            snoozeTime = "\(durationString) \(interval.pluralInterval)"
+        }
+        
+        snoozeTimeLabel.text = String(format: NSLocalizedString("for %@", comment: "for x minutes"), snoozeTime)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

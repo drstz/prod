@@ -101,7 +101,6 @@ func isUsingCustomSnoozeTime() -> Bool {
 func setUsingCustomSnoozeTime(_ enabled: Bool) {
     let userDefaults = UserDefaults.standard
     userDefaults.set(enabled, forKey: "UsingCustomSnooze")
-    
 }
 
 func setSnoozeTime(_ duration: Double, unit: SnoozeUnit) {
@@ -128,9 +127,7 @@ func getLabel(_ snoozeDuration: Double, snoozeUnit: SnoozeUnit) -> String {
     case .Days:
         duration = "day"
     }
-    if snoozeDuration > 1 {
-        duration += "s"
-    }
+
     return duration
 }
 

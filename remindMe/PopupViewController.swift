@@ -90,7 +90,7 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
     }
     
     @IBAction func delete() {
-        let alert = UIAlertController(title: NSLocalizedString("Delete \"\((incomingReminder?.name)!)\" ?", comment: "Delete 'reminder name'"),
+        let alert = UIAlertController(title:  String(format: NSLocalizedString("Delete \"%@\" ?", comment: "Delete 'reminder name'"), (incomingReminder?.name)!),
                                       message: NSLocalizedString("You cannot undo this", comment: ""), preferredStyle: .alert)
         let deleteAction = UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive, handler: {
             action in
@@ -102,6 +102,7 @@ class PopupViewController: UIViewController, AddReminderViewControllerDelegate {
         alert.addAction(deleteAction)
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
+        
     }
     
     @IBAction func favorite() {

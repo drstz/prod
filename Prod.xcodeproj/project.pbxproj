@@ -24,7 +24,6 @@
 		7165A5811CBB6A310088EA76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7165A57F1CBB6A310088EA76 /* Main.storyboard */; };
 		7165A5831CBB6A310088EA76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7165A5821CBB6A310088EA76 /* Assets.xcassets */; };
 		7165A5861CBB6A310088EA76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7165A5841CBB6A310088EA76 /* LaunchScreen.storyboard */; };
-		7165A5961CBB910B0088EA76 /* ReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7165A5951CBB910B0088EA76 /* ReminderCell.xib */; };
 		7165A5981CBB92C30088EA76 /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7165A5971CBB92C30088EA76 /* ReminderCell.swift */; };
 		7165A59A1CBCB4330088EA76 /* AddReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7165A5991CBCB4330088EA76 /* AddReminder.swift */; };
 		7171DC971D8FA48F0034EBF0 /* PremiumUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7171DC961D8FA48F0034EBF0 /* PremiumUserViewController.swift */; };
@@ -38,6 +37,8 @@
 		71ABD7041CBF893300F0BF90 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 71ABD7021CBF893300F0BF90 /* DataModel.xcdatamodeld */; };
 		71ABD70A1CC0A87600F0BF90 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71ABD7091CC0A87600F0BF90 /* Date.swift */; };
 		71C3A9A71DEC1735005D01E5 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C3A9A61DEC1735005D01E5 /* Theme.swift */; };
+		71C3A9AB1DEDAD4C005D01E5 /* ReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 71C3A9AD1DEDAD4C005D01E5 /* ReminderCell.xib */; };
+		71C3A9B61DEDAE0C005D01E5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 71C3A9B41DEDAE0C005D01E5 /* Localizable.strings */; };
 		71C3EFB01D0ED79A00A87525 /* AutoSnoozePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C3EFAF1D0ED79A00A87525 /* AutoSnoozePickerViewController.swift */; };
 		71C9EF491D598A0F00F1717B /* aboutApp.html in Resources */ = {isa = PBXBuildFile; fileRef = 71C9EF481D598A0F00F1717B /* aboutApp.html */; };
 		71D365541D6EA8D1004D4953 /* PatternPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D365531D6EA8D1004D4953 /* PatternPickerViewController.swift */; };
@@ -72,7 +73,6 @@
 		7165A5821CBB6A310088EA76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7165A5851CBB6A310088EA76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7165A5871CBB6A310088EA76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7165A5951CBB910B0088EA76 /* ReminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderCell.xib; sourceTree = "<group>"; };
 		7165A5971CBB92C30088EA76 /* ReminderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ReminderCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7165A5991CBCB4330088EA76 /* AddReminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddReminder.swift; sourceTree = "<group>"; };
 		7171DC961D8FA48F0034EBF0 /* PremiumUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PremiumUserViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +86,14 @@
 		71ABD7031CBF893300F0BF90 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		71ABD7091CC0A87600F0BF90 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Date.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		71C3A9A61DEC1735005D01E5 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		71C3A9A81DEDA663005D01E5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		71C3A9A91DEDA663005D01E5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		71C3A9AA1DEDA664005D01E5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Settings.strings; sourceTree = "<group>"; };
+		71C3A9AC1DEDAD4C005D01E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ReminderCell.xib; sourceTree = "<group>"; };
+		71C3A9AF1DEDAD55005D01E5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/ReminderCell.strings; sourceTree = "<group>"; };
+		71C3A9B11DEDAD8D005D01E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ReminderCell.strings; sourceTree = "<group>"; };
+		71C3A9B51DEDAE0C005D01E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = remindMe/en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		71C3A9B71DEDAE57005D01E5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = remindMe/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		71C3EFAF1D0ED79A00A87525 /* AutoSnoozePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoSnoozePickerViewController.swift; sourceTree = "<group>"; };
 		71C9EF481D598A0F00F1717B /* aboutApp.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = aboutApp.html; sourceTree = "<group>"; };
 		71D365531D6EA8D1004D4953 /* PatternPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatternPickerViewController.swift; sourceTree = "<group>"; };
@@ -186,7 +194,7 @@
 			children = (
 				7165A5841CBB6A310088EA76 /* LaunchScreen.storyboard */,
 				7165A57F1CBB6A310088EA76 /* Main.storyboard */,
-				7165A5951CBB910B0088EA76 /* ReminderCell.xib */,
+				71C3A9AD1DEDAD4C005D01E5 /* ReminderCell.xib */,
 				71D86C3E1D067929002A5CAE /* Settings.storyboard */,
 				71D620771D3629260038FE56 /* TableSectionHeader.xib */,
 			);
@@ -205,6 +213,7 @@
 		7165A56F1CBB6A310088EA76 = {
 			isa = PBXGroup;
 			children = (
+				71C3A9B41DEDAE0C005D01E5 /* Localizable.strings */,
 				714C055E1D93D46C00F8639D /* Fabric.framework */,
 				714C055F1D93D46C00F8639D /* Crashlytics.framework */,
 				7165A57A1CBB6A310088EA76 /* remindMe */,
@@ -336,6 +345,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 7165A56F1CBB6A310088EA76;
 			productRefGroup = 7165A5791CBB6A310088EA76 /* Products */;
@@ -357,9 +367,10 @@
 				7130E43C1D58AB460013B568 /* style.css in Resources */,
 				7165A5811CBB6A310088EA76 /* Main.storyboard in Resources */,
 				71D620781D3629260038FE56 /* TableSectionHeader.xib in Resources */,
+				71C3A9B61DEDAE0C005D01E5 /* Localizable.strings in Resources */,
 				7130E43D1D58AB460013B568 /* aboutDeveloper.html in Resources */,
 				71C9EF491D598A0F00F1717B /* aboutApp.html in Resources */,
-				7165A5961CBB910B0088EA76 /* ReminderCell.xib in Resources */,
+				71C3A9AB1DEDAD4C005D01E5 /* ReminderCell.xib in Resources */,
 				71D86C401D067929002A5CAE /* Settings.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,6 +439,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				7165A5801CBB6A310088EA76 /* Base */,
+				71C3A9A91DEDA663005D01E5 /* fr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -436,14 +448,35 @@
 			isa = PBXVariantGroup;
 			children = (
 				7165A5851CBB6A310088EA76 /* Base */,
+				71C3A9A81DEDA663005D01E5 /* fr */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		71C3A9AD1DEDAD4C005D01E5 /* ReminderCell.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				71C3A9AC1DEDAD4C005D01E5 /* Base */,
+				71C3A9AF1DEDAD55005D01E5 /* fr */,
+				71C3A9B11DEDAD8D005D01E5 /* en */,
+			);
+			name = ReminderCell.xib;
+			sourceTree = "<group>";
+		};
+		71C3A9B41DEDAE0C005D01E5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				71C3A9B51DEDAE0C005D01E5 /* en */,
+				71C3A9B71DEDAE57005D01E5 /* fr */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		71D86C3E1D067929002A5CAE /* Settings.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				71D86C3F1D067929002A5CAE /* Base */,
+				71C3A9AA1DEDA664005D01E5 /* fr */,
 			);
 			name = Settings.storyboard;
 			sourceTree = "<group>";
@@ -455,6 +488,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -502,6 +536,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";

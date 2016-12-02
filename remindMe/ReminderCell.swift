@@ -132,7 +132,10 @@ class ReminderCell: UITableViewCell {
         }
     }
     
+    
+    
     func updateRepeatLabelWithCustomPattern(_ reminder: Reminder) {
+        
         if let frequency = reminder.frequency?.intValue, let interval = reminder.interval {
             nextDueDate.text = patternPhrase(frequency: frequency, interval: interval)
         }

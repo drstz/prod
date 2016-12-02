@@ -17,6 +17,74 @@ enum DateFormats: String {
     case ShortDate = "dd MMMM"
 }
 
+enum CustomTimeInterval: String {
+    case second
+    case minute
+    case hour
+    case day
+    case week
+    case month
+    case year
+    
+    var singularInterval: String {
+        switch self {
+        case .second:
+            return NSLocalizedString("second", comment: "singular seconds")
+        case .minute:
+            return NSLocalizedString("minute", comment: "singular minutes")
+        case .hour:
+            return NSLocalizedString("hour", comment: "singular hours")
+        case .day:
+            return NSLocalizedString("day", comment: "singular days")
+        case .week:
+            return NSLocalizedString("week", comment: "singular weeks")
+        case .month:
+            return NSLocalizedString("month", comment: "singular months")
+        case .year:
+            return NSLocalizedString("year", comment: "singular years")
+        }
+    }
+    
+    var pluralInterval: String {
+        switch self {
+        case .second:
+            return NSLocalizedString("seconds", comment: "plural seconds")
+        case .minute:
+            return NSLocalizedString("minutes", comment: "plural minutes")
+        case .hour:
+            return NSLocalizedString("hours", comment: "plural hours")
+        case .day:
+            return NSLocalizedString("days", comment: "plural days")
+        case .week:
+            return NSLocalizedString("weeks", comment: "plural weeks")
+        case .month:
+            return NSLocalizedString("months", comment: "plural months")
+        case .year:
+            return NSLocalizedString("years", comment: "plural years")
+        }
+    }
+    
+    var abbreviation: String {
+        switch self {
+        case .second:
+            return NSLocalizedString("s", comment: "abb seconds")
+        case .minute:
+            return NSLocalizedString("min", comment: "abb minutes")
+        case .hour:
+            return NSLocalizedString("h", comment: "abb hours")
+        case .day:
+            return NSLocalizedString("d", comment: "abb days")
+        case .week:
+            return NSLocalizedString("w", comment: "abb weeks")
+        case .month:
+            return NSLocalizedString("m", comment: "abb months")
+        case .year:
+            return NSLocalizedString("y", comment: "abb years")
+        }
+    }
+    
+}
+
 enum Day: String {
     case monday
     case tuesday
@@ -115,10 +183,11 @@ func listOfSelectedDays(selectedDays: [Int]) -> String {
 }
 
 func patternPhrase(frequency: Int, interval: String) -> String {
+    let newInterval: CustomTimeInterval = CustomTimeInterval(rawValue: interval)!
     if frequency != 1 {
-        return  NSLocalizedString("every \(frequency) \(interval)s", comment: "Example 'Every 2 days'")
+        return String(format: NSLocalizedString("PLURAL_SENTENCE", comment: "Example 'Every 2 days'"), frequency, newInterval.pluralInterval)
     } else {
-        return  NSLocalizedString("every \(interval)", comment: "Example: 'every year', 'every day'")
+        return String(format: NSLocalizedString("every %@", comment: "Example: 'every year', 'every day'"), newInterval.singularInterval)
     }
 }
 

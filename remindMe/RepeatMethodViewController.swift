@@ -34,7 +34,6 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
     
     // MARK: Outlets
     
-    
     // MARK: Next Date Example
     
     @IBOutlet weak var nextDateExampleLabel: UILabel!
@@ -185,7 +184,6 @@ class RepeatMethodViewController: UITableViewController, PatternPickerViewContro
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.textColor = UIColor.white
-        // header.titleLabel.textColor = UIColor.whiteColor()
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

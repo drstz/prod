@@ -43,7 +43,6 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
     
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     
-    
     // MARK: Labels
     @IBOutlet weak var introSentenceLabel: UILabel!
     
@@ -58,14 +57,12 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
         isRequestForPurchase = true
         isRequestForRestore = false
         fetchProducts()
-        
     }
     
     @IBAction func restore() {
         isRequestForRestore = true
         isRequestForPurchase = false
         fetchProducts()
-        
     }
     
     // MARK: - Delegates
@@ -89,7 +86,6 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
         
         activityView.stopAnimating()
         activityView.removeFromSuperview()
-        
     }
     
     func request(_ request: SKRequest, didFailWithError error: Error) {
@@ -105,7 +101,6 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
         let cancel = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
         alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
-   
     }
     
     // MARK: Product Request Delegate
@@ -128,8 +123,6 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
         }
     }
     
-    
-    
     // MARK: - View Lifecyle
     
     deinit {
@@ -147,12 +140,12 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
         print("User is premium: \(isPremium())")
         
         if isPremium() {
-            introSentenceLabel.text = "Thank you for your support. You now have access to the following features."
+            introSentenceLabel.text = NSLocalizedString("Thank you for your support. You now have access to the following features.", comment: "")
             
             goPremiumButton.isHidden = true
             restorePurchaseButton.isHidden = true
         } else {
-            introSentenceLabel.text = "Go premium and access the following features."
+            introSentenceLabel.text = NSLocalizedString("Go premium and access the following features.", comment: "")
             
             goPremiumButton.isHidden = false
             restorePurchaseButton.isHidden = false
@@ -175,22 +168,17 @@ class PremiumUserViewController: UIViewController, SKProductsRequestDelegate, SK
         requestForProducts?.delegate = self
         requestForProducts?.start()
         
-        
-        
         activityView.center = self.view.center
         
         activityView.startAnimating()
         
         self.view.addSubview(activityView)
-        
-        
     }
     
     func format(price: NSDecimalNumber, for locale: Locale) -> String {
         let formatter = NumberFormatter()
         formatter.locale = locale
         formatter.numberStyle = .currency
-        
         
         let formattedPrice = formatter.string(from: price as NSNumber)
         

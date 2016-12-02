@@ -151,13 +151,17 @@ extension CustomSnoozePickerController: UIPickerViewDelegate, UIPickerViewDataSo
         var title = ""
         switch row {
         case 0:
-            title = "seconds"
+            let interval = CustomTimeInterval.second
+            title = interval.pluralInterval
         case 1:
-            title = "minutes"
+            let interval = CustomTimeInterval.minute
+            title = interval.pluralInterval
         case 2:
-            title = "hours"
+            let interval = CustomTimeInterval.hour
+            title = interval.pluralInterval
         case 3:
-            title = "days"
+            let interval = CustomTimeInterval.day
+            title = interval.pluralInterval
         default:
             title = "Error"
         }

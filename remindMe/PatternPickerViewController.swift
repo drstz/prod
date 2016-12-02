@@ -74,17 +74,41 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         } else {
             switch row {
             case 0:
-                return NSLocalizedString("minutes", comment: "")
+                if selectedFrequency! > 1 {
+                    return CustomTimeInterval.minute.pluralInterval
+                } else {
+                    return CustomTimeInterval.minute.singularInterval
+                }
             case 1:
-                return NSLocalizedString("hours", comment: "in a list")
+                if selectedFrequency! > 1 {
+                    return CustomTimeInterval.hour.pluralInterval
+                } else {
+                    return CustomTimeInterval.hour.singularInterval
+                }
             case 2:
-                return NSLocalizedString("days", comment: "in a list")
+                if selectedFrequency! > 1 {
+                    return CustomTimeInterval.day.pluralInterval
+                } else {
+                    return CustomTimeInterval.day.singularInterval
+                }
             case 3:
-                return NSLocalizedString("weeks", comment: "")
+                if selectedFrequency! > 1 {
+                    return CustomTimeInterval.week.pluralInterval
+                } else {
+                    return CustomTimeInterval.week.singularInterval
+                }
             case 4:
-                return NSLocalizedString("months", comment: "")
+                if selectedFrequency! > 1 {
+                    return CustomTimeInterval.month.pluralInterval
+                } else {
+                    return CustomTimeInterval.month.singularInterval
+                }
             case 5:
-                return NSLocalizedString("years", comment: "")
+                if selectedFrequency! > 1 {
+                    return CustomTimeInterval.year.pluralInterval
+                } else {
+                    return CustomTimeInterval.year.singularInterval
+                }
             default:
                 return "No idea"
             }
@@ -94,21 +118,21 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == 0 {
             selectedFrequency = row + 1
-            
+            pickerView.reloadComponent(1)
         } else {
             switch row {
             case 0:
-                selectedInterval = "minute"
+                selectedInterval = CustomTimeInterval.minute.rawValue
             case 1:
-                selectedInterval = "hour"
+                selectedInterval = CustomTimeInterval.hour.rawValue
             case 2:
-                selectedInterval = "day"
+                selectedInterval = CustomTimeInterval.day.rawValue
             case 3:
-                selectedInterval = "week"
+                selectedInterval = CustomTimeInterval.week.rawValue
             case 4:
-                selectedInterval = "month"
+                selectedInterval = CustomTimeInterval.month.rawValue
             case 5:
-                selectedInterval = "year"
+                selectedInterval = CustomTimeInterval.year.rawValue
             default:
                 print("Error")
             }
@@ -153,7 +177,7 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         
         // Select date automatically
         if selectedInterval == nil && selectedFrequency == nil {
-            selectedInterval = "minute"
+            selectedInterval = CustomTimeInterval.minute.rawValue
             selectedFrequency = 1
         }
         
@@ -163,7 +187,7 @@ class PatternPickerViewController: UIViewController, UIPickerViewDelegate, UIPic
      // MARK: Picker Helper Methods
     func setPatternPicker() {
         var frequency = 1
-        var interval = "minute"
+        var interval = CustomTimeInterval.minute.rawValue
         
         if let selectedFrequency = selectedFrequency , let selectedInterval = selectedInterval {
             frequency = selectedFrequency

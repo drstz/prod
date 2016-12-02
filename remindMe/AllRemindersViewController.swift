@@ -740,11 +740,11 @@ extension AllRemindersViewController: ReminderCellDelegate {
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
             
             var favoriteText = ""
-            let completeText = "Complete"
+            let completeText = NSLocalizedString("Complete", comment: "")
             if reminder.isFavorite == true {
-                favoriteText = "Remove favorite"
+                favoriteText = NSLocalizedString("Remove favorite", comment: "")
             } else {
-                favoriteText = "Favorite"
+                favoriteText = NSLocalizedString("Favorite", comment: "")
             }
             
             let favorite = UIBarButtonItem.init(title: favoriteText, style: .plain, target: self, action: #selector(toolbarFavorite))
@@ -946,13 +946,14 @@ extension AllRemindersViewController {
         
         let reminders = selectedReminders()
         if reminders.count > 1 {
-            deleteActionTitle = "Delete \(reminders.count) reminders?"
+            //deleteActionTitle = "Delete \(reminders.count) reminders?"
+            deleteActionTitle = String(format: NSLocalizedString("Delete %d reminders?", comment: ""), reminders.count)
         } else {
-            deleteActionTitle = "Delete this reminder?"
+            deleteActionTitle = NSLocalizedString("Delete this reminder?", comment: "")
         }
         
-        let alert = UIAlertController(title: deleteActionTitle, message: "You cannot undo this", preferredStyle: .alert)
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
+        let alert = UIAlertController(title: deleteActionTitle, message: NSLocalizedString("You cannot undo this", comment: ""), preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: NSLocalizedString("Delete", comment: ""), style: .destructive, handler: {
             action in
             for reminder in reminders {
                 self.deleteReminder(reminder, save: false)
@@ -965,7 +966,7 @@ extension AllRemindersViewController {
             // Tracking
             Answers.logCustomEvent(withName: "Delete", customAttributes: ["Category": "Toolbar"])
         })
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .default, handler: nil)
         alert.addAction(deleteAction)
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
@@ -1068,21 +1069,21 @@ extension AllRemindersViewController {
         if selectionIsMixed || containsUnFavorite {
             if isComplete {
                 let favoriteItem = toolbarItems![0]
-                favoriteItem.title = "Favorite"
+                favoriteItem.title = NSLocalizedString("Favorite", comment: "")
                 toolbarItems![0] = favoriteItem
             } else {
                 let favoriteItem = toolbarItems![1]
-                favoriteItem.title = "Favorite"
+                favoriteItem.title = NSLocalizedString("Favorite", comment: "")
                 toolbarItems![1] = favoriteItem
             }
         } else if !selectionIsMixed && containsFavorite {
             if isComplete {
                 let favoriteItem = toolbarItems![0]
-                favoriteItem.title = "Remove favorite"
+                favoriteItem.title = NSLocalizedString("Remove favorite", comment: "")
                 toolbarItems![0] = favoriteItem
             } else {
                 let favoriteItem = toolbarItems![1]
-                favoriteItem.title = "Remove favorite"
+                favoriteItem.title = NSLocalizedString("Remove favorite", comment: "")
                 toolbarItems![1] = favoriteItem
             }
         }
